@@ -1,3 +1,5 @@
+// package context is the controler for all the XModules of Xamboo and is required to build any other XModule in the system.
+// It controls different contexts for different sites, installed xmodules, logs, caches, databases and tables.
 package context
 
 import (
@@ -13,7 +15,7 @@ import (
 	"github.com/webability-go/xdominion"
 )
 
-// The context is a portable structre containing pointer to usefull structures used in any context of sites
+// Context is a portable structure containing pointer to usefull structures used in any context of sites
 type Context struct {
 	// The name of the context (informative only)
 	Name string
@@ -31,12 +33,20 @@ type Context struct {
 	Caches map[string]*xcore.XCache
 }
 
-// The type for a list of contexts
-type ContextContainer map[string]*Context
+// Container if the list of created contexts
+type Container map[string]*Context
 
-func CreateContextContainer(contextconfig *xconfig.XConfig) ContextContainer {
+// CreateContainer will create a new container for contexts  from am XConfig data
+// The XConfig file must have this syntax:
+//  context=[contextid1]
+//  context=[contextid2]
+//  context=[contextid3]
+//  contextid1-config=[path-to-config-file]
+//  contextid2-config=[path-to-config-file]
+//  contextid3-config=[path-to-config-file]
+func CreateContainer(contextconfig *xconfig.XConfig) Container {
 
-	cc := ContextContainer{}
+	cc := Container{}
 
 	contexts, _ := contextconfig.GetStringCollection("context")
 	for _, context := range contexts {
@@ -48,7 +58,18 @@ func CreateContextContainer(contextconfig *xconfig.XConfig) ContextContainer {
 	return cc
 }
 
-func (cs ContextContainer) CreateContext(name string, config *xconfig.XConfig) *Context {
+// CreateContext will create a new context, link databases and logs based on XConfig data
+// The XConfig file must have this syntax:
+//  database.[dbid].type=[dbtype]
+//  database.[dbid].username=[dbusername]
+//  database.[dbid].password=[dbpassword]
+//  database.[dbid].database=[dbname]
+//  database.[dbid].server=[dbserver]
+//  database.[dbid].ssl=[dbsslflag]
+//
+//  log.[logid].file=[pathtologfile]
+// every line can be repeated for each dbid or logid
+func (cs Container) CreateContext(name string, config *xconfig.XConfig) *Context {
 	// Crear los contextos basados en el CoreConfig
 	ctx := &Context{
 		Name:      name,
@@ -136,7 +157,7 @@ func (cs ContextContainer) CreateContext(name string, config *xconfig.XConfig) *
 	return ctx
 }
 
-func (cs ContextContainer) GetContext(name string) *Context {
+func (cs Container) GetContext(name string) *Context {
 	return cs[name]
 }
 
@@ -174,4 +195,15 @@ func (c *Context) AddTable(name string, table *xdominion.XTable) error {
 
 func (c *Context) GetTable(name string) *xdominion.XTable {
 	return c.Tables[name]
+}
+
+// InitContext is called during the init phase to link the module with the system
+// adds tables and caches to sitecontext::database
+// It should be called AFTER createContext
+func InitContext(sitecontext *Context, databasename string) error {
+
+	buildTables(sitecontext, databasename)
+	buildCache(sitecontext)
+
+	return nil
 }
