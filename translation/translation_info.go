@@ -4,12 +4,8 @@ import (
 	"github.com/webability-go/xdominion"
 )
 
-/*
-  TABLE: translation_info:
-  All the translation words into any language
-*/
-
-func translation_info() *xdominion.XTable {
+//  translationInfo table: All the translation words into any language
+func translationInfo() *xdominion.XTable {
 	t := xdominion.NewXTable("trnaslation_info", "translation_info_")
 
 	t.AddField(xdominion.XFieldInteger{Name: "key", Constraints: xdominion.XConstraints{
@@ -18,7 +14,7 @@ func translation_info() *xdominion.XTable {
 	}}) // AI, PK
 
 	// theme
-	t.AddField(xdominion.XFieldInteger{Name: "theme", Constraints: xdominion.XConstraints{
+	t.AddField(xdominion.XFieldVarChar{Name: "theme", Size: 10, Constraints: xdominion.XConstraints{
 		xdominion.XConstraint{Type: xdominion.FK, Data: []string{"translation_theme", "translation_thm_key"}},
 	}})
 

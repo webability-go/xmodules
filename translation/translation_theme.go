@@ -4,18 +4,13 @@ import (
 	"github.com/webability-go/xdominion"
 )
 
-/*
-  TABLE: kl_rutatraduccion:
-  All the links and routes of kiwilimon
-*/
-
-func kl_traducciontema() *xdominion.XTable {
+//  translationTheme table: All the translation group of words
+func translationTheme() *xdominion.XTable {
 	t := xdominion.NewXTable("translation_theme", "translation_thm_")
 
-	t.AddField(xdominion.XFieldInteger{Name: "key", Constraints: xdominion.XConstraints{
+	t.AddField(xdominion.XFieldVarChar{Name: "key", Size: 10, Constraints: xdominion.XConstraints{
 		xdominion.XConstraint{Type: xdominion.PK},
-		xdominion.XConstraint{Type: xdominion.AI},
-	}}) // AI, PK
+	}})
 
 	// name
 	t.AddField(xdominion.XFieldVarChar{Name: "name", Size: 255, Constraints: xdominion.XConstraints{

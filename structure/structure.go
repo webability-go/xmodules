@@ -3,10 +3,10 @@ package structure
 import (
 	"github.com/webability-go/xdominion"
 
-	"xmodules/context"
+	"github.com/webability-go/xmodules/context"
 )
 
-// The structure interface is made to implement a standarized object to use cross modules, graph, memory caches etc.
+// Structure interface is made to implement a standarized object to use cross modules, graph, memory caches etc.
 type Structure interface {
 
 	// ComplementData adds all the needed data from other objects /duplicable in the thread since the object will be destroyed at the end
@@ -15,8 +15,9 @@ type Structure interface {
 	// IsAuthorized returns true if the structure can be used on this site/language/device
 	IsAuthorized(sitecontext *context.Context, site string, language string, device string) bool
 
-	// Returns the raw data
+	// GetData Returns the raw data
 	GetData() *xdominion.XRecord
-	// Clone the whole structure
+
+	// Clone will clone the whole structure
 	Clone() Structure
 }

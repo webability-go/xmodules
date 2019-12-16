@@ -4,7 +4,7 @@ Standard modules for Xamboo.
 
 The released modules are actually:
 
-- context: is used to contextualize a xamboo session (hit of server) to a specific set of pointers to caches, databases, logs, config files, etc.
+- context: is used to contextualize a xamboo session (hit of server) to a specific set of pointers to caches, databases, logs, config files, etc. so you will use the correct set of data and tables on the correct site.
 
 import "github.com/webability-go/xmodules/context"
 
