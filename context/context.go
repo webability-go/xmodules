@@ -1,3 +1,5 @@
+// package context is the controler for all the XModules of Xamboo and is required to build any other XModule in the system.
+// It controls different contexts for different sites, installed xmodules, logs, caches, databases and tables.
 package context
 
 import (
@@ -193,4 +195,15 @@ func (c *Context) AddTable(name string, table *xdominion.XTable) error {
 
 func (c *Context) GetTable(name string) *xdominion.XTable {
 	return c.Tables[name]
+}
+
+// InitContext is called during the init phase to link the module with the system
+// adds tables and caches to sitecontext::database
+// It should be called AFTER createContext
+func InitContext(sitecontext *Context, databasename string) error {
+
+	buildTables(sitecontext, databasename)
+	buildCache(sitecontext)
+
+	return nil
 }

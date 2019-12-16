@@ -9,54 +9,35 @@ import (
 */
 
 func countryCountry() *xdominion.XTable {
-	t := xdominion.NewXTable("ingredient_ingredient", "ingrediente_ing_")
+	t := xdominion.NewXTable("country_country", "country_cou_")
 
-	t.AddField(xdominion.XFieldInteger{Name: "key", Constraints: xdominion.XConstraints{
+	// Clave del pais, primary key
+	t.AddField(xdominion.XFieldVarChar{Name: "key", Size: 8, Constraints: xdominion.XConstraints{
 		xdominion.XConstraint{Type: xdominion.PK},
-		xdominion.XConstraint{Type: xdominion.AI},
 	}}) // AI, PK
-
-	// nombre
+	// Nombre
 	t.AddField(xdominion.XFieldVarChar{Name: "name", Size: 255, Constraints: xdominion.XConstraints{
 		xdominion.XConstraint{Type: xdominion.NN},
-	}})
+	}}) // NN
 
-	// plural
-	t.AddField(xdominion.XFieldVarChar{Name: "plural", Size: 255, Constraints: xdominion.XConstraints{
-		xdominion.XConstraint{Type: xdominion.NN},
-	}})
-
-	// pasillo
-	t.AddField(xdominion.XFieldInteger{Name: "aisle", Constraints: xdominion.XConstraints{
-		xdominion.XConstraint{Type: xdominion.FK, Data: []string{"ingredient_aisle", "ingredient_ais_key"}},
-		xdominion.XConstraint{Type: xdominion.IN},
+	// type: 1 = region, 2 = subregion, 3 = country, 4 = subdivision
+	t.AddField(xdominion.XFieldInteger{Name: "type", Constraints: xdominion.XConstraints{
 		xdominion.XConstraint{Type: xdominion.NN},
 	}})
 
 	// padre
-	t.AddField(xdominion.XFieldInteger{Name: "father", Constraints: xdominion.XConstraints{
-		xdominion.XConstraint{Type: xdominion.FK, Data: []string{"ingredient_ingredient", "ingrediente_ing_key"}},
-	}})
+	t.AddField(xdominion.XFieldVarChar{Name: "father", Size: 5, Constraints: xdominion.XConstraints{
+		xdominion.XConstraint{Type: xdominion.FK, Data: []string{"country_country", "country_cou"}},
+	}}) // FK: kl_pais
 
-	// usda
-	t.AddField(xdominion.XFieldInteger{Name: "usda", Constraints: xdominion.XConstraints{
-		xdominion.XConstraint{Type: xdominion.FK, Data: []string{"usda_food", "usda_fo_key"}},
-	}})
+	// extra field (3 char ISO field, id of state, number of state, etc) if any
+	t.AddField(xdominion.XFieldVarChar{Name: "iso3", Size: 3})
 
-	// Unidad SI para pieza
-	t.AddField(xdominion.XFieldInteger{Name: "isunit", Constraints: xdominion.XConstraints{
-		xdominion.XConstraint{Type: xdominion.FK, Data: []string{"metric_unit", "metric_unt_key"}},
-	}})
+	// country code
+	t.AddField(xdominion.XFieldInteger{Name: "code"})
 
-	// Cantidad en unidad SI para pieza
-	t.AddField(xdominion.XFieldFloat{Name: "quantity"})
+	// php geo ip extra id if any (states)
+	t.AddField(xdominion.XFieldVarChar{Name: "geoip", Size: 3})
 
-	// densidad si volumen
-	t.AddField(xdominion.XFieldFloat{Name: "density"})
-
-	// date last modif
-	t.AddField(xdominion.XFieldDateTime{Name: "lastmodif", Constraints: xdominion.XConstraints{
-		xdominion.XConstraint{Type: xdominion.NN},
-	}})
 	return t
 }
