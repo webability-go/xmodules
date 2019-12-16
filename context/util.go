@@ -1,14 +1,14 @@
 package context
 
 import (
-	"strconv"
-
 	"golang.org/x/text/language"
 
+	"github.com/webability-go/xconfig"
 	"github.com/webability-go/xcore"
+	"github.com/webability-go/xdominion"
 )
 
-func buildTables(sitecontext *context.Context, databasename string) {
+func buildTables(sitecontext *Context, databasename string) {
 
 	sitecontext.Tables["context_module"] = contextModule()
 	sitecontext.Tables["context_module"].SetBase(sitecontext.Databases[databasename])
@@ -52,4 +52,43 @@ func SynchronizeDatabase(sitecontext *Context) {
 		"name":    "Contexts for Xamboo",
 		"version": "1.0.0",
 	})
+}
+
+// Analyze a context and gets back the main data
+func GetContextStats(sitecontext *Context) *xcore.XDataset {
+
+	subdata := xcore.XDataset{}
+	subdata["languages"] = sitecontext.Languages
+	subdata["modules"], _ = sitecontext.Config.Get("module")
+	subdata["databases"] = sitecontext.Databases
+	subdata["logs"] = sitecontext.Logs
+
+	caches := []string{}
+	for id := range sitecontext.Caches {
+		caches = append(caches, id)
+	}
+	subdata["xcaches"] = caches
+
+	tables := map[string]string{}
+	for id, table := range sitecontext.Tables {
+		db := table.Base.Database
+		tables[id] = db
+	}
+	subdata["tables"] = tables
+
+	subdata["config"] = buildConfigSet(sitecontext.Config)
+	return &subdata
+}
+
+func buildConfigSet(config *xconfig.XConfig) xcore.XDataset {
+	data := xcore.XDataset{}
+	for id := range config.Parameters {
+		d, _ := config.Get(id)
+		if val, ok := d.(*xconfig.XConfig); ok {
+			data[id] = buildConfigSet(val)
+		} else {
+			data[id] = d
+		}
+	}
+	return data
 }
