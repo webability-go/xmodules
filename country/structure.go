@@ -8,7 +8,6 @@ import (
 	"github.com/webability-go/xdominion"
 
 	"github.com/webability-go/xmodules/context"
-	"github.com/webability-go/xmodules/structure"
 	"github.com/webability-go/xmodules/translation"
 )
 

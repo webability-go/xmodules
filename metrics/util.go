@@ -6,8 +6,7 @@ import (
 	"golang.org/x/text/language"
 
 	"github.com/webability-go/xcore"
-
-	"xmodules/context"
+	"github.com/webability-go/xmodules/context"
 )
 
 func buildTables(sitecontext *context.Context, databasename string) {

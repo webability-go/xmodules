@@ -4,9 +4,8 @@ import (
 	"golang.org/x/text/language"
 
 	"github.com/webability-go/xdominion"
+	"github.com/webability-go/xmodules/context"
 
-	"xmodules/context"
-	"xmodules/structure"
 	"xmodules/translation"
 )
 
@@ -20,7 +19,7 @@ type StructureNutrient struct {
 	Data *xdominion.XRecord
 }
 
-func CreateStructureNutrientByKey(sitecontext *context.Context, key string, lang language.Tag) structure.Structure {
+func CreateStructureNutrientByKey(sitecontext *context.Context, key string, lang language.Tag) context.Structure {
 	data, _ := sitecontext.Tables["usda_nutrient"].SelectOne(key)
 	if data == nil {
 		return nil
@@ -28,7 +27,7 @@ func CreateStructureNutrientByKey(sitecontext *context.Context, key string, lang
 	return CreateStructureNutrientByData(sitecontext, data, lang)
 }
 
-func CreateStructureNutrientByData(sitecontext *context.Context, data xdominion.XRecordDef, lang language.Tag) structure.Structure {
+func CreateStructureNutrientByData(sitecontext *context.Context, data xdominion.XRecordDef, lang language.Tag) context.Structure {
 
 	key, _ := data.GetString("key")
 
@@ -57,7 +56,7 @@ func (sm *StructureNutrient) GetData() *xdominion.XRecord {
 }
 
 // Clone the whole structure
-func (sm *StructureNutrient) Clone() structure.Structure {
+func (sm *StructureNutrient) Clone() context.Structure {
 	cloned := &StructureNutrient{
 		Key:  sm.Key,
 		Lang: sm.Lang,

@@ -9,8 +9,7 @@ import (
 	"golang.org/x/text/language"
 
 	"github.com/webability-go/xdominion"
-
-	"xmodules/context"
+	"github.com/webability-go/xmodules/context"
 )
 
 const (
