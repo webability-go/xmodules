@@ -15,6 +15,11 @@ import (
 	"github.com/webability-go/xdominion"
 )
 
+const (
+	MODULEID = "context"
+	VERSION  = "1.0.1"
+)
+
 // Context is a portable structure containing pointer to usefull structures used in any context of sites
 type Context struct {
 	// The name of the context (informative only)
@@ -31,6 +36,8 @@ type Context struct {
 	Tables map[string]*xdominion.XTable
 	// A list of in-memory caches for the context:
 	Caches map[string]*xcore.XCache
+	// A list of linked modules id => code version
+	Modules map[string]string
 }
 
 // Container if the list of created contexts
@@ -153,6 +160,14 @@ func (cs Container) CreateContext(name string, config *xconfig.XConfig) *Context
 		}
 	}
 
+	// modules
+	modules := map[string]string{}
+	modulelist, _ := config.GetStringCollection("module")
+	for _, m := range modulelist {
+		modules[m] = ""
+	}
+	ctx.Modules = modules
+
 	cs[name] = ctx
 	return ctx
 }
@@ -197,13 +212,73 @@ func (c *Context) GetTable(name string) *xdominion.XTable {
 	return c.Tables[name]
 }
 
+// Analyze a context and gets back the main data
+func GetContextStats(sitecontext *Context) *xcore.XDataset {
+
+	subdata := xcore.XDataset{}
+	subdata["languages"] = sitecontext.Languages
+	subdata["databases"] = sitecontext.Databases
+	subdata["logs"] = sitecontext.Logs
+
+	caches := []string{}
+	for id := range sitecontext.Caches {
+		caches = append(caches, id)
+	}
+	subdata["xcaches"] = caches
+
+	tables := map[string]string{}
+	for id, table := range sitecontext.Tables {
+		db := table.Base.Database
+		tables[id] = db
+	}
+	subdata["tables"] = tables
+
+	subdata["config"] = buildConfigSet(sitecontext.Config)
+
+	// analiza los módulos instalados
+	moduleslist := sitecontext.Modules
+	modules := map[string]interface{}{}
+	for id, v := range moduleslist {
+		md := struct {
+			Version          string
+			InstalledVersion string
+		}{v, ModuleInstalledVersion(sitecontext, id)}
+		modules[id] = md
+	}
+	subdata["modules"] = modules
+
+	return &subdata
+}
+
+// ======================================
+
 // InitContext is called during the init phase to link the module with the system
+// It must be called AFTER GetContainer
 // adds tables and caches to sitecontext::database
 // It should be called AFTER createContext
-func InitContext(sitecontext *Context, databasename string) error {
+func InitModule(sitecontext *Context, databasename string) error {
 
 	buildTables(sitecontext, databasename)
 	buildCache(sitecontext)
+	sitecontext.Modules[MODULEID] = VERSION
 
 	return nil
+}
+
+func SynchronizeModule(sitecontext *Context) {
+
+	num1, err1 := sitecontext.Tables["context_module"].Count(nil)
+	if err1 != nil || num1 == 0 {
+		sitecontext.Logs["main"].Println("The table context_module was created (again)")
+		sitecontext.Tables["context_module"].Synchronize()
+	} else {
+		sitecontext.Logs["main"].Println("The table context_module was not created because it contains data")
+	}
+
+	// Be sure context module is on db: fill context module (we should get this from xmodule.conf)
+	sitecontext.Tables["context_module"].Upsert(MODULEID, xdominion.XRecord{
+		"key":     MODULEID,
+		"name":    "Contexts for Xamboo",
+		"version": VERSION,
+	})
 }

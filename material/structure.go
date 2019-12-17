@@ -6,9 +6,8 @@ import (
 	"golang.org/x/text/language"
 
 	"github.com/webability-go/xdominion"
+	"github.com/webability-go/xmodules/context"
 
-	"xmodules/context"
-	"xmodules/structure"
 	"xmodules/translation"
 )
 
@@ -22,7 +21,7 @@ type StructureMaterial struct {
 	Data *xdominion.XRecord
 }
 
-func CreateStructureMaterialByKey(sitecontext *context.Context, key int, lang language.Tag) structure.Structure {
+func CreateStructureMaterialByKey(sitecontext *context.Context, key int, lang language.Tag) context.Structure {
 	data, _ := sitecontext.Tables["kl_material"].SelectOne(key)
 	if data == nil {
 		return nil
@@ -30,7 +29,7 @@ func CreateStructureMaterialByKey(sitecontext *context.Context, key int, lang la
 	return CreateStructureMaterialByData(sitecontext, data, lang)
 }
 
-func CreateStructureMaterialByData(sitecontext *context.Context, data xdominion.XRecordDef, lang language.Tag) structure.Structure {
+func CreateStructureMaterialByData(sitecontext *context.Context, data xdominion.XRecordDef, lang language.Tag) context.Structure {
 
 	key, _ := data.GetInt("clave")
 
@@ -59,7 +58,7 @@ func (sm *StructureMaterial) GetData() *xdominion.XRecord {
 }
 
 // Clone the whole structure
-func (sm *StructureMaterial) Clone() structure.Structure {
+func (sm *StructureMaterial) Clone() context.Structure {
 	cloned := &StructureMaterial{
 		Key:  sm.Key,
 		Lang: sm.Lang,

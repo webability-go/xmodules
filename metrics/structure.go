@@ -6,9 +6,8 @@ import (
 	"golang.org/x/text/language"
 
 	"github.com/webability-go/xdominion"
+	"github.com/webability-go/xmodules/context"
 
-	"xmodules/context"
-	"xmodules/structure"
 	"xmodules/translation"
 )
 
@@ -22,22 +21,22 @@ type StructureMetric struct {
 	Data *xdominion.XRecord
 }
 
-func CreateStructureMetricByKey(sitecontext *context.Context, key int, lang language.Tag) structure.Structure {
-	data, _ := sitecontext.Tables["metric_unit"].SelectOne(key)
+func CreateStructureMetricByKey(sitecontext *context.Context, key int, lang language.Tag) context.Structure {
+	data, _ := sitecontext.Tables["metrics_unit"].SelectOne(key)
 	if data == nil {
 		return nil
 	}
 	return CreateStructureMetricByData(sitecontext, data, lang)
 }
 
-func CreateStructureMetricByData(sitecontext *context.Context, data xdominion.XRecordDef, lang language.Tag) structure.Structure {
+func CreateStructureMetricByData(sitecontext *context.Context, data xdominion.XRecordDef, lang language.Tag) context.Structure {
 
 	key, _ := data.GetInt("key")
 
 	// builds main data: translations
-	if sitecontext.Tables["metric_unit"].Language != lang {
+	if sitecontext.Tables["metrics_unit"].Language != lang {
 		// Only 2 fields to translate: nombre, plural
-		translation.Translate(sitecontext, TRANSLATION_THEME, strconv.Itoa(key), data, map[string]interface{}{"name": true, "plural": true}, sitecontext.Tables["metric_unit"].Language, lang)
+		translation.Translate(sitecontext, TRANSLATION_THEME, strconv.Itoa(key), data, map[string]interface{}{"name": true, "plural": true}, sitecontext.Tables["metrics_unit"].Language, lang)
 	}
 
 	return &StructureMetric{Key: key, Lang: lang, Data: data.(*xdominion.XRecord)}
@@ -59,7 +58,7 @@ func (sm *StructureMetric) GetData() *xdominion.XRecord {
 }
 
 // Clone the whole structure
-func (sm *StructureMetric) Clone() structure.Structure {
+func (sm *StructureMetric) Clone() context.Structure {
 	cloned := &StructureMetric{
 		Key:  sm.Key,
 		Lang: sm.Lang,

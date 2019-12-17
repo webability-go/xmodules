@@ -6,9 +6,8 @@ import (
 	"golang.org/x/text/language"
 
 	"github.com/webability-go/xdominion"
+	"github.com/webability-go/xmodules/context"
 
-	"xmodules/context"
-	"xmodules/structure"
 	"xmodules/translation"
 )
 
@@ -29,7 +28,7 @@ type StructureIngredient struct {
 	Data *xdominion.XRecord
 }
 
-func CreateStructurePasilloByKey(sitecontext *context.Context, key int, lang language.Tag) structure.Structure {
+func CreateStructurePasilloByKey(sitecontext *context.Context, key int, lang language.Tag) context.Structure {
 	data, _ := sitecontext.Tables["kl_ingredientepasillo"].SelectOne(key)
 	if data == nil {
 		return nil
@@ -37,7 +36,7 @@ func CreateStructurePasilloByKey(sitecontext *context.Context, key int, lang lan
 	return CreateStructurePasilloByData(sitecontext, data, lang)
 }
 
-func CreateStructurePasilloByData(sitecontext *context.Context, data xdominion.XRecordDef, lang language.Tag) structure.Structure {
+func CreateStructurePasilloByData(sitecontext *context.Context, data xdominion.XRecordDef, lang language.Tag) context.Structure {
 
 	key, _ := data.GetInt("clave")
 
@@ -66,7 +65,7 @@ func (sm *StructurePasillo) GetData() *xdominion.XRecord {
 }
 
 // Clone the whole structure
-func (sm *StructurePasillo) Clone() structure.Structure {
+func (sm *StructurePasillo) Clone() context.Structure {
 	cloned := &StructurePasillo{
 		Key:  sm.Key,
 		Lang: sm.Lang,
@@ -75,7 +74,7 @@ func (sm *StructurePasillo) Clone() structure.Structure {
 	return cloned
 }
 
-func CreateStructureIngredientByKey(sitecontext *context.Context, key int, lang language.Tag) structure.Structure {
+func CreateStructureIngredientByKey(sitecontext *context.Context, key int, lang language.Tag) context.Structure {
 	data, _ := sitecontext.Tables["kl_ingrediente"].SelectOne(key)
 	if data == nil {
 		return nil
@@ -83,7 +82,7 @@ func CreateStructureIngredientByKey(sitecontext *context.Context, key int, lang 
 	return CreateStructureIngredientByData(sitecontext, data, lang)
 }
 
-func CreateStructureIngredientByData(sitecontext *context.Context, data xdominion.XRecordDef, lang language.Tag) structure.Structure {
+func CreateStructureIngredientByData(sitecontext *context.Context, data xdominion.XRecordDef, lang language.Tag) context.Structure {
 
 	key, _ := data.GetInt("clave")
 
@@ -112,7 +111,7 @@ func (sm *StructureIngredient) GetData() *xdominion.XRecord {
 }
 
 // Clone the whole structure
-func (sm *StructureIngredient) Clone() structure.Structure {
+func (sm *StructureIngredient) Clone() context.Structure {
 	cloned := &StructureIngredient{
 		Key:  sm.Key,
 		Lang: sm.Lang,
