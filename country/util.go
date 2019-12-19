@@ -1,9 +1,15 @@
 package country
 
 import (
+	"bufio"
+	"encoding/json"
+	"fmt"
+	"os"
+
 	"golang.org/x/text/language"
 
 	"github.com/webability-go/xcore"
+	"github.com/webability-go/xdominion"
 	"github.com/webability-go/xmodules/context"
 )
 
@@ -36,4 +42,60 @@ func buildCache(sitecontext *context.Context) {
 		}
 		sitecontext.Caches["country:countries:"+canonical].Set("all", all)
 	}
+}
+
+func loadTables(sitecontext *context.Context, filespath string) []string {
+
+	// borra toda la data porque la vamos a insertar de nuevo (si se puede: FK bloquea)
+	sitecontext.Tables["country_country"].Delete(nil)
+
+	// 4 archivos de importación
+	DMPCOUNTRY := filespath + "countries.en.dmp"
+
+	data := readFile(DMPCOUNTRY)
+	for _, r := range *data {
+
+		sitecontext.Tables["country_country"].Upsert(*r.(*xdominion.XRecord))
+	}
+
+	// spanish in language
+
+	return []string{}
+}
+
+func readFile(filename string) *xdominion.XRecords {
+
+	file, err := os.Open(filename)
+	if err != nil {
+		fmt.Println(err)
+		return nil
+	}
+	defer file.Close()
+
+	data := &xdominion.XRecords{}
+	scanner := bufio.NewScanner(file)
+	for scanner.Scan() {
+		line := scanner.Text()
+		if line == "" || line[0] == '#' {
+			continue
+		}
+		rec := scanLine(line)
+		data.Push(rec)
+	}
+	return data
+}
+
+func scanLine(line string) *xdominion.XRecord {
+	data := &xdominion.XRecord{}
+
+	var fields map[string]interface{}
+	err := json.Unmarshal([]byte(line), &fields)
+	if err != nil {
+		return nil
+	}
+
+	for i, v := range fields {
+		data.Set(i, v)
+	}
+	return data
 }

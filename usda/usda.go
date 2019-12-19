@@ -19,17 +19,28 @@ func InitModule(sitecontext *context.Context, databasename string) error {
 	buildTables(sitecontext, databasename)
 	buildCache(sitecontext)
 	sitecontext.Modules[MODULEID] = VERSION
-	translation.AddTheme(sitecontext, TRANSLATIONTHEME, "USDA nutrients", translation.SOURCETABLE, "", "name,tag")
 
 	return nil
 }
 
 func SynchronizeModule(sitecontext *context.Context, filespath string) []string {
 
+	translation.AddTheme(sitecontext, TRANSLATIONTHEME, "USDA nutrients", translation.SOURCETABLE, "", "name,tag")
+
 	messages := []string{}
 	messages = append(messages, createTables(sitecontext)...)
+
+	// Be sure context module is on db: fill context module (we should get this from xmodule.conf)
+	err := context.AddModule(sitecontext, MODULEID, "List of USDA food and nutrients", VERSION)
+	if err == nil {
+		messages = append(messages, "The entry "+MODULEID+" was modified successfully in the modules table.")
+	} else {
+		messages = append(messages, "Error modifying the entry "+MODULEID+" in the modules table: "+err.Error())
+	}
+
 	messages = append(messages, loadTables(sitecontext, filespath)...)
 	messages = append(messages, buildCache(sitecontext)...)
+
 	return messages
 }
 

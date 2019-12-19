@@ -27,7 +27,7 @@ func countryCountry() *xdominion.XTable {
 
 	// padre
 	t.AddField(xdominion.XFieldVarChar{Name: "father", Size: 5, Constraints: xdominion.XConstraints{
-		xdominion.XConstraint{Type: xdominion.FK, Data: []string{"country_country", "country_cou"}},
+		xdominion.XConstraint{Type: xdominion.FK, Data: []string{"country_country", "country_cou_key"}},
 	}}) // FK: kl_pais
 
 	// extra field (3 char ISO field, id of state, number of state, etc) if any
