@@ -26,7 +26,7 @@ func InitModule(sitecontext *context.Context, databasename string) error {
 	return nil
 }
 
-func SynchronizeModule(sitecontext *context.Context) []string {
+func SynchronizeModule(sitecontext *context.Context, filespath string) []string {
 
 	translation.AddTheme(sitecontext, TRANSLATIONTHEME, "Countries", translation.SOURCETABLE, "", "name")
 
@@ -45,6 +45,16 @@ func SynchronizeModule(sitecontext *context.Context) []string {
 	}
 
 	// fill countries and translations
+	loadTables(sitecontext, filespath)
+
+	// Inserting into context-modules
+	// Be sure context module is on db: fill context module (we should get this from xmodule.conf)
+	err = context.AddModule(sitecontext, MODULEID, "List of official countries and ISO codes", VERSION)
+	if err == nil {
+		messages = append(messages, "The entry "+MODULEID+" was modified successfully in the modules table.")
+	} else {
+		messages = append(messages, "Error modifying the entry "+MODULEID+" in the modules table: "+err.Error())
+	}
 
 	return messages
 }

@@ -9,24 +9,29 @@ The released modules are actually:
 import "github.com/webability-go/xmodules/context"
 
 
-- structure: is used to build a basic data structure to use in the system. The structure is generally a complex set of data build from many database tables, for example an invoice, a recipe, an accounting policy, a client, etc.
+- stat: tables to keep stats of use of anything, from site hits to IOT events.
 
-import "github.com/webability-go/xmodules/structure"
+import "github.com/webability-go/xmodules/stat"
+
+
+- translation: a set of translation tables to keep translated words of anything, from database field to files. It supports all the known languages in UTF8.
+
+import "github.com/webability-go/xmodules/translation"
+
+
+- country: is the list of ISO official countries ready to use in a database.
+
+import "github.com/webability-go/xmodules/country"
+
+
+- metric: a full set of units to count things and convert between them.
+
+import "github.com/webability-go/xmodules/metric"
 
 
 - usda: the official USDA tables for nutrients to calculate recipes.
 
 import "github.com/webability-go/xmodules/usda"
-
-
-- metrics: a full set of units to count things and convert between them.
-
-import "github.com/webability-go/xmodules/metrics"
-
-
-- translation: a set of translation tables to keep translated words of anything, from database field to files. It supports anl the known languages in UTF8.
-
-import "github.com/webability-go/xmodules/translation"
 
 
 - ingredient: tables to manage ingredients for food and recipes.
@@ -39,21 +44,20 @@ import "github.com/webability-go/xmodules/ingredient"
 import "github.com/webability-go/xmodules/material"
 
 
-- stat: tables to keep stats of use of anything, from site hits to IOT events.
-
-import "github.com/webability-go/xmodules/stat"
 
 
 Modules soon available: (working on them)
-
-- country: is the list of ISO official countries ready to use in a database.
-
-import "github.com/webability-go/xmodules/country"
+------------------------------------------
 
 
-- client: is a set of clients that can connect to the system with basic metadata, social source and FindAllStringSubmatch
+- client: is a set of clients that can connect to the system with basic metadata, social source and basic data
 
 import "github.com/webability-go/xmodules/client"
+
+
+- clientremote: is a table to link clients PK/FKs but from a distant client set of tables in another database/server
+
+import "github.com/webability-go/xmodules/clientremote"
 
 
 - clientsecurity: is a set of access tables to build a solid set of access rights, profiles, atomic rights, etc.

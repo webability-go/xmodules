@@ -1,0 +1,332 @@
+# XDominion Database Dump
+# Empty lines and lines beginning with # are comments
+# Each line is a standalone JSON corresponding to a table record
+
+# UN M49 regions
+{"key":"001","name":"World","type":1,"code":"001"}
+{"key":"002","name":"Africa","type":1,"code":"002","father":"001"}
+{"key":"015","name":"Northern Africa","type":2,"code":"015","father":"002"}
+{"key":"202","name":"Sub-Saharan Africa","type":2,"code":"202","father":"002"}
+{"key":"014","name":"Eastern Africa","type":2,"code":"014","father":"202"}
+{"key":"017","name":"Middle Africa","type":2,"code":"017","father":"202"}
+{"key":"018","name":"Southern Africa","type":2,"code":"018","father":"202"}
+{"key":"011","name":"Western Africa","type":2,"code":"011","father":"202"}
+
+{"key":"019","name":"Americas","type":1,"code":"019","father":"001"}
+{"key":"419","name":"Latin America and the Caribbean","type":2,"code":"419","father":"019"}
+{"key":"029","name":"Caribbean","type":2,"code":"029","father":"419"}
+{"key":"013","name":"Central America","type":2,"code":"013","father":"419"}
+{"key":"005","name":"South America","type":2,"code":"005","father":"419"}
+{"key":"003","name":"North America","type":2,"code":"003","father":"019"}
+{"key":"021","name":"Northern America","type":2,"code":"021","father":"019"}
+
+{"key":"142","name":"Asia","type":1,"code":"142","father":"001"}
+{"key":"143","name":"Central Asia","type":2,"code":"143","father":"142"}
+{"key":"030","name":"Eastern Asia","type":2,"code":"030","father":"142"}
+{"key":"035","name":"South-eastern Asia","type":2,"code":"035","father":"142"}
+{"key":"034","name":"Southern Asia","type":2,"code":"034","father":"142"}
+{"key":"145","name":"Western Asia","type":2,"code":"145","father":"142"}
+
+{"key":"150","name":"Europe","type":1,"code":"150","father":"001"}
+{"key":"151","name":"Eastern Europe (includes North Asia)","type":2,"code":"151","father":"150"}
+{"key":"154","name":"Northern Europe","type":2,"code":"154","father":"150"}
+{"key":"039","name":"Southern Europe","type":2,"code":"039","father":"150"}
+{"key":"155","name":"Western Europe","type":2,"code":"155","father":"150"}
+
+{"key":"009","name":"Oceania","type":1,"code":"009","father":"001"}
+{"key":"053","name":"Australia and New Zealand","type":2,"code":"053","father":"009"}
+{"key":"054","name":"Melanesia","type":2,"code":"054","father":"009"}
+{"key":"057","name":"Micronesia","type":2,"code":"057","father":"009"}
+{"key":"061","name":"Polynesia","type":2,"code":"061","father":"009"}
+
+# Special places
+{"key":"O1","name":"Other country","type":3,"father":"001"}
+{"key":"XX","name":"Unknown","type":3,"father":"001"}
+{"key":"A1","name":"Anonymous Proxy","type":3,"father":"001"}
+{"key":"A2","name":"Satelital IP","type":3,"father":"001"}
+
+# All the countries
+{"key":"AF","name":"Afghanistan","type":3,"code":"004","iso3":"AFG","father":"034"}
+{"key":"AX","name":"Åland Islands","type":3,"code":"248","iso3":"ALA","father":"154"}
+{"key":"AL","name":"Albania","type":3,"code":"008","iso3":"ALB","father":"039"}
+{"key":"DZ","name":"Algeria","type":3,"code":"012","iso3":"DZA","father":"015"}
+{"key":"AS","name":"American Samoa","type":3,"code":"016","iso3":"ASM","father":"061"}
+{"key":"AD","name":"Andorra","type":3,"code":"020","iso3":"AND","father":"039"}
+{"key":"AO","name":"Angola","type":3,"code":"024","iso3":"AGO","father":"202"}
+{"key":"AI","name":"Anguilla","type":3,"code":"660","iso3":"AIA","father":"419"}
+{"key":"AQ","name":"Antarctica","type":3,"code":"010","iso3":"ATA","father":""}
+{"key":"AG","name":"Antigua and Barbuda","type":3,"code":"028","iso3":"ATG","father":"419"}
+{"key":"AR","name":"Argentina","type":3,"code":"032","iso3":"ARG","father":"419"}
+{"key":"AM","name":"Armenia","type":3,"code":"051","iso3":"ARM","father":"145"}
+{"key":"AW","name":"Aruba","type":3,"code":"533","iso3":"ABW","father":"029"}
+{"key":"AU","name":"Australia","type":3,"code":"036","iso3":"AUS","father":"053"}
+{"key":"AT","name":"Austria","type":3,"code":"040","iso3":"AUT","father":"155"}
+{"key":"AZ","name":"Azerbaijan","type":3,"code":"031","iso3":"AZE","father":"145"}
+{"key":"BS","name":"Bahamas","type":3,"code":"044","iso3":"BHS","father":"029"}
+{"key":"BH","name":"Bahrain","type":3,"code":"048","iso3":"BHR","father":"145"}
+{"key":"BD","name":"Bangladesh","type":3,"code":"050","iso3":"BGD","father":"034"}
+{"key":"BB","name":"Barbados","type":3,"code":"052","iso3":"BRB","father":"029"}
+{"key":"BY","name":"Belarus","type":3,"code":"112","iso3":"BLR","father":"151"}
+{"key":"BE","name":"Belgium","type":3,"code":"056","iso3":"BEL","father":"155"}
+{"key":"BZ","name":"Belize","type":3,"code":"084","iso3":"BLZ","father":"013"}
+{"key":"BJ","name":"Benin","type":3,"code":"204","iso3":"BEN","father":"011"}
+{"key":"BM","name":"Bermuda","type":3,"code":"060","iso3":"BMU","father":"021"}
+{"key":"BT","name":"Bhutan","type":3,"code":"064","iso3":"BTN","father":"034"}
+{"key":"BO","name":"Bolivia (Plurinational State of)","type":3,"code":"068","iso3":"BOL","father":"005"}
+{"key":"BQ","name":"Bonaire, Sint Eustatius and Saba","type":3,"code":"535","iso3":"BES","father":"029"}
+{"key":"BA","name":"Bosnia and Herzegovina","type":3,"code":"070","iso3":"BIH","father":"039"}
+{"key":"BW","name":"Botswana","type":3,"code":"072","iso3":"BWA","father":"018"}
+{"key":"BV","name":"Bouvet Island","type":3,"code":"074","iso3":"BVT","father":"005"}
+{"key":"BR","name":"Brazil","type":3,"code":"076","iso3":"BRA","father":"005"}
+{"key":"IO","name":"British Indian Ocean Territory","type":3,"code":"086","iso3":"IOT","father":"014"}
+{"key":"BN","name":"Brunei Darussalam","type":3,"code":"096","iso3":"BRN","father":"035"}
+{"key":"BG","name":"Bulgaria","type":3,"code":"100","iso3":"BGR","father":"151"}
+{"key":"BF","name":"Burkina Faso","type":3,"code":"854","iso3":"BFA","father":"011"}
+{"key":"BI","name":"Burundi","type":3,"code":"108","iso3":"BDI","father":"014"}
+{"key":"CV","name":"Cabo Verde","type":3,"code":"132","iso3":"CPV","father":"011"}
+{"key":"KH","name":"Cambodia","type":3,"code":"116","iso3":"KHM","father":"035"}
+{"key":"CM","name":"Cameroon","type":3,"code":"120","iso3":"CMR","father":"017"}
+{"key":"CA","name":"Canada","type":3,"code":"124","iso3":"CAN","father":"021"}
+{"key":"KY","name":"Cayman Islands","type":3,"code":"136","iso3":"CYM","father":"029"}
+{"key":"CF","name":"Central African Republic","type":3,"code":"140","iso3":"CAF","father":"017"}
+{"key":"TD","name":"Chad","type":3,"code":"148","iso3":"TCD","father":"017"}
+{"key":"CL","name":"Chile","type":3,"code":"152","iso3":"CHL","father":"005"}
+{"key":"CN","name":"China","type":3,"code":"156","iso3":"CHN","father":"030"}
+{"key":"CX","name":"Christmas Island","type":3,"code":"162","iso3":"CXR","father":"053"}
+{"key":"CC","name":"Cocos (Keeling) Islands","type":3,"code":"166","iso3":"CCK","father":"053"}
+{"key":"CO","name":"Colombia","type":3,"code":"170","iso3":"COL","father":"005"}
+{"key":"KM","name":"Comoros","type":3,"code":"174","iso3":"COM","father":"014"}
+{"key":"CG","name":"Congo","type":3,"code":"178","iso3":"COG","father":"017"}
+{"key":"CD","name":"Congo, Democratic Republic of the","type":3,"code":"180","iso3":"COD","father":"017"}
+{"key":"CK","name":"Cook Islands","type":3,"code":"184","iso3":"COK","father":"061"}
+{"key":"CR","name":"Costa Rica","type":3,"code":"188","iso3":"CRI","father":"013"}
+{"key":"CI","name":"Côte d'Ivoire","type":3,"code":"384","iso3":"CIV","father":"011"}
+{"key":"HR","name":"Croatia","type":3,"code":"191","iso3":"HRV","father":"039"}
+{"key":"CU","name":"Cuba","type":3,"code":"192","iso3":"CUB","father":"029"}
+{"key":"CW","name":"Curaçao","type":3,"code":"531","iso3":"CUW","father":"029"}
+{"key":"CY","name":"Cyprus","type":3,"code":"196","iso3":"CYP","father":"145"}
+{"key":"CZ","name":"Czechia","type":3,"code":"203","iso3":"CZE","father":"151"}
+{"key":"DK","name":"Denmark","type":3,"code":"208","iso3":"DNK","father":"154"}
+{"key":"DJ","name":"Djibouti","type":3,"code":"262","iso3":"DJI","father":"014"}
+{"key":"DM","name":"Dominica","type":3,"code":"212","iso3":"DMA","father":"029"}
+{"key":"DO","name":"Dominican Republic","type":3,"code":"214","iso3":"DOM","father":"029"}
+{"key":"EC","name":"Ecuador","type":3,"code":"218","iso3":"ECU","father":"005"}
+{"key":"EG","name":"Egypt","type":3,"code":"818","iso3":"EGY","father":"015"}
+{"key":"SV","name":"El Salvador","type":3,"code":"222","iso3":"SLV","father":"013"}
+{"key":"GQ","name":"Equatorial Guinea","type":3,"code":"226","iso3":"GNQ","father":"017"}
+{"key":"ER","name":"Eritrea","type":3,"code":"232","iso3":"ERI","father":"014"}
+{"key":"EE","name":"Estonia","type":3,"code":"233","iso3":"EST","father":"154"}
+{"key":"SZ","name":"Eswatini","type":3,"code":"748","iso3":"SWZ","father":"018"}
+{"key":"ET","name":"Ethiopia","type":3,"code":"231","iso3":"ETH","father":"014"}
+{"key":"FK","name":"Falkland Islands (Malvinas)","type":3,"code":"238","iso3":"FLK","father":"005"}
+{"key":"FO","name":"Faroe Islands","type":3,"code":"234","iso3":"FRO","father":"154"}
+{"key":"FJ","name":"Fiji","type":3,"code":"242","iso3":"FJI","father":"054"}
+{"key":"FI","name":"Finland","type":3,"code":"246","iso3":"FIN","father":"154"}
+{"key":"FR","name":"France","type":3,"code":"250","iso3":"FRA","father":"155"}
+{"key":"GF","name":"French Guiana","type":3,"code":"254","iso3":"GUF","father":"005"}
+{"key":"PF","name":"French Polynesia","type":3,"code":"258","iso3":"PYF","father":"061"}
+{"key":"TF","name":"French Southern Territories","type":3,"code":"260","iso3":"ATF","father":"014"}
+{"key":"GA","name":"Gabon","type":3,"code":"266","iso3":"GAB","father":"017"}
+{"key":"GM","name":"Gambia","type":3,"code":"270","iso3":"GMB","father":"011"}
+{"key":"GE","name":"Georgia","type":3,"code":"268","iso3":"GEO","father":"145"}
+{"key":"DE","name":"Germany","type":3,"code":"276","iso3":"DEU","father":"155"}
+{"key":"GH","name":"Ghana","type":3,"code":"288","iso3":"GHA","father":"011"}
+{"key":"GI","name":"Gibraltar","type":3,"code":"292","iso3":"GIB","father":"039"}
+{"key":"GR","name":"Greece","type":3,"code":"300","iso3":"GRC","father":"039"}
+{"key":"GL","name":"Greenland","type":3,"code":"304","iso3":"GRL","father":"021"}
+{"key":"GD","name":"Grenada","type":3,"code":"308","iso3":"GRD","father":"029"}
+{"key":"GP","name":"Guadeloupe","type":3,"code":"312","iso3":"GLP","father":"029"}
+{"key":"GU","name":"Guam","type":3,"code":"316","iso3":"GUM","father":"057"}
+{"key":"GT","name":"Guatemala","type":3,"code":"320","iso3":"GTM","father":"013"}
+{"key":"GG","name":"Guernsey","type":3,"code":"831","iso3":"GGY","father":"830"}
+{"key":"GN","name":"Guinea","type":3,"code":"324","iso3":"GIN","father":"011"}
+{"key":"GW","name":"Guinea-Bissau","type":3,"code":"624","iso3":"GNB","father":"011"}
+{"key":"GY","name":"Guyana","type":3,"code":"328","iso3":"GUY","father":"005"}
+{"key":"HT","name":"Haiti","type":3,"code":"332","iso3":"HTI","father":"029"}
+{"key":"HM","name":"Heard Island and McDonald Islands","type":3,"code":"334","iso3":"HMD","father":"053"}
+{"key":"VA","name":"Holy See","type":3,"code":"336","iso3":"VAT","father":"039"}
+{"key":"HN","name":"Honduras","type":3,"code":"340","iso3":"HND","father":"013"}
+{"key":"HK","name":"Hong Kong","type":3,"code":"344","iso3":"HKG","father":"030"}
+{"key":"HU","name":"Hungary","type":3,"code":"348","iso3":"HUN","father":"151"}
+{"key":"IS","name":"Iceland","type":3,"code":"352","iso3":"ISL","father":"154"}
+{"key":"IN","name":"India","type":3,"code":"356","iso3":"IND","father":"034"}
+{"key":"ID","name":"Indonesia","type":3,"code":"360","iso3":"IDN","father":"035"}
+{"key":"IR","name":"Iran (Islamic Republic of)","type":3,"code":"364","iso3":"IRN","father":"034"}
+{"key":"IQ","name":"Iraq","type":3,"code":"368","iso3":"IRQ","father":"145"}
+{"key":"IE","name":"Ireland","type":3,"code":"372","iso3":"IRL","father":"154"}
+{"key":"IM","name":"Isle of Man","type":3,"code":"833","iso3":"IMN","father":"154"}
+{"key":"IL","name":"Israel","type":3,"code":"376","iso3":"ISR","father":"145"}
+{"key":"IT","name":"Italy","type":3,"code":"380","iso3":"ITA","father":"039"}
+{"key":"JM","name":"Jamaica","type":3,"code":"388","iso3":"JAM","father":"029"}
+{"key":"JP","name":"Japan","type":3,"code":"392","iso3":"JPN","father":"030"}
+{"key":"JE","name":"Jersey","type":3,"code":"832","iso3":"JEY","father":"830"}
+{"key":"JO","name":"Jordan","type":3,"code":"400","iso3":"JOR","father":"145"}
+{"key":"KZ","name":"Kazakhstan","type":3,"code":"398","iso3":"KAZ","father":"143"}
+{"key":"KE","name":"Kenya","type":3,"code":"404","iso3":"KEN","father":"014"}
+{"key":"KI","name":"Kiribati","type":3,"code":"296","iso3":"KIR","father":"057"}
+{"key":"KP","name":"Korea (Democratic People's Republic of)","type":3,"code":"408","iso3":"PRK","father":"030"}
+{"key":"KR","name":"Korea, Republic of","type":3,"code":"410","iso3":"KOR","father":"030"}
+{"key":"KW","name":"Kuwait","type":3,"code":"414","iso3":"KWT","father":"145"}
+{"key":"KG","name":"Kyrgyzstan","type":3,"code":"417","iso3":"KGZ","father":"143"}
+{"key":"LA","name":"Lao People's Democratic Republic","type":3,"code":"418","iso3":"LAO","father":"035"}
+{"key":"LV","name":"Latvia","type":3,"code":"428","iso3":"LVA","father":"154"}
+{"key":"LB","name":"Lebanon","type":3,"code":"422","iso3":"LBN","father":"145"}
+{"key":"LS","name":"Lesotho","type":3,"code":"426","iso3":"LSO","father":"018"}
+{"key":"LR","name":"Liberia","type":3,"code":"430","iso3":"LBR","father":"011"}
+{"key":"LY","name":"Libya","type":3,"code":"434","iso3":"LBY","father":"015"}
+{"key":"LI","name":"Liechtenstein","type":3,"code":"438","iso3":"LIE","father":"155"}
+{"key":"LT","name":"Lithuania","type":3,"code":"440","iso3":"LTU","father":"154"}
+{"key":"LU","name":"Luxembourg","type":3,"code":"442","iso3":"LUX","father":"155"}
+{"key":"MO","name":"Macao","type":3,"code":"446","iso3":"MAC","father":"030"}
+{"key":"MG","name":"Madagascar","type":3,"code":"450","iso3":"MDG","father":"014"}
+{"key":"MW","name":"Malawi","type":3,"code":"454","iso3":"MWI","father":"014"}
+{"key":"MY","name":"Malaysia","type":3,"code":"458","iso3":"MYS","father":"035"}
+{"key":"MV","name":"Maldives","type":3,"code":"462","iso3":"MDV","father":"034"}
+{"key":"ML","name":"Mali","type":3,"code":"466","iso3":"MLI","father":"011"}
+{"key":"MT","name":"Malta","type":3,"code":"470","iso3":"MLT","father":"039"}
+{"key":"MH","name":"Marshall Islands","type":3,"code":"584","iso3":"MHL","father":"057"}
+{"key":"MQ","name":"Martinique","type":3,"code":"474","iso3":"MTQ","father":"029"}
+{"key":"MR","name":"Mauritania","type":3,"code":"478","iso3":"MRT","father":"011"}
+{"key":"MU","name":"Mauritius","type":3,"code":"480","iso3":"MUS","father":"014"}
+{"key":"YT","name":"Mayotte","type":3,"code":"175","iso3":"MYT","father":"014"}
+
+# Mexico and states
+{"key":"MX","name":"Mexico","type":3,"code":"484","iso3":"MEX","father":"003"}
+{"key":"MX-CMX","name":"Mexico city","type":4,"father":"MX","geoip":"09"}
+{"key":"MX-AGU","name":"Aguascalientes","type":4,"father":"MX","geoip":"01"}
+{"key":"MX-BCN","name":"Baja California","type":4,"father":"MX","geoip":"02"}
+{"key":"MX-BCS","name":"Baja California South","type":4,"father":"MX","geoip":"03"}
+{"key":"MX-CAM","name":"Campeche","type":4,"father":"MX","geoip":"04"}
+{"key":"MX-COA","name":"Coahuila","type":4,"father":"MX","geoip":"05"}
+{"key":"MX-COL","name":"Colima","type":4,"father":"MX","geoip":"06"}
+{"key":"MX-CHP","name":"Chiapas","type":4,"father":"MX","geoip":"07"}
+{"key":"MX-CHH","name":"Chihuahua","type":4,"father":"MX","geoip":"08"}
+{"key":"MX-DUR","name":"Durango","type":4,"father":"MX","geoip":"10"}
+{"key":"MX-GUA","name":"Guanajato","type":4,"father":"MX","geoip":"11"}
+{"key":"MX-GRO","name":"Guerrero","type":4,"father":"MX","geoip":"12"}
+{"key":"MX-HID","name":"Hidalgo","type":4,"father":"MX","geoip":"13"}
+{"key":"MX-JAL","name":"Jalisco","type":4,"father":"MX","geoip":"14"}
+{"key":"MX-MEX","name":"State of Mexico","type":4,"father":"MX","geoip":"15"}
+{"key":"MX-MIC","name":"Michoacan","type":4,"father":"MX","geoip":"16"}
+{"key":"MX-MOR","name":"Morelos","type":4,"father":"MX","geoip":"17"}
+{"key":"MX-NAY","name":"Nayarit","type":4,"father":"MX","geoip":"18"}
+{"key":"MX-NLE","name":"Nuevo Leon","type":4,"father":"MX","geoip":"19"}
+{"key":"MX-OAX","name":"Oaxaca","type":4,"father":"MX","geoip":"20"}
+{"key":"MX-PUE","name":"Puebla","type":4,"father":"MX","geoip":"21"}
+{"key":"MX-QUE","name":"Querétaro","type":4,"father":"MX","geoip":"22"}
+{"key":"MX-ROO","name":"Quintana Roo","type":4,"father":"MX","geoip":"23"}
+{"key":"MX-SLP","name":"San Luis Potosi","type":4,"father":"MX","geoip":"24"}
+{"key":"MX-SIN","name":"Sinaloa","type":4,"father":"MX","geoip":"25"}
+{"key":"MX-SON","name":"Sonora","type":4,"father":"MX","geoip":"26"}
+{"key":"MX-TAB","name":"Tabasco","type":4,"father":"MX","geoip":"27"}
+{"key":"MX-TAM","name":"Tamaulipas","type":4,"father":"MX","geoip":"28"}
+{"key":"MX-TLA","name":"Tlaxcala","type":4,"father":"MX","geoip":"29"}
+{"key":"MX-VER","name":"Veracruz","type":4,"father":"MX","geoip":"30"}
+{"key":"MX-YUC","name":"Yucatan","type":4,"father":"MX","geoip":"31"}
+{"key":"MX-ZAC","name":"Zacatecas","type":4,"father":"MX","geoip":"32"}
+
+{"key":"FM","name":"Micronesia (Federated States of)","type":3,"code":"583","iso3":"FSM","father":"057"}
+{"key":"MD","name":"Moldova, Republic of","type":3,"code":"498","iso3":"MDA","father":"151"}
+{"key":"MC","name":"Monaco","type":3,"code":"492","iso3":"MCO","father":"155"}
+{"key":"MN","name":"Mongolia","type":3,"code":"496","iso3":"MNG","father":"030"}
+{"key":"ME","name":"Montenegro","type":3,"code":"499","iso3":"MNE","father":"039"}
+{"key":"MS","name":"Montserrat","type":3,"code":"500","iso3":"MSR","father":"029"}
+{"key":"MA","name":"Morocco","type":3,"code":"504","iso3":"MAR","father":"015"}
+{"key":"MZ","name":"Mozambique","type":3,"code":"508","iso3":"MOZ","father":"014"}
+{"key":"MM","name":"Myanmar","type":3,"code":"104","iso3":"MMR","father":"035"}
+{"key":"NA","name":"Namibia","type":3,"code":"516","iso3":"NAM","father":"018"}
+{"key":"NR","name":"Nauru","type":3,"code":"520","iso3":"NRU","father":"057"}
+{"key":"NP","name":"Nepal","type":3,"code":"524","iso3":"NPL","father":"034"}
+{"key":"NL","name":"Netherlands","type":3,"code":"528","iso3":"NLD","father":"155"}
+{"key":"NC","name":"New Caledonia","type":3,"code":"540","iso3":"NCL","father":"054"}
+{"key":"NZ","name":"New Zealand","type":3,"code":"554","iso3":"NZL","father":"053"}
+{"key":"NI","name":"Nicaragua","type":3,"code":"558","iso3":"NIC","father":"013"}
+{"key":"NE","name":"Niger","type":3,"code":"562","iso3":"NER","father":"011"}
+{"key":"NG","name":"Nigeria","type":3,"code":"566","iso3":"NGA","father":"011"}
+{"key":"NU","name":"Niue","type":3,"code":"570","iso3":"NIU","father":"061"}
+{"key":"NF","name":"Norfolk Island","type":3,"code":"574","iso3":"NFK","father":"053"}
+{"key":"MK","name":"North Macedonia","type":3,"code":"807","iso3":"MKD","father":"039"}
+{"key":"MP","name":"Northern Mariana Islands","type":3,"code":"580","iso3":"MNP","father":"057"}
+{"key":"NO","name":"Norway","type":3,"code":"578","iso3":"NOR","father":"154"}
+{"key":"OM","name":"Oman","type":3,"code":"512","iso3":"OMN","father":"145"}
+{"key":"PK","name":"Pakistan","type":3,"code":"586","iso3":"PAK","father":"034"}
+{"key":"PW","name":"Palau","type":3,"code":"585","iso3":"PLW","father":"057"}
+{"key":"PS","name":"Palestine, State of","type":3,"code":"275","iso3":"PSE","father":"145"}
+{"key":"PA","name":"Panama","type":3,"code":"591","iso3":"PAN","father":"013"}
+{"key":"PG","name":"Papua New Guinea","type":3,"code":"598","iso3":"PNG","father":"054"}
+{"key":"PY","name":"Paraguay","type":3,"code":"600","iso3":"PRY","father":"005"}
+{"key":"PE","name":"Peru","type":3,"code":"604","iso3":"PER","father":"005"}
+{"key":"PH","name":"Philippines","type":3,"code":"608","iso3":"PHL","father":"035"}
+{"key":"PN","name":"Pitcairn","type":3,"code":"612","iso3":"PCN","father":"061"}
+{"key":"PL","name":"Poland","type":3,"code":"616","iso3":"POL","father":"151"}
+{"key":"PT","name":"Portugal","type":3,"code":"620","iso3":"PRT","father":"039"}
+{"key":"PR","name":"Puerto Rico","type":3,"code":"630","iso3":"PRI","father":"029"}
+{"key":"QA","name":"Qatar","type":3,"code":"634","iso3":"QAT","father":"145"}
+{"key":"RE","name":"Réunion","type":3,"code":"638","iso3":"REU","father":"014"}
+{"key":"RO","name":"Romania","type":3,"code":"642","iso3":"ROU","father":"151"}
+{"key":"RU","name":"Russian Federation","type":3,"code":"643","iso3":"RUS","father":"151"}
+{"key":"RW","name":"Rwanda","type":3,"code":"646","iso3":"RWA","father":"014"}
+{"key":"BL","name":"Saint Barthélemy","type":3,"code":"652","iso3":"BLM","father":"029"}
+{"key":"SH","name":"Saint Helena, Ascension and Tristan da Cunha","type":3,"code":"654","iso3":"SHN","father":"011"}
+{"key":"KN","name":"Saint Kitts and Nevis","type":3,"code":"659","iso3":"KNA","father":"029"}
+{"key":"LC","name":"Saint Lucia","type":3,"code":"662","iso3":"LCA","father":"029"}
+{"key":"MF","name":"Saint Martin (French part)","type":3,"code":"663","iso3":"MAF","father":"029"}
+{"key":"PM","name":"Saint Pierre and Miquelon","type":3,"code":"666","iso3":"SPM","father":"021"}
+{"key":"VC","name":"Saint Vincent and the Grenadines","type":3,"code":"670","iso3":"VCT","father":"029"}
+{"key":"WS","name":"Samoa","type":3,"code":"882","iso3":"WSM","father":"061"}
+{"key":"SM","name":"San Marino","type":3,"code":"674","iso3":"SMR","father":"039"}
+{"key":"ST","name":"Sao Tome and Principe","type":3,"code":"678","iso3":"STP","father":"017"}
+{"key":"SA","name":"Saudi Arabia","type":3,"code":"682","iso3":"SAU","father":"145"}
+{"key":"SN","name":"Senegal","type":3,"code":"686","iso3":"SEN","father":"011"}
+{"key":"RS","name":"Serbia","type":3,"code":"688","iso3":"SRB","father":"039"}
+{"key":"SC","name":"Seychelles","type":3,"code":"690","iso3":"SYC","father":"014"}
+{"key":"SL","name":"Sierra Leone","type":3,"code":"694","iso3":"SLE","father":"011"}
+{"key":"SG","name":"Singapore","type":3,"code":"702","iso3":"SGP","father":"035"}
+{"key":"SX","name":"Sint Maarten (Dutch part)","type":3,"code":"534","iso3":"SXM","father":"029"}
+{"key":"SK","name":"Slovakia","type":3,"code":"703","iso3":"SVK","father":"151"}
+{"key":"SI","name":"Slovenia","type":3,"code":"705","iso3":"SVN","father":"039"}
+{"key":"SB","name":"Solomon Islands","type":3,"code":"090","iso3":"SLB","father":"054"}
+{"key":"SO","name":"Somalia","type":3,"code":"706","iso3":"SOM","father":"014"}
+{"key":"ZA","name":"South Africa","type":3,"code":"710","iso3":"ZAF","father":"018"}
+{"key":"GS","name":"South Georgia and the South Sandwich Islands","type":3,"code":"239","iso3":"SGS","father":"005"}
+{"key":"SS","name":"South Sudan","type":3,"code":"728","iso3":"SSD","father":"014"}
+{"key":"ES","name":"Spain","type":3,"code":"724","iso3":"ESP","father":"039"}
+{"key":"LK","name":"Sri Lanka","type":3,"code":"144","iso3":"LKA","father":"034"}
+{"key":"SD","name":"Sudan","type":3,"code":"729","iso3":"SDN","father":"015"}
+{"key":"SR","name":"Suriname","type":3,"code":"740","iso3":"SUR","father":"005"}
+{"key":"SJ","name":"Svalbard and Jan Mayen","type":3,"code":"744","iso3":"SJM","father":"154"}
+{"key":"SE","name":"Sweden","type":3,"code":"752","iso3":"SWE","father":"154"}
+{"key":"CH","name":"Switzerland","type":3,"code":"756","iso3":"CHE","father":"155"}
+{"key":"SY","name":"Syrian Arab Republic","type":3,"code":"760","iso3":"SYR","father":"145"}
+{"key":"TW","name":"Taiwan, Province of China","type":3,"code":"158","iso3":"TWN","father":"030"}
+{"key":"TJ","name":"Tajikistan","type":3,"code":"762","iso3":"TJK","father":"143"}
+{"key":"TZ","name":"Tanzania, United Republic of","type":3,"code":"834","iso3":"TZA","father":"014"}
+{"key":"TH","name":"Thailand","type":3,"code":"764","iso3":"THA","father":"035"}
+{"key":"TL","name":"Timor-Leste","type":3,"code":"626","iso3":"TLS","father":"035"}
+{"key":"TG","name":"Togo","type":3,"code":"768","iso3":"TGO","father":"011"}
+{"key":"TK","name":"Tokelau","type":3,"code":"772","iso3":"TKL","father":"061"}
+{"key":"TO","name":"Tonga","type":3,"code":"776","iso3":"TON","father":"061"}
+{"key":"TT","name":"Trinidad and Tobago","type":3,"code":"780","iso3":"TTO","father":"029"}
+{"key":"TN","name":"Tunisia","type":3,"code":"788","iso3":"TUN","father":"015"}
+{"key":"TR","name":"Turkey","type":3,"code":"792","iso3":"TUR","father":"145"}
+{"key":"TM","name":"Turkmenistan","type":3,"code":"795","iso3":"TKM","father":"143"}
+{"key":"TC","name":"Turks and Caicos Islands","type":3,"code":"796","iso3":"TCA","father":"029"}
+{"key":"TV","name":"Tuvalu","type":3,"code":"798","iso3":"TUV","father":"061"}
+{"key":"UG","name":"Uganda","type":3,"code":"800","iso3":"UGA","father":"014"}
+{"key":"UA","name":"Ukraine","type":3,"code":"804","iso3":"UKR","father":"151"}
+{"key":"AE","name":"United Arab Emirates","type":3,"code":"784","iso3":"ARE","father":"145"}
+{"key":"GB","name":"United Kingdom of Great Britain and Northern Ireland","type":3,"code":"826","iso3":"GBR","father":"154"}
+{"key":"US","name":"United States of America","type":3,"code":"840","iso3":"USA","father":"021"}
+{"key":"UM","name":"United States Minor Outlying Islands","type":3,"code":"581","iso3":"UMI","father":"057"}
+{"key":"UY","name":"Uruguay","type":3,"code":"858","iso3":"URY","father":"005"}
+{"key":"UZ","name":"Uzbekistan","type":3,"code":"860","iso3":"UZB","father":"143"}
+{"key":"VU","name":"Vanuatu","type":3,"code":"548","iso3":"VUT","father":"054"}
+{"key":"VE","name":"Venezuela (Bolivarian Republic of)","type":3,"code":"862","iso3":"VEN","father":"005"}
+{"key":"VN","name":"Viet Nam","type":3,"code":"704","iso3":"VNM","father":"035"}
+{"key":"VG","name":"Virgin Islands (British)","type":3,"code":"092","iso3":"VGB","father":"029"}
+{"key":"VI","name":"Virgin Islands (U.S.)","type":3,"code":"850","iso3":"VIR","father":"029"}
+{"key":"WF","name":"Wallis and Futuna","type":3,"code":"876","iso3":"WLF","father":"061"}
+{"key":"EH","name":"Western Sahara","type":3,"code":"732","iso3":"ESH","father":"015"}
+{"key":"YE","name":"Yemen","type":3,"code":"887","iso3":"YEM","father":"145"}
+{"key":"ZM","name":"Zambia","type":3,"code":"894","iso3":"ZMB","father":"014"}
+{"key":"ZW","name":"Zimbabwe","type":3,"code":"716","iso3":"ZWE","father":"014"}

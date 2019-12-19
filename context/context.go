@@ -228,8 +228,12 @@ func GetContextStats(sitecontext *Context) *xcore.XDataset {
 
 	tables := map[string]string{}
 	for id, table := range sitecontext.Tables {
-		db := table.Base.Database
-		tables[id] = db
+		if table.Base != nil {
+			db := table.Base.Database
+			tables[id] = db
+		} else {
+			tables[id] = "N/A"
+		}
 	}
 	subdata["tables"] = tables
 
