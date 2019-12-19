@@ -13,8 +13,7 @@ import (
 
 	"github.com/webability-go/xcore"
 	"github.com/webability-go/xdominion"
-
-	"xmodules/context"
+	"github.com/webability-go/xmodules/context"
 )
 
 func buildTables(sitecontext *context.Context, databasename string) {
@@ -36,7 +35,7 @@ func buildTables(sitecontext *context.Context, databasename string) {
 	sitecontext.Tables["usda_foodnutrient"].SetLanguage(language.English)
 }
 
-func buildCache(sitecontext *context.Context) {
+func buildCache(sitecontext *context.Context) []string {
 
 	// Loads all data in XCache
 	nutrients, _ := sitecontext.Tables["usda_nutrient"].SelectAll()
@@ -55,9 +54,11 @@ func buildCache(sitecontext *context.Context) {
 		}
 		sitecontext.Caches["usda:nutrients:"+canonical].Set("all", all)
 	}
+
+	return []string{}
 }
 
-func createTables(sitecontext *context.Context) {
+func createTables(sitecontext *context.Context) []string {
 	// alguna protección para saber si existe la tabla y no tronarla si tiene datos?
 	// hacer un select count
 	num1, err1 := sitecontext.Tables["usda_group"].Count(nil)
@@ -73,11 +74,11 @@ func createTables(sitecontext *context.Context) {
 	} else {
 		sitecontext.Logs["main"].Println("The tables usda_* were not created because they contain data")
 	}
+
+	return []string{}
 }
 
-func SynchronizeDatabase(sitecontext *context.Context, filespath string) {
-
-	createTables(sitecontext)
+func loadTables(sitecontext *context.Context, filespath string) []string {
 
 	// borra toda la data porque la vamos a insertar de nuevo
 	sitecontext.Tables["usda_foodnutrient"].Delete(nil)
@@ -216,7 +217,7 @@ func SynchronizeDatabase(sitecontext *context.Context, filespath string) {
 		sitecontext.Tables["usda_foodnutrient"].Insert(*r.(*xdominion.XRecord))
 	}
 
-	buildCache(sitecontext)
+	return []string{}
 }
 
 func readFile(filename string, fields map[int]string) *xdominion.XRecords {

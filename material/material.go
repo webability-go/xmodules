@@ -5,16 +5,46 @@ import (
 
 	"golang.org/x/text/language"
 
-	"xmodules/context"
-	"xmodules/metrics"
+	"github.com/webability-go/xmodules/context"
+	"github.com/webability-go/xmodules/metric"
+	"github.com/webability-go/xmodules/translation"
 )
 
-func InitMaterial(sitecontext *context.Context, databasename string) error {
+const (
+	MODULEID         = "material"
+	VERSION          = "1.0.0"
+	TRANSLATIONTHEME = "material"
+)
+
+func InitModule(sitecontext *context.Context, databasename string) error {
 
 	buildTables(sitecontext, databasename)
 	buildCache(sitecontext)
+	sitecontext.Modules[MODULEID] = VERSION
 
 	return nil
+}
+
+func SynchronizeModule(sitecontext *context.Context) []string {
+
+	translation.AddTheme(sitecontext, TRANSLATIONTHEME, "Material", translation.SOURCETABLE, "", "name,plural")
+
+	messages := []string{}
+	messages = append(messages, "Analysing material_material table.")
+	num, err := sitecontext.Tables["material_material"].Count(nil)
+	if err != nil || num == 0 {
+		err1 := sitecontext.Tables["material_material"].Synchronize()
+		if err1 != nil {
+			messages = append(messages, "The table material_material was not created: "+err1.Error())
+		} else {
+			messages = append(messages, "The table material_material was created (again)")
+		}
+	} else {
+		messages = append(messages, "The table material_material was not created because it contains data.")
+	}
+
+	// fill metric and translations
+	return messages
 }
 
 func GetMaterial(sitecontext *context.Context, clave int, lang language.Tag) *StructureMaterial {
@@ -37,7 +67,7 @@ func GetMaterial(sitecontext *context.Context, clave int, lang language.Tag) *St
 func GetMaterialCompositeName(sitecontext *context.Context, quantity string, materialkey int, metrickey int, extra string, system int, lang language.Tag) string {
 
 	materialstructure := GetMaterial(sitecontext, materialkey, lang)
-	metricstructure := metrics.GetMetric(sitecontext, metrickey, lang)
+	metricstructure := metric.GetMetric(sitecontext, metrickey, lang)
 	if materialstructure == nil || metricstructure == nil {
 		return extra
 	}
@@ -47,7 +77,7 @@ func GetMaterialCompositeName(sitecontext *context.Context, quantity string, mat
 		return extra
 	}
 
-	xquantity := metrics.ParseQuantity(quantity)
+	xquantity := metric.ParseQuantity(quantity)
 	matnamesingular, _ := materialdata.GetString("nombre")
 	matnameplural, _ := materialdata.GetString("plural")
 	metricingular, _ := metricdata.GetString("nombre")
@@ -56,7 +86,7 @@ func GetMaterialCompositeName(sitecontext *context.Context, quantity string, mat
 	composite := quantity + " "
 
 	// pieza sin decirlo = unidades del ingrediente
-	if metrickey == metrics.UNIT_NOTVISIBLE {
+	if metrickey == metric.UNIT_NOTVISIBLE {
 		if xquantity == 1.0 {
 			composite += matnamesingular
 		} else {

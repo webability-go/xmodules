@@ -15,55 +15,106 @@ import (
 const (
 	MODULEID = "translation"
 	VERSION  = "1.0.0"
+
+	SOURCETABLE = 1
+	SOURCEFILE  = 2
 )
 
 func InitModule(sitecontext *context.Context, databasename string) error {
 
-	sitecontext.Tables["translation_theme"] = translationTheme()
-	sitecontext.Tables["translation_theme"].SetBase(sitecontext.Databases[databasename])
-
-	sitecontext.Tables["translation_info"] = translationInfo()
-	sitecontext.Tables["translation_info"].SetBase(sitecontext.Databases[databasename])
-
+	buildTables(sitecontext, databasename)
 	sitecontext.Modules[MODULEID] = VERSION
 
 	return nil
+}
+
+func SynchronizeModule(sitecontext *context.Context) []string {
+
+	messages := []string{}
+
+	messages = append(messages, "Analysing translation_theme table.")
+	num, err := sitecontext.Tables["translation_theme"].Count(nil)
+	if err != nil || num == 0 {
+		err1 := sitecontext.Tables["translation_theme"].Synchronize()
+		if err1 != nil {
+			messages = append(messages, "The table translation_theme was not created: "+err1.Error())
+		} else {
+			messages = append(messages, "The table translation_theme was created (again)")
+		}
+	} else {
+		messages = append(messages, "The table translation_theme was not created because it contains data.")
+	}
+
+	messages = append(messages, "Analysing translation_info table.")
+	num, err = sitecontext.Tables["translation_info"].Count(nil)
+	if err != nil || num == 0 {
+		err1 := sitecontext.Tables["translation_info"].Synchronize()
+		if err1 != nil {
+			messages = append(messages, "The table translation_info was not created: "+err1.Error())
+		} else {
+			messages = append(messages, "The table translation_info was created (again)")
+		}
+	} else {
+		messages = append(messages, "The table translation_info was not created because it contains data.")
+	}
+
+	// Inserting into context-modules
+	// Be sure context module is on db: fill context module (we should get this from xmodule.conf)
+	err = context.AddModule(sitecontext, MODULEID, "Multilanguages translation tables for Xamboo", VERSION)
+	if err == nil {
+		messages = append(messages, "The entry "+MODULEID+" was modified successfully in the modules table.")
+	} else {
+		messages = append(messages, "Error modifying the entry "+MODULEID+" in the modules table: "+err.Error())
+	}
+
+	return messages
+}
+
+func AddTheme(sitecontext *context.Context, theme string, name string, source int, link string, fields string) error {
+	_, err := sitecontext.Tables["translation_theme"].Upsert(theme, xdominion.XRecord{
+		"key":    theme,
+		"name":   name,
+		"source": source,
+		"link":   link,
+		"fields": fields,
+	})
+	return err
 }
 
 // return: translation, ok (true, false), lastdate, lastverified (0, 1, 2)
 // ok = true: texto correcto, false = no existe el texto
 // last date = fecha en la cual se tradujo ( si no es español y ok = true)
 // lastverified = 0: auto (o español original), 1 = verified, 2 = original modified (not re-translated, pending)
-func GetTraduccion(sitecontext *context.Context, textooriginal string, tema int, clave string, campo string, lang language.Tag) (string, bool, time.Time, int) {
+func GetTranslation(sitecontext *context.Context, textooriginal string, theme string, key string, field string, lang language.Tag) (string, bool, time.Time, int) {
 
-	data, err := sitecontext.Tables["kl_traducciontabla"].SelectOne(xdominion.XConditions{
-		xdominion.NewXCondition("tema", "=", tema),
-		xdominion.NewXCondition("claveext", "=", clave, "and"),
-		xdominion.NewXCondition("campo", "=", campo, "and"),
-		xdominion.NewXCondition("idioma", "=", lang.String(), "and"),
+	data, err := sitecontext.Tables["translation_info"].SelectOne(xdominion.XConditions{
+		xdominion.NewXCondition("theme", "=", theme),
+		xdominion.NewXCondition("externalkey", "=", key, "and"),
+		xdominion.NewXCondition("field", "=", field, "and"),
+		xdominion.NewXCondition("language", "=", lang.String(), "and"),
 	})
 	if err != nil {
 		return "", false, time.Time{}, 0
 	}
 
 	if data != nil {
-		lastdate, _ := data.GetTime("fecha")
-		verify, _ := data.GetInt("verify")
-		translation, _ := data.GetString("traduccion")
+		lastdate, _ := data.GetTime("lastmodif")
+		verify, _ := data.GetInt("verified")
+		translation, _ := data.GetString("translation")
 		return translation, true, lastdate, verify
 	}
 
-	return fmt.Sprintf("##%d::%s::%s##", tema, clave, campo), false, time.Time{}, 0
+	return fmt.Sprintf("##%d::%s::%s##", theme, key, field), false, time.Time{}, 0
 }
 
 // return: error
-func SetTraduccion(sitecontext *context.Context, textotraducido string, tema int, clave string, campo string, lang language.Tag, verified int) error {
+func SetTranslation(sitecontext *context.Context, textotraducido string, theme string, key string, field string, lang language.Tag, verified int) error {
 
-	data, err := sitecontext.Tables["kl_traducciontabla"].SelectOne(xdominion.XConditions{
-		xdominion.NewXCondition("tema", "=", tema),
-		xdominion.NewXCondition("claveext", "=", clave, "and"),
-		xdominion.NewXCondition("campo", "=", campo, "and"),
-		xdominion.NewXCondition("idioma", "=", lang.String(), "and"),
+	data, err := sitecontext.Tables["translation_info"].SelectOne(xdominion.XConditions{
+		xdominion.NewXCondition("theme", "=", theme),
+		xdominion.NewXCondition("externalkey", "=", key, "and"),
+		xdominion.NewXCondition("field", "=", field, "and"),
+		xdominion.NewXCondition("language", "=", lang.String(), "and"),
 	})
 	if err != nil {
 		return err
@@ -71,30 +122,30 @@ func SetTraduccion(sitecontext *context.Context, textotraducido string, tema int
 
 	if data != nil {
 		// update
-		clave, _ := data.GetInt("clave")
-		_, err := sitecontext.Tables["kl_traducciontabla"].Update(clave,
+		key, _ := data.GetInt("key")
+		_, err := sitecontext.Tables["translation_info"].Update(key,
 			xdominion.XRecord{
-				"verify":     verified,
-				"traduccion": textotraducido,
-				"fecha":      time.Now(),
-				"lastuser":   1,
+				"verify":      verified,
+				"translation": textotraducido,
+				"lastdate":    time.Now(),
+				"lastuser":    1,
 			})
 		if err != nil {
 			return err
 		}
 	} else {
 		// insert
-		_, err := sitecontext.Tables["kl_traducciontabla"].Insert(
+		_, err := sitecontext.Tables["translation_info"].Insert(
 			xdominion.XRecord{
-				"clave":      0,
-				"tema":       tema,
-				"idioma":     lang.String(),
-				"claveext":   clave,
-				"campo":      campo,
-				"traduccion": textotraducido,
-				"fecha":      time.Now(),
-				"lastuser":   1,
-				"verify":     verified,
+				"key":         0,
+				"theme":       theme,
+				"language":    lang.String(),
+				"externalkey": key,
+				"field":       field,
+				"translation": textotraducido,
+				"lastmodif":   time.Now(),
+				"lastuser":    1,
+				"verified":    verified,
 			})
 		if err != nil {
 			return err
@@ -105,23 +156,20 @@ func SetTraduccion(sitecontext *context.Context, textotraducido string, tema int
 }
 
 // return: error
-func SetVerified(sitecontext *context.Context, tema int, clave string, campo string, lang language.Tag, verified int) error {
-	_, err := sitecontext.Tables["kl_traducciontabla"].Update(xdominion.XConditions{
-		xdominion.NewXCondition("tema", "=", tema),
-		xdominion.NewXCondition("claveext", "=", clave, "and"),
-		xdominion.NewXCondition("campo", "=", campo, "and"),
-		xdominion.NewXCondition("idioma", "=", lang.String(), "and"),
+func SetVerified(sitecontext *context.Context, theme string, key string, field string, lang language.Tag, verified int) error {
+	_, err := sitecontext.Tables["translation_info"].Update(xdominion.XConditions{
+		xdominion.NewXCondition("theme", "=", theme),
+		xdominion.NewXCondition("externalkey", "=", key, "and"),
+		xdominion.NewXCondition("field", "=", field, "and"),
+		xdominion.NewXCondition("language", "=", lang.String(), "and"),
 	},
-		xdominion.XRecord{"verify": verified})
+		xdominion.XRecord{"verified": verified})
 	return err
 }
 
 // Las credenciales de conección de google estan dentro del directorio accesible por GO en el archivo JSON de credenciales service_account
 func GoogleTranslation(data []string, fromLang language.Tag, toLang language.Tag) ([]translate.Translation, error) {
 	ctxbg := gcontext.Background()
-
-	fmt.Println("Traduciendo: ", data, toLang)
-
 	client, err := translate.NewClient(ctxbg)
 	if err != nil {
 		return nil, err

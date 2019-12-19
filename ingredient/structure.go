@@ -7,13 +7,7 @@ import (
 
 	"github.com/webability-go/xdominion"
 	"github.com/webability-go/xmodules/context"
-
-	"xmodules/translation"
-)
-
-const (
-	TRANSLATION_THEME         = 6
-	TRANSLATION_THEME_PASILLO = 5
+	"github.com/webability-go/xmodules/translation"
 )
 
 type StructurePasillo struct {
@@ -43,7 +37,7 @@ func CreateStructurePasilloByData(sitecontext *context.Context, data xdominion.X
 	// builds main data: translations
 	if sitecontext.Tables["kl_ingredientepasillo"].Language != lang {
 		// Only 1 fields to translate: nombre
-		translation.Translate(sitecontext, TRANSLATION_THEME, strconv.Itoa(key), data, map[string]interface{}{"nombre": true}, sitecontext.Tables["kl_ingredientepasillo"].Language, lang)
+		translation.Translate(sitecontext, TRANSLATIONTHEME, strconv.Itoa(key), data, map[string]interface{}{"nombre": true}, sitecontext.Tables["kl_ingredientepasillo"].Language, lang)
 	}
 
 	return &StructurePasillo{Key: key, Lang: lang, Data: data.(*xdominion.XRecord)}
@@ -89,7 +83,7 @@ func CreateStructureIngredientByData(sitecontext *context.Context, data xdominio
 	// builds main data: translations
 	if sitecontext.Tables["kl_ingrediente"].Language != lang {
 		// Only 2 fields to translate: nombre, plural
-		translation.Translate(sitecontext, TRANSLATION_THEME, strconv.Itoa(key), data, map[string]interface{}{"nombre": true, "plural": true}, sitecontext.Tables["kl_ingrediente"].Language, lang)
+		translation.Translate(sitecontext, TRANSLATIONTHEMEAISLE, strconv.Itoa(key), data, map[string]interface{}{"nombre": true, "plural": true}, sitecontext.Tables["kl_ingrediente"].Language, lang)
 	}
 
 	return &StructureIngredient{Key: key, Lang: lang, Data: data.(*xdominion.XRecord)}

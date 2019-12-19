@@ -2,35 +2,27 @@ package stat
 
 import (
 	"strconv"
-	"time"
-
-	"golang.org/x/text/language"
 
 	"github.com/webability-go/xdominion"
-
-	"xmodules/context"
+	"github.com/webability-go/xmodules/context"
 )
 
-func InitStat(ctx *context.Context, prefix string, databasename string) error {
+const (
+	MODULEID = "stat"
+	VERSION  = "1.0.0"
+)
 
-	// open 12 tables for each file
-	for i := 1; i < 13; i++ {
-		m := ""
-		if i < 10 {
-			m = "0"
-		}
-		m += strconv.Itoa(i)
+func InitModule(sitecontext *context.Context, prefix string, databasename string) error {
 
-		ctx.Tables[prefix+"stat_"+m] = stat_stat(prefix, m)
-		ctx.Tables[prefix+"stat_"+m].SetBase(ctx.Databases[databasename])
-		ctx.Tables[prefix+"stat_"+m].SetLanguage(language.English)
-	}
+	buildTables(sitecontext, prefix, databasename)
+	sitecontext.Modules[MODULEID] = VERSION
 
 	return nil
 }
 
-func SynchronizeDatabase(ctx *context.Context, prefix string) {
+func SynchronizeModule(sitecontext *context.Context, prefix string) []string {
 
+	messages := []string{}
 	for i := 1; i < 13; i++ {
 		m := ""
 		if i < 10 {
@@ -38,28 +30,27 @@ func SynchronizeDatabase(ctx *context.Context, prefix string) {
 		}
 		m += strconv.Itoa(i)
 
-		// alguna protección para saber si existe la tabla y no tronarla si tiene datos?
-		// hacer un select count
-		num, err := ctx.Tables[prefix+"stat_"+m].Count(nil)
+		messages = append(messages, "Analysing "+prefix+"stat_"+m+" table.")
+		num, err := sitecontext.Tables[prefix+"stat_"+m].Count(nil)
 		if err != nil || num == 0 {
-			ctx.Logs["main"].Println("The table " + prefix + "stat_" + m + " was created (again)")
-			ctx.Tables[prefix+"stat_"+m].Synchronize()
+			err1 := sitecontext.Tables[prefix+"stat_"+m].Synchronize()
+			if err1 != nil {
+				messages = append(messages, "The table "+prefix+"stat_"+m+" was not created: "+err1.Error())
+			} else {
+				messages = append(messages, "The table "+prefix+"stat_"+m+" was created (again)")
+			}
 		} else {
-			ctx.Logs["main"].Println("The table " + prefix + "stat_" + m + " was not created because it contains data")
+			messages = append(messages, "The table "+prefix+"stat_"+m+" was not created because it contains data.")
 		}
 	}
+	return messages
 }
 
-func getMonth() string {
-	currentTime := time.Now()
-	return currentTime.Format("01")
-}
-
-func RegisterStat(ctx *context.Context, prefix string, data xdominion.XRecord) {
+func RegisterStat(sitecontext *context.Context, prefix string, data xdominion.XRecord) {
 	data.Set("clave", 0)
-	_, err := ctx.Tables[prefix+"stat_"+getMonth()].Insert(data)
+	_, err := sitecontext.Tables[prefix+"stat_"+getMonth()].Insert(data)
 	if err != nil {
-		ctx.Logs["main"].Println("Error insertando el log:", err)
+		sitecontext.Logs["main"].Println("Error insertando el log:", err)
 	}
 }
 

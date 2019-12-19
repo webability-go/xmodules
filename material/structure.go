@@ -7,12 +7,7 @@ import (
 
 	"github.com/webability-go/xdominion"
 	"github.com/webability-go/xmodules/context"
-
-	"xmodules/translation"
-)
-
-const (
-	TRANSLATION_THEME = 19
+	"github.com/webability-go/xmodules/translation"
 )
 
 type StructureMaterial struct {
@@ -36,7 +31,7 @@ func CreateStructureMaterialByData(sitecontext *context.Context, data xdominion.
 	// builds main data: translations
 	if sitecontext.Tables["kl_material"].Language != lang {
 		// Only 1 fields to translate: nombre
-		translation.Translate(sitecontext, TRANSLATION_THEME, strconv.Itoa(key), data, map[string]interface{}{"nombre": true, "plural": true}, sitecontext.Tables["kl_material"].Language, lang)
+		translation.Translate(sitecontext, TRANSLATIONTHEME, strconv.Itoa(key), data, map[string]interface{}{"nombre": true, "plural": true}, sitecontext.Tables["kl_material"].Language, lang)
 	}
 
 	return &StructureMaterial{Key: key, Lang: lang, Data: data.(*xdominion.XRecord)}

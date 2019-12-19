@@ -265,20 +265,28 @@ func InitModule(sitecontext *Context, databasename string) error {
 	return nil
 }
 
-func SynchronizeModule(sitecontext *Context) {
+func SynchronizeModule(sitecontext *Context) []string {
 
-	num1, err1 := sitecontext.Tables["context_module"].Count(nil)
-	if err1 != nil || num1 == 0 {
-		sitecontext.Logs["main"].Println("The table context_module was created (again)")
-		sitecontext.Tables["context_module"].Synchronize()
+	messages := []string{}
+	messages = append(messages, "Analysing context_module table.")
+	num, err := sitecontext.Tables["context_module"].Count(nil)
+	if err != nil || num == 0 {
+		err1 := sitecontext.Tables["context_module"].Synchronize()
+		if err1 != nil {
+			messages = append(messages, "The table context_module was not created: "+err1.Error())
+		} else {
+			messages = append(messages, "The table context_module was created (again)")
+		}
 	} else {
-		sitecontext.Logs["main"].Println("The table context_module was not created because it contains data")
+		messages = append(messages, "The table context_module was not created because it contains data.")
 	}
 
 	// Be sure context module is on db: fill context module (we should get this from xmodule.conf)
-	sitecontext.Tables["context_module"].Upsert(MODULEID, xdominion.XRecord{
-		"key":     MODULEID,
-		"name":    "Contexts for Xamboo",
-		"version": VERSION,
-	})
+	err = AddModule(sitecontext, MODULEID, "Contexts and Modules for Xamboo", VERSION)
+	if err == nil {
+		messages = append(messages, "The entry "+MODULEID+" was modified successfully in the context_module table.")
+	} else {
+		messages = append(messages, "Error modifying the entry "+MODULEID+" in the context_module table: "+err.Error())
+	}
+	return messages
 }

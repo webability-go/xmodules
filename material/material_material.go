@@ -8,7 +8,7 @@ import (
   All purpose materials
 */
 
-func material_material() *xdominion.XTable {
+func materialMaterial() *xdominion.XTable {
 	t := xdominion.NewXTable("material_material", "material_mat_")
 
 	t.AddField(xdominion.XFieldInteger{Name: "key", Constraints: xdominion.XConstraints{

@@ -5,12 +5,7 @@ import (
 
 	"github.com/webability-go/xdominion"
 	"github.com/webability-go/xmodules/context"
-
-	"xmodules/translation"
-)
-
-const (
-	TRANSLATION_THEME = 18
+	"github.com/webability-go/xmodules/translation"
 )
 
 type StructureNutrient struct {
@@ -34,7 +29,7 @@ func CreateStructureNutrientByData(sitecontext *context.Context, data xdominion.
 	// builds main data: translations
 	if sitecontext.Tables["usda_nutrient"].Language != lang {
 		// Only 2 fields to translate: name, tag
-		translation.Translate(sitecontext, TRANSLATION_THEME, key, data, map[string]interface{}{"name": true, "tag": true}, sitecontext.Tables["usda_nutrient"].Language, lang)
+		translation.Translate(sitecontext, TRANSLATIONTHEME, key, data, map[string]interface{}{"name": true, "tag": true}, sitecontext.Tables["usda_nutrient"].Language, lang)
 	}
 
 	return &StructureNutrient{Key: key, Lang: lang, Data: data.(*xdominion.XRecord)}
