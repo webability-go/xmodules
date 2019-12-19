@@ -1,8 +1,6 @@
 package country
 
 import (
-	"strconv"
-
 	"golang.org/x/text/language"
 
 	"github.com/webability-go/xdominion"
@@ -11,16 +9,13 @@ import (
 	"github.com/webability-go/xmodules/translation"
 )
 
-// TRANSLATIONTHEME contains the id of the theme to translate the countries
-const TRANSLATIONTHEME = "country"
-
 type StructureCountry struct {
 	Key  string
 	Lang language.Tag
 	Data *xdominion.XRecord
 }
 
-func CreateStructureCountryByKey(sitecontext *context.Context, key string, lang language.Tag) structure.Structure {
+func CreateStructureCountryByKey(sitecontext *context.Context, key string, lang language.Tag) context.Structure {
 	data, _ := sitecontext.Tables["country_country"].SelectOne(key)
 	if data == nil {
 		return nil
@@ -28,14 +23,14 @@ func CreateStructureCountryByKey(sitecontext *context.Context, key string, lang 
 	return CreateStructureCountryByData(sitecontext, data, lang)
 }
 
-func CreateStructureCountryByData(sitecontext *context.Context, data xdominion.XRecordDef, lang language.Tag) structure.Structure {
+func CreateStructureCountryByData(sitecontext *context.Context, data xdominion.XRecordDef, lang language.Tag) context.Structure {
 
 	key, _ := data.GetString("key")
 
 	// builds main data: translations
 	if sitecontext.Tables["country_country"].Language != lang {
 		// Only 1 fields to translate: name
-		translation.Translate(sitecontext, TRANSLATION_THEME, key, data, map[string]interface{}{"name": true}, sitecontext.Tables["country_country"].Language, lang)
+		translation.Translate(sitecontext, TRANSLATIONTHEME, key, data, map[string]interface{}{"name": true}, sitecontext.Tables["country_country"].Language, lang)
 	}
 
 	return &StructureCountry{Key: key, Lang: lang, Data: data.(*xdominion.XRecord)}
@@ -57,7 +52,7 @@ func (sc *StructureCountry) GetData() *xdominion.XRecord {
 }
 
 // Clone the whole structure
-func (sc *StructureCountry) Clone() structure.Structure {
+func (sc *StructureCountry) Clone() context.Structure {
 	cloned := &StructureCountry{
 		Key:  sc.Key,
 		Lang: sc.Lang,

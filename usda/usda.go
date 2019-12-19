@@ -4,16 +4,33 @@ import (
 	"golang.org/x/text/language"
 
 	"github.com/webability-go/xdominion"
-
-	"xmodules/context"
+	"github.com/webability-go/xmodules/context"
+	"github.com/webability-go/xmodules/translation"
 )
 
-func InitUSDA(sitecontext *context.Context, databasename string) error {
+const (
+	MODULEID         = "usda"
+	VERSION          = "1.0.0"
+	TRANSLATIONTHEME = "nutrient"
+)
+
+func InitModule(sitecontext *context.Context, databasename string) error {
 
 	buildTables(sitecontext, databasename)
 	buildCache(sitecontext)
+	sitecontext.Modules[MODULEID] = VERSION
+	translation.AddTheme(sitecontext, TRANSLATIONTHEME, "USDA nutrients", translation.SOURCETABLE, "", "name,tag")
 
 	return nil
+}
+
+func SynchronizeModule(sitecontext *context.Context, filespath string) []string {
+
+	messages := []string{}
+	messages = append(messages, createTables(sitecontext)...)
+	messages = append(messages, loadTables(sitecontext, filespath)...)
+	messages = append(messages, buildCache(sitecontext)...)
+	return messages
 }
 
 func GetNutrients(sitecontext *context.Context, lang language.Tag) []string {

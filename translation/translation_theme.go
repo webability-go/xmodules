@@ -18,7 +18,7 @@ func translationTheme() *xdominion.XTable {
 	}})
 
 	// source
-	// 1 = tablas de Bdd => tienen entrada en traducciontabla, 2 = PC, 3 = MOB, 4 = GRAPHv5, 5 = Identity Manager
+	// 1 = tablas de Bdd => tienen entrada en traducciontabla, 2 = file
 	t.AddField(xdominion.XFieldInteger{Name: "source", Constraints: xdominion.XConstraints{
 		xdominion.XConstraint{Type: xdominion.IN},
 	}})

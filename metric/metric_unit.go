@@ -1,4 +1,4 @@
-package metrics
+package metric
 
 import (
 	"github.com/webability-go/xdominion"
@@ -8,7 +8,7 @@ import (
   ALl purpose units
 */
 
-func metric_unit() *xdominion.XTable {
+func metricUnit() *xdominion.XTable {
 	t := xdominion.NewXTable("metric_unit", "metric_unt_")
 
 	t.AddField(xdominion.XFieldInteger{Name: "key", Constraints: xdominion.XConstraints{

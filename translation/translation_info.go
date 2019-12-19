@@ -6,7 +6,7 @@ import (
 
 //  translationInfo table: All the translation words into any language
 func translationInfo() *xdominion.XTable {
-	t := xdominion.NewXTable("trnaslation_info", "translation_info_")
+	t := xdominion.NewXTable("translation_info", "translation_info_")
 
 	t.AddField(xdominion.XFieldInteger{Name: "key", Constraints: xdominion.XConstraints{
 		xdominion.XConstraint{Type: xdominion.PK},

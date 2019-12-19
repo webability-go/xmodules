@@ -1,4 +1,4 @@
-package metrics
+package metric
 
 import (
 	"strconv"
@@ -7,12 +7,7 @@ import (
 
 	"github.com/webability-go/xdominion"
 	"github.com/webability-go/xmodules/context"
-
-	"xmodules/translation"
-)
-
-const (
-	TRANSLATION_THEME = 12
+	"github.com/webability-go/xmodules/translation"
 )
 
 type StructureMetric struct {
@@ -22,7 +17,7 @@ type StructureMetric struct {
 }
 
 func CreateStructureMetricByKey(sitecontext *context.Context, key int, lang language.Tag) context.Structure {
-	data, _ := sitecontext.Tables["metrics_unit"].SelectOne(key)
+	data, _ := sitecontext.Tables["metric_unit"].SelectOne(key)
 	if data == nil {
 		return nil
 	}
@@ -34,9 +29,9 @@ func CreateStructureMetricByData(sitecontext *context.Context, data xdominion.XR
 	key, _ := data.GetInt("key")
 
 	// builds main data: translations
-	if sitecontext.Tables["metrics_unit"].Language != lang {
+	if sitecontext.Tables["metric_unit"].Language != lang {
 		// Only 2 fields to translate: nombre, plural
-		translation.Translate(sitecontext, TRANSLATION_THEME, strconv.Itoa(key), data, map[string]interface{}{"name": true, "plural": true}, sitecontext.Tables["metrics_unit"].Language, lang)
+		translation.Translate(sitecontext, TRANSLATIONTHEME, strconv.Itoa(key), data, map[string]interface{}{"name": true, "plural": true}, sitecontext.Tables["metric_unit"].Language, lang)
 	}
 
 	return &StructureMetric{Key: key, Lang: lang, Data: data.(*xdominion.XRecord)}

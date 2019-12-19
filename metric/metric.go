@@ -1,4 +1,4 @@
-package metrics
+package metric
 
 import (
 	"fmt"
@@ -10,11 +10,16 @@ import (
 
 	"github.com/webability-go/xdominion"
 	"github.com/webability-go/xmodules/context"
+	"github.com/webability-go/xmodules/translation"
 )
 
 const (
-	RE_FLOAT    = "^[0-9.]+$"
-	RE_FRACCION = "^(([0-9]+)\\s+){0,1}([0-9]+)/([0-9]+)$"
+	MODULEID         = "metric"
+	VERSION          = "1.0.0"
+	TRANSLATIONTHEME = "metric"
+
+	reFloat    = "^[0-9.]+$"
+	reFraction = "^(([0-9]+)\\s+){0,1}([0-9]+)/([0-9]+)$"
 
 	SI_GRAM  = 42
 	SI_LITER = 49
@@ -41,12 +46,35 @@ const (
 	UNIT_VISIBLE    = 62  // pieza escribiendo el nombre
 )
 
-func InitMetrics(sitecontext *context.Context, databasename string) error {
+func InitModule(sitecontext *context.Context, databasename string) error {
 
 	buildTables(sitecontext, databasename)
 	buildCache(sitecontext)
+	sitecontext.Modules[MODULEID] = VERSION
 
 	return nil
+}
+
+func SynchronizeModule(sitecontext *context.Context) []string {
+
+	translation.AddTheme(sitecontext, TRANSLATIONTHEME, "Metric units", translation.SOURCETABLE, "", "name,plural")
+
+	messages := []string{}
+	messages = append(messages, "Analysing metric_unit table.")
+	num, err := sitecontext.Tables["metric_unit"].Count(nil)
+	if err != nil || num == 0 {
+		err1 := sitecontext.Tables["metric_unit"].Synchronize()
+		if err1 != nil {
+			messages = append(messages, "The table metric_unit was not created: "+err1.Error())
+		} else {
+			messages = append(messages, "The table metric_unit was created (again)")
+		}
+	} else {
+		messages = append(messages, "The table metric_unit was not created because it contains data.")
+	}
+
+	// fill metric and translations
+	return messages
 }
 
 func GetMetric(sitecontext *context.Context, clave int, lang language.Tag) *StructureMetric {
@@ -60,7 +88,7 @@ func GetMetric(sitecontext *context.Context, clave int, lang language.Tag) *Stru
 			sitecontext.Logs["graph"].Println("xmodules::metrics::GetMetric: No hay medida creada:", clave, lang)
 			return nil
 		}
-		sitecontext.Caches["metrics:"+canonical].Set(strconv.Itoa(clave), sm)
+		sitecontext.Caches["metric:"+canonical].Set(strconv.Itoa(clave), sm)
 		return sm.(*StructureMetric)
 	}
 	return data.(*StructureMetric)
@@ -77,8 +105,8 @@ func ParseQuantity(cantidad string) float64 {
 	if cantidad == "" {
 		return 0
 	}
-	fl := regexp.MustCompile(RE_FLOAT)
-	fr := regexp.MustCompile(RE_FRACCION)
+	fl := regexp.MustCompile(reFloat)
+	fr := regexp.MustCompile(reFraction)
 
 	if fl.MatchString(cantidad) {
 		f, err := strconv.ParseFloat(cantidad, 64)

@@ -6,12 +6,11 @@ import (
 	"golang.org/x/text/language"
 
 	"github.com/webability-go/xdominion"
-
-	"xmodules/context"
+	"github.com/webability-go/xmodules/context"
 )
 
 type TranslationBlock struct {
-	tema       int
+	tema       string
 	clave      string
 	lastmodif  time.Time
 	fromlang   language.Tag
@@ -21,7 +20,7 @@ type TranslationBlock struct {
 	translated map[string]string
 }
 
-func NewTranslationBlock(tema int, clave string, lastmodif time.Time, fromlang language.Tag, tolang language.Tag) *TranslationBlock {
+func NewTranslationBlock(tema string, clave string, lastmodif time.Time, fromlang language.Tag, tolang language.Tag) *TranslationBlock {
 	return &TranslationBlock{
 		tema:       tema,
 		clave:      clave,
@@ -40,10 +39,10 @@ func (tb *TranslationBlock) Set(field string, value string) {
 
 func (tb *TranslationBlock) Verify(sitecontext *context.Context) {
 
-	data, err := sitecontext.Tables["kl_traducciontabla"].SelectAll(xdominion.XConditions{
-		xdominion.NewXCondition("tema", "=", tb.tema),
-		xdominion.NewXCondition("claveext", "=", tb.clave, "and"),
-		xdominion.NewXCondition("idioma", "=", tb.tolang.String(), "and"),
+	data, err := sitecontext.Tables["translation_info"].SelectAll(xdominion.XConditions{
+		xdominion.NewXCondition("theme", "=", tb.tema),
+		xdominion.NewXCondition("externalkey", "=", tb.clave, "and"),
+		xdominion.NewXCondition("language", "=", tb.tolang.String(), "and"),
 	})
 	if err != nil {
 		return
@@ -51,7 +50,7 @@ func (tb *TranslationBlock) Verify(sitecontext *context.Context) {
 
 	datafields := map[string]*xdominion.XRecord{}
 	for _, rec := range *data {
-		campo, _ := rec.GetString("campo")
+		campo, _ := rec.GetString("field")
 		datafields[campo] = rec.(*xdominion.XRecord)
 	}
 
@@ -65,9 +64,9 @@ func (tb *TranslationBlock) Verify(sitecontext *context.Context) {
 			values = append(values, value)
 			continue
 		}
-		fecha, _ := tr.GetTime("fecha")
+		fecha, _ := tr.GetTime("lastmodif")
 		if tb.lastmodif.After(fecha) {
-			verify, _ := tr.GetInt("verify")
+			verify, _ := tr.GetInt("verified")
 			if verify == 0 {
 				fields = append(fields, field)
 				values = append(values, value)
@@ -77,14 +76,14 @@ func (tb *TranslationBlock) Verify(sitecontext *context.Context) {
 				SetVerified(sitecontext, tb.tema, tb.clave, field, tb.tolang, 2)
 			}
 		}
-		trval, _ := tr.GetString("traduccion")
+		trval, _ := tr.GetString("translation")
 		tb.translated[field] = trval
 	}
 	if len(fields) > 0 {
 		result, _ := GoogleTranslation(values, tb.fromlang, tb.tolang)
 		for i, field := range fields {
 			tb.translated[field] = result[i].Text
-			SetTraduccion(sitecontext, result[i].Text, tb.tema, tb.clave, field, tb.tolang, 0)
+			SetTranslation(sitecontext, result[i].Text, tb.tema, tb.clave, field, tb.tolang, 0)
 		}
 	}
 }

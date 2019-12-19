@@ -8,7 +8,7 @@ import (
   Ingredients aisle in supermarket
 */
 
-func ingredient_aisle() *xdominion.XTable {
+func ingredientAisle() *xdominion.XTable {
 	t := xdominion.NewXTable("ingredient_aisle", "ingredient_ais_")
 
 	t.AddField(xdominion.XFieldInteger{Name: "key", Constraints: xdominion.XConstraints{

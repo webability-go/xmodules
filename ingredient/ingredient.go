@@ -8,16 +8,62 @@ import (
 
 	"golang.org/x/text/language"
 
-	"xmodules/context"
-	"xmodules/metrics"
+	"github.com/webability-go/xmodules/context"
+	"github.com/webability-go/xmodules/metric"
+	"github.com/webability-go/xmodules/translation"
 )
 
-func InitIngredient(sitecontext *context.Context, databasename string) error {
+const (
+	MODULEID              = "ingredient"
+	VERSION               = "1.0.0"
+	TRANSLATIONTHEME      = "ingredient"
+	TRANSLATIONTHEMEAISLE = "ingaisle"
+)
+
+func InitModule(sitecontext *context.Context, databasename string) error {
 
 	buildTables(sitecontext, databasename)
 	buildCache(sitecontext)
+	sitecontext.Modules[MODULEID] = VERSION
 
 	return nil
+}
+
+func SynchronizeModule(sitecontext *context.Context) []string {
+
+	translation.AddTheme(sitecontext, TRANSLATIONTHEME, "Ingredients", translation.SOURCETABLE, "", "name,plural")
+	translation.AddTheme(sitecontext, TRANSLATIONTHEMEAISLE, "Ingredients Aisles", translation.SOURCETABLE, "", "name")
+
+	messages := []string{}
+
+	messages = append(messages, "Analysing ingredient_aisle table.")
+	num, err := sitecontext.Tables["ingredient_aisle"].Count(nil)
+	if err != nil || num == 0 {
+		err1 := sitecontext.Tables["ingredient_aisle"].Synchronize()
+		if err1 != nil {
+			messages = append(messages, "The table ingredient_aisle was not created: "+err1.Error())
+		} else {
+			messages = append(messages, "The table ingredient_aisle was created (again)")
+		}
+	} else {
+		messages = append(messages, "The table ingredient_aisle was not created because it contains data.")
+	}
+
+	messages = append(messages, "Analysing ingredient_ingredient table.")
+	num, err = sitecontext.Tables["ingredient_ingredient"].Count(nil)
+	if err != nil || num == 0 {
+		err1 := sitecontext.Tables["ingredient_ingredient"].Synchronize()
+		if err1 != nil {
+			messages = append(messages, "The table ingredient_ingredient was not created: "+err1.Error())
+		} else {
+			messages = append(messages, "The table ingredient_ingredient was created (again)")
+		}
+	} else {
+		messages = append(messages, "The table ingredient_ingredient was not created because it contains data.")
+	}
+
+	// fill metric and translations
+	return messages
 }
 
 func GetPasillo(sitecontext *context.Context, clave int, lang language.Tag) *StructurePasillo {
@@ -65,27 +111,27 @@ func ConvertToSI(sitecontext *context.Context, ingrediente int, scantidad string
 	}
 
 	// cantidad es correcta ?
-	cantidad := metrics.ParseQuantity(scantidad)
+	cantidad := metric.ParseQuantity(scantidad)
 	if cantidad < 0 {
 		return 0, -2, "La cantidad no se pudo interpretar"
 	}
 
 	var factorconversion float64 = 0
 	// medida es cuantificable ?
-	medidadata := metrics.GetMetric(sitecontext, medida, language.Spanish) // el idioma no importa aqui, estamos calculando cifras solamente
+	medidadata := metric.GetMetric(sitecontext, medida, language.Spanish) // el idioma no importa aqui, estamos calculando cifras solamente
 	unidadsi, _ := medidadata.Data.GetInt("unidadsi")
 	if unidadsi != 0 {
 		factorconversion, _ = medidadata.Data.GetFloat("factorconversion")
 	} else {
 		// CASO ESPECIAL: por pieza
 		// verificar si tenemos un peso/unidad en el ingrediente x defecto (ejemplo: 1 huevo, 1 manzana, etc)
-		if medida == metrics.UNIT_NOTVISIBLE || medida == metrics.UNIT_VISIBLE {
+		if medida == metric.UNIT_NOTVISIBLE || medida == metric.UNIT_VISIBLE {
 			ingredientedata := GetIngredient(sitecontext, ingrediente, language.Spanish) // el idioma no importa aqui, estamos calculando cifras solamente
 			usi, _ := ingredientedata.Data.GetInt("unidadsi")
 			if usi != 0 {
 				unidadsi = usi
 				csi, _ := ingredientedata.Data.GetFloat("cantidad")
-				medidadata = metrics.GetMetric(sitecontext, usi, language.Spanish)
+				medidadata = metric.GetMetric(sitecontext, usi, language.Spanish)
 				factorconversion, _ = medidadata.Data.GetFloat("factorconversion")
 				cantidad = cantidad * csi
 			} else {
@@ -113,14 +159,14 @@ func GetIngredientCompositeName(sitecontext *context.Context, quantity string, i
 
 func CompositeNameSpanish(sitecontext *context.Context, quantity string, ingredientkey int, metrickey int, extra string, system int) string {
 
-	xquantity := metrics.ParseQuantity(quantity)
+	xquantity := metric.ParseQuantity(quantity)
 	ingredientdata := GetIngredient(sitecontext, ingredientkey, language.Spanish).GetData()
 	density, _ := ingredientdata.GetFloat("densidad")
 	state, _ := ingredientdata.GetInt("tipo")
-	metricdata := metrics.GetMetric(sitecontext, metrickey, language.Spanish).GetData()
+	metricdata := metric.GetMetric(sitecontext, metrickey, language.Spanish).GetData()
 
 	if system != 0 { // 1, 2, 3: convertir al sistema solicitado antes de crear composite
-		xquantity, metricdata = metrics.ConvertMetrics(sitecontext, xquantity, density, state, metricdata, system)
+		xquantity, metricdata = metric.ConvertMetrics(sitecontext, xquantity, density, state, metricdata, system)
 		quantity = fmt.Sprint(xquantity)
 
 		fmt.Println("Hemos calculado:", system, xquantity, metricdata)
@@ -135,7 +181,7 @@ func CompositeNameSpanish(sitecontext *context.Context, quantity string, ingredi
 	composite := quantity + " "
 
 	// pieza sin decirlo = unidades del ingrediente
-	if metrickey == metrics.UNIT_NOTVISIBLE {
+	if metrickey == metric.UNIT_NOTVISIBLE {
 		if xquantity == 1.0 {
 			composite += ingnamesingular
 		} else {
@@ -164,9 +210,9 @@ func CompositeNameSpanish(sitecontext *context.Context, quantity string, ingredi
 
 func CompositeNameEnglish(sitecontext *context.Context, quantity string, ingredientkey int, metrickey int, extra string, system int) string {
 
-	xquantity := metrics.ParseQuantity(quantity)
+	xquantity := metric.ParseQuantity(quantity)
 	ingredientdata := GetIngredient(sitecontext, ingredientkey, language.English).GetData()
-	metricdata := metrics.GetMetric(sitecontext, metrickey, language.English).GetData()
+	metricdata := metric.GetMetric(sitecontext, metrickey, language.English).GetData()
 	ingnamesingular, _ := ingredientdata.GetString("nombre")
 	ingnameplural, _ := ingredientdata.GetString("plural")
 	metricsingular, _ := metricdata.GetString("nombre")
@@ -175,7 +221,7 @@ func CompositeNameEnglish(sitecontext *context.Context, quantity string, ingredi
 	composite := quantity + " "
 
 	// pieza sin decirlo = unidades del ingrediente
-	if metrickey == metrics.UNIT_NOTVISIBLE {
+	if metrickey == metric.UNIT_NOTVISIBLE {
 		if xquantity == 1.0 {
 			composite += ingnamesingular
 		} else {

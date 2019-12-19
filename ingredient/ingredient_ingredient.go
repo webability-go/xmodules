@@ -8,7 +8,7 @@ import (
   Ingredients for recipes
 */
 
-func ingredient_ingredient() *xdominion.XTable {
+func ingredientIngredient() *xdominion.XTable {
 	t := xdominion.NewXTable("ingredient_ingredient", "ingrediente_ing_")
 
 	t.AddField(xdominion.XFieldInteger{Name: "key", Constraints: xdominion.XConstraints{
