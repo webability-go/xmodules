@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"os"
+	"strconv"
 
 	"golang.org/x/text/language"
 
@@ -52,15 +53,17 @@ func loadTables(sitecontext *context.Context, filespath string) []string {
 	// 4 archivos de importación
 	DMPCOUNTRY := filespath + "countries.en.dmp"
 
+	num := 0
 	data := readFile(DMPCOUNTRY)
 	for _, r := range *data {
 
 		sitecontext.Tables["country_country"].Upsert(*r.(*xdominion.XRecord))
+		num++
 	}
 
 	// spanish in language
 
-	return []string{}
+	return []string{"Paises insertados/modificados. Cantidad: " + strconv.Itoa(num)}
 }
 
 func readFile(filename string) *xdominion.XRecords {

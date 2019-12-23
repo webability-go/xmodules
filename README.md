@@ -14,6 +14,11 @@ import "github.com/webability-go/xmodules/context"
 import "github.com/webability-go/xmodules/stat"
 
 
+- user: tables to keep all the administration users of the system, with complex profiles and access rights on the sessions
+
+import "github.com/webability-go/xmodules/user"
+
+
 - translation: a set of translation tables to keep translated words of anything, from database field to files. It supports all the known languages in UTF8.
 
 import "github.com/webability-go/xmodules/translation"
