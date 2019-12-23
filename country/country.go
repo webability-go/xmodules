@@ -28,9 +28,22 @@ func InitModule(sitecontext *context.Context, databasename string) error {
 
 func SynchronizeModule(sitecontext *context.Context, filespath string) []string {
 
+	messages := []string{}
+
+	// Needed modules: context and translation
+	vc := context.ModuleInstalledVersion(sitecontext, "context")
+	if vc == "" {
+		messages = append(messages, "xmodules/context need to be installed before installing xmodules/country.")
+		return messages
+	}
+	vc = context.ModuleInstalledVersion(sitecontext, "translation")
+	if vc == "" {
+		messages = append(messages, "xmodules/translation need to be installed before installing xmodules/country.")
+		return messages
+	}
+
 	translation.AddTheme(sitecontext, TRANSLATIONTHEME, "Countries", translation.SOURCETABLE, "", "name")
 
-	messages := []string{}
 	messages = append(messages, "Analysing country_country table.")
 	num, err := sitecontext.Tables["country_country"].Count(nil)
 	if err != nil || num == 0 {

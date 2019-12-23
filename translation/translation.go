@@ -32,6 +32,13 @@ func SynchronizeModule(sitecontext *context.Context) []string {
 
 	messages := []string{}
 
+	// Needed modules: context
+	vc := context.ModuleInstalledVersion(sitecontext, "context")
+	if vc == "" {
+		messages = append(messages, "xmodules/context need to be installed before installing xmodules/translation.")
+		return messages
+	}
+
 	messages = append(messages, "Analysing translation_theme table.")
 	num, err := sitecontext.Tables["translation_theme"].Count(nil)
 	if err != nil || num == 0 {
