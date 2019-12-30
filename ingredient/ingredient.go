@@ -160,17 +160,25 @@ func GetIngredientCompositeName(sitecontext *context.Context, quantity string, i
 func CompositeNameSpanish(sitecontext *context.Context, quantity string, ingredientkey int, metrickey int, extra string, system int) string {
 
 	xquantity := metric.ParseQuantity(quantity)
-	ingredientdata := GetIngredient(sitecontext, ingredientkey, language.Spanish).GetData()
-	density, _ := ingredientdata.GetFloat("densidad")
-	state, _ := ingredientdata.GetInt("tipo")
-	metricdata := metric.GetMetric(sitecontext, metrickey, language.Spanish).GetData()
+	ingredient := GetIngredient(sitecontext, ingredientkey, language.Spanish)
+	if ingredient == nil {
+		// log this
+		return "Error in CompositeNameSpanish::ingredient NIL"
+	}
+	ingredientdata := ingredient.GetData()
+	metricstructure := metric.GetMetric(sitecontext, metrickey, language.Spanish)
+	if metricstructure == nil {
+		// log this
+		return "Error in CompositeNameSpanish::metric NIL"
+	}
+	metricdata := metricstructure.GetData()
+
+	density, _ := ingredientdata.GetFloat("density")
+	state, _ := ingredientdata.GetInt("type")
 
 	if system != 0 { // 1, 2, 3: convertir al sistema solicitado antes de crear composite
 		xquantity, metricdata = metric.ConvertMetrics(sitecontext, xquantity, density, state, metricdata, system)
 		quantity = fmt.Sprint(xquantity)
-
-		fmt.Println("Hemos calculado:", system, xquantity, metricdata)
-
 	}
 
 	ingnamesingular, _ := ingredientdata.GetString("nombre")
@@ -211,11 +219,30 @@ func CompositeNameSpanish(sitecontext *context.Context, quantity string, ingredi
 func CompositeNameEnglish(sitecontext *context.Context, quantity string, ingredientkey int, metrickey int, extra string, system int) string {
 
 	xquantity := metric.ParseQuantity(quantity)
-	ingredientdata := GetIngredient(sitecontext, ingredientkey, language.English).GetData()
-	metricdata := metric.GetMetric(sitecontext, metrickey, language.English).GetData()
-	ingnamesingular, _ := ingredientdata.GetString("nombre")
+	ingredient := GetIngredient(sitecontext, ingredientkey, language.English)
+	if ingredient == nil {
+		// log this
+		return "Error in CompositeNameSpanish::ingredient NIL"
+	}
+	ingredientdata := ingredient.GetData()
+	metricstructure := metric.GetMetric(sitecontext, metrickey, language.English)
+	if metricstructure == nil {
+		// log this
+		return "Error in CompositeNameSpanish::metric NIL"
+	}
+	metricdata := metricstructure.GetData()
+
+	density, _ := ingredientdata.GetFloat("density")
+	state, _ := ingredientdata.GetInt("type")
+
+	if system != 0 { // 1, 2, 3: convertir al sistema solicitado antes de crear composite
+		xquantity, metricdata = metric.ConvertMetrics(sitecontext, xquantity, density, state, metricdata, system)
+		quantity = fmt.Sprint(xquantity)
+	}
+
+	ingnamesingular, _ := ingredientdata.GetString("name")
 	ingnameplural, _ := ingredientdata.GetString("plural")
-	metricsingular, _ := metricdata.GetString("nombre")
+	metricsingular, _ := metricdata.GetString("name")
 	metricplural, _ := metricdata.GetString("plural")
 
 	composite := quantity + " "
