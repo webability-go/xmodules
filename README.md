@@ -1,6 +1,7 @@
 # xmodules
 
-Standard modules for Xamboo.
+Standard modules for Xamboo external loadable application.
+All modules must be thread-safe.
 
 The released modules are actually:
 
@@ -12,21 +13,33 @@ import "github.com/webability-go/xmodules/context"
 - stat: tables to keep stats of use of anything, from site hits to IOT events.
 
 import "github.com/webability-go/xmodules/stat"
+needs: "github.com/webability-go/xmodules/context"
 
 
 - user: tables to keep all the administration users of the system, with complex profiles and access rights on the sessions
 
 import "github.com/webability-go/xmodules/user"
+needs: "github.com/webability-go/xmodules/context"
+
+
+- userlink: tables to keep basic data of administration users (primary key, status, name, email) from a distant controller node that have loaded complete xmodules/user
+
+import "github.com/webability-go/xmodules/userlink"
+needs: "github.com/webability-go/xmodules/context"
 
 
 - translation: a set of translation tables to keep translated words of anything, from database field to files. It supports all the known languages in UTF8.
 
 import "github.com/webability-go/xmodules/translation"
+needs: "github.com/webability-go/xmodules/context"
+needs: "github.com/webability-go/xmodules/user" or "github.com/webability-go/xmodules/userlink"
 
 
 - country: is the list of ISO official countries ready to use in a database.
 
 import "github.com/webability-go/xmodules/country"
+needs: "github.com/webability-go/xmodules/context"
+needs: "github.com/webability-go/xmodules/translation"
 
 
 - metric: a full set of units to count things and convert between them.

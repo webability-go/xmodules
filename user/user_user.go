@@ -7,7 +7,7 @@ import (
 // TABLE: user_user:
 // All the administrators of the base system.
 func userUser() *xdominion.XTable {
-	t := xdominion.NewXTable("user_usr", "user_usr_")
+	t := xdominion.NewXTable("user_user", "user_usr_")
 
 	// Key of the user, automatic consecutive
 	t.AddField(xdominion.XFieldInteger{Name: "key", Constraints: xdominion.XConstraints{
