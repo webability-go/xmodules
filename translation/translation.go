@@ -14,7 +14,7 @@ import (
 
 const (
 	MODULEID = "translation"
-	VERSION  = "1.0.0"
+	VERSION  = "1.0.1"
 
 	SOURCETABLE = 1
 	SOURCEFILE  = 2
@@ -38,36 +38,19 @@ func SynchronizeModule(sitecontext *context.Context) []string {
 		messages = append(messages, "xmodules/context need to be installed before installing xmodules/translation.")
 		return messages
 	}
-
-	messages = append(messages, "Analysing translation_theme table.")
-	num, err := sitecontext.Tables["translation_theme"].Count(nil)
-	if err != nil || num == 0 {
-		err1 := sitecontext.Tables["translation_theme"].Synchronize()
-		if err1 != nil {
-			messages = append(messages, "The table translation_theme was not created: "+err1.Error())
-		} else {
-			messages = append(messages, "The table translation_theme was created (again)")
-		}
-	} else {
-		messages = append(messages, "The table translation_theme was not created because it contains data.")
+	vc1 := context.ModuleInstalledVersion(sitecontext, "user")
+	vc2 := context.ModuleInstalledVersion(sitecontext, "userlink")
+	if vc1 == "" && vc2 == "" {
+		messages = append(messages, "xmodules/user or xmodules/userlink need to be installed before installing xmodules/translation.")
+		return messages
 	}
 
-	messages = append(messages, "Analysing translation_info table.")
-	num, err = sitecontext.Tables["translation_info"].Count(nil)
-	if err != nil || num == 0 {
-		err1 := sitecontext.Tables["translation_info"].Synchronize()
-		if err1 != nil {
-			messages = append(messages, "The table translation_info was not created: "+err1.Error())
-		} else {
-			messages = append(messages, "The table translation_info was created (again)")
-		}
-	} else {
-		messages = append(messages, "The table translation_info was not created because it contains data.")
-	}
+	// create tables
+	messages = append(messages, createTables(sitecontext)...)
 
 	// Inserting into context-modules
 	// Be sure context module is on db: fill context module (we should get this from xmodule.conf)
-	err = context.AddModule(sitecontext, MODULEID, "Multilanguages translation tables for Xamboo", VERSION)
+	err := context.AddModule(sitecontext, MODULEID, "Multilanguages translation tables for Xamboo", VERSION)
 	if err == nil {
 		messages = append(messages, "The entry "+MODULEID+" was modified successfully in the modules table.")
 	} else {

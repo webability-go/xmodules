@@ -9,7 +9,7 @@ import (
 
 const (
 	MODULEID = "stat"
-	VERSION  = "1.0.0"
+	VERSION  = "1.0.1"
 )
 
 func InitModule(sitecontext *context.Context, prefix string, databasename string) error {
@@ -23,6 +23,14 @@ func InitModule(sitecontext *context.Context, prefix string, databasename string
 func SynchronizeModule(sitecontext *context.Context, prefix string) []string {
 
 	messages := []string{}
+
+	// Needed modules: context and translation
+	vc := context.ModuleInstalledVersion(sitecontext, "context")
+	if vc == "" {
+		messages = append(messages, "xmodules/context need to be installed before installing xmodules/country.")
+		return messages
+	}
+
 	for i := 1; i < 13; i++ {
 		m := ""
 		if i < 10 {
@@ -43,6 +51,16 @@ func SynchronizeModule(sitecontext *context.Context, prefix string) []string {
 			messages = append(messages, "The table "+prefix+"stat_"+m+" was not created because it contains data.")
 		}
 	}
+
+	// Inserting into context-modules
+	// Be sure context module is on db: fill context module (we should get this from xmodule.conf)
+	err := context.AddModule(sitecontext, MODULEID, "Statistics", VERSION)
+	if err == nil {
+		messages = append(messages, "The entry "+MODULEID+" was modified successfully in the modules table.")
+	} else {
+		messages = append(messages, "Error modifying the entry "+MODULEID+" in the modules table: "+err.Error())
+	}
+
 	return messages
 }
 

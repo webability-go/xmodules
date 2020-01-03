@@ -45,7 +45,7 @@ func translationInfo() *xdominion.XTable {
 
 	// last user
 	t.AddField(xdominion.XFieldInteger{Name: "lastuser", Constraints: xdominion.XConstraints{
-		xdominion.XConstraint{Type: xdominion.FK, Data: []string{"kl_usuario", "kl_usr_clave"}},
+		xdominion.XConstraint{Type: xdominion.FK, Data: []string{"user_user", "user_usr_key"}},
 		xdominion.XConstraint{Type: xdominion.NN},
 	}})
 
@@ -54,7 +54,7 @@ func translationInfo() *xdominion.XTable {
 
 	// verify user
 	t.AddField(xdominion.XFieldInteger{Name: "verifyuser", Constraints: xdominion.XConstraints{
-		xdominion.XConstraint{Type: xdominion.FK, Data: []string{"kl_usuario", "kl_usr_clave"}},
+		xdominion.XConstraint{Type: xdominion.FK, Data: []string{"user_user", "user_usr_key"}},
 	}})
 
 	// verify date

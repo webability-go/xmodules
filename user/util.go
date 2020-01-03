@@ -68,7 +68,7 @@ func createTables(sitecontext *context.Context) []string {
 
 	messages := []string{}
 
-	for tbl := range moduletables {
+	for _, tbl := range moduletablesorder {
 		messages = append(messages, "Analysing "+tbl+" table.")
 		num, err := sitecontext.Tables[tbl].Count(nil)
 		if err != nil || num == 0 {
