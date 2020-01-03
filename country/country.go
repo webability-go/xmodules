@@ -11,7 +11,7 @@ import (
 
 const (
 	MODULEID         = "country"
-	VERSION          = "1.0.0"
+	VERSION          = "1.0.1"
 	TRANSLATIONTHEME = "country"
 )
 
@@ -44,25 +44,15 @@ func SynchronizeModule(sitecontext *context.Context, filespath string) []string 
 
 	translation.AddTheme(sitecontext, TRANSLATIONTHEME, "Countries", translation.SOURCETABLE, "", "name")
 
-	messages = append(messages, "Analysing country_country table.")
-	num, err := sitecontext.Tables["country_country"].Count(nil)
-	if err != nil || num == 0 {
-		err1 := sitecontext.Tables["country_country"].Synchronize()
-		if err1 != nil {
-			messages = append(messages, "The table country_country was not created: "+err1.Error())
-		} else {
-			messages = append(messages, "The table country_country was created (again)")
-		}
-	} else {
-		messages = append(messages, "The table country_country was not created because it contains data.")
-	}
+	// create tables
+	messages = append(messages, createTables(sitecontext)...)
 
 	// fill countries and translations
-	loadTables(sitecontext, filespath)
+	messages = append(messages, loadTables(sitecontext, filespath)...)
 
 	// Inserting into context-modules
 	// Be sure context module is on db: fill context module (we should get this from xmodule.conf)
-	err = context.AddModule(sitecontext, MODULEID, "List of official countries and ISO codes", VERSION)
+	err := context.AddModule(sitecontext, MODULEID, "List of official countries and ISO codes", VERSION)
 	if err == nil {
 		messages = append(messages, "The entry "+MODULEID+" was modified successfully in the modules table.")
 	} else {

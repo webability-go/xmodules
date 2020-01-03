@@ -5,7 +5,7 @@
 # Countries: spanish names
 
 # UN M49 regions
-{"key":"001","name":"Mondo","type":1,"code":"001"}
+{"key":"001","name":"Mundo","type":1,"code":"001"}
 {"key":"002","name":"Africa","type":1,"code":"002","father":"001"}
 {"key":"015","name":"Africa del norte","type":2,"code":"015","father":"002"}
 {"key":"202","name":"Africa Sub-sahariana","type":2,"code":"202","father":"002"}

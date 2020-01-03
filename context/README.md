@@ -2,7 +2,7 @@
 [ ![GoDoc](https://godoc.org/github.com/webability-go/xmodules/context?status.png)](https://godoc.org/github.com/webability-go/xmodules/context)
 [ ![GolangCI](https://golangci.com/badges/github.com/webability-go/xmodules/context.svg)](https://golangci.com)
 
-xmodule/context for Xamboo - GO
+xmodules/context for Xamboo - GO
 ================================
 
 The context package is used to build a set of contexts for the Xamboo CMS, so each site is build on top of its context.

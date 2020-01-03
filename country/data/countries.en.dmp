@@ -213,7 +213,7 @@
 {"key":"MX-NLE","name":"Nuevo Leon","type":4,"father":"MX","geoip":"19"}
 {"key":"MX-OAX","name":"Oaxaca","type":4,"father":"MX","geoip":"20"}
 {"key":"MX-PUE","name":"Puebla","type":4,"father":"MX","geoip":"21"}
-{"key":"MX-QUE","name":"Querétaro","type":4,"father":"MX","geoip":"22"}
+{"key":"MX-QUE","name":"Queretaro","type":4,"father":"MX","geoip":"22"}
 {"key":"MX-ROO","name":"Quintana Roo","type":4,"father":"MX","geoip":"23"}
 {"key":"MX-SLP","name":"San Luis Potosi","type":4,"father":"MX","geoip":"24"}
 {"key":"MX-SIN","name":"Sinaloa","type":4,"father":"MX","geoip":"25"}

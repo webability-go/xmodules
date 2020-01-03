@@ -11,7 +11,7 @@ import (
 
 const (
 	MODULEID = "user"
-	VERSION  = "1.0.0"
+	VERSION  = "1.0.1"
 )
 
 // InitModule is called during the init phase to link the module with the system

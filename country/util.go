@@ -12,13 +12,48 @@ import (
 	"github.com/webability-go/xcore"
 	"github.com/webability-go/xdominion"
 	"github.com/webability-go/xmodules/context"
+	"github.com/webability-go/xmodules/translation"
 )
+
+// Order to load/synchronize tables:
+var moduletablesorder = []string{
+	"country_country",
+}
+
+// map[string] does not respect order
+var moduletables = map[string]func() *xdominion.XTable{
+	"country_country": countryCountry,
+}
 
 func buildTables(sitecontext *context.Context, databasename string) {
 
-	sitecontext.Tables["country_country"] = countryCountry()
-	sitecontext.Tables["country_country"].SetBase(sitecontext.Databases[databasename])
-	sitecontext.Tables["country_country"].SetLanguage(language.English)
+	for _, tbl := range moduletablesorder {
+		sitecontext.Tables[tbl] = moduletables[tbl]()
+		sitecontext.Tables[tbl].SetBase(sitecontext.Databases[databasename])
+		sitecontext.Tables[tbl].SetLanguage(language.English)
+	}
+}
+
+func createTables(sitecontext *context.Context) []string {
+
+	messages := []string{}
+
+	for _, tbl := range moduletablesorder {
+		messages = append(messages, "Analysing "+tbl+" table.")
+		num, err := sitecontext.Tables[tbl].Count(nil)
+		if err != nil || num == 0 {
+			err1 := sitecontext.Tables[tbl].Synchronize()
+			if err1 != nil {
+				messages = append(messages, "The table "+tbl+" was not created: "+err1.Error())
+			} else {
+				messages = append(messages, "The table "+tbl+" was created (again)")
+			}
+		} else {
+			messages = append(messages, "The table "+tbl+" was not created because it contains data.")
+		}
+	}
+
+	return messages
 }
 
 func buildCache(sitecontext *context.Context) {
@@ -37,7 +72,7 @@ func buildCache(sitecontext *context.Context) {
 		for _, m := range *countries {
 			// creates structure on language
 			str := CreateStructureCountryByData(sitecontext, m.Clone(), lang)
-			key, _ := m.GetString("clave")
+			key, _ := m.GetString("key")
 			all = append(all, key)
 			sitecontext.Caches["country:countries:"+canonical].Set(key, str)
 		}
@@ -56,12 +91,26 @@ func loadTables(sitecontext *context.Context, filespath string) []string {
 	num := 0
 	data := readFile(DMPCOUNTRY)
 	for _, r := range *data {
-
-		sitecontext.Tables["country_country"].Upsert(*r.(*xdominion.XRecord))
+		key, _ := r.(*xdominion.XRecord).GetString("key")
+		sitecontext.Tables["country_country"].Upsert(key, *r.(*xdominion.XRecord))
 		num++
 	}
 
-	// spanish in language
+	// insert into translation each country in spanish
+	DMPCOUNTRY = filespath + "countries.es.dmp"
+	data = readFile(DMPCOUNTRY)
+	for _, r := range *data {
+		key, _ := r.(*xdominion.XRecord).GetString("key")
+		name, _ := r.(*xdominion.XRecord).GetString("name")
+
+		err := translation.SetTranslation(sitecontext, name, TRANSLATIONTHEME, key, "name", language.Spanish, 1)
+		if err != nil {
+			fmt.Println(err)
+		}
+	}
+
+	// reload caches
+	buildCache(sitecontext)
 
 	return []string{"Paises insertados/modificados. Cantidad: " + strconv.Itoa(num)}
 }
