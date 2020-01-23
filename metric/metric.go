@@ -15,7 +15,7 @@ import (
 
 const (
 	MODULEID         = "metric"
-	VERSION          = "1.0.0"
+	VERSION          = "1.0.1"
 	TRANSLATIONTHEME = "metric"
 
 	reFloat    = "^[0-9.]+$"
@@ -49,7 +49,7 @@ const (
 func InitModule(sitecontext *context.Context, databasename string) error {
 
 	buildTables(sitecontext, databasename)
-	buildCache(sitecontext)
+	go buildCache(sitecontext)
 	sitecontext.Modules[MODULEID] = VERSION
 
 	return nil

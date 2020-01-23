@@ -12,6 +12,9 @@ The package comes in english and spanish natively
 Version Changes Control
 =======================
 
+v1.0.2 - 2020-01-23
+- BuildCaches is now on parallel thread
+
 v1.0.1 - 2020-01-03
 - This document added
 - Need xmodules/context to work

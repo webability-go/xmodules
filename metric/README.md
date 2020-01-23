@@ -11,6 +11,9 @@ The translation package is used to keep translation tables for multilanguage sit
 Version Changes Control
 =======================
 
+v1.0.1 - 2020-01-23
+- BuildCaches is now on parallel thread
+
 v1.0.0 - 2019-12-18
 - First release of module
 
