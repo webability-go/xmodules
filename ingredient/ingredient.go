@@ -23,7 +23,7 @@ const (
 func InitModule(sitecontext *context.Context, databasename string) error {
 
 	buildTables(sitecontext, databasename)
-	buildCache(sitecontext)
+	go buildCache(sitecontext)
 	sitecontext.Modules[MODULEID] = VERSION
 
 	return nil

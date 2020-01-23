@@ -11,7 +11,7 @@ import (
 
 const (
 	MODULEID = "user"
-	VERSION  = "1.0.1"
+	VERSION  = "1.0.2"
 )
 
 // InitModule is called during the init phase to link the module with the system
@@ -19,7 +19,7 @@ const (
 func InitModule(sitecontext *context.Context, databasename string) error {
 
 	buildTables(sitecontext, databasename)
-	buildCache(sitecontext)
+	go buildCache(sitecontext)
 	sitecontext.Modules[MODULEID] = VERSION
 
 	return nil

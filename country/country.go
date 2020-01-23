@@ -11,7 +11,7 @@ import (
 
 const (
 	MODULEID         = "country"
-	VERSION          = "1.0.1"
+	VERSION          = "1.0.2"
 	TRANSLATIONTHEME = "country"
 )
 
@@ -20,7 +20,7 @@ const (
 func InitModule(sitecontext *context.Context, databasename string) error {
 
 	buildTables(sitecontext, databasename)
-	buildCache(sitecontext)
+	go buildCache(sitecontext)
 	sitecontext.Modules[MODULEID] = VERSION
 
 	return nil

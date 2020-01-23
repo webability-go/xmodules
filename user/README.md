@@ -16,6 +16,9 @@ The user package is used to build a set of administration users with all the sec
 Version Changes Control
 =======================
 
+v1.0.2 - 2020-01-23
+- BuildCaches is now on parallel thread
+
 v1.0.1 - 2020-01-03
 - This document added
 - Order added to synchronize tables in database (due to hierarchy of FK-PK)
