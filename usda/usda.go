@@ -17,6 +17,7 @@ const (
 func InitModule(sitecontext *context.Context, databasename string) error {
 
 	buildTables(sitecontext, databasename)
+	createCache(sitecontext)
 	go buildCache(sitecontext)
 	sitecontext.Modules[MODULEID] = VERSION
 

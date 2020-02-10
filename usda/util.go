@@ -35,6 +35,15 @@ func buildTables(sitecontext *context.Context, databasename string) {
 	sitecontext.Tables["usda_foodnutrient"].SetLanguage(language.English)
 }
 
+func createCache(sitecontext *context.Context) []string {
+
+	for _, lang := range sitecontext.Languages {
+		canonical := lang.String()
+		sitecontext.Caches["usda:nutrients:"+canonical] = xcore.NewXCache("usda:nutrients:"+canonical, 0, 0)
+	}
+	return []string{}
+}
+
 func buildCache(sitecontext *context.Context) []string {
 
 	// Loads all data in XCache
@@ -42,7 +51,6 @@ func buildCache(sitecontext *context.Context) []string {
 
 	for _, lang := range sitecontext.Languages {
 		canonical := lang.String()
-		sitecontext.Caches["usda:nutrients:"+canonical] = xcore.NewXCache("usda:nutrients:"+canonical, 0, 0)
 
 		all := []string{}
 		for _, m := range *nutrients {
