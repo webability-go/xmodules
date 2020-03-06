@@ -13,7 +13,7 @@ import (
 
 const (
 	MODULEID = "userlink"
-	VERSION  = "1.0.2"
+	VERSION  = "2.0.0"
 )
 
 // InitModule is called during the init phase to link the module with the system
@@ -21,7 +21,7 @@ const (
 func InitModule(sitecontext *context.Context, databasename string) error {
 
 	buildTables(sitecontext, databasename)
-	sitecontext.Modules[MODULEID] = VERSION
+	sitecontext.SetModule(MODULEID, VERSION)
 
 	return nil
 }
@@ -57,16 +57,21 @@ func SynchroUsers(sitecontext *context.Context, fromcontext *context.Context) []
 	msg := []string{}
 
 	// load from origin context
-	table, ok := fromcontext.Tables["user_user"]
-	if !ok {
+	table := fromcontext.GetTable("user_user")
+	if table == nil {
 		return []string{"Error: the origin table user_user does not exist."}
 	}
+	totable := sitecontext.GetTable("user_user")
+	if totable == nil {
+		return []string{"Error: the destination table user_user does not exist."}
+	}
+
 	users, _ := table.SelectAll(nil, xdominion.XFieldSet{"key", "status", "name", "mail"})
 	keys := map[int]bool{}
 	if users != nil {
 		for _, u := range *users {
 			key, _ := u.GetInt("key")
-			_, err := sitecontext.Tables["user_user"].Upsert(key, u)
+			_, err := totable.Upsert(key, u)
 			if err != nil {
 				msg = append(msg, "Error adding user:"+fmt.Sprint(err))
 			}
@@ -90,10 +95,10 @@ func SynchroUsers(sitecontext *context.Context, fromcontext *context.Context) []
 	}
 	// set status to "deleted" to X (not available anymore), they may be used by the local code
 	for k := range localkeys {
-		sitecontext.Tables["user_user"].Update(k, xdominion.XRecord{"status": "X"})
+		totable.Update(k, xdominion.XRecord{"status": "X"})
 	}
 
-	cnt, _ := sitecontext.Tables["user_user"].Count(nil)
+	cnt, _ := totable.Count(nil)
 	msg = append(msg, strconv.Itoa(cnt)+" admin users synchronized")
 	return msg
 }

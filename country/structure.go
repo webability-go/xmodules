@@ -16,7 +16,7 @@ type StructureCountry struct {
 }
 
 func CreateStructureCountryByKey(sitecontext *context.Context, key string, lang language.Tag) context.Structure {
-	data, _ := sitecontext.Tables["country_country"].SelectOne(key)
+	data, _ := sitecontext.GetTable("country_country").SelectOne(key)
 	if data == nil {
 		return nil
 	}
@@ -28,9 +28,9 @@ func CreateStructureCountryByData(sitecontext *context.Context, data xdominion.X
 	key, _ := data.GetString("key")
 
 	// builds main data: translations
-	if sitecontext.Tables["country_country"].Language != lang {
+	if sitecontext.GetTable("country_country").Language != lang {
 		// Only 1 fields to translate: name
-		translation.Translate(sitecontext, TRANSLATIONTHEME, key, data, map[string]interface{}{"name": true}, sitecontext.Tables["country_country"].Language, lang)
+		translation.Translate(sitecontext, TRANSLATIONTHEME, key, data, map[string]interface{}{"name": true}, sitecontext.GetTable("country_country").Language, lang)
 	}
 
 	return &StructureCountry{Key: key, Lang: lang, Data: data.(*xdominion.XRecord)}

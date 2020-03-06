@@ -9,19 +9,20 @@ import (
 
 func buildTables(sitecontext *Context, databasename string) {
 
-	sitecontext.Tables["context_module"] = contextModule()
-	sitecontext.Tables["context_module"].SetBase(sitecontext.Databases[databasename])
-	sitecontext.Tables["context_module"].SetLanguage(language.English)
+	table := contextModule()
+	table.SetBase(sitecontext.GetDatabase(databasename))
+	table.SetLanguage(language.English)
+	sitecontext.SetTable("context_module", table)
 }
 
 func buildCache(sitecontext *Context) {
 
 	// Loads all data in XCache
-	modules, _ := sitecontext.Tables["context_module"].SelectAll()
+	modules, _ := sitecontext.GetTable("context_module").SelectAll()
 
-	for _, lang := range sitecontext.Languages {
+	for _, lang := range sitecontext.GetLanguages() {
 		canonical := lang.String()
-		sitecontext.Caches["context:modules:"+canonical] = xcore.NewXCache("context:modules:"+canonical, 0, 0)
+		sitecontext.SetCache("context:modules:"+canonical, xcore.NewXCache("context:modules:"+canonical, 0, 0))
 
 		all := []string{}
 		if modules != nil {
@@ -30,10 +31,10 @@ func buildCache(sitecontext *Context) {
 				str := CreateStructureModuleByData(sitecontext, m.Clone(), lang)
 				key, _ := m.GetString("key")
 				all = append(all, key)
-				sitecontext.Caches["context:modules:"+canonical].Set(key, str)
+				sitecontext.GetCache("context:modules:"+canonical).Set(key, str)
 			}
 		}
-		sitecontext.Caches["context:modules:"+canonical].Set("all", all)
+		sitecontext.GetCache("context:modules:"+canonical).Set("all", all)
 	}
 }
 

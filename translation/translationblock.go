@@ -39,7 +39,13 @@ func (tb *TranslationBlock) Set(field string, value string) {
 
 func (tb *TranslationBlock) Verify(sitecontext *context.Context) {
 
-	data, err := sitecontext.Tables["translation_info"].SelectAll(xdominion.XConditions{
+	translation_info := sitecontext.GetTable("translation_info")
+	if translation_info == nil {
+		sitecontext.Log("main", "xmodules::translation::Verify: Error, the translation_info table is not available on this context")
+		return
+	}
+
+	data, err := translation_info.SelectAll(xdominion.XConditions{
 		xdominion.NewXCondition("theme", "=", tb.tema),
 		xdominion.NewXCondition("externalkey", "=", tb.clave, "and"),
 		xdominion.NewXCondition("language", "=", tb.tolang.String(), "and"),

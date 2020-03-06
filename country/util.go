@@ -28,45 +28,40 @@ var moduletables = map[string]func() *xdominion.XTable{
 func buildTables(sitecontext *context.Context, databasename string) {
 
 	for _, tbl := range moduletablesorder {
-		sitecontext.Tables[tbl] = moduletables[tbl]()
-		sitecontext.Tables[tbl].SetBase(sitecontext.Databases[databasename])
-		sitecontext.Tables[tbl].SetLanguage(language.English)
+		table := moduletables[tbl]()
+		table.SetBase(sitecontext.GetDatabase(databasename))
+		table.SetLanguage(language.English)
+		sitecontext.SetTable(tbl, table)
 	}
 }
 
-func createTables(sitecontext *context.Context) []string {
+func createCache(sitecontext *context.Context) []string {
 
-	messages := []string{}
-
-	for _, tbl := range moduletablesorder {
-		messages = append(messages, "Analysing "+tbl+" table.")
-		num, err := sitecontext.Tables[tbl].Count(nil)
-		if err != nil || num == 0 {
-			err1 := sitecontext.Tables[tbl].Synchronize()
-			if err1 != nil {
-				messages = append(messages, "The table "+tbl+" was not created: "+err1.Error())
-			} else {
-				messages = append(messages, "The table "+tbl+" was created (again)")
-			}
-		} else {
-			messages = append(messages, "The table "+tbl+" was not created because it contains data.")
-		}
+	for _, lang := range sitecontext.GetLanguages() {
+		canonical := lang.String()
+		sitecontext.SetCache("country:countries:"+canonical, xcore.NewXCache("country:countries:"+canonical, 0, 0))
 	}
-
-	return messages
+	return []string{}
 }
 
-func buildCache(sitecontext *context.Context) {
+func buildCache(sitecontext *context.Context) []string {
+
+	// Lets protect us for race condition since map[] of Tables and XCaches are not thread safe
+	country_country := sitecontext.GetTable("country_country")
+	caches := map[string]*xcore.XCache{}
+	for _, lang := range sitecontext.GetLanguages() {
+		canonical := lang.String()
+		caches["country:countries:"+canonical] = sitecontext.GetCache("country:countries:" + canonical)
+	}
 
 	// Loads all data in XCache
-	countries, _ := sitecontext.Tables["country_country"].SelectAll()
+	countries, _ := country_country.SelectAll()
 	if countries == nil {
-		return
+		return []string{"No hay paises en la tabla"}
 	}
 
-	for _, lang := range sitecontext.Languages {
+	for _, lang := range sitecontext.GetLanguages() {
 		canonical := lang.String()
-		sitecontext.Caches["country:countries:"+canonical] = xcore.NewXCache("country:countries:"+canonical, 0, 0)
 
 		all := []string{}
 		for _, m := range *countries {
@@ -74,16 +69,18 @@ func buildCache(sitecontext *context.Context) {
 			str := CreateStructureCountryByData(sitecontext, m.Clone(), lang)
 			key, _ := m.GetString("key")
 			all = append(all, key)
-			sitecontext.Caches["country:countries:"+canonical].Set(key, str)
+			caches["country:countries:"+canonical].Set(key, str)
 		}
-		sitecontext.Caches["country:countries:"+canonical].Set("all", all)
+		caches["country:countries:"+canonical].Set("all", all)
 	}
+
+	return []string{}
 }
 
 func loadTables(sitecontext *context.Context, filespath string) []string {
 
 	// borra toda la data porque la vamos a insertar de nuevo (si se puede: FK bloquea)
-	sitecontext.Tables["country_country"].Delete(nil)
+	sitecontext.GetTable("country_country").Delete(nil)
 
 	// 4 archivos de importación
 	DMPCOUNTRY := filespath + "countries.en.dmp"
@@ -92,7 +89,7 @@ func loadTables(sitecontext *context.Context, filespath string) []string {
 	data := readFile(DMPCOUNTRY)
 	for _, r := range *data {
 		key, _ := r.(*xdominion.XRecord).GetString("key")
-		sitecontext.Tables["country_country"].Upsert(key, *r.(*xdominion.XRecord))
+		sitecontext.GetTable("country_country").Upsert(key, *r.(*xdominion.XRecord))
 		num++
 	}
 

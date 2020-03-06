@@ -2,6 +2,7 @@ package translation
 
 import (
 	gcontext "context"
+	"errors"
 	"fmt"
 	"time"
 
@@ -14,7 +15,7 @@ import (
 
 const (
 	MODULEID = "translation"
-	VERSION  = "1.0.1"
+	VERSION  = "2.0.0"
 
 	SOURCETABLE = 1
 	SOURCEFILE  = 2
@@ -23,7 +24,7 @@ const (
 func InitModule(sitecontext *context.Context, databasename string) error {
 
 	buildTables(sitecontext, databasename)
-	sitecontext.Modules[MODULEID] = VERSION
+	sitecontext.SetModule(MODULEID, VERSION)
 
 	return nil
 }
@@ -61,7 +62,14 @@ func SynchronizeModule(sitecontext *context.Context) []string {
 }
 
 func AddTheme(sitecontext *context.Context, theme string, name string, source int, link string, fields string) error {
-	_, err := sitecontext.Tables["translation_theme"].Upsert(theme, xdominion.XRecord{
+
+	translation_theme := sitecontext.GetTable("translation_theme")
+	if translation_theme == nil {
+		sitecontext.Log("main", "xmodules::translation::addTheme: Error, the translation_theme table is not available on this context")
+		return errors.New("xmodules::translation::addTheme: Error, the translation_theme table is not available on this context")
+	}
+
+	_, err := translation_theme.Upsert(theme, xdominion.XRecord{
 		"key":    theme,
 		"name":   name,
 		"source": source,
@@ -77,13 +85,20 @@ func AddTheme(sitecontext *context.Context, theme string, name string, source in
 // lastverified = 0: auto (o español original), 1 = verified, 2 = original modified (not re-translated, pending)
 func GetTranslation(sitecontext *context.Context, textooriginal string, theme string, key string, field string, lang language.Tag) (string, bool, time.Time, int) {
 
-	data, err := sitecontext.Tables["translation_info"].SelectOne(xdominion.XConditions{
+	translation_info := sitecontext.GetTable("translation_info")
+	if translation_info == nil {
+		sitecontext.Log("main", "xmodules::translation::GetTranslation: Error, the translation_info table is not available on this context")
+		return "", false, time.Time{}, 0
+	}
+
+	data, err := translation_info.SelectOne(xdominion.XConditions{
 		xdominion.NewXCondition("theme", "=", theme),
 		xdominion.NewXCondition("externalkey", "=", key, "and"),
 		xdominion.NewXCondition("field", "=", field, "and"),
 		xdominion.NewXCondition("language", "=", lang.String(), "and"),
 	})
 	if err != nil {
+		sitecontext.Log("main", "Error con select info", err)
 		return "", false, time.Time{}, 0
 	}
 
@@ -100,7 +115,13 @@ func GetTranslation(sitecontext *context.Context, textooriginal string, theme st
 // return: error
 func SetTranslation(sitecontext *context.Context, textotraducido string, theme string, key string, field string, lang language.Tag, verified int) error {
 
-	data, err := sitecontext.Tables["translation_info"].SelectOne(xdominion.XConditions{
+	translation_info := sitecontext.GetTable("translation_info")
+	if translation_info == nil {
+		sitecontext.Log("main", "xmodules::translation::SetTranslation: Error, the translation_info table is not available on this context")
+		return errors.New("xmodules::translation::SetTranslation: Error, the translation_info table is not available on this context")
+	}
+
+	data, err := translation_info.SelectOne(xdominion.XConditions{
 		xdominion.NewXCondition("theme", "=", theme),
 		xdominion.NewXCondition("externalkey", "=", key, "and"),
 		xdominion.NewXCondition("field", "=", field, "and"),
@@ -113,7 +134,7 @@ func SetTranslation(sitecontext *context.Context, textotraducido string, theme s
 	if data != nil {
 		// update
 		key, _ := data.GetInt("key")
-		_, err := sitecontext.Tables["translation_info"].Update(key,
+		_, err := translation_info.Update(key,
 			xdominion.XRecord{
 				"verify":      verified,
 				"translation": textotraducido,
@@ -125,7 +146,7 @@ func SetTranslation(sitecontext *context.Context, textotraducido string, theme s
 		}
 	} else {
 		// insert
-		_, err := sitecontext.Tables["translation_info"].Insert(
+		_, err := translation_info.Insert(
 			xdominion.XRecord{
 				"key":         0,
 				"theme":       theme,
@@ -147,7 +168,14 @@ func SetTranslation(sitecontext *context.Context, textotraducido string, theme s
 
 // return: error
 func SetVerified(sitecontext *context.Context, theme string, key string, field string, lang language.Tag, verified int) error {
-	_, err := sitecontext.Tables["translation_info"].Update(xdominion.XConditions{
+
+	translation_info := sitecontext.GetTable("translation_info")
+	if translation_info == nil {
+		sitecontext.Log("main", "xmodules::translation::SetVerified: Error, the translation_info table is not available on this context")
+		return errors.New("xmodules::translation::SetVerified: Error, the translation_info table is not available on this context")
+	}
+
+	_, err := translation_info.Update(xdominion.XConditions{
 		xdominion.NewXCondition("theme", "=", theme),
 		xdominion.NewXCondition("externalkey", "=", key, "and"),
 		xdominion.NewXCondition("field", "=", field, "and"),

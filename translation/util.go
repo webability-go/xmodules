@@ -20,8 +20,9 @@ var moduletables = map[string]func() *xdominion.XTable{
 func buildTables(sitecontext *context.Context, databasename string) {
 
 	for _, tbl := range moduletablesorder {
-		sitecontext.Tables[tbl] = moduletables[tbl]()
-		sitecontext.Tables[tbl].SetBase(sitecontext.Databases[databasename])
+		table := moduletables[tbl]()
+		table.SetBase(sitecontext.GetDatabase(databasename))
+		sitecontext.SetTable(tbl, table)
 	}
 }
 
@@ -30,10 +31,16 @@ func createTables(sitecontext *context.Context) []string {
 	messages := []string{}
 
 	for _, tbl := range moduletablesorder {
+
+		table := sitecontext.GetTable(tbl)
+		if table == nil {
+			return []string{"xmodules::translation::createTables: Error, the table is not available on this context:" + tbl}
+		}
+
 		messages = append(messages, "Analysing "+tbl+" table.")
-		num, err := sitecontext.Tables[tbl].Count(nil)
+		num, err := table.Count(nil)
 		if err != nil || num == 0 {
-			err1 := sitecontext.Tables[tbl].Synchronize()
+			err1 := table.Synchronize()
 			if err1 != nil {
 				messages = append(messages, "The table "+tbl+" was not created: "+err1.Error())
 			} else {

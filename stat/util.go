@@ -19,9 +19,10 @@ func buildTables(sitecontext *context.Context, prefix string, databasename strin
 		}
 		m += strconv.Itoa(i)
 
-		sitecontext.Tables[prefix+"stat_"+m] = stat_stat(prefix, m)
-		sitecontext.Tables[prefix+"stat_"+m].SetBase(sitecontext.Databases[databasename])
-		sitecontext.Tables[prefix+"stat_"+m].SetLanguage(language.English)
+		table := stat_stat(prefix, m)
+		table.SetBase(sitecontext.GetDatabase(databasename))
+		table.SetLanguage(language.English)
+		sitecontext.SetTable(prefix+"stat_"+m, table)
 	}
 }
 

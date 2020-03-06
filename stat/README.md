@@ -11,6 +11,9 @@ The stat package is used to build a set of monthly statistic tables for any type
 Version Changes Control
 =======================
 
+v2.0.0 - 2020-03-05
+- Support for multithread context implemented
+
 v1.0.1 - 2020-01-03
 - This file was added
 

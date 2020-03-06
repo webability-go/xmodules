@@ -15,7 +15,7 @@ type StructureNutrient struct {
 }
 
 func CreateStructureNutrientByKey(sitecontext *context.Context, key string, lang language.Tag) context.Structure {
-	data, _ := sitecontext.Tables["usda_nutrient"].SelectOne(key)
+	data, _ := sitecontext.GetTable("usda_nutrient").SelectOne(key)
 	if data == nil {
 		return nil
 	}
@@ -27,9 +27,9 @@ func CreateStructureNutrientByData(sitecontext *context.Context, data xdominion.
 	key, _ := data.GetString("key")
 
 	// builds main data: translations
-	if sitecontext.Tables["usda_nutrient"].Language != lang {
+	if sitecontext.GetTable("usda_nutrient").Language != lang {
 		// Only 2 fields to translate: name, tag
-		translation.Translate(sitecontext, TRANSLATIONTHEME, key, data, map[string]interface{}{"name": true, "tag": true}, sitecontext.Tables["usda_nutrient"].Language, lang)
+		translation.Translate(sitecontext, TRANSLATIONTHEME, key, data, map[string]interface{}{"name": true, "tag": true}, sitecontext.GetTable("usda_nutrient").Language, lang)
 	}
 
 	return &StructureNutrient{Key: key, Lang: lang, Data: data.(*xdominion.XRecord)}

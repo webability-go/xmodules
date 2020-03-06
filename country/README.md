@@ -12,6 +12,9 @@ The package comes in english and spanish natively
 Version Changes Control
 =======================
 
+v2.0.0 - 2020-03-05
+- Support for multithread context implemented
+
 v1.0.2 - 2020-01-23
 - BuildCaches is now on parallel thread
 
@@ -41,7 +44,7 @@ Intro
 Example:
 
 ```
-import "github.com/webability-go/xmodules/translation"
+import "github.com/webability-go/xmodules/country"
 
 ```
 
@@ -51,4 +54,4 @@ import "github.com/webability-go/xmodules/translation"
 
 To use the package:
 
-import "github.com/webability-go/xmodules/translation"
+import "github.com/webability-go/xmodules/country"

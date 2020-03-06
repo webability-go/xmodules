@@ -11,7 +11,7 @@ import (
 
 const (
 	MODULEID = "user"
-	VERSION  = "1.0.2"
+	VERSION  = "2.0.0"
 )
 
 // InitModule is called during the init phase to link the module with the system
@@ -19,8 +19,10 @@ const (
 func InitModule(sitecontext *context.Context, databasename string) error {
 
 	buildTables(sitecontext, databasename)
+	createCache(sitecontext)
+	sitecontext.SetModule(MODULEID, VERSION)
+
 	go buildCache(sitecontext)
-	sitecontext.Modules[MODULEID] = VERSION
 
 	return nil
 }
@@ -56,14 +58,20 @@ func SynchronizeModule(sitecontext *context.Context) []string {
 // GetCountry to get the data of a country from cache/db in the specified language
 func GetUser(sitecontext *context.Context, key int) *StructureUser {
 
-	data, _ := sitecontext.Caches["user:users"].Get(strconv.Itoa(key))
+	cache := sitecontext.GetCache("user:users")
+	if cache == nil {
+		sitecontext.Log("main", "xmodules::user::GetUser: Error, the user cache is not available on this site context")
+		return nil
+	}
+
+	data, _ := cache.Get(strconv.Itoa(key))
 	if data == nil {
 		sm := CreateStructureUserByKey(sitecontext, key)
 		if sm == nil {
-			sitecontext.Logs["graph"].Println("xmodules::user::GetUser: there is no user created:", key)
+			sitecontext.Log("graph", "xmodules::user::GetUser: There is no user created: ", key)
 			return nil
 		}
-		sitecontext.Caches["user:users"].Set(strconv.Itoa(key), sm)
+		cache.Set(strconv.Itoa(key), sm)
 		return sm.(*StructureUser)
 	}
 	return data.(*StructureUser)
