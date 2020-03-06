@@ -11,7 +11,14 @@ type StructureUser struct {
 }
 
 func CreateStructureUserByKey(sitecontext *context.Context, key int) context.Structure {
-	data, _ := sitecontext.Tables["user_user"].SelectOne(key)
+
+	user_user := sitecontext.GetTable("user_user")
+	if user_user == nil {
+		sitecontext.Log("xmodules::user::CreateStructureUserByKey: Error, the user_user table is not available on this context")
+		return nil
+	}
+
+	data, _ := user_user.SelectOne(key)
 	if data == nil {
 		return nil
 	}

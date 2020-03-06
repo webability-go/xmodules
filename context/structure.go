@@ -17,7 +17,12 @@ type StructureModule struct {
 }
 
 func CreateStructureModuleByKey(sitecontext *Context, key string, lang language.Tag) Structure {
-	data, _ := sitecontext.Tables["context_module"].SelectOne(key)
+	context_module := sitecontext.GetTable("context_module")
+	if context_module == nil {
+		sitecontext.Log("main", "Error: the context_module table is not available within the context xmodule")
+		return nil
+	}
+	data, _ := context_module.SelectOne(key)
 	if data == nil {
 		return nil
 	}

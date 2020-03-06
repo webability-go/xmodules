@@ -11,22 +11,37 @@ import (
 
 func buildTables(sitecontext *context.Context, databasename string) {
 
-	sitecontext.Tables["material_material"] = materialMaterial()
-	sitecontext.Tables["material_material"].SetBase(sitecontext.Databases[databasename])
-	sitecontext.Tables["material_material"].SetLanguage(language.Spanish)
+	sitecontext.SetTable("material_material", materialMaterial())
+	sitecontext.GetTable("material_material").SetBase(sitecontext.GetDatabase(databasename))
+	sitecontext.GetTable("material_material").SetLanguage(language.Spanish)
 }
 
-func buildCache(sitecontext *context.Context) {
+func createCache(sitecontext *context.Context) []string {
 
-	// Loads all data in XCache
-	materiales, _ := sitecontext.Tables["material_material"].SelectAll()
-	if materiales == nil {
-		return
+	for _, lang := range sitecontext.GetLanguages() {
+		canonical := lang.String()
+		sitecontext.SetCache("materiales:"+canonical, xcore.NewXCache("materiales:"+canonical, 0, 0))
+	}
+	return []string{}
+}
+
+func buildCache(sitecontext *context.Context) []string {
+
+	// Lets protect us for race condition since map[] of Tables and XCaches are not thread safe
+	material_material := sitecontext.GetTable("material_material")
+	caches := map[string]*xcore.XCache{}
+	for _, lang := range sitecontext.GetLanguages() {
+		canonical := lang.String()
+		caches["materiales:"+canonical] = sitecontext.GetCache("materiales:" + canonical)
 	}
 
-	for _, lang := range sitecontext.Languages {
+	// Loads all data in XCache
+	materiales, _ := material_material.SelectAll()
+	if materiales == nil {
+		return []string{"No hay material en la base de datos"}
+	}
+	for _, lang := range sitecontext.GetLanguages() {
 		canonical := lang.String()
-		sitecontext.Caches["materiales:"+canonical] = xcore.NewXCache("materiales:"+canonical, 0, 0)
 
 		all := []int{}
 		for _, m := range *materiales {
@@ -34,8 +49,10 @@ func buildCache(sitecontext *context.Context) {
 			str := CreateStructureMaterialByData(sitecontext, m.Clone(), lang)
 			key, _ := m.GetInt("clave")
 			all = append(all, key)
-			sitecontext.Caches["materiales:"+canonical].Set(strconv.Itoa(key), str)
+			caches["materiales:"+canonical].Set(strconv.Itoa(key), str)
 		}
-		sitecontext.Caches["materiales:"+canonical].Set("all", all)
+		caches["materiales:"+canonical].Set("all", all)
 	}
+
+	return []string{}
 }

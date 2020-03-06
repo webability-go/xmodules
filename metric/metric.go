@@ -15,7 +15,7 @@ import (
 
 const (
 	MODULEID         = "metric"
-	VERSION          = "1.0.1"
+	VERSION          = "2.0.0"
 	TRANSLATIONTHEME = "metric"
 
 	reFloat    = "^[0-9.]+$"
@@ -49,8 +49,10 @@ const (
 func InitModule(sitecontext *context.Context, databasename string) error {
 
 	buildTables(sitecontext, databasename)
+	createCache(sitecontext)
+	sitecontext.SetModule(MODULEID, VERSION)
+
 	go buildCache(sitecontext)
-	sitecontext.Modules[MODULEID] = VERSION
 
 	return nil
 }
@@ -61,9 +63,9 @@ func SynchronizeModule(sitecontext *context.Context) []string {
 
 	messages := []string{}
 	messages = append(messages, "Analysing metric_unit table.")
-	num, err := sitecontext.Tables["metric_unit"].Count(nil)
+	num, err := sitecontext.GetTable("metric_unit").Count(nil)
 	if err != nil || num == 0 {
-		err1 := sitecontext.Tables["metric_unit"].Synchronize()
+		err1 := sitecontext.GetTable("metric_unit").Synchronize()
 		if err1 != nil {
 			messages = append(messages, "The table metric_unit was not created: "+err1.Error())
 		} else {
@@ -81,14 +83,14 @@ func GetMetric(sitecontext *context.Context, clave int, lang language.Tag) *Stru
 
 	canonical := lang.String()
 
-	data, _ := sitecontext.Caches["metrics:"+canonical].Get(strconv.Itoa(clave))
+	data, _ := sitecontext.GetCache("metrics:" + canonical).Get(strconv.Itoa(clave))
 	if data == nil {
 		sm := CreateStructureMetricByKey(sitecontext, clave, lang)
 		if sm == nil {
-			sitecontext.Logs["graph"].Println("xmodules::metrics::GetMetric: No hay medida creada:", clave, lang)
+			sitecontext.Log("graph", "xmodules::metrics::GetMetric: No hay medida creada:", clave, lang)
 			return nil
 		}
-		sitecontext.Caches["metric:"+canonical].Set(strconv.Itoa(clave), sm)
+		sitecontext.GetCache("metric:"+canonical).Set(strconv.Itoa(clave), sm)
 		return sm.(*StructureMetric)
 	}
 	return data.(*StructureMetric)

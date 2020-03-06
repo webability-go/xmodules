@@ -9,13 +9,13 @@ import (
 
 const (
 	MODULEID = "stat"
-	VERSION  = "1.0.1"
+	VERSION  = "2.0.0"
 )
 
 func InitModule(sitecontext *context.Context, prefix string, databasename string) error {
 
 	buildTables(sitecontext, prefix, databasename)
-	sitecontext.Modules[MODULEID] = VERSION
+	sitecontext.SetModule(MODULEID, VERSION)
 
 	return nil
 }
@@ -39,9 +39,15 @@ func SynchronizeModule(sitecontext *context.Context, prefix string) []string {
 		m += strconv.Itoa(i)
 
 		messages = append(messages, "Analysing "+prefix+"stat_"+m+" table.")
-		num, err := sitecontext.Tables[prefix+"stat_"+m].Count(nil)
+		table := sitecontext.GetTable(prefix + "stat_" + m)
+		if table == nil {
+			messages = append(messages, "xmodules::stat::SynchronizeModule: Error, the table does not exist in the context: "+prefix+"stat_"+m)
+			return messages
+		}
+
+		num, err := table.Count(nil)
 		if err != nil || num == 0 {
-			err1 := sitecontext.Tables[prefix+"stat_"+m].Synchronize()
+			err1 := table.Synchronize()
 			if err1 != nil {
 				messages = append(messages, "The table "+prefix+"stat_"+m+" was not created: "+err1.Error())
 			} else {
@@ -65,10 +71,17 @@ func SynchronizeModule(sitecontext *context.Context, prefix string) []string {
 }
 
 func RegisterStat(sitecontext *context.Context, prefix string, data xdominion.XRecord) {
+
+	table := sitecontext.GetTable(prefix + "stat_" + getMonth())
+	if table == nil {
+		sitecontext.Log("main", "xmodules::stat::RegisterStat: Error, the table does not exist in the context: ", prefix+"stat_"+getMonth())
+		return
+	}
+
 	data.Set("clave", 0)
-	_, err := sitecontext.Tables[prefix+"stat_"+getMonth()].Insert(data)
+	_, err := table.Insert(data)
 	if err != nil {
-		sitecontext.Logs["main"].Println("Error insertando el log:", err)
+		sitecontext.Log("main", "Error insertando el log:", err)
 	}
 }
 

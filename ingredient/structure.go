@@ -23,7 +23,7 @@ type StructureIngredient struct {
 }
 
 func CreateStructurePasilloByKey(sitecontext *context.Context, key int, lang language.Tag) context.Structure {
-	data, _ := sitecontext.Tables["kl_ingredientepasillo"].SelectOne(key)
+	data, _ := sitecontext.GetTable("kl_ingredientepasillo").SelectOne(key)
 	if data == nil {
 		return nil
 	}
@@ -35,9 +35,9 @@ func CreateStructurePasilloByData(sitecontext *context.Context, data xdominion.X
 	key, _ := data.GetInt("clave")
 
 	// builds main data: translations
-	if sitecontext.Tables["kl_ingredientepasillo"].Language != lang {
+	if sitecontext.GetTable("kl_ingredientepasillo").Language != lang {
 		// Only 1 fields to translate: nombre
-		translation.Translate(sitecontext, TRANSLATIONTHEME, strconv.Itoa(key), data, map[string]interface{}{"nombre": true}, sitecontext.Tables["kl_ingredientepasillo"].Language, lang)
+		translation.Translate(sitecontext, TRANSLATIONTHEME, strconv.Itoa(key), data, map[string]interface{}{"nombre": true}, sitecontext.GetTable("kl_ingredientepasillo").Language, lang)
 	}
 
 	return &StructurePasillo{Key: key, Lang: lang, Data: data.(*xdominion.XRecord)}
@@ -69,7 +69,7 @@ func (sm *StructurePasillo) Clone() context.Structure {
 }
 
 func CreateStructureIngredientByKey(sitecontext *context.Context, key int, lang language.Tag) context.Structure {
-	data, _ := sitecontext.Tables["kl_ingrediente"].SelectOne(key)
+	data, _ := sitecontext.GetTable("kl_ingrediente").SelectOne(key)
 	if data == nil {
 		return nil
 	}
@@ -81,9 +81,9 @@ func CreateStructureIngredientByData(sitecontext *context.Context, data xdominio
 	key, _ := data.GetInt("clave")
 
 	// builds main data: translations
-	if sitecontext.Tables["kl_ingrediente"].Language != lang {
+	if sitecontext.GetTable("kl_ingrediente").Language != lang {
 		// Only 2 fields to translate: nombre, plural
-		translation.Translate(sitecontext, TRANSLATIONTHEMEAISLE, strconv.Itoa(key), data, map[string]interface{}{"nombre": true, "plural": true}, sitecontext.Tables["kl_ingrediente"].Language, lang)
+		translation.Translate(sitecontext, TRANSLATIONTHEMEAISLE, strconv.Itoa(key), data, map[string]interface{}{"nombre": true, "plural": true}, sitecontext.GetTable("kl_ingrediente").Language, lang)
 	}
 
 	return &StructureIngredient{Key: key, Lang: lang, Data: data.(*xdominion.XRecord)}

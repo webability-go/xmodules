@@ -40,24 +40,39 @@ var moduletables = map[string]func() *xdominion.XTable{
 func buildTables(sitecontext *context.Context, databasename string) {
 
 	for _, tbl := range moduletablesorder {
-		sitecontext.Tables[tbl] = moduletables[tbl]()
-		sitecontext.Tables[tbl].SetBase(sitecontext.Databases[databasename])
+		table := moduletables[tbl]()
+		table.SetBase(sitecontext.GetDatabase(databasename))
+		sitecontext.SetTable(tbl, table)
 	}
+}
+
+func createCache(sitecontext *context.Context) []string {
+
+	sitecontext.SetCache("user:users", xcore.NewXCache("user:users", 0, 0))
+
+	return []string{}
 }
 
 func buildCache(sitecontext *context.Context) []string {
 
-	// Loads all data in XCache
-	users, _ := sitecontext.Tables["user_user"].SelectAll()
+	user_user := sitecontext.GetTable("user_user")
+	if user_user == nil {
+		return []string{"xmodules::user::buildCache: Error, the user_user table is not available on this context"}
+	}
+	cache := sitecontext.GetCache("user:users")
+	if cache == nil {
+		return []string{"xmodules::user::buildCache: Error, the user cache is not available on this site context"}
+	}
 
-	sitecontext.Caches["user:users"] = xcore.NewXCache("user:users", 0, 0)
+	// Loads all data in XCache
+	users, _ := user_user.SelectAll()
 
 	if users != nil {
 		for _, m := range *users {
 			// creates structure on language
 			str := CreateStructureUserByData(sitecontext, m.Clone())
 			key, _ := m.GetString("key")
-			sitecontext.Caches["user:users"].Set(key, str)
+			cache.Set(key, str)
 		}
 	}
 
@@ -69,10 +84,16 @@ func createTables(sitecontext *context.Context) []string {
 	messages := []string{}
 
 	for _, tbl := range moduletablesorder {
+
+		table := sitecontext.GetTable(tbl)
+		if table == nil {
+			return []string{"xmodules::user::createTables: Error, the table is not available on this context:" + tbl}
+		}
+
 		messages = append(messages, "Analysing "+tbl+" table.")
-		num, err := sitecontext.Tables[tbl].Count(nil)
+		num, err := table.Count(nil)
 		if err != nil || num == 0 {
-			err1 := sitecontext.Tables[tbl].Synchronize()
+			err1 := table.Synchronize()
 			if err1 != nil {
 				messages = append(messages, "The table "+tbl+" was not created: "+err1.Error())
 			} else {
@@ -88,8 +109,13 @@ func createTables(sitecontext *context.Context) []string {
 
 func loadTables(sitecontext *context.Context) []string {
 
+	user_user := sitecontext.GetTable("user_user")
+	if user_user == nil {
+		return []string{"xmodules::user::createTables: Error, the table user_user is not available on this context"}
+	}
+
 	// insert super admin
-	_, err := sitecontext.Tables["user_user"].Upsert(1, xdominion.XRecord{
+	_, err := user_user.Upsert(1, xdominion.XRecord{
 		"key":          1,
 		"status":       "A",
 		"name":         "System Manager",
@@ -101,9 +127,10 @@ func loadTables(sitecontext *context.Context) []string {
 		"lastmodif":    time.Now(),
 	})
 	if err != nil {
-
+		sitecontext.Log("main", "Error inserting admin user", err)
+		return []string{"xmodules::user::loadTables: Error upserting the admin user"}
 	}
 	return []string{
-		fmt.Sprint(sitecontext.Tables["user_user"].Count(nil)) + " admin user added",
+		fmt.Sprint(user_user.Count(nil)) + " admin user added",
 	}
 }

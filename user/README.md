@@ -16,6 +16,9 @@ The user package is used to build a set of administration users with all the sec
 Version Changes Control
 =======================
 
+v2.0.0 - 2020-03-05
+- Support for multithread context implemented
+
 v1.0.2 - 2020-01-23
 - BuildCaches is now on parallel thread
 

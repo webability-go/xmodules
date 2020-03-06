@@ -11,7 +11,7 @@ import (
 
 const (
 	MODULEID         = "country"
-	VERSION          = "1.0.2"
+	VERSION          = "2.0.0"
 	TRANSLATIONTHEME = "country"
 )
 
@@ -20,8 +20,10 @@ const (
 func InitModule(sitecontext *context.Context, databasename string) error {
 
 	buildTables(sitecontext, databasename)
+	createCache(sitecontext)
+	sitecontext.SetModule(MODULEID, VERSION)
+
 	go buildCache(sitecontext)
-	sitecontext.Modules[MODULEID] = VERSION
 
 	return nil
 }
@@ -62,19 +64,41 @@ func SynchronizeModule(sitecontext *context.Context, filespath string) []string 
 	return messages
 }
 
+func createTables(sitecontext *context.Context) []string {
+
+	messages := []string{}
+
+	for _, tbl := range moduletablesorder {
+		messages = append(messages, "Analysing "+tbl+" table.")
+		num, err := sitecontext.GetTable(tbl).Count(nil)
+		if err != nil || num == 0 {
+			err1 := sitecontext.GetTable(tbl).Synchronize()
+			if err1 != nil {
+				messages = append(messages, "The table "+tbl+" was not created: "+err1.Error())
+			} else {
+				messages = append(messages, "The table "+tbl+" was created (again)")
+			}
+		} else {
+			messages = append(messages, "The table "+tbl+" was not created because it contains data.")
+		}
+	}
+
+	return messages
+}
+
 // GetCountry to get the data of a country from cache/db in the specified language
 func GetCountry(sitecontext *context.Context, key string, lang language.Tag) *StructureCountry {
 
 	canonical := lang.String()
 
-	data, _ := sitecontext.Caches["country:countries:"+canonical].Get(key)
+	data, _ := sitecontext.GetCache("country:countries:" + canonical).Get(key)
 	if data == nil {
 		sm := CreateStructureCountryByKey(sitecontext, key, lang)
 		if sm == nil {
-			sitecontext.Logs["graph"].Println("xmodules::country::GetGountry: there is no country created:", key, lang)
+			sitecontext.Log("graph", "xmodules::country::GetGountry: there is no country created:", key, lang)
 			return nil
 		}
-		sitecontext.Caches["country:countries:"+canonical].Set(key, sm)
+		sitecontext.GetCache("country:countries:"+canonical).Set(key, sm)
 		return sm.(*StructureCountry)
 	}
 	return data.(*StructureCountry)

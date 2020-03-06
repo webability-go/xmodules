@@ -12,15 +12,17 @@ import (
 
 const (
 	MODULEID         = "material"
-	VERSION          = "1.0.0"
+	VERSION          = "2.0.0"
 	TRANSLATIONTHEME = "material"
 )
 
 func InitModule(sitecontext *context.Context, databasename string) error {
 
 	buildTables(sitecontext, databasename)
+	createCache(sitecontext)
+	sitecontext.SetModule(MODULEID, VERSION)
+
 	go buildCache(sitecontext)
-	sitecontext.Modules[MODULEID] = VERSION
 
 	return nil
 }
@@ -31,9 +33,9 @@ func SynchronizeModule(sitecontext *context.Context) []string {
 
 	messages := []string{}
 	messages = append(messages, "Analysing material_material table.")
-	num, err := sitecontext.Tables["material_material"].Count(nil)
+	num, err := sitecontext.GetTable("material_material").Count(nil)
 	if err != nil || num == 0 {
-		err1 := sitecontext.Tables["material_material"].Synchronize()
+		err1 := sitecontext.GetTable("material_material").Synchronize()
 		if err1 != nil {
 			messages = append(messages, "The table material_material was not created: "+err1.Error())
 		} else {
@@ -51,14 +53,14 @@ func GetMaterial(sitecontext *context.Context, clave int, lang language.Tag) *St
 
 	canonical := lang.String()
 
-	data, _ := sitecontext.Caches["materiales:"+canonical].Get(strconv.Itoa(clave))
+	data, _ := sitecontext.GetCache("materiales:" + canonical).Get(strconv.Itoa(clave))
 	if data == nil {
 		sm := CreateStructureMaterialByKey(sitecontext, clave, lang)
 		if sm == nil {
-			sitecontext.Logs["graph"].Println("xmodules::material::GetMaterial: No hay material creado:", clave, lang)
+			sitecontext.Log("graph", "xmodules::material::GetMaterial: No hay material creado:", clave, lang)
 			return nil
 		}
-		sitecontext.Caches["materiales:"+canonical].Set(strconv.Itoa(clave), sm)
+		sitecontext.GetCache("materiales:"+canonical).Set(strconv.Itoa(clave), sm)
 		return sm.(*StructureMaterial)
 	}
 	return data.(*StructureMaterial)

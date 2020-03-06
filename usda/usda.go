@@ -10,7 +10,7 @@ import (
 
 const (
 	MODULEID         = "usda"
-	VERSION          = "1.0.0"
+	VERSION          = "2.0.0"
 	TRANSLATIONTHEME = "nutrient"
 )
 
@@ -18,8 +18,9 @@ func InitModule(sitecontext *context.Context, databasename string) error {
 
 	buildTables(sitecontext, databasename)
 	createCache(sitecontext)
+	sitecontext.SetModule(MODULEID, VERSION)
+
 	go buildCache(sitecontext)
-	sitecontext.Modules[MODULEID] = VERSION
 
 	return nil
 }
@@ -49,7 +50,13 @@ func GetNutrients(sitecontext *context.Context, lang language.Tag) []string {
 
 	canonical := lang.String()
 
-	data, _ := sitecontext.Caches["usda:nutrients:"+canonical].Get("all")
+	cache := sitecontext.GetCache("usda:nutrients:" + canonical)
+	if cache == nil {
+		sitecontext.Log("main", "xmodules::usda::GetNutrients: Error, the nutrients cache is not available on this site context")
+		return nil
+	}
+
+	data, _ := cache.Get("all")
 	if data == nil {
 		return []string{}
 	}
@@ -60,14 +67,20 @@ func GetNutrient(sitecontext *context.Context, key string, lang language.Tag) *S
 
 	canonical := lang.String()
 
-	data, _ := sitecontext.Caches["usda:nutrients:"+canonical].Get(key)
+	cache := sitecontext.GetCache("usda:nutrients:" + canonical)
+	if cache == nil {
+		sitecontext.Log("main", "xmodules::usda::GetNutrient: Error, the nutrients cache is not available on this site context")
+		return nil
+	}
+
+	data, _ := cache.Get(key)
 	if data == nil {
 		sm := CreateStructureNutrientByKey(sitecontext, key, lang)
 		if sm == nil {
-			sitecontext.Logs["graph"].Println("xmodules::usda::GetNutrient: No hay nutriente creado:", key, lang)
+			sitecontext.Log("graph", "xmodules::usda::GetNutrient: No hay nutriente creado:", key, lang)
 			return nil
 		}
-		sitecontext.Caches["usda:nutrients:"+canonical].Set(key, sm)
+		cache.Set(key, sm)
 		return sm.(*StructureNutrient)
 	}
 	return data.(*StructureNutrient)
@@ -75,7 +88,13 @@ func GetNutrient(sitecontext *context.Context, key string, lang language.Tag) *S
 
 func GetFoodNutrients(sitecontext *context.Context, key string) *xdominion.XRecords {
 
-	nutrients, _ := sitecontext.Tables["usda_foodnutrient"].SelectAll(xdominion.XConditions{
+	usda_foodnutrient := sitecontext.GetTable("usda_foodnutrient")
+	if usda_foodnutrient == nil {
+		sitecontext.Log("main", "xmodules::usda::GetFoodNutrients: Error, the usda_foodnutrient table is not available on this context")
+		return nil
+	}
+
+	nutrients, _ := usda_foodnutrient.SelectAll(xdominion.XConditions{
 		xdominion.NewXCondition("food", "=", key),
 	}, xdominion.NewXOrderBy("nutrient", xdominion.ASC))
 	return nutrients

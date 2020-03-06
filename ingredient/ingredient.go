@@ -15,7 +15,7 @@ import (
 
 const (
 	MODULEID              = "ingredient"
-	VERSION               = "1.0.0"
+	VERSION               = "2.0.0"
 	TRANSLATIONTHEME      = "ingredient"
 	TRANSLATIONTHEMEAISLE = "ingaisle"
 )
@@ -23,8 +23,10 @@ const (
 func InitModule(sitecontext *context.Context, databasename string) error {
 
 	buildTables(sitecontext, databasename)
+	createCache(sitecontext)
+	sitecontext.SetModule(MODULEID, VERSION)
+
 	go buildCache(sitecontext)
-	sitecontext.Modules[MODULEID] = VERSION
 
 	return nil
 }
@@ -37,9 +39,9 @@ func SynchronizeModule(sitecontext *context.Context) []string {
 	messages := []string{}
 
 	messages = append(messages, "Analysing ingredient_aisle table.")
-	num, err := sitecontext.Tables["ingredient_aisle"].Count(nil)
+	num, err := sitecontext.GetTable("ingredient_aisle").Count(nil)
 	if err != nil || num == 0 {
-		err1 := sitecontext.Tables["ingredient_aisle"].Synchronize()
+		err1 := sitecontext.GetTable("ingredient_aisle").Synchronize()
 		if err1 != nil {
 			messages = append(messages, "The table ingredient_aisle was not created: "+err1.Error())
 		} else {
@@ -50,9 +52,9 @@ func SynchronizeModule(sitecontext *context.Context) []string {
 	}
 
 	messages = append(messages, "Analysing ingredient_ingredient table.")
-	num, err = sitecontext.Tables["ingredient_ingredient"].Count(nil)
+	num, err = sitecontext.GetTable("ingredient_ingredient").Count(nil)
 	if err != nil || num == 0 {
-		err1 := sitecontext.Tables["ingredient_ingredient"].Synchronize()
+		err1 := sitecontext.GetTable("ingredient_ingredient").Synchronize()
 		if err1 != nil {
 			messages = append(messages, "The table ingredient_ingredient was not created: "+err1.Error())
 		} else {
@@ -70,14 +72,14 @@ func GetPasillo(sitecontext *context.Context, clave int, lang language.Tag) *Str
 
 	canonical := lang.String()
 
-	data, _ := sitecontext.Caches["ingredient:pasillos:"+canonical].Get(strconv.Itoa(clave))
+	data, _ := sitecontext.GetCache("ingredient:pasillos:" + canonical).Get(strconv.Itoa(clave))
 	if data == nil {
 		sm := CreateStructurePasilloByKey(sitecontext, clave, lang)
 		if sm == nil {
-			sitecontext.Logs["graph"].Println("xmodules::ingredient::GetPasillo: No hay pasillo creado:", clave, lang)
+			sitecontext.Log("graph", "xmodules::ingredient::GetPasillo: No hay pasillo creado:", clave, lang)
 			return nil
 		}
-		sitecontext.Caches["ingredient:pasillos:"+canonical].Set(strconv.Itoa(clave), sm)
+		sitecontext.GetCache("ingredient:pasillos:"+canonical).Set(strconv.Itoa(clave), sm)
 		return sm.(*StructurePasillo)
 	}
 	return data.(*StructurePasillo)
@@ -87,14 +89,14 @@ func GetIngredient(sitecontext *context.Context, clave int, lang language.Tag) *
 
 	canonical := lang.String()
 
-	data, _ := sitecontext.Caches["ingredient:ingredientes:"+canonical].Get(strconv.Itoa(clave))
+	data, _ := sitecontext.GetCache("ingredient:ingredientes:" + canonical).Get(strconv.Itoa(clave))
 	if data == nil {
 		sm := CreateStructureIngredientByKey(sitecontext, clave, lang)
 		if sm == nil {
-			sitecontext.Logs["graph"].Println("xmodules::ingredient::GetIngredient: No hay ingrediente creado:", clave, lang)
+			sitecontext.Log("graph", "xmodules::ingredient::GetIngredient: No hay ingrediente creado:", clave, lang)
 			return nil
 		}
-		sitecontext.Caches["ingredient:ingredientes:"+canonical].Set(strconv.Itoa(clave), sm)
+		sitecontext.GetCache("ingredient:ingredientes:"+canonical).Set(strconv.Itoa(clave), sm)
 		return sm.(*StructureIngredient)
 	}
 	return data.(*StructureIngredient)

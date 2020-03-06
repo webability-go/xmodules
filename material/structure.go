@@ -17,7 +17,7 @@ type StructureMaterial struct {
 }
 
 func CreateStructureMaterialByKey(sitecontext *context.Context, key int, lang language.Tag) context.Structure {
-	data, _ := sitecontext.Tables["kl_material"].SelectOne(key)
+	data, _ := sitecontext.GetTable("kl_material").SelectOne(key)
 	if data == nil {
 		return nil
 	}
@@ -29,9 +29,9 @@ func CreateStructureMaterialByData(sitecontext *context.Context, data xdominion.
 	key, _ := data.GetInt("clave")
 
 	// builds main data: translations
-	if sitecontext.Tables["kl_material"].Language != lang {
+	if sitecontext.GetTable("kl_material").Language != lang {
 		// Only 1 fields to translate: nombre
-		translation.Translate(sitecontext, TRANSLATIONTHEME, strconv.Itoa(key), data, map[string]interface{}{"nombre": true, "plural": true}, sitecontext.Tables["kl_material"].Language, lang)
+		translation.Translate(sitecontext, TRANSLATIONTHEME, strconv.Itoa(key), data, map[string]interface{}{"nombre": true, "plural": true}, sitecontext.GetTable("kl_material").Language, lang)
 	}
 
 	return &StructureMaterial{Key: key, Lang: lang, Data: data.(*xdominion.XRecord)}

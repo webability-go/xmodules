@@ -13,6 +13,10 @@ The context package controls also the installed package on each context.
 Version Changes Control
 =======================
 
+v2.0.0 - 2020-03-05
+- Implemented support for multithread (Mutex) on each object of the Container and Context.
+- The data is now accessible by Get/Set/Add functions
+
 v1.0.0 - 2019-12-18
 - First release of module
 
