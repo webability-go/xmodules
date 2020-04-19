@@ -62,6 +62,10 @@ import "github.com/webability-go/xmodules/ingredient"
 import "github.com/webability-go/xmodules/material"
 
 
+v0.0.2:
+Now uses xcore/v2
+
+
 
 
 Modules soon available: (working on them)

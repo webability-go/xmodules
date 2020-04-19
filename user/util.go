@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/webability-go/xcore"
+	"github.com/webability-go/xcore/v2"
 	"github.com/webability-go/xdominion"
 	"github.com/webability-go/xmodules/context"
 )
