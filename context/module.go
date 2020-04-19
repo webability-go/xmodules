@@ -3,7 +3,7 @@ package context
 import (
 	"errors"
 
-	"github.com/webability-go/xcore"
+	"github.com/webability-go/xcore/v2"
 	"github.com/webability-go/xdominion"
 )
 

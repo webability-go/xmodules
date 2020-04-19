@@ -1,6 +1,7 @@
 package translation
 
 import (
+	"fmt"
 	"time"
 
 	"golang.org/x/text/language"
@@ -86,7 +87,11 @@ func (tb *TranslationBlock) Verify(sitecontext *context.Context) {
 		tb.translated[field] = trval
 	}
 	if len(fields) > 0 {
-		result, _ := GoogleTranslation(values, tb.fromlang, tb.tolang)
+		result, err := GoogleTranslation(values, tb.fromlang, tb.tolang)
+		if err != nil || len(result) != len(fields) {
+			fmt.Println("Error translating google:", tb.tema, tb.clave, tb.fromlang, tb.tolang, len(result), len(fields), err)
+			return
+		}
 		for i, field := range fields {
 			tb.translated[field] = result[i].Text
 			SetTranslation(sitecontext, result[i].Text, tb.tema, tb.clave, field, tb.tolang, 0)

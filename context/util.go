@@ -4,7 +4,7 @@ import (
 	"golang.org/x/text/language"
 
 	"github.com/webability-go/xconfig"
-	"github.com/webability-go/xcore"
+	"github.com/webability-go/xcore/v2"
 )
 
 func buildTables(sitecontext *Context, databasename string) {
