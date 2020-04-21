@@ -10,6 +10,11 @@ The released modules are actually:
 import "github.com/webability-go/xmodules/context"
 
 
+- tools: is used to give some basic tools for keys, passwords, uuid, md5.
+
+import "github.com/webability-go/xmodules/tools"
+
+
 - stat: tables to keep stats of use of anything, from site hits to IOT events.
 
 import "github.com/webability-go/xmodules/stat"
@@ -62,8 +67,12 @@ import "github.com/webability-go/xmodules/ingredient"
 import "github.com/webability-go/xmodules/material"
 
 
+v0.0.3:
+- Added tools xmodule for basic functions
+- user xmodule enhanced to log-in/log-out and controls session of a user
+
 v0.0.2:
-Now uses xcore/v2
+- Now uses xcore/v2
 
 
 
