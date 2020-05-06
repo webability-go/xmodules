@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<language id="users" lang="es">
+
+    <!-- ENTORNO -->
+    <entry id="userstitle"><![CDATA[Administración de usuarios]]></entry>
+    <entry id="usershint"><![CDATA[Seleccione un usuario haciendo click sobre su nombre o en los comandos]]></entry>
+    <entry id="listreload"><![CDATA[Recargar la lista]]></entry>
+    <entry id="insertnew">Insertar un nuevo usuario</entry>
+    <entry id="onlyactive">Ver solamente los activos</entry>
+
+    <entry id="key">Clave</entry>
+    <entry id="status">Estatus</entry>
+    <entry id="namemail">Nombre / Correo</entry>
+    <entry id="profiles">Perfiles</entry>
+    <entry id="rights">Derechos</entry>
+    <entry id="commands">Comandos</entry>
+
+</language>

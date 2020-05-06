@@ -16,14 +16,10 @@ import (
 	"github.com/webability-go/xdominion"
 )
 
-const (
-	MODULEID = "context"
-	VERSION  = "2.0.0"
-)
-
 // Context is a portable structure containing pointer to usefull structures used in any context of sites
 // Since it's thread safe and based on maps and slices, it must be accessed through Get/Set functions with mutexes
 // to avoid race conditions
+// The is only ONE database by context, with a set of modules and tables into this database.
 type Context struct {
 	// The name of the context (informative only)
 	Name string
@@ -192,6 +188,7 @@ func (ctx *Context) GetModules() map[string]string {
 type Container struct {
 	mcontexts sync.RWMutex
 	contexts  map[string]*Context
+	CoreLog   *log.Logger
 }
 
 func (cs *Container) SetContext(id string, context *Context) {
@@ -347,6 +344,43 @@ func (cs *Container) CreateContext(name string, config *xconfig.XConfig) *Contex
 	return ctx
 }
 
+// Create will scan a full config file for Containers
+// The XConfig file must have this syntax:
+//  context=[contextid1]
+//  context=[contextid2]
+//  context=[contextid3]
+//  contextid1-config=[path-to-config-file]
+//  contextid2-config=[path-to-config-file]
+//  contextid3-config=[path-to-config-file]
+func Create(configfile string) *Container {
+
+	CoreConfig := xconfig.New()
+	CoreConfig.LoadFile(configfile)
+
+	// Abrir CoreLog de Base
+	logstr, _ := CoreConfig.GetString("logcore")
+	logw, err := os.OpenFile(logstr, os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
+	if err != nil {
+		fmt.Println("Error opening core log file xmodules::app::init:", err)
+	}
+	CoreLog := log.New(logw, "Core: ", log.Ldate|log.Ltime|log.Lshortfile)
+	CoreLog.Println("xmodules::context::Create: Starting Core Log")
+
+	cc := &Container{
+		contexts: map[string]*Context{},
+		CoreLog:  CoreLog,
+	}
+
+	contexts, _ := CoreConfig.GetStringCollection("context")
+	for _, context := range contexts {
+		cfgpath, _ := CoreConfig.GetString(context + "+config")
+		cfg := xconfig.New()
+		cfg.LoadFile(cfgpath)
+		cc.CreateContext(context, cfg)
+	}
+	return cc
+}
+
 // Analyze a context and gets back the main data
 func GetContextStats(sitecontext *Context) *xcore.XDataset {
 
@@ -386,51 +420,4 @@ func GetContextStats(sitecontext *Context) *xcore.XDataset {
 	subdata["modules"] = modules
 
 	return &subdata
-}
-
-// ======================================
-
-// InitContext is called during the init phase to link the module with the system
-// It must be called AFTER GetContainer
-// adds tables and caches to sitecontext::database
-// It should be called AFTER createContext
-func InitModule(sitecontext *Context, databasename string) error {
-
-	buildTables(sitecontext, databasename)
-	buildCache(sitecontext)
-	sitecontext.SetModule(MODULEID, VERSION)
-
-	return nil
-}
-
-func SynchronizeModule(sitecontext *Context) []string {
-
-	messages := []string{}
-	messages = append(messages, "Analysing context_module table.")
-
-	context_module := sitecontext.GetTable("context_module")
-	if context_module == nil {
-		messages = append(messages, "Critical Error: the context table context_module does not exist !!!: ")
-		return messages
-	}
-	num, err := context_module.Count(nil)
-	if err != nil || num == 0 {
-		err1 := context_module.Synchronize()
-		if err1 != nil {
-			messages = append(messages, "The table context_module was not created: "+err1.Error())
-		} else {
-			messages = append(messages, "The table context_module was created (again)")
-		}
-	} else {
-		messages = append(messages, "The table context_module was not created because it contains data.")
-	}
-
-	// Be sure context module is on db: fill context module (we should get this from xmodule.conf)
-	err = AddModule(sitecontext, MODULEID, "Contexts and Modules for Xamboo", VERSION)
-	if err == nil {
-		messages = append(messages, "The entry "+MODULEID+" was modified successfully in the context_module table.")
-	} else {
-		messages = append(messages, "Error modifying the entry "+MODULEID+" in the context_module table: "+err.Error())
-	}
-	return messages
 }

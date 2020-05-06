@@ -3,9 +3,71 @@ package context
 import (
 	"errors"
 
+	"golang.org/x/text/language"
+
 	"github.com/webability-go/xcore/v2"
 	"github.com/webability-go/xdominion"
 )
+
+type ModuleDef interface {
+	GetID() string
+	GetVersion() string
+	GetLanguages() map[language.Tag]string
+	GetNeeds() []string // module[.version[+]]
+
+	Setup(*Context, string) (string, error)
+	Synchronize(*Context, string) (string, error)
+}
+
+type Modules map[string]ModuleDef
+
+var ModulesList = &Modules{}
+
+func (ml *Modules) Register(m ModuleDef) {
+	id := m.GetID()
+	(*ml)[id] = m
+}
+
+type Module struct {
+	ID      string
+	Version string
+
+	Languages map[language.Tag]string
+	Needs     []string
+
+	FSetup       func(*Context, string) (string, error)
+	FSynchronize func(*Context, string) (string, error)
+}
+
+func (m *Module) GetID() string {
+	return m.ID
+}
+
+func (m *Module) GetVersion() string {
+	return m.Version
+}
+
+func (m *Module) GetLanguages() map[language.Tag]string {
+	return m.Languages
+}
+
+func (m *Module) GetNeeds() []string {
+	return m.Needs
+}
+
+func (m *Module) Setup(context *Context, db string) (string, error) {
+	if m.FSetup != nil {
+		return m.FSetup(context, db)
+	}
+	return "", nil
+}
+
+func (m *Module) Synchronize(context *Context, db string) (string, error) {
+	if m.FSynchronize != nil {
+		return m.FSynchronize(context, db)
+	}
+	return "", nil
+}
 
 func IsModuleAuthorized(sitecontext *Context, id string) bool {
 	return sitecontext.GetModule(id) != ""
