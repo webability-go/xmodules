@@ -1,10 +1,7 @@
 package user
 
 import (
-	"crypto/md5"
-	"encoding/hex"
 	"fmt"
-	"math/rand"
 	"time"
 
 	"github.com/webability-go/xcore/v2"

@@ -13,9 +13,11 @@ import (
 
 func VerifyUserSession(ctx *assets.Context, xcontext *context.Context, origin string, device string) {
 
+	config := xcontext.Config
+
 	// Any sent session ?
 	sessionid := ""
-	cookiename, _ := ctx.Sysparams.GetString("cookiename")
+	cookiename, _ := config.GetString("cookiename")
 	cookie, _ := ctx.Request.Cookie(cookiename)
 	// 1.bis If there is no cookie, there is no session
 	if cookie != nil && len(cookie.Value) != 0 {
@@ -31,7 +33,7 @@ func VerifyUserSession(ctx *assets.Context, xcontext *context.Context, origin st
 		username := ctx.Request.Form.Get("username")
 		password := ctx.Request.Form.Get("password")
 		// verify against config data
-		md5password := GetMD5Hash(password)
+		md5password := tools.GetMD5Hash(password)
 
 		userdata := GetUserByCredentials(xcontext, username, md5password)
 		if userdata != nil {
@@ -50,13 +52,13 @@ func VerifyUserSession(ctx *assets.Context, xcontext *context.Context, origin st
 	if sessionid == "" { // there is no session
 		return
 	}
-	sessiondata := ReadSessionUser(ctx, sessionid)
+	sessiondata := GetSession(xcontext, sessionid)
 	if sessiondata == nil {
 		return
 	}
 
-	checkIP, _ := ctx.Sysparams.GetBool("checkip")
-	sessionip := sessiondata["ip"]
+	checkIP, _ := config.GetBool("checkip")
+	sessionip, _ := sessiondata.GetString("ip")
 	if checkIP && IP != sessionip {
 		DestroySessionUser(ctx, xcontext, sessionid)
 		return
@@ -68,23 +70,18 @@ func VerifyUserSession(ctx *assets.Context, xcontext *context.Context, origin st
 	//	ctx.Sessionparams.Set("sessionid", sessionid)
 	//	ctx.Sessionparams.Set("clientid", clientid)
 
-	ctx.Sessionparams.Set("sessionid", sessionid)
-	ctx.Sessionparams.Set("userkey", sessiondata["userkey"])
-	ctx.Sessionparams.Set("userdata", sessiondata["username"])
-}
+	userkey, _ := sessiondata.GetInt("user")
+	userdata := GetUser(xcontext, userkey)
 
-func ReadSessionUser(ctx *assets.Context, sessionid string) map[string]string {
-	return nil
-}
-
-func WriteSessionUser(ctx *assets.Context, sessionid string, data map[string]string) {
-
+	ctx.Sessionparams.Set("usersessionid", sessionid)
+	ctx.Sessionparams.Set("userkey", userkey)
+	ctx.Sessionparams.Set("usersession", sessiondata)
+	ctx.Sessionparams.Set("userdata", userdata.Data)
 }
 
 func CreateSessionUser(ctx *assets.Context, xcontext *context.Context, sessionid string, IP string, origin string, device string, user *StructureUser) string {
 
 	config := xcontext.Config
-	cookiesize, _ := config.GetInt("cookiesize")
 
 	match, _ := regexp.MatchString("[a-zA-Z0-9]{24}", sessionid)
 	if !match {
@@ -92,7 +89,7 @@ func CreateSessionUser(ctx *assets.Context, xcontext *context.Context, sessionid
 	}
 
 	userkey, _ := user.Data.GetInt("key")
-	sessionid = CreateSession(xcontext, cookiesize, userkey, sessionid, IP, origin, device)
+	sessionid = CreateSession(xcontext, userkey, sessionid, IP, origin, device)
 	if sessionid == "" {
 		return ""
 	}
@@ -105,8 +102,10 @@ func CreateSessionUser(ctx *assets.Context, xcontext *context.Context, sessionid
 
 func DestroySessionUser(ctx *assets.Context, xcontext *context.Context, sessionid string) {
 
+	config := xcontext.Config
 	cookiedomain, _ := config.GetString("cookiedomain")
-	cookiename, _ := ctx.Sysparams.GetString("cookiename")
+	cookiename, _ := config.GetString("cookiename")
+
 	http.SetCookie(ctx.Writer, &http.Cookie{Domain: cookiedomain, Name: cookiename, Value: "", Path: "/", MaxAge: -1})
 
 	// destroys the session in DB
