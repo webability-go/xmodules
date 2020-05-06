@@ -1,3 +1,3 @@
 package xmodules
 
-const VERSION = "0.0.5"
+const VERSION = "0.0.6"
