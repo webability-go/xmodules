@@ -41,6 +41,11 @@ func setupModule(context *Context, db string) (string, error) {
 	return "", nil
 }
 
+func InitModule(sitecontext *context.Context, databasename string) error {
+	_, e := setupModule(sitecontext, databasename)
+	return e
+}
+
 func synchronizeModule(context *Context, db string) (string, error) {
 
 	messages := []string{}
