@@ -9,30 +9,30 @@ import (
 	"github.com/webability-go/xmodules/context"
 )
 
-func buildTables(sitecontext *context.Context, databasename string) {
+func buildTables(ctx *context.Context) {
 
-	sitecontext.SetTable("metric_unit", metricUnit())
-	sitecontext.GetTable("metric_unit").SetBase(sitecontext.GetDatabase(databasename))
-	sitecontext.GetTable("metric_unit").SetLanguage(language.English)
+	ctx.SetTable("metric_unit", metricUnit())
+	ctx.GetTable("metric_unit").SetBase(ctx.GetDatabase())
+	ctx.GetTable("metric_unit").SetLanguage(language.English)
 }
 
-func createCache(sitecontext *context.Context) []string {
+func createCache(ctx *context.Context) []string {
 
-	for _, lang := range sitecontext.GetLanguages() {
+	for _, lang := range ctx.GetLanguages() {
 		canonical := lang.String()
-		sitecontext.SetCache("metric:"+canonical, xcore.NewXCache("metric:"+canonical, 0, 0))
+		ctx.SetCache("metric:"+canonical, xcore.NewXCache("metric:"+canonical, 0, 0))
 	}
 	return []string{}
 }
 
-func buildCache(sitecontext *context.Context) []string {
+func buildCache(ctx *context.Context) []string {
 
 	// Lets protect us for race condition since map[] of Tables and XCaches are not thread safe
-	metric_unit := sitecontext.GetTable("metric_unit")
+	metric_unit := ctx.GetTable("metric_unit")
 	caches := map[string]*xcore.XCache{}
-	for _, lang := range sitecontext.GetLanguages() {
+	for _, lang := range ctx.GetLanguages() {
 		canonical := lang.String()
-		caches["metric:"+canonical] = sitecontext.GetCache("metric:" + canonical)
+		caches["metric:"+canonical] = ctx.GetCache("metric:" + canonical)
 	}
 
 	// Loads all data in XCache
@@ -41,12 +41,12 @@ func buildCache(sitecontext *context.Context) []string {
 		return []string{"No hay metricas en la base de datos"}
 	}
 
-	for _, lang := range sitecontext.GetLanguages() {
+	for _, lang := range ctx.GetLanguages() {
 		canonical := lang.String()
 
 		for _, m := range *metrics {
 			// creates structure on language
-			str := CreateStructureMetricByData(sitecontext, m.Clone(), lang)
+			str := CreateStructureMetricByData(ctx, m.Clone(), lang)
 			clave, _ := m.GetInt("key")
 			caches["metric:"+canonical].Set(strconv.Itoa(clave), str)
 		}

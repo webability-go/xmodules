@@ -10,14 +10,9 @@ import (
 
 	"github.com/webability-go/xdominion"
 	"github.com/webability-go/xmodules/context"
-	"github.com/webability-go/xmodules/translation"
 )
 
 const (
-	MODULEID         = "metric"
-	VERSION          = "2.0.0"
-	TRANSLATIONTHEME = "metric"
-
 	reFloat    = "^[0-9.]+$"
 	reFraction = "^(([0-9]+)\\s+){0,1}([0-9]+)/([0-9]+)$"
 
@@ -45,39 +40,6 @@ const (
 	UNIT_NOTVISIBLE = 102 // pieza sin escribir el nombre
 	UNIT_VISIBLE    = 62  // pieza escribiendo el nombre
 )
-
-func InitModule(sitecontext *context.Context, databasename string) error {
-
-	buildTables(sitecontext, databasename)
-	createCache(sitecontext)
-	sitecontext.SetModule(MODULEID, VERSION)
-
-	go buildCache(sitecontext)
-
-	return nil
-}
-
-func SynchronizeModule(sitecontext *context.Context) []string {
-
-	translation.AddTheme(sitecontext, TRANSLATIONTHEME, "Metric units", translation.SOURCETABLE, "", "name,plural")
-
-	messages := []string{}
-	messages = append(messages, "Analysing metric_unit table.")
-	num, err := sitecontext.GetTable("metric_unit").Count(nil)
-	if err != nil || num == 0 {
-		err1 := sitecontext.GetTable("metric_unit").Synchronize()
-		if err1 != nil {
-			messages = append(messages, "The table metric_unit was not created: "+err1.Error())
-		} else {
-			messages = append(messages, "The table metric_unit was created (again)")
-		}
-	} else {
-		messages = append(messages, "The table metric_unit was not created because it contains data.")
-	}
-
-	// fill metric and translations
-	return messages
-}
 
 func GetMetric(sitecontext *context.Context, clave int, lang language.Tag) *StructureMetric {
 

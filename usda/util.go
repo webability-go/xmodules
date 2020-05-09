@@ -32,11 +32,11 @@ var moduletables = map[string]func() *xdominion.XTable{
 	"usda_foodnutrient": usda_foodnutrient,
 }
 
-func buildTables(sitecontext *context.Context, databasename string) {
+func buildTables(sitecontext *context.Context) {
 
 	for _, tbl := range moduletablesorder {
 		table := moduletables[tbl]()
-		table.SetBase(sitecontext.GetDatabase(databasename))
+		table.SetBase(sitecontext.GetDatabase())
 		table.SetLanguage(language.English)
 		sitecontext.SetTable(tbl, table)
 	}

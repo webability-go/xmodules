@@ -7,34 +7,34 @@ import (
 	"github.com/webability-go/xcore/v2"
 )
 
-func buildTables(sitecontext *Context, databasename string) {
+func buildTables(ctx *Context) {
 
 	table := contextModule()
-	table.SetBase(sitecontext.GetDatabase(databasename))
+	table.SetBase(ctx.GetDatabase())
 	table.SetLanguage(language.English)
-	sitecontext.SetTable("context_module", table)
+	ctx.SetTable("context_module", table)
 }
 
-func buildCache(sitecontext *Context) {
+func buildCache(ctx *Context) {
 
 	// Loads all data in XCache
-	modules, _ := sitecontext.GetTable("context_module").SelectAll()
+	modules, _ := ctx.GetTable("context_module").SelectAll()
 
-	for _, lang := range sitecontext.GetLanguages() {
+	for _, lang := range ctx.GetLanguages() {
 		canonical := lang.String()
-		sitecontext.SetCache("context:modules:"+canonical, xcore.NewXCache("context:modules:"+canonical, 0, 0))
+		ctx.SetCache("context:modules:"+canonical, xcore.NewXCache("context:modules:"+canonical, 0, 0))
 
 		all := []string{}
 		if modules != nil {
 			for _, m := range *modules {
 				// creates structure on language
-				str := CreateStructureModuleByData(sitecontext, m.Clone(), lang)
+				str := CreateStructureModuleByData(ctx, m.Clone(), lang)
 				key, _ := m.GetString("key")
 				all = append(all, key)
-				sitecontext.GetCache("context:modules:"+canonical).Set(key, str)
+				ctx.GetCache("context:modules:"+canonical).Set(key, str)
 			}
 		}
-		sitecontext.GetCache("context:modules:"+canonical).Set("all", all)
+		ctx.GetCache("context:modules:"+canonical).Set("all", all)
 	}
 }
 

@@ -14,13 +14,16 @@ To Do:
 Version Changes Control
 =======================
 
-v2.0.0 - 2020-03-05
+v0.0.1 - 2020-05-08
+- Compatible with xmodule context standard
+
+v0.0.0 - 2020-03-05
 - Support for multithread context implemented
 
-v1.0.1 - 2020-01-23
+v0.0.0 - 2020-01-23
 - BuildCaches is now on parallel thread
 
-v1.0.0 - 2019-12-18
+v0.0.0 - 2019-12-18
 - First release of module
 
 

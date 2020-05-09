@@ -14,52 +14,9 @@ import (
 )
 
 const (
-	MODULEID = "translation"
-	VERSION  = "2.0.0"
-
 	SOURCETABLE = 1
 	SOURCEFILE  = 2
 )
-
-func InitModule(sitecontext *context.Context, databasename string) error {
-
-	buildTables(sitecontext, databasename)
-	sitecontext.SetModule(MODULEID, VERSION)
-
-	return nil
-}
-
-func SynchronizeModule(sitecontext *context.Context) []string {
-
-	messages := []string{}
-
-	// Needed modules: context
-	vc := context.ModuleInstalledVersion(sitecontext, "context")
-	if vc == "" {
-		messages = append(messages, "xmodules/context need to be installed before installing xmodules/translation.")
-		return messages
-	}
-	vc1 := context.ModuleInstalledVersion(sitecontext, "user")
-	vc2 := context.ModuleInstalledVersion(sitecontext, "userlink")
-	if vc1 == "" && vc2 == "" {
-		messages = append(messages, "xmodules/user or xmodules/userlink need to be installed before installing xmodules/translation.")
-		return messages
-	}
-
-	// create tables
-	messages = append(messages, createTables(sitecontext)...)
-
-	// Inserting into context-modules
-	// Be sure context module is on db: fill context module (we should get this from xmodule.conf)
-	err := context.AddModule(sitecontext, MODULEID, "Multilanguages translation tables for Xamboo", VERSION)
-	if err == nil {
-		messages = append(messages, "The entry "+MODULEID+" was modified successfully in the modules table.")
-	} else {
-		messages = append(messages, "Error modifying the entry "+MODULEID+" in the modules table: "+err.Error())
-	}
-
-	return messages
-}
 
 func AddTheme(sitecontext *context.Context, theme string, name string, source int, link string, fields string) error {
 
