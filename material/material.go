@@ -7,69 +7,29 @@ import (
 
 	"github.com/webability-go/xmodules/context"
 	"github.com/webability-go/xmodules/metric"
-	"github.com/webability-go/xmodules/translation"
 )
 
-const (
-	MODULEID         = "material"
-	VERSION          = "2.0.0"
-	TRANSLATIONTHEME = "material"
-)
-
-func InitModule(sitecontext *context.Context, databasename string) error {
-
-	buildTables(sitecontext, databasename)
-	createCache(sitecontext)
-	sitecontext.SetModule(MODULEID, VERSION)
-
-	go buildCache(sitecontext)
-
-	return nil
-}
-
-func SynchronizeModule(sitecontext *context.Context) []string {
-
-	translation.AddTheme(sitecontext, TRANSLATIONTHEME, "Material", translation.SOURCETABLE, "", "name,plural")
-
-	messages := []string{}
-	messages = append(messages, "Analysing material_material table.")
-	num, err := sitecontext.GetTable("material_material").Count(nil)
-	if err != nil || num == 0 {
-		err1 := sitecontext.GetTable("material_material").Synchronize()
-		if err1 != nil {
-			messages = append(messages, "The table material_material was not created: "+err1.Error())
-		} else {
-			messages = append(messages, "The table material_material was created (again)")
-		}
-	} else {
-		messages = append(messages, "The table material_material was not created because it contains data.")
-	}
-
-	// fill metric and translations
-	return messages
-}
-
-func GetMaterial(sitecontext *context.Context, clave int, lang language.Tag) *StructureMaterial {
+func GetMaterial(ctx *context.Context, clave int, lang language.Tag) *StructureMaterial {
 
 	canonical := lang.String()
 
-	data, _ := sitecontext.GetCache("materiales:" + canonical).Get(strconv.Itoa(clave))
+	data, _ := ctx.GetCache("materiales:" + canonical).Get(strconv.Itoa(clave))
 	if data == nil {
-		sm := CreateStructureMaterialByKey(sitecontext, clave, lang)
+		sm := CreateStructureMaterialByKey(ctx, clave, lang)
 		if sm == nil {
-			sitecontext.Log("graph", "xmodules::material::GetMaterial: No hay material creado:", clave, lang)
+			ctx.Log("graph", "xmodules::material::GetMaterial: No hay material creado:", clave, lang)
 			return nil
 		}
-		sitecontext.GetCache("materiales:"+canonical).Set(strconv.Itoa(clave), sm)
+		ctx.GetCache("materiales:"+canonical).Set(strconv.Itoa(clave), sm)
 		return sm.(*StructureMaterial)
 	}
 	return data.(*StructureMaterial)
 }
 
-func GetMaterialCompositeName(sitecontext *context.Context, quantity string, materialkey int, metrickey int, extra string, system int, lang language.Tag) string {
+func GetMaterialCompositeName(ctx *context.Context, quantity string, materialkey int, metrickey int, extra string, system int, lang language.Tag) string {
 
-	materialstructure := GetMaterial(sitecontext, materialkey, lang)
-	metricstructure := metric.GetMetric(sitecontext, metrickey, lang)
+	materialstructure := GetMaterial(ctx, materialkey, lang)
+	metricstructure := metric.GetMetric(ctx, metrickey, lang)
 	if materialstructure == nil || metricstructure == nil {
 		return extra
 	}

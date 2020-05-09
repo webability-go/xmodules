@@ -3,10 +3,12 @@
 package context
 
 import (
+	"errors"
 	"fmt"
 	"io/ioutil"
 	"log"
 	"os"
+	"strings"
 	"sync"
 
 	"golang.org/x/text/language"
@@ -25,15 +27,14 @@ type Context struct {
 	Name string
 	// A configuration for the context: (does not need lock to be accessed since it's a pointer)
 	Config *xconfig.XConfig
+	// Only one database per context
+	database *xdominion.XBase
 	// Languages knows by the context
 	mlanguages sync.RWMutex
 	languages  []language.Tag
 	// A list of loggers for the context:
 	mlogs sync.RWMutex
 	logs  map[string]*log.Logger
-	// A list of databases for the context:
-	mdatabases sync.RWMutex
-	databases  map[string]*xdominion.XBase
 	// A list of tables for the context:
 	mtables sync.RWMutex
 	tables  map[string]*xdominion.XTable
@@ -92,27 +93,12 @@ func (ctx *Context) Log(id string, messages ...interface{}) {
 	l.Println(messages...)
 }
 
-func (ctx *Context) SetDatabase(id string, db *xdominion.XBase) {
-	ctx.mdatabases.Lock()
-	ctx.databases[id] = db
-	ctx.mdatabases.Unlock()
+func (ctx *Context) SetDatabase(db *xdominion.XBase) {
+	ctx.database = db
 }
 
-func (ctx *Context) GetDatabase(id string) *xdominion.XBase {
-	ctx.mdatabases.RLock()
-	d := ctx.databases[id]
-	ctx.mdatabases.RUnlock()
-	return d
-}
-
-func (ctx *Context) GetDatabases() map[string]*xdominion.XBase {
-	ctx.mdatabases.RLock()
-	dbs := make(map[string]*xdominion.XBase)
-	for i, d := range ctx.databases {
-		dbs[i] = d
-	}
-	ctx.mdatabases.RUnlock()
-	return dbs
+func (ctx *Context) GetDatabase() *xdominion.XBase {
+	return ctx.database
 }
 
 func (ctx *Context) SetTable(id string, table *xdominion.XTable) {
@@ -191,51 +177,27 @@ type Container struct {
 	CoreLog   *log.Logger
 }
 
-func (cs *Container) SetContext(id string, context *Context) {
-	cs.mcontexts.Lock()
-	cs.contexts[id] = context
-	cs.mcontexts.Unlock()
+func (cnt *Container) SetContext(id string, ctx *Context) {
+	cnt.mcontexts.Lock()
+	cnt.contexts[id] = ctx
+	cnt.mcontexts.Unlock()
 }
 
-func (cs *Container) GetContext(id string) *Context {
-	cs.mcontexts.RLock()
-	c := cs.contexts[id]
-	cs.mcontexts.RUnlock()
-	return c
+func (cnt *Container) GetContext(id string) *Context {
+	cnt.mcontexts.RLock()
+	ctx := cnt.contexts[id]
+	cnt.mcontexts.RUnlock()
+	return ctx
 }
 
-func (cs *Container) GetContexts() map[string]*Context {
-	cs.mcontexts.RLock()
-	contexts := make(map[string]*Context)
-	for i, v := range cs.contexts {
-		contexts[i] = v
+func (cnt *Container) GetContexts() map[string]*Context {
+	cnt.mcontexts.RLock()
+	ctxs := make(map[string]*Context)
+	for i, v := range cnt.contexts {
+		ctxs[i] = v
 	}
-	cs.mcontexts.RUnlock()
-	return contexts
-}
-
-// CreateContainer will create a new container for contexts  from am XConfig data
-// The XConfig file must have this syntax:
-//  context=[contextid1]
-//  context=[contextid2]
-//  context=[contextid3]
-//  contextid1-config=[path-to-config-file]
-//  contextid2-config=[path-to-config-file]
-//  contextid3-config=[path-to-config-file]
-func CreateContainer(contextconfig *xconfig.XConfig) *Container {
-
-	cc := &Container{
-		contexts: map[string]*Context{},
-	}
-
-	contexts, _ := contextconfig.GetStringCollection("context")
-	for _, context := range contexts {
-		cfgpath, _ := contextconfig.GetString(context + "+config")
-		cfg := xconfig.New()
-		cfg.LoadFile(cfgpath)
-		cc.CreateContext(context, cfg)
-	}
-	return cc
+	cnt.mcontexts.RUnlock()
+	return ctxs
 }
 
 // CreateContext will create a new context, link databases and logs based on XConfig data
@@ -249,45 +211,41 @@ func CreateContainer(contextconfig *xconfig.XConfig) *Container {
 //
 //  log.[logid].file=[pathtologfile]
 // every line can be repeated for each dbid or logid
-func (cs *Container) CreateContext(name string, config *xconfig.XConfig) *Context {
+func (cnt *Container) CreateContext(name string, config *xconfig.XConfig) (*Context, error) {
 	// Crear los contextos basados en el CoreConfig
 	ctx := &Context{
-		Name:      name,
-		Config:    config,
-		logs:      map[string]*log.Logger{},
-		databases: map[string]*xdominion.XBase{},
-		tables:    map[string]*xdominion.XTable{},
-		caches:    map[string]*xcore.XCache{},
-		modules:   map[string]string{},
+		Name:    name,
+		Config:  config,
+		logs:    map[string]*log.Logger{},
+		tables:  map[string]*xdominion.XTable{},
+		caches:  map[string]*xcore.XCache{},
+		modules: map[string]string{},
 	}
 
 	// fill context LOGS and DATABASES with the definition of Context Config. Caches and Tables depends on modules called
-	databases := config.GetConfig("database")
-	if databases != nil {
-		for dbcname := range databases.Parameters {
-			database := databases.GetConfig(dbcname)
-			if database != nil {
-				// create a connector to the database
-				dbtype, _ := database.GetString("type")
-				username, _ := database.GetString("username")
-				password, _ := database.GetString("password")
-				dbname, _ := database.GetString("database")
-				host, _ := database.GetString("server")
-				ssl, _ := database.GetBool("ssl")
-
-				XBase := &xdominion.XBase{
-					DBType:   dbtype,
-					Username: username,
-					Password: password,
-					Database: dbname,
-					Host:     host,
-					SSL:      ssl,
-				}
-				XBase.Logon()
-				ctx.SetDatabase(dbcname, XBase)
-			}
-		}
+	database := config.GetConfig("database")
+	if database == nil {
+		// Missing Database
+		return nil, errors.New("There is no available database in the context")
 	}
+	// create a connector to the database
+	dbtype, _ := database.GetString("type")
+	username, _ := database.GetString("username")
+	password, _ := database.GetString("password")
+	dbname, _ := database.GetString("database")
+	host, _ := database.GetString("server")
+	ssl, _ := database.GetBool("ssl")
+
+	XBase := &xdominion.XBase{
+		DBType:   dbtype,
+		Username: username,
+		Password: password,
+		Database: dbname,
+		Host:     host,
+		SSL:      ssl,
+	}
+	XBase.Logon()
+	ctx.SetDatabase(XBase)
 
 	hasmain := false
 	logs := config.GetConfig("log")
@@ -338,10 +296,21 @@ func (cs *Container) CreateContext(name string, config *xconfig.XConfig) *Contex
 	modulelist, _ := config.GetStringCollection("module")
 	for _, m := range modulelist {
 		ctx.SetModule(m, "-")
+		// If the module has been compile, we set it up
+		xm := strings.Split(m, "|")
+		modid := xm[0]
+		modprefix := ""
+		if len(xm) > 1 {
+			modprefix = xm[1]
+		}
+		cmod := ModulesList.Get(modid)
+		if cmod != nil {
+			cmod.Setup(ctx, modprefix)
+		}
 	}
 
-	cs.SetContext(name, ctx)
-	return ctx
+	cnt.SetContext(name, ctx)
+	return ctx, nil
 }
 
 // Create will scan a full config file for Containers
@@ -366,7 +335,7 @@ func Create(configfile string) *Container {
 	CoreLog := log.New(logw, "Core: ", log.Ldate|log.Ltime|log.Lshortfile)
 	CoreLog.Println("xmodules::context::Create: Starting Core Log")
 
-	cc := &Container{
+	cnt := &Container{
 		contexts: map[string]*Context{},
 		CoreLog:  CoreLog,
 	}
@@ -376,27 +345,30 @@ func Create(configfile string) *Container {
 		cfgpath, _ := CoreConfig.GetString(context + "+config")
 		cfg := xconfig.New()
 		cfg.LoadFile(cfgpath)
-		cc.CreateContext(context, cfg)
+		_, err := cnt.CreateContext(context, cfg)
+		if err != nil {
+			fmt.Println("Error creating context:", err)
+		}
 	}
-	return cc
+	return cnt
 }
 
 // Analyze a context and gets back the main data
-func GetContextStats(sitecontext *Context) *xcore.XDataset {
+func GetContextStats(ctx *Context) *xcore.XDataset {
 
 	subdata := xcore.XDataset{}
-	subdata["languages"] = sitecontext.GetLanguages()
-	subdata["databases"] = sitecontext.GetDatabases()
-	subdata["logs"] = sitecontext.GetLogs()
+	subdata["languages"] = ctx.GetLanguages()
+	subdata["database"] = ctx.GetDatabase()
+	subdata["logs"] = ctx.GetLogs()
 
 	caches := []string{}
-	for id := range sitecontext.GetCaches() {
+	for id := range ctx.GetCaches() {
 		caches = append(caches, id)
 	}
 	subdata["xcaches"] = caches
 
 	tables := map[string]string{}
-	for id, table := range sitecontext.GetTables() {
+	for id, table := range ctx.GetTables() {
 		if table.Base != nil {
 			db := table.Base.Database
 			tables[id] = db
@@ -406,15 +378,15 @@ func GetContextStats(sitecontext *Context) *xcore.XDataset {
 	}
 	subdata["tables"] = tables
 
-	subdata["config"] = buildConfigSet(sitecontext.Config)
+	subdata["config"] = buildConfigSet(ctx.Config)
 
 	// analiza los módulos instalados
 	modules := map[string]interface{}{}
-	for id, v := range sitecontext.GetModules() {
+	for id, v := range ctx.GetModules() {
 		md := struct {
 			Version          string
 			InstalledVersion string
-		}{v, ModuleInstalledVersion(sitecontext, id)}
+		}{v, ModuleInstalledVersion(ctx, id)}
 		modules[id] = md
 	}
 	subdata["modules"] = modules

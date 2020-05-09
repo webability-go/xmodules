@@ -9,7 +9,7 @@ import (
 	"github.com/webability-go/xmodules/context"
 )
 
-func buildTables(sitecontext *context.Context, prefix string, databasename string) {
+func buildTables(ctx *context.Context, prefix string) {
 
 	// open 12 tables for each file
 	for i := 1; i < 13; i++ {
@@ -20,9 +20,9 @@ func buildTables(sitecontext *context.Context, prefix string, databasename strin
 		m += strconv.Itoa(i)
 
 		table := stat_stat(prefix, m)
-		table.SetBase(sitecontext.GetDatabase(databasename))
+		table.SetBase(ctx.GetDatabase())
 		table.SetLanguage(language.English)
-		sitecontext.SetTable(prefix+"stat_"+m, table)
+		ctx.SetTable(prefix+"stat_"+m, table)
 	}
 }
 

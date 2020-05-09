@@ -4,8 +4,6 @@
 package context
 
 import (
-	"strings"
-
 	"golang.org/x/text/language"
 )
 
@@ -32,29 +30,24 @@ func init() {
 // It must be called AFTER GetContainer
 // adds tables and caches to sitecontext::database
 // It should be called AFTER createContext
-func setupModule(context *Context, db string) (string, error) {
+func setupModule(ctx *Context, prefix string) ([]string, error) {
 
-	buildTables(context, db)
-	buildCache(context)
-	context.SetModule(MODULEID, VERSION)
+	buildTables(ctx)
+	buildCache(ctx)
+	ctx.SetModule(MODULEID, VERSION)
 
-	return "", nil
+	return []string{}, nil
 }
 
-func InitModule(sitecontext *context.Context, databasename string) error {
-	_, e := setupModule(sitecontext, databasename)
-	return e
-}
-
-func synchronizeModule(context *Context, db string) (string, error) {
+func synchronizeModule(ctx *Context, prefix string) ([]string, error) {
 
 	messages := []string{}
 	messages = append(messages, "Analysing context_module table.")
 
-	context_module := context.GetTable("context_module")
+	context_module := ctx.GetTable("context_module")
 	if context_module == nil {
 		messages = append(messages, "Critical Error: the context table context_module does not exist !!!: ")
-		return strings.Join(messages, "\n"), nil
+		return messages, nil
 	}
 	num, err := context_module.Count(nil)
 	if err != nil || num == 0 {
@@ -69,11 +62,11 @@ func synchronizeModule(context *Context, db string) (string, error) {
 	}
 
 	// Be sure context module is on db: fill context module (we should get this from xmodule.conf)
-	err = AddModule(context, MODULEID, "Contexts and Modules for Xamboo", VERSION)
+	err = AddModule(ctx, MODULEID, "Contexts and Modules for Xamboo", VERSION)
 	if err == nil {
 		messages = append(messages, "The entry "+MODULEID+" was modified successfully in the context_module table.")
 	} else {
 		messages = append(messages, "Error modifying the entry "+MODULEID+" in the context_module table: "+err.Error())
 	}
-	return strings.Join(messages, "\n"), nil
+	return messages, nil
 }

@@ -15,11 +15,11 @@ var moduletables = map[string]func() *xdominion.XTable{
 	"user_user": userUser,
 }
 
-func buildTables(sitecontext *context.Context, databasename string) {
+func buildTables(sitecontext *context.Context) {
 
 	for _, tbl := range moduletablesorder {
 		table := moduletables[tbl]()
-		table.SetBase(sitecontext.GetDatabase(databasename))
+		table.SetBase(sitecontext.GetDatabase())
 		sitecontext.SetTable(tbl, table)
 	}
 }
@@ -50,4 +50,19 @@ func createTables(sitecontext *context.Context) []string {
 	}
 
 	return messages
+}
+
+func loadTables(ctx *context.Context) []string {
+	/*
+		wiki_wiki := ctx.GetTable("wiki_wiki")
+		if wiki_wiki == nil {
+			return []string{"xmodules::wiki::createTables: Error, the table wiki_wiki is not available on this context"}
+		}
+
+		if err != nil {
+			ctx.Log("main", "Error inserting admin wiki", err)
+			return []string{"xmodules::wiki::loadTables: Error upserting the admin wiki"}
+		}
+	*/
+	return []string{}
 }

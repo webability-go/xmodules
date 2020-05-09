@@ -17,11 +17,11 @@ var moduletables = map[string]func() *xdominion.XTable{
 	"translation_info":  translationInfo,
 }
 
-func buildTables(sitecontext *context.Context, databasename string) {
+func buildTables(sitecontext *context.Context) {
 
 	for _, tbl := range moduletablesorder {
 		table := moduletables[tbl]()
-		table.SetBase(sitecontext.GetDatabase(databasename))
+		table.SetBase(sitecontext.GetDatabase())
 		sitecontext.SetTable(tbl, table)
 	}
 }

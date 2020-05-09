@@ -15,8 +15,9 @@ type ModuleDef interface {
 	GetLanguages() map[language.Tag]string
 	GetNeeds() []string // module[.version[+]]
 
-	Setup(*Context, string) (string, error)
-	Synchronize(*Context, string) (string, error)
+	GetInstalledVersion(*Context) string
+	Setup(*Context, string) ([]string, error)
+	Synchronize(*Context, string) ([]string, error)
 }
 
 type Modules map[string]ModuleDef
@@ -28,6 +29,10 @@ func (ml *Modules) Register(m ModuleDef) {
 	(*ml)[id] = m
 }
 
+func (ml *Modules) Get(id string) ModuleDef {
+	return (*ml)[id]
+}
+
 type Module struct {
 	ID      string
 	Version string
@@ -35,8 +40,8 @@ type Module struct {
 	Languages map[language.Tag]string
 	Needs     []string
 
-	FSetup       func(*Context, string) (string, error)
-	FSynchronize func(*Context, string) (string, error)
+	FSetup       func(*Context, string) ([]string, error)
+	FSynchronize func(*Context, string) ([]string, error)
 }
 
 func (m *Module) GetID() string {
@@ -55,18 +60,22 @@ func (m *Module) GetNeeds() []string {
 	return m.Needs
 }
 
-func (m *Module) Setup(context *Context, db string) (string, error) {
-	if m.FSetup != nil {
-		return m.FSetup(context, db)
-	}
-	return "", nil
+func (m *Module) GetInstalledVersion(context *Context) string {
+	return ModuleInstalledVersion(context, m.ID)
 }
 
-func (m *Module) Synchronize(context *Context, db string) (string, error) {
-	if m.FSynchronize != nil {
-		return m.FSynchronize(context, db)
+func (m *Module) Setup(context *Context, prefix string) ([]string, error) {
+	if m.FSetup != nil {
+		return m.FSetup(context, prefix)
 	}
-	return "", nil
+	return []string{}, nil
+}
+
+func (m *Module) Synchronize(context *Context, prefix string) ([]string, error) {
+	if m.FSynchronize != nil {
+		return m.FSynchronize(context, prefix)
+	}
+	return []string{}, nil
 }
 
 func IsModuleAuthorized(sitecontext *Context, id string) bool {

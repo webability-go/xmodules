@@ -37,29 +37,29 @@ var moduletables = map[string]func() *xdominion.XTable{
 	"user_sessionhistory":        userSessionHistory,
 }
 
-func buildTables(sitecontext *context.Context, databasename string) {
+func buildTables(ctx *context.Context) {
 
 	for _, tbl := range moduletablesorder {
 		table := moduletables[tbl]()
-		table.SetBase(sitecontext.GetDatabase(databasename))
-		sitecontext.SetTable(tbl, table)
+		table.SetBase(ctx.GetDatabase())
+		ctx.SetTable(tbl, table)
 	}
 }
 
-func createCache(sitecontext *context.Context) []string {
+func createCache(ctx *context.Context) []string {
 
-	sitecontext.SetCache("user:users", xcore.NewXCache("user:users", 0, 0))
+	ctx.SetCache("user:users", xcore.NewXCache("user:users", 0, 0))
 
 	return []string{}
 }
 
-func buildCache(sitecontext *context.Context) []string {
+func buildCache(ctx *context.Context) []string {
 
-	user_user := sitecontext.GetTable("user_user")
+	user_user := ctx.GetTable("user_user")
 	if user_user == nil {
 		return []string{"xmodules::user::buildCache: Error, the user_user table is not available on this context"}
 	}
-	cache := sitecontext.GetCache("user:users")
+	cache := ctx.GetCache("user:users")
 	if cache == nil {
 		return []string{"xmodules::user::buildCache: Error, the user cache is not available on this site context"}
 	}
@@ -70,7 +70,7 @@ func buildCache(sitecontext *context.Context) []string {
 	if users != nil {
 		for _, m := range *users {
 			// creates structure on language
-			str := CreateStructureUserByData(sitecontext, m.Clone())
+			str := CreateStructureUserByData(ctx, m.Clone())
 			key, _ := m.GetString("key")
 			cache.Set(key, str)
 		}
@@ -79,13 +79,13 @@ func buildCache(sitecontext *context.Context) []string {
 	return []string{}
 }
 
-func createTables(sitecontext *context.Context) []string {
+func createTables(ctx *context.Context) []string {
 
 	messages := []string{}
 
 	for _, tbl := range moduletablesorder {
 
-		table := sitecontext.GetTable(tbl)
+		table := ctx.GetTable(tbl)
 		if table == nil {
 			return []string{"xmodules::user::createTables: Error, the table is not available on this context:" + tbl}
 		}
@@ -107,9 +107,9 @@ func createTables(sitecontext *context.Context) []string {
 	return messages
 }
 
-func loadTables(sitecontext *context.Context) []string {
+func loadTables(ctx *context.Context) []string {
 
-	user_user := sitecontext.GetTable("user_user")
+	user_user := ctx.GetTable("user_user")
 	if user_user == nil {
 		return []string{"xmodules::user::createTables: Error, the table user_user is not available on this context"}
 	}
@@ -127,7 +127,7 @@ func loadTables(sitecontext *context.Context) []string {
 		"lastmodif":    time.Now(),
 	})
 	if err != nil {
-		sitecontext.Log("main", "Error inserting admin user", err)
+		ctx.Log("main", "Error inserting admin user", err)
 		return []string{"xmodules::user::loadTables: Error upserting the admin user"}
 	}
 	return []string{

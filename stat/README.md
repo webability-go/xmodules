@@ -5,19 +5,22 @@
 xmodules/stat for Xamboo - GO
 ================================
 
-The stat package is used to build a set of monthly statistic tables for any type of unitary stats, like website hists, IoT eventos, etc.
+The stat package is used to build a set of monthly log tables for any type of unitary stats, like website hits, IoT eventos, etc.
 
 
 Version Changes Control
 =======================
 
-v2.0.0 - 2020-03-05
+v0.0.1 - 2020-05-08
+- Compatible with xmodule context standard
+
+v0.0.0 - 2020-03-05
 - Support for multithread context implemented
 
-v1.0.1 - 2020-01-03
+v0.0.0 - 2020-01-03
 - This file was added
 
-v1.0.0 - 2019-12-18
+v0.0.0 - 2019-12-18
 - First release of module
 
 Manual:

@@ -4,8 +4,6 @@
 package user
 
 import (
-	"strings"
-
 	"golang.org/x/text/language"
 
 	"github.com/webability-go/xmodules/context"
@@ -30,46 +28,41 @@ func init() {
 
 // InitModule is called during the init phase to link the module with the system
 // adds tables and caches to sitecontext::database
-func Setup(sitecontext *context.Context, databasename string) (string, error) {
+func Setup(ctx *context.Context, prefix string) ([]string, error) {
 
-	buildTables(sitecontext, databasename)
-	createCache(sitecontext)
-	sitecontext.SetModule(MODULEID, VERSION)
+	buildTables(ctx)
+	createCache(ctx)
+	ctx.SetModule(MODULEID, VERSION)
 
-	go buildCache(sitecontext)
+	go buildCache(ctx)
 
-	return "", nil
+	return []string{}, nil
 }
 
-func InitModule(sitecontext *context.Context, databasename string) error {
-	_, e := Setup(sitecontext, databasename)
-	return e
-}
-
-func Synchronize(sitecontext *context.Context, databasename string) (string, error) {
+func Synchronize(ctx *context.Context, prefix string) ([]string, error) {
 
 	messages := []string{}
 
 	// Needed modules: context and translation
-	vc := context.ModuleInstalledVersion(sitecontext, "context")
+	vc := context.ModuleInstalledVersion(ctx, "context")
 	if vc == "" {
 		messages = append(messages, "xmodules/context need to be installed before installing xmodules/user.")
-		return strings.Join(messages, "\n"), nil
+		return messages, nil
 	}
 
 	// create tables
-	messages = append(messages, createTables(sitecontext)...)
+	messages = append(messages, createTables(ctx)...)
 	// fill super admin
-	messages = append(messages, loadTables(sitecontext)...)
+	messages = append(messages, loadTables(ctx)...)
 
 	// Inserting into context-modules
 	// Be sure context module is on db: fill context module (we should get this from xmodule.conf)
-	err := context.AddModule(sitecontext, MODULEID, "Administration users", VERSION)
+	err := context.AddModule(ctx, MODULEID, "Administration users", VERSION)
 	if err == nil {
 		messages = append(messages, "The entry "+MODULEID+" was modified successfully in the modules table.")
 	} else {
 		messages = append(messages, "Error modifying the entry "+MODULEID+" in the modules table: "+err.Error())
 	}
 
-	return strings.Join(messages, "\n"), nil
+	return messages, nil
 }
