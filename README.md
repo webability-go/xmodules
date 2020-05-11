@@ -66,6 +66,8 @@ import "github.com/webability-go/xmodules/ingredient"
 
 import "github.com/webability-go/xmodules/material"
 
+v0.0.7:
+- Modules homologation and Contexts homologation for use with Xamboo
 
 v0.0.3:
 - Added tools xmodule for basic functions
