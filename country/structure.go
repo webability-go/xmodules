@@ -5,7 +5,7 @@ import (
 
 	"github.com/webability-go/xdominion"
 
-	"github.com/webability-go/xmodules/context"
+	"github.com/webability-go/xmodules/base"
 	"github.com/webability-go/xmodules/translation"
 )
 
@@ -15,7 +15,7 @@ type StructureCountry struct {
 	Data *xdominion.XRecord
 }
 
-func CreateStructureCountryByKey(sitecontext *context.Context, key string, lang language.Tag) context.Structure {
+func CreateStructureCountryByKey(sitecontext *base.Datasource, key string, lang language.Tag) base.Structure {
 	data, _ := sitecontext.GetTable("country_country").SelectOne(key)
 	if data == nil {
 		return nil
@@ -23,7 +23,7 @@ func CreateStructureCountryByKey(sitecontext *context.Context, key string, lang 
 	return CreateStructureCountryByData(sitecontext, data, lang)
 }
 
-func CreateStructureCountryByData(sitecontext *context.Context, data xdominion.XRecordDef, lang language.Tag) context.Structure {
+func CreateStructureCountryByData(sitecontext *base.Datasource, data xdominion.XRecordDef, lang language.Tag) base.Structure {
 
 	key, _ := data.GetString("key")
 
@@ -37,12 +37,12 @@ func CreateStructureCountryByData(sitecontext *context.Context, data xdominion.X
 }
 
 // ComplementData adds all the needed data from other objects /duplicable in the thread since the object will be destroyed at the end
-func (sc *StructureCountry) ComplementData(sitecontext *context.Context) {
+func (sc *StructureCountry) ComplementData(sitecontext *base.Datasource) {
 
 }
 
 // IsAuthorized returns true if the structure can be used on this site/language/device
-func (sc *StructureCountry) IsAuthorized(sitecontext *context.Context, site string, language string, device string) bool {
+func (sc *StructureCountry) IsAuthorized(sitecontext *base.Datasource, site string, language string, device string) bool {
 	return true
 }
 
@@ -52,7 +52,7 @@ func (sc *StructureCountry) GetData() *xdominion.XRecord {
 }
 
 // Clone the whole structure
-func (sc *StructureCountry) Clone() context.Structure {
+func (sc *StructureCountry) Clone() base.Structure {
 	cloned := &StructureCountry{
 		Key:  sc.Key,
 		Lang: sc.Lang,

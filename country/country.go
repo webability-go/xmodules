@@ -5,10 +5,10 @@ package country
 import (
 	"golang.org/x/text/language"
 
-	"github.com/webability-go/xmodules/context"
+	"github.com/webability-go/xmodules/base"
 )
 
-func createTables(ctx *context.Context) []string {
+func createTables(ctx *base.Datasource) []string {
 
 	messages := []string{}
 
@@ -31,7 +31,7 @@ func createTables(ctx *context.Context) []string {
 }
 
 // GetCountry to get the data of a country from cache/db in the specified language
-func GetCountry(ctx *context.Context, key string, lang language.Tag) *StructureCountry {
+func GetCountry(ctx *base.Datasource, key string, lang language.Tag) *StructureCountry {
 
 	canonical := lang.String()
 

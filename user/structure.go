@@ -2,7 +2,7 @@ package user
 
 import (
 	"github.com/webability-go/xdominion"
-	"github.com/webability-go/xmodules/context"
+	"github.com/webability-go/xmodules/base"
 )
 
 type StructureUser struct {
@@ -10,11 +10,11 @@ type StructureUser struct {
 	Data *xdominion.XRecord
 }
 
-func CreateStructureUserByKey(sitecontext *context.Context, key int) context.Structure {
+func CreateStructureUserByKey(ds *base.Datasource, key int) base.Structure {
 
-	user_user := sitecontext.GetTable("user_user")
+	user_user := ds.GetTable("user_user")
 	if user_user == nil {
-		sitecontext.Log("xmodules::user::CreateStructureUserByKey: Error, the user_user table is not available on this context")
+		ds.Log("xmodules::user::CreateStructureUserByKey: Error, the user_user table is not available on this datasource")
 		return nil
 	}
 
@@ -22,10 +22,10 @@ func CreateStructureUserByKey(sitecontext *context.Context, key int) context.Str
 	if data == nil {
 		return nil
 	}
-	return CreateStructureUserByData(sitecontext, data)
+	return CreateStructureUserByData(ds, data)
 }
 
-func CreateStructureUserByData(sitecontext *context.Context, data xdominion.XRecordDef) context.Structure {
+func CreateStructureUserByData(ds *base.Datasource, data xdominion.XRecordDef) base.Structure {
 
 	key, _ := data.GetInt("key")
 
@@ -35,12 +35,12 @@ func CreateStructureUserByData(sitecontext *context.Context, data xdominion.XRec
 }
 
 // ComplementData adds all the needed data from other objects /duplicable in the thread since the object will be destroyed at the end
-func (sm *StructureUser) ComplementData(sitecontext *context.Context) {
+func (sm *StructureUser) ComplementData(ds *base.Datasource) {
 
 }
 
 // IsAuthorized returns true if the structure can be used on this site/language/device
-func (sm *StructureUser) IsAuthorized(sitecontext *context.Context, site string, language string, device string) bool {
+func (sm *StructureUser) IsAuthorized(ds *base.Datasource, site string, language string, device string) bool {
 	return true
 }
 
@@ -50,7 +50,7 @@ func (sm *StructureUser) GetData() *xdominion.XRecord {
 }
 
 // Clone the whole structure
-func (sm *StructureUser) Clone() context.Structure {
+func (sm *StructureUser) Clone() base.Structure {
 	cloned := &StructureUser{
 		Key:  sm.Key,
 		Data: sm.Data.Clone().(*xdominion.XRecord),

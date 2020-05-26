@@ -1,12 +1,14 @@
 // Package user contains the list of administrative user for the system.
 // All users have accesses, into a profile and even extended access based upon table records.
-// It needs context xmodule.
+// It needs base xmodule.
 package translation
 
 import (
 	"golang.org/x/text/language"
 
-	"github.com/webability-go/xmodules/context"
+	serverassets "github.com/webability-go/xamboo/assets"
+
+	"github.com/webability-go/xmodules/base"
 )
 
 const (
@@ -15,39 +17,41 @@ const (
 )
 
 func init() {
-	m := &context.Module{
+	m := &base.Module{
 		ID:           MODULEID,
 		Version:      VERSION,
 		Languages:    map[language.Tag]string{language.English: "Translation tables", language.Spanish: "Tablas de traducción", language.French: "Tables de traduction"},
-		Needs:        []string{"context"},
+		Needs:        []string{"base"},
 		FSetup:       Setup,
 		FSynchronize: Synchronize,
 	}
-	context.ModulesList.Register(m)
+	base.ModulesList.Register(m)
 }
 
 // InitModule is called during the init phase to link the module with the system
 // adds tables and caches to ctx::database
-func Setup(ctx *context.Context, prefix string) ([]string, error) {
+func Setup(ds serverassets.Datasource, prefix string) ([]string, error) {
 
+	ctx := ds.(*base.Datasource)
 	buildTables(ctx)
 	ctx.SetModule(MODULEID, VERSION)
 
 	return []string{}, nil
 }
 
-func Synchronize(ctx *context.Context, prefix string) ([]string, error) {
+func Synchronize(ds serverassets.Datasource, prefix string) ([]string, error) {
 
 	messages := []string{}
 
-	// Needed modules: context
-	vc := context.ModuleInstalledVersion(ctx, "context")
+	ctx := ds.(*base.Datasource)
+	// Needed modules: base
+	vc := base.ModuleInstalledVersion(ctx, "base")
 	if vc == "" {
-		messages = append(messages, "xmodules/context need to be installed before installing xmodules/translation.")
+		messages = append(messages, "xmodules/base need to be installed before installing xmodules/translation.")
 		return messages, nil
 	}
-	vc1 := context.ModuleInstalledVersion(ctx, "user")
-	vc2 := context.ModuleInstalledVersion(ctx, "userlink")
+	vc1 := base.ModuleInstalledVersion(ctx, "user")
+	vc2 := base.ModuleInstalledVersion(ctx, "userlink")
 	if vc1 == "" && vc2 == "" {
 		messages = append(messages, "xmodules/user or xmodules/userlink need to be installed before installing xmodules/translation.")
 		return messages, nil
@@ -56,9 +60,9 @@ func Synchronize(ctx *context.Context, prefix string) ([]string, error) {
 	// create tables
 	messages = append(messages, createTables(ctx)...)
 
-	// Inserting into context-modules
-	// Be sure context module is on db: fill context module (we should get this from xmodule.conf)
-	err := context.AddModule(ctx, MODULEID, "Multilanguages translation tables for Xamboo", VERSION)
+	// Inserting into base-modules
+	// Be sure base module is on db: fill base module (we should get this from xmodule.conf)
+	err := base.AddModule(ctx, MODULEID, "Multilanguages translation tables for Xamboo", VERSION)
 	if err == nil {
 		messages = append(messages, "The entry "+MODULEID+" was modified successfully in the modules table.")
 	} else {
@@ -66,4 +70,8 @@ func Synchronize(ctx *context.Context, prefix string) ([]string, error) {
 	}
 
 	return messages, nil
+}
+
+func StartContext(ds serverassets.Datasource, ctx *serverassets.Context) error {
+	return nil
 }

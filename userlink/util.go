@@ -2,7 +2,7 @@ package userlink
 
 import (
 	"github.com/webability-go/xdominion"
-	"github.com/webability-go/xmodules/context"
+	"github.com/webability-go/xmodules/base"
 )
 
 // Order to load/synchronize tables:
@@ -15,7 +15,7 @@ var moduletables = map[string]func() *xdominion.XTable{
 	"user_user": userUser,
 }
 
-func buildTables(sitecontext *context.Context) {
+func buildTables(sitecontext *base.Datasource) {
 
 	for _, tbl := range moduletablesorder {
 		table := moduletables[tbl]()
@@ -24,7 +24,7 @@ func buildTables(sitecontext *context.Context) {
 	}
 }
 
-func createTables(sitecontext *context.Context) []string {
+func createTables(sitecontext *base.Datasource) []string {
 
 	messages := []string{}
 
@@ -52,7 +52,7 @@ func createTables(sitecontext *context.Context) []string {
 	return messages
 }
 
-func loadTables(ctx *context.Context) []string {
+func loadTables(ctx *base.Datasource) []string {
 	/*
 		wiki_wiki := ctx.GetTable("wiki_wiki")
 		if wiki_wiki == nil {

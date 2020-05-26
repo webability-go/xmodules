@@ -6,7 +6,7 @@ import (
 	"golang.org/x/text/language"
 
 	"github.com/webability-go/xdominion"
-	"github.com/webability-go/xmodules/context"
+	"github.com/webability-go/xmodules/base"
 	"github.com/webability-go/xmodules/translation"
 )
 
@@ -22,7 +22,7 @@ type StructureIngredient struct {
 	Data *xdominion.XRecord
 }
 
-func CreateStructurePasilloByKey(sitecontext *context.Context, key int, lang language.Tag) context.Structure {
+func CreateStructurePasilloByKey(sitecontext *base.Datasource, key int, lang language.Tag) base.Structure {
 	data, _ := sitecontext.GetTable("kl_ingredientepasillo").SelectOne(key)
 	if data == nil {
 		return nil
@@ -30,7 +30,7 @@ func CreateStructurePasilloByKey(sitecontext *context.Context, key int, lang lan
 	return CreateStructurePasilloByData(sitecontext, data, lang)
 }
 
-func CreateStructurePasilloByData(sitecontext *context.Context, data xdominion.XRecordDef, lang language.Tag) context.Structure {
+func CreateStructurePasilloByData(sitecontext *base.Datasource, data xdominion.XRecordDef, lang language.Tag) base.Structure {
 
 	key, _ := data.GetInt("clave")
 
@@ -44,12 +44,12 @@ func CreateStructurePasilloByData(sitecontext *context.Context, data xdominion.X
 }
 
 // ComplementData adds all the needed data from other objects /duplicable in the thread since the object will be destroyed at the end
-func (sm *StructurePasillo) ComplementData(sitecontext *context.Context) {
+func (sm *StructurePasillo) ComplementData(sitecontext *base.Datasource) {
 
 }
 
 // IsAuthorized returns true if the structure can be used on this site/language/device
-func (sm *StructurePasillo) IsAuthorized(sitecontext *context.Context, site string, language string, device string) bool {
+func (sm *StructurePasillo) IsAuthorized(sitecontext *base.Datasource, site string, language string, device string) bool {
 	return true
 }
 
@@ -59,7 +59,7 @@ func (sm *StructurePasillo) GetData() *xdominion.XRecord {
 }
 
 // Clone the whole structure
-func (sm *StructurePasillo) Clone() context.Structure {
+func (sm *StructurePasillo) Clone() base.Structure {
 	cloned := &StructurePasillo{
 		Key:  sm.Key,
 		Lang: sm.Lang,
@@ -68,7 +68,7 @@ func (sm *StructurePasillo) Clone() context.Structure {
 	return cloned
 }
 
-func CreateStructureIngredientByKey(sitecontext *context.Context, key int, lang language.Tag) context.Structure {
+func CreateStructureIngredientByKey(sitecontext *base.Datasource, key int, lang language.Tag) base.Structure {
 	data, _ := sitecontext.GetTable("kl_ingrediente").SelectOne(key)
 	if data == nil {
 		return nil
@@ -76,7 +76,7 @@ func CreateStructureIngredientByKey(sitecontext *context.Context, key int, lang 
 	return CreateStructureIngredientByData(sitecontext, data, lang)
 }
 
-func CreateStructureIngredientByData(sitecontext *context.Context, data xdominion.XRecordDef, lang language.Tag) context.Structure {
+func CreateStructureIngredientByData(sitecontext *base.Datasource, data xdominion.XRecordDef, lang language.Tag) base.Structure {
 
 	key, _ := data.GetInt("clave")
 
@@ -90,12 +90,12 @@ func CreateStructureIngredientByData(sitecontext *context.Context, data xdominio
 }
 
 // ComplementData adds all the needed data from other objects /duplicable in the thread since the object will be destroyed at the end
-func (sm *StructureIngredient) ComplementData(sitecontext *context.Context) {
+func (sm *StructureIngredient) ComplementData(sitecontext *base.Datasource) {
 
 }
 
 // IsAuthorized returns true if the structure can be used on this site/language/device
-func (sm *StructureIngredient) IsAuthorized(sitecontext *context.Context, site string, language string, device string) bool {
+func (sm *StructureIngredient) IsAuthorized(sitecontext *base.Datasource, site string, language string, device string) bool {
 	return true
 }
 
@@ -105,7 +105,7 @@ func (sm *StructureIngredient) GetData() *xdominion.XRecord {
 }
 
 // Clone the whole structure
-func (sm *StructureIngredient) Clone() context.Structure {
+func (sm *StructureIngredient) Clone() base.Structure {
 	cloned := &StructureIngredient{
 		Key:  sm.Key,
 		Lang: sm.Lang,

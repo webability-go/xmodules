@@ -6,10 +6,10 @@ import (
 
 	"golang.org/x/text/language"
 
-	"github.com/webability-go/xmodules/context"
+	"github.com/webability-go/xmodules/base"
 )
 
-func buildTables(ctx *context.Context, prefix string) {
+func buildTables(ctx *base.Datasource, prefix string) {
 
 	// open 12 tables for each file
 	for i := 1; i < 13; i++ {

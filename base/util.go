@@ -1,40 +1,42 @@
-package context
+package base
 
 import (
 	"golang.org/x/text/language"
 
 	"github.com/webability-go/xconfig"
 	"github.com/webability-go/xcore/v2"
+
+	"github.com/webability-go/xamboo/assets"
 )
 
-func buildTables(ctx *Context) {
+func buildTables(ds assets.Datasource) {
 
-	table := contextModule()
-	table.SetBase(ctx.GetDatabase())
+	table := baseModule()
+	table.SetBase(ds.GetDatabase())
 	table.SetLanguage(language.English)
-	ctx.SetTable("context_module", table)
+	ds.SetTable("base_module", table)
 }
 
-func buildCache(ctx *Context) {
+func buildCache(ds assets.Datasource) {
 
 	// Loads all data in XCache
-	modules, _ := ctx.GetTable("context_module").SelectAll()
+	modules, _ := ds.GetTable("base_module").SelectAll()
 
-	for _, lang := range ctx.GetLanguages() {
+	for _, lang := range ds.GetLanguages() {
 		canonical := lang.String()
-		ctx.SetCache("context:modules:"+canonical, xcore.NewXCache("context:modules:"+canonical, 0, 0))
+		ds.SetCache("base:modules:"+canonical, xcore.NewXCache("base:modules:"+canonical, 0, 0))
 
 		all := []string{}
 		if modules != nil {
 			for _, m := range *modules {
 				// creates structure on language
-				str := CreateStructureModuleByData(ctx, m.Clone(), lang)
+				str := CreateStructureModuleByData(ds, m.Clone(), lang)
 				key, _ := m.GetString("key")
 				all = append(all, key)
-				ctx.GetCache("context:modules:"+canonical).Set(key, str)
+				ds.GetCache("base:modules:"+canonical).Set(key, str)
 			}
 		}
-		ctx.GetCache("context:modules:"+canonical).Set("all", all)
+		ds.GetCache("base:modules:"+canonical).Set("all", all)
 	}
 }
 

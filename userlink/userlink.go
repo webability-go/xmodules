@@ -8,10 +8,10 @@ import (
 	"strconv"
 
 	"github.com/webability-go/xdominion"
-	"github.com/webability-go/xmodules/context"
+	"github.com/webability-go/xmodules/base"
 )
 
-func SynchroUsers(sitecontext *context.Context, fromcontext *context.Context) []string {
+func SynchroUsers(sitecontext *base.Datasource, fromcontext *base.Datasource) []string {
 
 	msg := []string{}
 

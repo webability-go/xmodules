@@ -5,9 +5,9 @@ All modules must be thread-safe.
 
 The released modules are actually:
 
-- context: is used to contextualize a xamboo session (hit of server) to a specific set of pointers to caches, databases, logs, config files, etc. so you will use the correct set of data and tables on the correct site.
+- base: is used to control datasources and modules into each of ones. It contains a specific set of pointers to caches, databases, logs, config files, etc. so you will use the correct set of data and tables on the correct site.
 
-import "github.com/webability-go/xmodules/context"
+import "github.com/webability-go/xmodules/base"
 
 
 - tools: is used to give some basic tools for keys, passwords, uuid, md5.
@@ -18,32 +18,32 @@ import "github.com/webability-go/xmodules/tools"
 - stat: tables to keep stats of use of anything, from site hits to IOT events.
 
 import "github.com/webability-go/xmodules/stat"
-needs: "github.com/webability-go/xmodules/context"
+needs: "github.com/webability-go/xmodules/base"
 
 
 - user: tables to keep all the administration users of the system, with complex profiles and access rights on the sessions
 
 import "github.com/webability-go/xmodules/user"
-needs: "github.com/webability-go/xmodules/context"
+needs: "github.com/webability-go/xmodules/base"
 
 
 - userlink: tables to keep basic data of administration users (primary key, status, name, email) from a distant controller node that have loaded complete xmodules/user
 
 import "github.com/webability-go/xmodules/userlink"
-needs: "github.com/webability-go/xmodules/context"
+needs: "github.com/webability-go/xmodules/base"
 
 
 - translation: a set of translation tables to keep translated words of anything, from database field to files. It supports all the known languages in UTF8.
 
 import "github.com/webability-go/xmodules/translation"
-needs: "github.com/webability-go/xmodules/context"
+needs: "github.com/webability-go/xmodules/base"
 needs: "github.com/webability-go/xmodules/user" or "github.com/webability-go/xmodules/userlink"
 
 
 - country: is the list of ISO official countries ready to use in a database.
 
 import "github.com/webability-go/xmodules/country"
-needs: "github.com/webability-go/xmodules/context"
+needs: "github.com/webability-go/xmodules/base"
 needs: "github.com/webability-go/xmodules/translation"
 
 
@@ -65,6 +65,11 @@ import "github.com/webability-go/xmodules/ingredient"
 - material: tables to manage materials for recipes, do it yourself, and any type of things you can build.
 
 import "github.com/webability-go/xmodules/material"
+
+v2020-05-25:
+- Change on all modules to meet new modules standard for Xamboo 1.3 (Datasources, instead of Contexts (wrong nomination), Modules new function StartContext, assets.Datasource interface.)
+- The Xamboo server now controls the standard interfaces for XModules, Applications, Datasources, etc.
+- Context module renamed to Base
 
 v0.0.7:
 - Modules homologation and Contexts homologation for use with Xamboo

@@ -5,11 +5,11 @@ import (
 
 	"golang.org/x/text/language"
 
-	"github.com/webability-go/xmodules/context"
+	"github.com/webability-go/xmodules/base"
 	"github.com/webability-go/xmodules/metric"
 )
 
-func GetMaterial(ctx *context.Context, clave int, lang language.Tag) *StructureMaterial {
+func GetMaterial(ctx *base.Datasource, clave int, lang language.Tag) *StructureMaterial {
 
 	canonical := lang.String()
 
@@ -26,7 +26,7 @@ func GetMaterial(ctx *context.Context, clave int, lang language.Tag) *StructureM
 	return data.(*StructureMaterial)
 }
 
-func GetMaterialCompositeName(ctx *context.Context, quantity string, materialkey int, metrickey int, extra string, system int, lang language.Tag) string {
+func GetMaterialCompositeName(ctx *base.Datasource, quantity string, materialkey int, metrickey int, extra string, system int, lang language.Tag) string {
 
 	materialstructure := GetMaterial(ctx, materialkey, lang)
 	metricstructure := metric.GetMetric(ctx, metrickey, lang)
