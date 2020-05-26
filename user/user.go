@@ -6,23 +6,23 @@ import (
 
 	"github.com/webability-go/xdominion"
 
-	"github.com/webability-go/xmodules/context"
+	"github.com/webability-go/xmodules/base"
 )
 
 // GetCountry to get the data of a country from cache/db in the specified language
-func GetUser(sitecontext *context.Context, key int) *StructureUser {
+func GetUser(ds *base.Datasource, key int) *StructureUser {
 
-	cache := sitecontext.GetCache("user:users")
+	cache := ds.GetCache("user:users")
 	if cache == nil {
-		sitecontext.Log("main", "xmodules::user::GetUser: Error, the user cache is not available on this site context")
+		ds.Log("main", "xmodules::user::GetUser: Error, the user cache is not available on this site datasource")
 		return nil
 	}
 
 	data, _ := cache.Get(strconv.Itoa(key))
 	if data == nil {
-		sm := CreateStructureUserByKey(sitecontext, key)
+		sm := CreateStructureUserByKey(ds, key)
 		if sm == nil {
-			sitecontext.Log("graph", "xmodules::user::GetUser: There is no user created: ", key)
+			ds.Log("graph", "xmodules::user::GetUser: There is no user created: ", key)
 			return nil
 		}
 		cache.Set(strconv.Itoa(key), sm)
@@ -32,35 +32,38 @@ func GetUser(sitecontext *context.Context, key int) *StructureUser {
 }
 
 // GetCountry to get the data of a country from cache/db in the specified language
-func GetUsersList(sitecontext *context.Context) *xdominion.XRecords {
+func GetUsersList(ds *base.Datasource) *xdominion.XRecords {
 
-	user_user := sitecontext.GetTable("user_user")
+	user_user := ds.GetTable("user_user")
 	if user_user == nil {
-		sitecontext.Log("xmodules::user::GetUsersList: Error, the user_user table is not available on this context")
+		ds.Log("xmodules::user::GetUsersList: Error, the user_user table is not available on this datasource")
 		return nil
 	}
 	data, _ := user_user.SelectAll()
 	return data
 }
 
-func GetUserByCredentials(sitecontext *context.Context, username string, password string) *StructureUser {
+func GetUserByCredentials(ds *base.Datasource, username string, password string) *StructureUser {
 
-	user_user := sitecontext.GetTable("user_user")
+	user_user := ds.GetTable("user_user")
 	if user_user == nil {
-		sitecontext.Log("xmodules::user::GetUserByCredentials: Error, the user_user table is not available on this context")
+		ds.Log("xmodules::user::GetUserByCredentials: Error, the user_user table is not available on this datasource")
 		return nil
 	}
-	data, _ := user_user.SelectOne(xdominion.XConditions{
+	data, err := user_user.SelectOne(xdominion.XConditions{
 		xdominion.NewXCondition("un", "=", username),
 		xdominion.NewXCondition("pw", "=", password, "and"),
 		xdominion.NewXCondition("status", "!=", "X", "and"),
 	})
+	if err != nil {
+		ds.Log("xmodules::user::GetUserByCredentials:" + err.Error())
+	}
 	if data == nil {
 		return nil
 	}
-	sm := CreateStructureUserByData(sitecontext, data)
+	sm := CreateStructureUserByData(ds, data)
 	if sm == nil {
-		sitecontext.Log("graph", "xmodules::user::GetUser: There is no user created: ", fmt.Sprint(data))
+		ds.Log("graph", "xmodules::user::GetUser: There is no user created: ", fmt.Sprint(data))
 		return nil
 	}
 	return sm.(*StructureUser)

@@ -6,10 +6,10 @@ import (
 	"golang.org/x/text/language"
 
 	"github.com/webability-go/xcore/v2"
-	"github.com/webability-go/xmodules/context"
+	"github.com/webability-go/xmodules/base"
 )
 
-func buildTables(ctx *context.Context) {
+func buildTables(ctx *base.Datasource) {
 
 	ctx.SetTable("ingredient_aisle", ingredientAisle())
 	ctx.GetTable("ingredient_aisle").SetBase(ctx.GetDatabase())
@@ -20,7 +20,7 @@ func buildTables(ctx *context.Context) {
 	ctx.GetTable("ingredient_ingredient").SetLanguage(language.Spanish)
 }
 
-func createCache(ctx *context.Context) []string {
+func createCache(ctx *base.Datasource) []string {
 
 	for _, lang := range ctx.GetLanguages() {
 		canonical := lang.String()
@@ -30,7 +30,7 @@ func createCache(ctx *context.Context) []string {
 	return []string{}
 }
 
-func buildCache(ctx *context.Context) []string {
+func buildCache(ctx *base.Datasource) []string {
 
 	// Lets protect us for race condition since map[] of Tables and XCaches are not thread safe
 	ingredient_aisle := ctx.GetTable("ingredient_aisle")

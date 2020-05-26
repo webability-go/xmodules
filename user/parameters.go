@@ -5,14 +5,14 @@ import (
 
 	"github.com/webability-go/xdominion"
 
-	"github.com/webability-go/xmodules/context"
+	"github.com/webability-go/xmodules/base"
 )
 
-func SetUserParam(sitecontext *context.Context, user int, param string, value interface{}) {
+func SetUserParam(ds *base.Datasource, user int, param string, value interface{}) {
 
-	user_parameter := sitecontext.GetTable("user_parameter")
+	user_parameter := ds.GetTable("user_parameter")
 	if user_parameter == nil {
-		sitecontext.Log("xmodules::user::SetUserParam: Error, the user_parameter table is not available on this context")
+		ds.Log("xmodules::user::SetUserParam: Error, the user_parameter table is not available on this datasource")
 		return
 	}
 	data, _ := user_parameter.SelectOne(xdominion.XConditions{
@@ -27,7 +27,7 @@ func SetUserParam(sitecontext *context.Context, user int, param string, value in
 			"value": value,
 		})
 		if err != nil {
-			sitecontext.Log("xmodules::user::SetUserParam: Error inserting in the user_parameter table", err)
+			ds.Log("xmodules::user::SetUserParam: Error inserting in the user_parameter table", err)
 		}
 		return
 	}
@@ -36,15 +36,15 @@ func SetUserParam(sitecontext *context.Context, user int, param string, value in
 		"value": value,
 	})
 	if err != nil {
-		sitecontext.Log("xmodules::user::SetUserParam: Error", err)
+		ds.Log("xmodules::user::SetUserParam: Error", err)
 	}
 }
 
-func GetUserParam(sitecontext *context.Context, user int, param string) string {
+func GetUserParam(ds *base.Datasource, user int, param string) string {
 
-	user_parameter := sitecontext.GetTable("user_parameter")
+	user_parameter := ds.GetTable("user_parameter")
 	if user_parameter == nil {
-		sitecontext.Log("xmodules::user::SetUserParam: Error, the user_parameter table is not available on this context")
+		ds.Log("xmodules::user::SetUserParam: Error, the user_parameter table is not available on this datasource")
 		return ""
 	}
 	data, _ := user_parameter.SelectOne(xdominion.XConditions{
@@ -56,11 +56,11 @@ func GetUserParam(sitecontext *context.Context, user int, param string) string {
 	return strings.TrimSpace(value)
 }
 
-func DelUserParam(sitecontext *context.Context, user int, param string) {
+func DelUserParam(ds *base.Datasource, user int, param string) {
 
-	user_parameter := sitecontext.GetTable("user_parameter")
+	user_parameter := ds.GetTable("user_parameter")
 	if user_parameter == nil {
-		sitecontext.Log("xmodules::user::SetUserParam: Error, the user_parameter table is not available on this context")
+		ds.Log("xmodules::user::SetUserParam: Error, the user_parameter table is not available on this datasource")
 		return
 	}
 	_, err := user_parameter.Delete(xdominion.XConditions{
@@ -68,6 +68,6 @@ func DelUserParam(sitecontext *context.Context, user int, param string) {
 		xdominion.NewXCondition("user", "=", user, "and"),
 	})
 	if err != nil {
-		sitecontext.Log("xmodules::user::DelUserParam: Error", err)
+		ds.Log("xmodules::user::DelUserParam: Error", err)
 	}
 }

@@ -13,7 +13,7 @@ import (
 
 	"github.com/webability-go/xcore/v2"
 	"github.com/webability-go/xdominion"
-	"github.com/webability-go/xmodules/context"
+	"github.com/webability-go/xmodules/base"
 )
 
 // Order to load/synchronize tables:
@@ -32,7 +32,7 @@ var moduletables = map[string]func() *xdominion.XTable{
 	"usda_foodnutrient": usda_foodnutrient,
 }
 
-func buildTables(sitecontext *context.Context) {
+func buildTables(sitecontext *base.Datasource) {
 
 	for _, tbl := range moduletablesorder {
 		table := moduletables[tbl]()
@@ -42,7 +42,7 @@ func buildTables(sitecontext *context.Context) {
 	}
 }
 
-func createCache(sitecontext *context.Context) []string {
+func createCache(sitecontext *base.Datasource) []string {
 
 	for _, lang := range sitecontext.GetLanguages() {
 		canonical := lang.String()
@@ -51,7 +51,7 @@ func createCache(sitecontext *context.Context) []string {
 	return []string{}
 }
 
-func buildCache(sitecontext *context.Context) []string {
+func buildCache(sitecontext *base.Datasource) []string {
 
 	// Lets protect us for race condition since map[] of Tables and XCaches are not thread safe
 	usda_nutrient := sitecontext.GetTable("usda_nutrient")
@@ -83,7 +83,7 @@ func buildCache(sitecontext *context.Context) []string {
 	return []string{}
 }
 
-func createTables(sitecontext *context.Context) []string {
+func createTables(sitecontext *base.Datasource) []string {
 	// alguna protección para saber si existe la tabla y no tronarla si tiene datos?
 	// hacer un select count
 	num1, err1 := sitecontext.GetTable("usda_group").Count(nil)
@@ -103,7 +103,7 @@ func createTables(sitecontext *context.Context) []string {
 	return []string{}
 }
 
-func loadTables(sitecontext *context.Context, filespath string) []string {
+func loadTables(sitecontext *base.Datasource, filespath string) []string {
 
 	// borra toda la data porque la vamos a insertar de nuevo
 	sitecontext.GetTable("usda_foodnutrient").Delete(nil)

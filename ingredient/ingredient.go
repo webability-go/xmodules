@@ -8,11 +8,11 @@ import (
 
 	"golang.org/x/text/language"
 
-	"github.com/webability-go/xmodules/context"
+	"github.com/webability-go/xmodules/base"
 	"github.com/webability-go/xmodules/metric"
 )
 
-func GetPasillo(ctx *context.Context, clave int, lang language.Tag) *StructurePasillo {
+func GetPasillo(ctx *base.Datasource, clave int, lang language.Tag) *StructurePasillo {
 
 	canonical := lang.String()
 
@@ -29,7 +29,7 @@ func GetPasillo(ctx *context.Context, clave int, lang language.Tag) *StructurePa
 	return data.(*StructurePasillo)
 }
 
-func GetIngredient(ctx *context.Context, clave int, lang language.Tag) *StructureIngredient {
+func GetIngredient(ctx *base.Datasource, clave int, lang language.Tag) *StructureIngredient {
 
 	canonical := lang.String()
 
@@ -46,7 +46,7 @@ func GetIngredient(ctx *context.Context, clave int, lang language.Tag) *Structur
 	return data.(*StructureIngredient)
 }
 
-func ConvertToSI(ctx *context.Context, ingrediente int, scantidad string, medida int, cantidadsi int, medidasi int) (float64, int, string) {
+func ConvertToSI(ctx *base.Datasource, ingrediente int, scantidad string, medida int, cantidadsi int, medidasi int) (float64, int, string) {
 
 	if scantidad == "" || medida == 0 {
 		return 0, -1, "Los parámetros aún son incompletos"
@@ -91,7 +91,7 @@ func ConvertToSI(ctx *context.Context, ingrediente int, scantidad string, medida
 	return factorconversion * cantidad, unidadsi, ""
 }
 
-func GetIngredientCompositeName(ctx *context.Context, quantity string, ingredientkey int, metrickey int, extra string, system int, lang language.Tag) string {
+func GetIngredientCompositeName(ctx *base.Datasource, quantity string, ingredientkey int, metrickey int, extra string, system int, lang language.Tag) string {
 
 	nombrecompuesto := ""
 	switch lang {
@@ -103,7 +103,7 @@ func GetIngredientCompositeName(ctx *context.Context, quantity string, ingredien
 	return nombrecompuesto
 }
 
-func CompositeNameSpanish(ctx *context.Context, quantity string, ingredientkey int, metrickey int, extra string, system int) string {
+func CompositeNameSpanish(ctx *base.Datasource, quantity string, ingredientkey int, metrickey int, extra string, system int) string {
 
 	xquantity := metric.ParseQuantity(quantity)
 	ingredient := GetIngredient(ctx, ingredientkey, language.Spanish)
@@ -162,7 +162,7 @@ func CompositeNameSpanish(ctx *context.Context, quantity string, ingredientkey i
 	return composite
 }
 
-func CompositeNameEnglish(ctx *context.Context, quantity string, ingredientkey int, metrickey int, extra string, system int) string {
+func CompositeNameEnglish(ctx *base.Datasource, quantity string, ingredientkey int, metrickey int, extra string, system int) string {
 
 	xquantity := metric.ParseQuantity(quantity)
 	ingredient := GetIngredient(ctx, ingredientkey, language.English)

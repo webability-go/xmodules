@@ -1,10 +1,12 @@
-package context
+package base
 
 import (
 	"golang.org/x/text/language"
 
 	"github.com/webability-go/xdominion"
 	//	"github.com/webability-go/xmodules/translation"
+
+	"github.com/webability-go/xamboo/assets"
 )
 
 // TRANSLATIONTHEME contains the id of the theme to translate the countries
@@ -16,20 +18,20 @@ type StructureModule struct {
 	Data *xdominion.XRecord
 }
 
-func CreateStructureModuleByKey(sitecontext *Context, key string, lang language.Tag) Structure {
-	context_module := sitecontext.GetTable("context_module")
-	if context_module == nil {
-		sitecontext.Log("main", "Error: the context_module table is not available within the context xmodule")
+func CreateStructureModuleByKey(ds assets.Datasource, key string, lang language.Tag) Structure {
+	base_module := ds.GetTable("base_module")
+	if base_module == nil {
+		ds.Log("main", "Error: the base_module table is not available within the datasource xmodule")
 		return nil
 	}
-	data, _ := context_module.SelectOne(key)
+	data, _ := base_module.SelectOne(key)
 	if data == nil {
 		return nil
 	}
-	return CreateStructureModuleByData(sitecontext, data, lang)
+	return CreateStructureModuleByData(ds, data, lang)
 }
 
-func CreateStructureModuleByData(sitecontext *Context, data xdominion.XRecordDef, lang language.Tag) Structure {
+func CreateStructureModuleByData(ds assets.Datasource, data xdominion.XRecordDef, lang language.Tag) Structure {
 
 	key, _ := data.GetString("key")
 
@@ -45,12 +47,12 @@ func CreateStructureModuleByData(sitecontext *Context, data xdominion.XRecordDef
 }
 
 // ComplementData adds all the needed data from other objects /duplicable in the thread since the object will be destroyed at the end
-func (sc *StructureModule) ComplementData(sitecontext *Context) {
+func (sc *StructureModule) ComplementData(ds *Datasource) {
 
 }
 
 // IsAuthorized returns true if the structure can be used on this site/language/device
-func (sc *StructureModule) IsAuthorized(sitecontext *Context, site string, language string, device string) bool {
+func (sc *StructureModule) IsAuthorized(ds *Datasource, site string, language string, device string) bool {
 	return true
 }
 

@@ -1,12 +1,12 @@
-package context
+package base
 
 import (
 	"github.com/webability-go/xdominion"
 )
 
 // contextModule contains the list of installed modules
-func contextModule() *xdominion.XTable {
-	t := xdominion.NewXTable("context_module", "context_mod_")
+func baseModule() *xdominion.XTable {
+	t := xdominion.NewXTable("base_module", "base_mod_")
 
 	// Clave del pais, primary key
 	t.AddField(xdominion.XFieldVarChar{Name: "key", Size: 15, Constraints: xdominion.XConstraints{

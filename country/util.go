@@ -11,7 +11,7 @@ import (
 
 	"github.com/webability-go/xcore/v2"
 	"github.com/webability-go/xdominion"
-	"github.com/webability-go/xmodules/context"
+	"github.com/webability-go/xmodules/base"
 	"github.com/webability-go/xmodules/translation"
 )
 
@@ -25,7 +25,7 @@ var moduletables = map[string]func() *xdominion.XTable{
 	"country_country": countryCountry,
 }
 
-func buildTables(ctx *context.Context) {
+func buildTables(ctx *base.Datasource) {
 
 	for _, tbl := range moduletablesorder {
 		table := moduletables[tbl]()
@@ -35,7 +35,7 @@ func buildTables(ctx *context.Context) {
 	}
 }
 
-func createCache(ctx *context.Context) []string {
+func createCache(ctx *base.Datasource) []string {
 
 	for _, lang := range ctx.GetLanguages() {
 		canonical := lang.String()
@@ -44,7 +44,7 @@ func createCache(ctx *context.Context) []string {
 	return []string{}
 }
 
-func buildCache(ctx *context.Context) []string {
+func buildCache(ctx *base.Datasource) []string {
 
 	// Lets protect us for race condition since map[] of Tables and XCaches are not thread safe
 	country_country := ctx.GetTable("country_country")
@@ -77,7 +77,7 @@ func buildCache(ctx *context.Context) []string {
 	return []string{}
 }
 
-func loadTables(ctx *context.Context, filespath string) []string {
+func loadTables(ctx *base.Datasource, filespath string) []string {
 
 	// borra toda la data porque la vamos a insertar de nuevo (si se puede: FK bloquea)
 	ctx.GetTable("country_country").Delete(nil)

@@ -9,7 +9,7 @@ import (
 	"golang.org/x/text/language"
 
 	"github.com/webability-go/xdominion"
-	"github.com/webability-go/xmodules/context"
+	"github.com/webability-go/xmodules/base"
 )
 
 const (
@@ -41,7 +41,7 @@ const (
 	UNIT_VISIBLE    = 62  // pieza escribiendo el nombre
 )
 
-func GetMetric(sitecontext *context.Context, clave int, lang language.Tag) *StructureMetric {
+func GetMetric(sitecontext *base.Datasource, clave int, lang language.Tag) *StructureMetric {
 
 	canonical := lang.String()
 
@@ -112,7 +112,7 @@ func ParseQuantity(cantidad string) float64 {
 // state is the type of metric we prefer for this ingredient: (basically for SI and SA), since SC is all volume
 // 1 = solid
 // 2 = liquid
-func ConvertMetrics(sitecontext *context.Context, quantity float64, density float64, state int, fromMetric *xdominion.XRecord, system int) (float64, *xdominion.XRecord) {
+func ConvertMetrics(sitecontext *base.Datasource, quantity float64, density float64, state int, fromMetric *xdominion.XRecord, system int) (float64, *xdominion.XRecord) {
 
 	fromsystem, _ := fromMetric.GetInt("type")
 	if fromsystem == system || fromsystem > 3 || system == 0 { // nothing to change, no calculable o el mismo sistema

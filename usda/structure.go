@@ -4,7 +4,7 @@ import (
 	"golang.org/x/text/language"
 
 	"github.com/webability-go/xdominion"
-	"github.com/webability-go/xmodules/context"
+	"github.com/webability-go/xmodules/base"
 	"github.com/webability-go/xmodules/translation"
 )
 
@@ -14,7 +14,7 @@ type StructureNutrient struct {
 	Data *xdominion.XRecord
 }
 
-func CreateStructureNutrientByKey(sitecontext *context.Context, key string, lang language.Tag) context.Structure {
+func CreateStructureNutrientByKey(sitecontext *base.Datasource, key string, lang language.Tag) base.Structure {
 	data, _ := sitecontext.GetTable("usda_nutrient").SelectOne(key)
 	if data == nil {
 		return nil
@@ -22,7 +22,7 @@ func CreateStructureNutrientByKey(sitecontext *context.Context, key string, lang
 	return CreateStructureNutrientByData(sitecontext, data, lang)
 }
 
-func CreateStructureNutrientByData(sitecontext *context.Context, data xdominion.XRecordDef, lang language.Tag) context.Structure {
+func CreateStructureNutrientByData(sitecontext *base.Datasource, data xdominion.XRecordDef, lang language.Tag) base.Structure {
 
 	key, _ := data.GetString("key")
 
@@ -36,12 +36,12 @@ func CreateStructureNutrientByData(sitecontext *context.Context, data xdominion.
 }
 
 // ComplementData adds all the needed data from other objects /duplicable in the thread since the object will be destroyed at the end
-func (sm *StructureNutrient) ComplementData(sitecontext *context.Context) {
+func (sm *StructureNutrient) ComplementData(sitecontext *base.Datasource) {
 
 }
 
 // IsAuthorized returns true if the structure can be used on this site/language/device
-func (sm *StructureNutrient) IsAuthorized(sitecontext *context.Context, site string, language string, device string) bool {
+func (sm *StructureNutrient) IsAuthorized(sitecontext *base.Datasource, site string, language string, device string) bool {
 	return true
 }
 
@@ -51,7 +51,7 @@ func (sm *StructureNutrient) GetData() *xdominion.XRecord {
 }
 
 // Clone the whole structure
-func (sm *StructureNutrient) Clone() context.Structure {
+func (sm *StructureNutrient) Clone() base.Structure {
 	cloned := &StructureNutrient{
 		Key:  sm.Key,
 		Lang: sm.Lang,

@@ -6,7 +6,7 @@ import (
 
 	"github.com/webability-go/xcore/v2"
 	"github.com/webability-go/xdominion"
-	"github.com/webability-go/xmodules/context"
+	"github.com/webability-go/xmodules/base"
 )
 
 // Order to load/synchronize tables:
@@ -37,31 +37,31 @@ var moduletables = map[string]func() *xdominion.XTable{
 	"user_sessionhistory":        userSessionHistory,
 }
 
-func buildTables(ctx *context.Context) {
+func buildTables(ds *base.Datasource) {
 
 	for _, tbl := range moduletablesorder {
 		table := moduletables[tbl]()
-		table.SetBase(ctx.GetDatabase())
-		ctx.SetTable(tbl, table)
+		table.SetBase(ds.GetDatabase())
+		ds.SetTable(tbl, table)
 	}
 }
 
-func createCache(ctx *context.Context) []string {
+func createCache(ds *base.Datasource) []string {
 
-	ctx.SetCache("user:users", xcore.NewXCache("user:users", 0, 0))
+	ds.SetCache("user:users", xcore.NewXCache("user:users", 0, 0))
 
 	return []string{}
 }
 
-func buildCache(ctx *context.Context) []string {
+func buildCache(ds *base.Datasource) []string {
 
-	user_user := ctx.GetTable("user_user")
+	user_user := ds.GetTable("user_user")
 	if user_user == nil {
-		return []string{"xmodules::user::buildCache: Error, the user_user table is not available on this context"}
+		return []string{"xmodules::user::buildCache: Error, the user_user table is not available on this datasource"}
 	}
-	cache := ctx.GetCache("user:users")
+	cache := ds.GetCache("user:users")
 	if cache == nil {
-		return []string{"xmodules::user::buildCache: Error, the user cache is not available on this site context"}
+		return []string{"xmodules::user::buildCache: Error, the user cache is not available on this site datasource"}
 	}
 
 	// Loads all data in XCache
@@ -70,7 +70,7 @@ func buildCache(ctx *context.Context) []string {
 	if users != nil {
 		for _, m := range *users {
 			// creates structure on language
-			str := CreateStructureUserByData(ctx, m.Clone())
+			str := CreateStructureUserByData(ds, m.Clone())
 			key, _ := m.GetString("key")
 			cache.Set(key, str)
 		}
@@ -79,15 +79,15 @@ func buildCache(ctx *context.Context) []string {
 	return []string{}
 }
 
-func createTables(ctx *context.Context) []string {
+func createTables(ds *base.Datasource) []string {
 
 	messages := []string{}
 
 	for _, tbl := range moduletablesorder {
 
-		table := ctx.GetTable(tbl)
+		table := ds.GetTable(tbl)
 		if table == nil {
-			return []string{"xmodules::user::createTables: Error, the table is not available on this context:" + tbl}
+			return []string{"xmodules::user::createTables: Error, the table is not available on this datasource:" + tbl}
 		}
 
 		messages = append(messages, "Analysing "+tbl+" table.")
@@ -107,11 +107,11 @@ func createTables(ctx *context.Context) []string {
 	return messages
 }
 
-func loadTables(ctx *context.Context) []string {
+func loadTables(ds *base.Datasource) []string {
 
-	user_user := ctx.GetTable("user_user")
+	user_user := ds.GetTable("user_user")
 	if user_user == nil {
-		return []string{"xmodules::user::createTables: Error, the table user_user is not available on this context"}
+		return []string{"xmodules::user::createTables: Error, the table user_user is not available on this datasource"}
 	}
 
 	// insert super admin
@@ -127,7 +127,7 @@ func loadTables(ctx *context.Context) []string {
 		"lastmodif":    time.Now(),
 	})
 	if err != nil {
-		ctx.Log("main", "Error inserting admin user", err)
+		ds.Log("main", "Error inserting admin user", err)
 		return []string{"xmodules::user::loadTables: Error upserting the admin user"}
 	}
 	return []string{

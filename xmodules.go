@@ -1,3 +1,3 @@
 package xmodules
 
-const VERSION = "0.0.7"
+const VERSION = "2020.05.25"

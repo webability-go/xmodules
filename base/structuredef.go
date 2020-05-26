@@ -1,4 +1,4 @@
-package context
+package base
 
 import (
 	"github.com/webability-go/xdominion"
@@ -8,10 +8,10 @@ import (
 type Structure interface {
 
 	// ComplementData adds all the needed data from other objects /duplicable in the thread since the object will be destroyed at the end
-	ComplementData(sitecontext *Context)
+	ComplementData(ds *Datasource)
 
 	// IsAuthorized returns true if the structure can be used on this site/language/device
-	IsAuthorized(sitecontext *Context, site string, language string, device string) bool
+	IsAuthorized(ds *Datasource, site string, language string, device string) bool
 
 	// GetData Returns the raw data
 	GetData() *xdominion.XRecord

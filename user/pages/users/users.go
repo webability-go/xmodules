@@ -6,7 +6,7 @@ import (
 	// We include the master/app bridge, where the xmodules are supposed to live
 	// You may change this to you own APP and bridge upon needs
 	"github.com/webability-go/xamboo/applications/xmodules/app/bridge"
-	"github.com/webability-go/xamboo/server/assets"
+	"github.com/webability-go/xamboo/assets"
 )
 
 func Run(ctx *assets.Context, template *xcore.XTemplate, language *xcore.XLanguage, e interface{}) interface{} {

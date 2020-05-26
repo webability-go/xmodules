@@ -4,10 +4,10 @@ import (
 	"golang.org/x/text/language"
 
 	"github.com/webability-go/xdominion"
-	"github.com/webability-go/xmodules/context"
+	"github.com/webability-go/xmodules/base"
 )
 
-func GetNutrients(sitecontext *context.Context, lang language.Tag) []string {
+func GetNutrients(sitecontext *base.Datasource, lang language.Tag) []string {
 
 	canonical := lang.String()
 
@@ -24,7 +24,7 @@ func GetNutrients(sitecontext *context.Context, lang language.Tag) []string {
 	return data.([]string)
 }
 
-func GetNutrient(sitecontext *context.Context, key string, lang language.Tag) *StructureNutrient {
+func GetNutrient(sitecontext *base.Datasource, key string, lang language.Tag) *StructureNutrient {
 
 	canonical := lang.String()
 
@@ -47,7 +47,7 @@ func GetNutrient(sitecontext *context.Context, key string, lang language.Tag) *S
 	return data.(*StructureNutrient)
 }
 
-func GetFoodNutrients(sitecontext *context.Context, key string) *xdominion.XRecords {
+func GetFoodNutrients(sitecontext *base.Datasource, key string) *xdominion.XRecords {
 
 	usda_foodnutrient := sitecontext.GetTable("usda_foodnutrient")
 	if usda_foodnutrient == nil {

@@ -4,16 +4,20 @@ import (
 	"net/http"
 	"regexp"
 
-	"github.com/webability-go/xamboo/server"
-	"github.com/webability-go/xamboo/server/assets"
+	"github.com/webability-go/xamboo"
+	"github.com/webability-go/xamboo/assets"
 
-	"github.com/webability-go/xmodules/context"
+	"github.com/webability-go/xmodules/base"
 	"github.com/webability-go/xmodules/tools"
 )
 
-func VerifyUserSession(ctx *assets.Context, xcontext *context.Context, origin string, device string) {
+func VerifyUserSession(ctx *assets.Context, ds *base.Datasource, origin string, device string) {
 
-	config := xcontext.Config
+	if !ds.IsModuleAuthorized("user") {
+		return
+	}
+
+	config := ds.Config
 
 	// Any sent session ?
 	sessionid := ""
@@ -23,7 +27,7 @@ func VerifyUserSession(ctx *assets.Context, xcontext *context.Context, origin st
 	if cookie != nil && len(cookie.Value) != 0 {
 		sessionid = cookie.Value
 	}
-	IP := ctx.Writer.(*server.CoreWriter).RequestStat.IP
+	IP := ctx.Writer.(*xamboo.CoreWriter).RequestStat.IP
 
 	// verify username, password, OrderSecurity connect/disconnect
 	order := ctx.Request.Form.Get("OrderSecurity")
@@ -35,24 +39,24 @@ func VerifyUserSession(ctx *assets.Context, xcontext *context.Context, origin st
 		// verify against config data
 		md5password := tools.GetMD5Hash(password)
 
-		userdata := GetUserByCredentials(xcontext, username, md5password)
+		userdata := GetUserByCredentials(ds, username, md5password)
 		if userdata != nil {
 			// Connect !
-			sessionid = CreateSessionUser(ctx, xcontext, sessionid, IP, origin, device, userdata)
+			sessionid = CreateSessionUser(ctx, ds, sessionid, IP, origin, device, userdata)
 		} else {
 			// Disconnect !
-			DestroySessionUser(ctx, xcontext, sessionid)
+			DestroySessionUser(ctx, ds, sessionid)
 			return
 		}
 	case "Disconnect":
-		DestroySessionUser(ctx, xcontext, sessionid)
+		DestroySessionUser(ctx, ds, sessionid)
 		return
 	}
 
 	if sessionid == "" { // there is no session
 		return
 	}
-	sessiondata := GetSession(xcontext, sessionid)
+	sessiondata := GetSession(ds, sessionid)
 	if sessiondata == nil {
 		return
 	}
@@ -60,7 +64,7 @@ func VerifyUserSession(ctx *assets.Context, xcontext *context.Context, origin st
 	checkIP, _ := config.GetBool("checkip")
 	sessionip, _ := sessiondata.GetString("ip")
 	if checkIP && IP != sessionip {
-		DestroySessionUser(ctx, xcontext, sessionid)
+		DestroySessionUser(ctx, ds, sessionid)
 		return
 	}
 
@@ -71,7 +75,7 @@ func VerifyUserSession(ctx *assets.Context, xcontext *context.Context, origin st
 	//	ctx.Sessionparams.Set("clientid", clientid)
 
 	userkey, _ := sessiondata.GetInt("user")
-	userdata := GetUser(xcontext, userkey)
+	userdata := GetUser(ds, userkey)
 
 	ctx.Sessionparams.Set("usersessionid", sessionid)
 	ctx.Sessionparams.Set("userkey", userkey)
@@ -79,9 +83,9 @@ func VerifyUserSession(ctx *assets.Context, xcontext *context.Context, origin st
 	ctx.Sessionparams.Set("userdata", userdata.Data)
 }
 
-func CreateSessionUser(ctx *assets.Context, xcontext *context.Context, sessionid string, IP string, origin string, device string, user *StructureUser) string {
+func CreateSessionUser(ctx *assets.Context, ds *base.Datasource, sessionid string, IP string, origin string, device string, user *StructureUser) string {
 
-	config := xcontext.Config
+	config := ds.Config
 
 	match, _ := regexp.MatchString("[a-zA-Z0-9]{24}", sessionid)
 	if !match {
@@ -89,7 +93,7 @@ func CreateSessionUser(ctx *assets.Context, xcontext *context.Context, sessionid
 	}
 
 	userkey, _ := user.Data.GetInt("key")
-	sessionid = CreateSession(xcontext, userkey, sessionid, IP, origin, device)
+	sessionid = CreateSession(ds, userkey, sessionid, IP, origin, device)
 	if sessionid == "" {
 		return ""
 	}
@@ -100,16 +104,16 @@ func CreateSessionUser(ctx *assets.Context, xcontext *context.Context, sessionid
 	return sessionid
 }
 
-func DestroySessionUser(ctx *assets.Context, xcontext *context.Context, sessionid string) {
+func DestroySessionUser(ctx *assets.Context, ds *base.Datasource, sessionid string) {
 
-	config := xcontext.Config
+	config := ds.Config
 	cookiedomain, _ := config.GetString("cookiedomain")
 	cookiename, _ := config.GetString("cookiename")
 
 	http.SetCookie(ctx.Writer, &http.Cookie{Domain: cookiedomain, Name: cookiename, Value: "", Path: "/", MaxAge: -1})
 
 	// destroys the session in DB
-	CloseSession(xcontext, sessionid)
+	CloseSession(ds, sessionid)
 }
 
 /* Verify cookie session against DB

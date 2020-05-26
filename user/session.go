@@ -7,15 +7,15 @@ import (
 
 	"github.com/webability-go/xdominion"
 
-	"github.com/webability-go/xmodules/context"
+	"github.com/webability-go/xmodules/base"
 	"github.com/webability-go/xmodules/tools"
 )
 
-func GetSession(sitecontext *context.Context, sessionid string) *xdominion.XRecord {
+func GetSession(ds *base.Datasource, sessionid string) *xdominion.XRecord {
 
-	user_session := sitecontext.GetTable("user_session")
+	user_session := ds.GetTable("user_session")
 	if user_session == nil {
-		sitecontext.Log("xmodules::user::GetSession: Error, the user_session table is not available on this context")
+		ds.Log("xmodules::user::GetSession: Error, the user_session table is not available on this datasource")
 		return nil
 	}
 
@@ -23,18 +23,18 @@ func GetSession(sitecontext *context.Context, sessionid string) *xdominion.XReco
 	return data
 }
 
-func CreateSession(sitecontext *context.Context, key int, sessionid string, IP string, origin string, device string) string {
+func CreateSession(ds *base.Datasource, key int, sessionid string, IP string, origin string, device string) string {
 
-	user_session := sitecontext.GetTable("user_session")
+	user_session := ds.GetTable("user_session")
 	if user_session == nil {
-		sitecontext.Log("xmodules::user::CreateSession: Error, the user_session table is not available on this context")
+		ds.Log("xmodules::user::CreateSession: Error, the user_session table is not available on this datasource")
 		return ""
 	}
 
 	// Lets see if we can reuse the sessionid
 	if sessionid != "" {
 		// load session to see if it fits, or not
-		sessiondata := GetSession(sitecontext, sessionid)
+		sessiondata := GetSession(ds, sessionid)
 		if sessiondata != nil {
 			userkey, _ := sessiondata.GetInt("user")
 			if userkey == key {
@@ -80,11 +80,11 @@ func CreateSession(sitecontext *context.Context, key int, sessionid string, IP s
 	return sessionid
 }
 
-func CloseSession(sitecontext *context.Context, sessionid string) string {
+func CloseSession(ds *base.Datasource, sessionid string) string {
 
-	user_session := sitecontext.GetTable("user_session")
+	user_session := ds.GetTable("user_session")
 	if user_session == nil {
-		sitecontext.Log("xmodules::user::CreateSession: Error, the user_session table is not available on this context")
+		ds.Log("xmodules::user::CreateSession: Error, the user_session table is not available on this datasource")
 		return ""
 	}
 	// invaluda sessionid

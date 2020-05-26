@@ -6,7 +6,7 @@ import (
 	"golang.org/x/text/language"
 
 	"github.com/webability-go/xdominion"
-	"github.com/webability-go/xmodules/context"
+	"github.com/webability-go/xmodules/base"
 	"github.com/webability-go/xmodules/translation"
 )
 
@@ -16,7 +16,7 @@ type StructureMaterial struct {
 	Data *xdominion.XRecord
 }
 
-func CreateStructureMaterialByKey(sitecontext *context.Context, key int, lang language.Tag) context.Structure {
+func CreateStructureMaterialByKey(sitecontext *base.Datasource, key int, lang language.Tag) base.Structure {
 	data, _ := sitecontext.GetTable("kl_material").SelectOne(key)
 	if data == nil {
 		return nil
@@ -24,7 +24,7 @@ func CreateStructureMaterialByKey(sitecontext *context.Context, key int, lang la
 	return CreateStructureMaterialByData(sitecontext, data, lang)
 }
 
-func CreateStructureMaterialByData(sitecontext *context.Context, data xdominion.XRecordDef, lang language.Tag) context.Structure {
+func CreateStructureMaterialByData(sitecontext *base.Datasource, data xdominion.XRecordDef, lang language.Tag) base.Structure {
 
 	key, _ := data.GetInt("clave")
 
@@ -38,12 +38,12 @@ func CreateStructureMaterialByData(sitecontext *context.Context, data xdominion.
 }
 
 // ComplementData adds all the needed data from other objects /duplicable in the thread since the object will be destroyed at the end
-func (sm *StructureMaterial) ComplementData(sitecontext *context.Context) {
+func (sm *StructureMaterial) ComplementData(sitecontext *base.Datasource) {
 
 }
 
 // IsAuthorized returns true if the structure can be used on this site/language/device
-func (sm *StructureMaterial) IsAuthorized(sitecontext *context.Context, site string, language string, device string) bool {
+func (sm *StructureMaterial) IsAuthorized(sitecontext *base.Datasource, site string, language string, device string) bool {
 	return true
 }
 
@@ -53,7 +53,7 @@ func (sm *StructureMaterial) GetData() *xdominion.XRecord {
 }
 
 // Clone the whole structure
-func (sm *StructureMaterial) Clone() context.Structure {
+func (sm *StructureMaterial) Clone() base.Structure {
 	cloned := &StructureMaterial{
 		Key:  sm.Key,
 		Lang: sm.Lang,

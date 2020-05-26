@@ -1,12 +1,14 @@
 // Package user contains the list of administrative user for the system.
 // All users have accesses, into a profile and even extended access based upon table records.
-// It needs context xmodule.
+// It needs base xmodule.
 package metric
 
 import (
 	"golang.org/x/text/language"
 
-	"github.com/webability-go/xmodules/context"
+	serverassets "github.com/webability-go/xamboo/assets"
+
+	"github.com/webability-go/xmodules/base"
 	"github.com/webability-go/xmodules/translation"
 )
 
@@ -17,21 +19,22 @@ const (
 )
 
 func init() {
-	m := &context.Module{
+	m := &base.Module{
 		ID:           MODULEID,
 		Version:      VERSION,
 		Languages:    map[language.Tag]string{language.English: "Metrics", language.Spanish: "Métricas", language.French: "Métriques"},
-		Needs:        []string{"context"},
+		Needs:        []string{"base"},
 		FSetup:       Setup,
 		FSynchronize: Synchronize,
 	}
-	context.ModulesList.Register(m)
+	base.ModulesList.Register(m)
 }
 
 // InitModule is called during the init phase to link the module with the system
 // adds tables and caches to ctx::database
-func Setup(ctx *context.Context, prefix string) ([]string, error) {
+func Setup(ds serverassets.Datasource, prefix string) ([]string, error) {
 
+	ctx := ds.(*base.Datasource)
 	buildTables(ctx)
 	createCache(ctx)
 	ctx.SetModule(MODULEID, VERSION)
@@ -41,8 +44,9 @@ func Setup(ctx *context.Context, prefix string) ([]string, error) {
 	return []string{}, nil
 }
 
-func Synchronize(ctx *context.Context, prefix string) ([]string, error) {
+func Synchronize(ds serverassets.Datasource, prefix string) ([]string, error) {
 
+	ctx := ds.(*base.Datasource)
 	translation.AddTheme(ctx, TRANSLATIONTHEME, "Metric units", translation.SOURCETABLE, "", "name,plural")
 
 	messages := []string{}
@@ -61,4 +65,8 @@ func Synchronize(ctx *context.Context, prefix string) ([]string, error) {
 
 	// fill metric and translations
 	return messages, nil
+}
+
+func StartContext(ds serverassets.Datasource, ctx *serverassets.Context) error {
+	return nil
 }

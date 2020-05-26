@@ -2,10 +2,10 @@ package stat
 
 import (
 	"github.com/webability-go/xdominion"
-	"github.com/webability-go/xmodules/context"
+	"github.com/webability-go/xmodules/base"
 )
 
-func RegisterStat(sitecontext *context.Context, prefix string, data xdominion.XRecord) {
+func RegisterStat(sitecontext *base.Datasource, prefix string, data xdominion.XRecord) {
 
 	table := sitecontext.GetTable(prefix + "stat_" + getMonth())
 	if table == nil {

@@ -6,17 +6,17 @@ import (
 	"golang.org/x/text/language"
 
 	"github.com/webability-go/xcore/v2"
-	"github.com/webability-go/xmodules/context"
+	"github.com/webability-go/xmodules/base"
 )
 
-func buildTables(ctx *context.Context) {
+func buildTables(ctx *base.Datasource) {
 
 	ctx.SetTable("metric_unit", metricUnit())
 	ctx.GetTable("metric_unit").SetBase(ctx.GetDatabase())
 	ctx.GetTable("metric_unit").SetLanguage(language.English)
 }
 
-func createCache(ctx *context.Context) []string {
+func createCache(ctx *base.Datasource) []string {
 
 	for _, lang := range ctx.GetLanguages() {
 		canonical := lang.String()
@@ -25,7 +25,7 @@ func createCache(ctx *context.Context) []string {
 	return []string{}
 }
 
-func buildCache(ctx *context.Context) []string {
+func buildCache(ctx *base.Datasource) []string {
 
 	// Lets protect us for race condition since map[] of Tables and XCaches are not thread safe
 	metric_unit := ctx.GetTable("metric_unit")
