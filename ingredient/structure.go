@@ -8,6 +8,8 @@ import (
 	"github.com/webability-go/xdominion"
 	"github.com/webability-go/xmodules/base"
 	"github.com/webability-go/xmodules/translation"
+
+	serverassets "github.com/webability-go/xamboo/assets"
 )
 
 type StructurePasillo struct {
@@ -22,7 +24,7 @@ type StructureIngredient struct {
 	Data *xdominion.XRecord
 }
 
-func CreateStructurePasilloByKey(sitecontext *base.Datasource, key int, lang language.Tag) base.Structure {
+func CreateStructurePasilloByKey(sitecontext serverassets.Datasource, key int, lang language.Tag) base.Structure {
 	data, _ := sitecontext.GetTable("kl_ingredientepasillo").SelectOne(key)
 	if data == nil {
 		return nil
@@ -30,7 +32,7 @@ func CreateStructurePasilloByKey(sitecontext *base.Datasource, key int, lang lan
 	return CreateStructurePasilloByData(sitecontext, data, lang)
 }
 
-func CreateStructurePasilloByData(sitecontext *base.Datasource, data xdominion.XRecordDef, lang language.Tag) base.Structure {
+func CreateStructurePasilloByData(sitecontext serverassets.Datasource, data xdominion.XRecordDef, lang language.Tag) base.Structure {
 
 	key, _ := data.GetInt("clave")
 
@@ -44,12 +46,12 @@ func CreateStructurePasilloByData(sitecontext *base.Datasource, data xdominion.X
 }
 
 // ComplementData adds all the needed data from other objects /duplicable in the thread since the object will be destroyed at the end
-func (sm *StructurePasillo) ComplementData(sitecontext *base.Datasource) {
+func (sm *StructurePasillo) ComplementData(sitecontext serverassets.Datasource) {
 
 }
 
 // IsAuthorized returns true if the structure can be used on this site/language/device
-func (sm *StructurePasillo) IsAuthorized(sitecontext *base.Datasource, site string, language string, device string) bool {
+func (sm *StructurePasillo) IsAuthorized(sitecontext serverassets.Datasource, site string, language string, device string) bool {
 	return true
 }
 
@@ -68,7 +70,7 @@ func (sm *StructurePasillo) Clone() base.Structure {
 	return cloned
 }
 
-func CreateStructureIngredientByKey(sitecontext *base.Datasource, key int, lang language.Tag) base.Structure {
+func CreateStructureIngredientByKey(sitecontext serverassets.Datasource, key int, lang language.Tag) base.Structure {
 	data, _ := sitecontext.GetTable("kl_ingrediente").SelectOne(key)
 	if data == nil {
 		return nil
@@ -76,7 +78,7 @@ func CreateStructureIngredientByKey(sitecontext *base.Datasource, key int, lang 
 	return CreateStructureIngredientByData(sitecontext, data, lang)
 }
 
-func CreateStructureIngredientByData(sitecontext *base.Datasource, data xdominion.XRecordDef, lang language.Tag) base.Structure {
+func CreateStructureIngredientByData(sitecontext serverassets.Datasource, data xdominion.XRecordDef, lang language.Tag) base.Structure {
 
 	key, _ := data.GetInt("clave")
 
@@ -90,12 +92,12 @@ func CreateStructureIngredientByData(sitecontext *base.Datasource, data xdominio
 }
 
 // ComplementData adds all the needed data from other objects /duplicable in the thread since the object will be destroyed at the end
-func (sm *StructureIngredient) ComplementData(sitecontext *base.Datasource) {
+func (sm *StructureIngredient) ComplementData(sitecontext serverassets.Datasource) {
 
 }
 
 // IsAuthorized returns true if the structure can be used on this site/language/device
-func (sm *StructureIngredient) IsAuthorized(sitecontext *base.Datasource, site string, language string, device string) bool {
+func (sm *StructureIngredient) IsAuthorized(sitecontext serverassets.Datasource, site string, language string, device string) bool {
 	return true
 }
 
