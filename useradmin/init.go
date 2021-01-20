@@ -1,7 +1,7 @@
 // Package user contains the list of administrative user for the system.
 // All users have accesses, into a profile and even extended access based upon table records.
 // It needs context xmodule.
-package user
+package useradmin
 
 import (
 	"golang.org/x/text/language"
@@ -10,30 +10,24 @@ import (
 
 	"github.com/webability-go/xmodules/base"
 	"github.com/webability-go/xmodules/tools"
-	"github.com/webability-go/xmodules/user/assets"
+	"github.com/webability-go/xmodules/useradmin/assets"
 )
 
 const (
-	MODULEID = "user"
+	MODULEID = "useradmin"
 	VERSION  = "0.0.1"
 )
 
-var Needs = []string{"base"}
-var ModuleUser = assets.ModuleEntries{
-	GetAccessesCount: GetCountAccesses,
-	GetAccessesList:  GetAccessesList,
-}
+var Needs = []string{"base", "user", "adminmenu"}
+
+var ModuleUserAdmin = assets.ModuleEntries{}
 
 func init() {
 	messages = tools.BuildMessages(smessages)
 	m := &base.Module{
-		ID:      MODULEID,
-		Version: VERSION,
-		Languages: map[language.Tag]string{
-			language.English: tools.Message(messages, "MODULENAME", language.English),
-			language.Spanish: tools.Message(messages, "MODULENAME", language.Spanish),
-			language.French:  tools.Message(messages, "MODULENAME", language.French),
-		},
+		ID:            MODULEID,
+		Version:       VERSION,
+		Languages:     map[language.Tag]string{language.English: "Administration of users", language.Spanish: "Adminitración de usuarios", language.French: "Administration des utilisateurs"},
 		Needs:         Needs,
 		FSetup:        Setup,        // Called once at the main system startup, once PER CREATED xmodule CONTEXT (if set)
 		FSynchronize:  Synchronize,  // Called only to create/rebuild database objects and others on demand (if set)
@@ -46,11 +40,8 @@ func init() {
 // adds tables and caches to sitecontext::database
 func Setup(ds serverassets.Datasource, prefix string) ([]string, error) {
 
-	buildTables(ds)
-	createCache(ds)
+	// no tables on this module
 	ds.SetModule(MODULEID, VERSION)
-
-	go buildCache(ds)
 
 	return []string{}, nil
 }
@@ -59,26 +50,25 @@ func Synchronize(ds serverassets.Datasource, prefix string) ([]string, error) {
 
 	result := []string{}
 
-	// Needed modules: context and translation
-	vc := base.ModuleInstalledVersion(ds, "base")
-	if vc == "" {
-		result = append(result, "xmodules/base need to be installed before installing xmodules/user.")
-		return result, nil
+	lds := ds.(*base.Datasource)
+	for _, need := range Needs {
+		// Needed modules: context and translation
+		vc := base.ModuleInstalledVersion(lds, need)
+		if vc == "" {
+			result = append(result, "xmodules/"+need+" need to be installed before installing xmodules/"+MODULEID)
+			return result, nil
+		}
 	}
 
-	// create tables
-	r, err := createTables(ds)
-	result = append(result, r...)
-
 	cds := ds.CloneShell()
-	_, err = cds.StartTransaction()
+	_, err := cds.StartTransaction()
 	if err != nil {
 		result = append(result, err.Error())
 		return result, err
 	}
 
 	// fill super admin
-	r, err = loadTables(cds)
+	r, err := loadTables(cds)
 	result = append(result, r...)
 
 	// Inserting into context-modules
@@ -97,10 +87,5 @@ func Synchronize(ds serverassets.Datasource, prefix string) ([]string, error) {
 }
 
 func StartContext(ds serverassets.Datasource, ctx *serverassets.Context) error {
-
-	// TODO(phil) implement site, device (from CTX)
-
-	lds := ds.(*base.Datasource)
-	VerifyUserSession(ctx, lds, "xmodules", "pc")
 	return nil
 }

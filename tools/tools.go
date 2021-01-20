@@ -3,8 +3,12 @@ package tools
 import (
 	"crypto/md5"
 	"encoding/hex"
+	"encoding/json"
 	"fmt"
 	"math/rand"
+	"net/http"
+	"net/url"
+	"strings"
 	"time"
 )
 
@@ -51,4 +55,31 @@ func GetMD5Hash(text string) string {
 	hasher := md5.New()
 	hasher.Write([]byte(text))
 	return hex.EncodeToString(hasher.Sum(nil))
+}
+
+func calljson(jsonservice string, jsonparams map[string]string, forwarded string) (map[string]interface{}, error) {
+
+	formdata := url.Values{}
+	for key, val := range jsonparams {
+		formdata[key] = []string{val}
+	}
+
+	req, err := http.NewRequest(http.MethodPost, jsonservice, strings.NewReader(formdata.Encode()))
+	if err != nil {
+		return nil, err
+	}
+	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
+	req.Header.Set("X-Forwarded-For", forwarded)
+	data, err := http.DefaultClient.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer data.Body.Close()
+
+	var result map[string]interface{}
+	err = json.NewDecoder(data.Body).Decode(&result)
+	if err != nil {
+		return nil, err
+	}
+	return result, nil
 }

@@ -31,7 +31,7 @@ func GetUser(ds *base.Datasource, key int) *StructureUser {
 	return data.(*StructureUser)
 }
 
-// GetCountry to get the data of a country from cache/db in the specified language
+// GetUsersList to get a list of all the users
 func GetUsersList(ds *base.Datasource) *xdominion.XRecords {
 
 	user_user := ds.GetTable("user_user")

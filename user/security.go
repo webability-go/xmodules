@@ -18,7 +18,6 @@ func VerifyUserSession(ctx *assets.Context, ds *base.Datasource, origin string, 
 	}
 
 	config := ds.Config
-
 	// Any sent session ?
 	sessionid := ""
 	cookiename, _ := config.GetString("cookiename")
@@ -76,9 +75,11 @@ func VerifyUserSession(ctx *assets.Context, ds *base.Datasource, origin string, 
 
 	userkey, _ := sessiondata.GetInt("user")
 	userdata := GetUser(ds, userkey)
+	username, _ := userdata.Data.GetString("name")
 
 	ctx.Sessionparams.Set("usersessionid", sessionid)
 	ctx.Sessionparams.Set("userkey", userkey)
+	ctx.Sessionparams.Set("username", username)
 	ctx.Sessionparams.Set("usersession", sessiondata)
 	ctx.Sessionparams.Set("userdata", userdata.Data)
 }

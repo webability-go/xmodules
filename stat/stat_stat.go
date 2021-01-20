@@ -26,7 +26,7 @@ func stat_stat(prefix string, num string) *xdominion.XTable {
 	}})
 
 	// uri
-	t.AddField(xdominion.XFieldVarChar{Name: "uri", Size: 250})
+	t.AddField(xdominion.XFieldVarChar{Name: "uri", Size: 4000})
 
 	// ip
 	t.AddField(xdominion.XFieldVarChar{Name: "ip", Size: 40, Constraints: xdominion.XConstraints{
@@ -53,13 +53,13 @@ func stat_stat(prefix string, num string) *xdominion.XTable {
 	}})
 
 	// method
-	t.AddField(xdominion.XFieldVarChar{Name: "method", Size: 6})
+	t.AddField(xdominion.XFieldVarChar{Name: "method", Size: 8})
 
 	// code
 	t.AddField(xdominion.XFieldInteger{Name: "code"})
 
 	// server
-	t.AddField(xdominion.XFieldVarChar{Name: "server", Size: 15})
+	t.AddField(xdominion.XFieldVarChar{Name: "server", Size: 30})
 
 	// client
 	t.AddField(xdominion.XFieldInteger{Name: "client"})

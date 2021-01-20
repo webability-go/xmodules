@@ -9,6 +9,8 @@ import (
 	"github.com/webability-go/xdominion"
 
 	"github.com/webability-go/xamboo/assets"
+
+	"github.com/webability-go/xmodules/tools"
 )
 
 var ModulesList = &Modules{}
@@ -83,7 +85,7 @@ func (m *Module) StartContext(ds assets.Datasource, ctx *assets.Context) error {
 func ModuleInstalledVersion(ds assets.Datasource, id string) string {
 	base_module := ds.GetTable("base_module")
 	if base_module == nil {
-		ds.Log("main", "Error: the base_module table is not available within the datasource xmodule")
+		ds.Log("main", tools.Message(messages, "notable", "base_module"))
 		return ""
 	}
 	data, err := base_module.SelectOne(id)
@@ -108,12 +110,14 @@ func GetModule(ds assets.Datasource, id string) *xcore.XDataset {
 func AddModule(ds assets.Datasource, id string, name string, version string) error {
 	base_module := ds.GetTable("base_module")
 	if base_module == nil {
-		return errors.New("Error: the base_module table is not available within the datasource xmodule")
+		msgerror := tools.Message(messages, "notable", "base_module")
+		ds.Log("main", msgerror)
+		return errors.New(msgerror)
 	}
 	_, err := base_module.Upsert(id, xdominion.XRecord{
 		"key":     id,
 		"name":    name,
 		"version": version,
-	})
+	}, ds.GetTransaction())
 	return err
 }

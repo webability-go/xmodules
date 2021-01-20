@@ -1,12 +1,16 @@
 package user
 
 import (
+	"crypto/md5"
+	"encoding/hex"
+	"errors"
 	"fmt"
 	"time"
 
 	"github.com/webability-go/xcore/v2"
 	"github.com/webability-go/xdominion"
-	"github.com/webability-go/xmodules/base"
+
+	serverassets "github.com/webability-go/xamboo/assets"
 )
 
 // Order to load/synchronize tables:
@@ -37,7 +41,7 @@ var moduletables = map[string]func() *xdominion.XTable{
 	"user_sessionhistory":        userSessionHistory,
 }
 
-func buildTables(ds *base.Datasource) {
+func buildTables(ds serverassets.Datasource) {
 
 	for _, tbl := range moduletablesorder {
 		table := moduletables[tbl]()
@@ -46,14 +50,14 @@ func buildTables(ds *base.Datasource) {
 	}
 }
 
-func createCache(ds *base.Datasource) []string {
+func createCache(ds serverassets.Datasource) []string {
 
 	ds.SetCache("user:users", xcore.NewXCache("user:users", 0, 0))
 
 	return []string{}
 }
 
-func buildCache(ds *base.Datasource) []string {
+func buildCache(ds serverassets.Datasource) []string {
 
 	user_user := ds.GetTable("user_user")
 	if user_user == nil {
@@ -79,48 +83,49 @@ func buildCache(ds *base.Datasource) []string {
 	return []string{}
 }
 
-func createTables(ds *base.Datasource) []string {
+func createTables(ds serverassets.Datasource) ([]string, error) {
 
-	messages := []string{}
+	result := []string{}
 
 	for _, tbl := range moduletablesorder {
 
 		table := ds.GetTable(tbl)
 		if table == nil {
-			return []string{"xmodules::user::createTables: Error, the table is not available on this datasource:" + tbl}
+			return []string{"xmodules::user::createTables: Error, the table is not available on this datasource:" + tbl}, errors.New("Error")
 		}
 
-		messages = append(messages, "Analysing "+tbl+" table.")
+		result = append(result, "Analysing "+tbl+" table.")
 		num, err := table.Count(nil)
 		if err != nil || num == 0 {
 			err1 := table.Synchronize()
 			if err1 != nil {
-				messages = append(messages, "The table "+tbl+" was not created: "+err1.Error())
+				result = append(result, "The table "+tbl+" was not created: "+err1.Error())
 			} else {
-				messages = append(messages, "The table "+tbl+" was created (again)")
+				result = append(result, "The table "+tbl+" was created (again)")
 			}
 		} else {
-			messages = append(messages, "The table "+tbl+" was not created because it contains data.")
+			result = append(result, "The table "+tbl+" was not created because it contains data.")
 		}
 	}
 
-	return messages
+	return result, nil
 }
 
-func loadTables(ds *base.Datasource) []string {
+func loadTables(ds serverassets.Datasource) ([]string, error) {
 
 	user_user := ds.GetTable("user_user")
 	if user_user == nil {
-		return []string{"xmodules::user::createTables: Error, the table user_user is not available on this datasource"}
+		return []string{"xmodules::user::createTables: Error, the table user_user is not available on this datasource"}, errors.New("error")
 	}
 
+	bmd5 := md5.Sum([]byte("manager"))
 	// insert super admin
 	_, err := user_user.Upsert(1, xdominion.XRecord{
 		"key":          1,
 		"status":       "A",
 		"name":         "System Manager",
 		"un":           "system",
-		"pw":           "manager",
+		"pw":           hex.EncodeToString(bmd5[:]),
 		"mail":         "hostmaster@yoursite.com",
 		"sex":          "M",
 		"creationdate": time.Now(),
@@ -128,9 +133,9 @@ func loadTables(ds *base.Datasource) []string {
 	})
 	if err != nil {
 		ds.Log("main", "Error inserting admin user", err)
-		return []string{"xmodules::user::loadTables: Error upserting the admin user"}
+		return []string{"xmodules::user::loadTables: Error upserting the admin user"}, errors.New("Error")
 	}
 	return []string{
 		fmt.Sprint(user_user.Count(nil)) + " admin user added",
-	}
+	}, nil
 }

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<language id="accesses" lang="es">
+  <entry id="maintitle"><![CDATA[Derechos de acceso del sistema.]]></entry>
+  <entry id="filtertitle"><![CDATA[Haz click sobre un renglon para verlo:]]></entry>
+  <entry id="filterreloadlist"><![CDATA[Recargar la lista]]></entry>
+  <entry id="filternewgroup"><![CDATA[Insertar un nuevo grupo]]></entry>
+  <entry id="filternewaccess"><![CDATA[Insertar un nuevo acceso]]></entry>
+
+  <entry id="gridkey">Clave</entry>
+  <entry id="gridnamemail">Nombre / Correo</entry>
+  <entry id="gridprofiles">Perfiles</entry>
+  <entry id="gridusers">Usuarios</entry>
+  <entry id="gridcommands">Comandos</entry>
+</language>

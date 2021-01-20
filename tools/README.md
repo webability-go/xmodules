@@ -9,9 +9,13 @@ The tools package give some standard functions
 - UUID() string,
 - MD5(string)string,
 - CreateKey(length, type) string
+- Messages selection for modules with languages
 
 Version Changes Control
 =======================
+
+v0.0.1 - 2021-01-15
+- Add language support for message selection
 
 v0.0.0 - 2020-04-20
 - First release
