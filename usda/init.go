@@ -10,6 +10,7 @@ import (
 
 	"github.com/webability-go/xmodules/base"
 	"github.com/webability-go/xmodules/translation"
+	"github.com/webability-go/xmodules/usda/assets"
 )
 
 const (
@@ -17,6 +18,8 @@ const (
 	VERSION          = "0.0.1"
 	TRANSLATIONTHEME = "nutrient"
 )
+
+var ModuleUsda = assets.ModuleEntries{}
 
 func init() {
 	m := &base.Module{

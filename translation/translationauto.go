@@ -4,12 +4,14 @@ import (
 	"golang.org/x/text/language"
 
 	"github.com/webability-go/xdominion"
-	"github.com/webability-go/xmodules/base"
+	//	"github.com/webability-go/xmodules/base"
+
+	serverassets "github.com/webability-go/xamboo/assets"
 )
 
 // All purpose Translation method for structures
 // Any MAINDATA record MUST have a lastmodif field
-func Translate(sitecontext *base.Datasource, theme string, key string, maindata xdominion.XRecordDef, fields map[string]interface{}, fromLang language.Tag, toLang language.Tag) {
+func Translate(sitecontext serverassets.Datasource, theme string, key string, maindata xdominion.XRecordDef, fields map[string]interface{}, fromLang language.Tag, toLang language.Tag) {
 
 	lastmodif, _ := maindata.GetTime("lastmodif")
 	trtbl := NewTranslationBlock(theme, key, lastmodif, fromLang, toLang)

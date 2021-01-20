@@ -6,6 +6,8 @@ import (
 	"github.com/webability-go/xdominion"
 	"github.com/webability-go/xmodules/base"
 	"github.com/webability-go/xmodules/translation"
+
+	serverassets "github.com/webability-go/xamboo/assets"
 )
 
 type StructureNutrient struct {
@@ -14,7 +16,7 @@ type StructureNutrient struct {
 	Data *xdominion.XRecord
 }
 
-func CreateStructureNutrientByKey(sitecontext *base.Datasource, key string, lang language.Tag) base.Structure {
+func CreateStructureNutrientByKey(sitecontext serverassets.Datasource, key string, lang language.Tag) base.Structure {
 	data, _ := sitecontext.GetTable("usda_nutrient").SelectOne(key)
 	if data == nil {
 		return nil
@@ -22,7 +24,7 @@ func CreateStructureNutrientByKey(sitecontext *base.Datasource, key string, lang
 	return CreateStructureNutrientByData(sitecontext, data, lang)
 }
 
-func CreateStructureNutrientByData(sitecontext *base.Datasource, data xdominion.XRecordDef, lang language.Tag) base.Structure {
+func CreateStructureNutrientByData(sitecontext serverassets.Datasource, data xdominion.XRecordDef, lang language.Tag) base.Structure {
 
 	key, _ := data.GetString("key")
 
@@ -36,12 +38,12 @@ func CreateStructureNutrientByData(sitecontext *base.Datasource, data xdominion.
 }
 
 // ComplementData adds all the needed data from other objects /duplicable in the thread since the object will be destroyed at the end
-func (sm *StructureNutrient) ComplementData(sitecontext *base.Datasource) {
+func (sm *StructureNutrient) ComplementData(sitecontext serverassets.Datasource) {
 
 }
 
 // IsAuthorized returns true if the structure can be used on this site/language/device
-func (sm *StructureNutrient) IsAuthorized(sitecontext *base.Datasource, site string, language string, device string) bool {
+func (sm *StructureNutrient) IsAuthorized(sitecontext serverassets.Datasource, site string, language string, device string) bool {
 	return true
 }
 
