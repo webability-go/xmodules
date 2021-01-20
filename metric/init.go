@@ -9,6 +9,7 @@ import (
 	serverassets "github.com/webability-go/xamboo/assets"
 
 	"github.com/webability-go/xmodules/base"
+	"github.com/webability-go/xmodules/metric/assets"
 	"github.com/webability-go/xmodules/translation"
 )
 
@@ -17,6 +18,8 @@ const (
 	VERSION          = "0.0.1"
 	TRANSLATIONTHEME = "metric"
 )
+
+var ModuleMetric = assets.ModuleEntries{}
 
 func init() {
 	m := &base.Module{

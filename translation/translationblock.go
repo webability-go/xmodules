@@ -7,7 +7,9 @@ import (
 	"golang.org/x/text/language"
 
 	"github.com/webability-go/xdominion"
-	"github.com/webability-go/xmodules/base"
+	//	"github.com/webability-go/xmodules/base"
+
+	serverassets "github.com/webability-go/xamboo/assets"
 )
 
 type TranslationBlock struct {
@@ -38,7 +40,7 @@ func (tb *TranslationBlock) Set(field string, value string) {
 	tb.original[field] = value
 }
 
-func (tb *TranslationBlock) Verify(sitecontext *base.Datasource) {
+func (tb *TranslationBlock) Verify(sitecontext serverassets.Datasource) {
 
 	translation_info := sitecontext.GetTable("translation_info")
 	if translation_info == nil {

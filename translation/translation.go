@@ -10,7 +10,9 @@ import (
 	"golang.org/x/text/language"
 
 	"github.com/webability-go/xdominion"
-	"github.com/webability-go/xmodules/base"
+	//	"github.com/webability-go/xmodules/base"
+
+	serverassets "github.com/webability-go/xamboo/assets"
 )
 
 const (
@@ -18,7 +20,7 @@ const (
 	SOURCEFILE  = 2
 )
 
-func AddTheme(sitecontext *base.Datasource, theme string, name string, source int, link string, fields string) error {
+func AddTheme(sitecontext serverassets.Datasource, theme string, name string, source int, link string, fields string) error {
 
 	translation_theme := sitecontext.GetTable("translation_theme")
 	if translation_theme == nil {
@@ -40,7 +42,7 @@ func AddTheme(sitecontext *base.Datasource, theme string, name string, source in
 // ok = true: texto correcto, false = no existe el texto
 // last date = fecha en la cual se tradujo ( si no es español y ok = true)
 // lastverified = 0: auto (o español original), 1 = verified, 2 = original modified (not re-translated, pending)
-func GetTranslation(sitecontext *base.Datasource, textooriginal string, theme string, key string, field string, lang language.Tag) (string, bool, time.Time, int) {
+func GetTranslation(sitecontext serverassets.Datasource, textooriginal string, theme string, key string, field string, lang language.Tag) (string, bool, time.Time, int) {
 
 	translation_info := sitecontext.GetTable("translation_info")
 	if translation_info == nil {
@@ -70,7 +72,7 @@ func GetTranslation(sitecontext *base.Datasource, textooriginal string, theme st
 }
 
 // return: error
-func SetTranslation(sitecontext *base.Datasource, textotraducido string, theme string, key string, field string, lang language.Tag, verified int) error {
+func SetTranslation(sitecontext serverassets.Datasource, textotraducido string, theme string, key string, field string, lang language.Tag, verified int) error {
 
 	translation_info := sitecontext.GetTable("translation_info")
 	if translation_info == nil {
@@ -124,7 +126,7 @@ func SetTranslation(sitecontext *base.Datasource, textotraducido string, theme s
 }
 
 // return: error
-func SetVerified(sitecontext *base.Datasource, theme string, key string, field string, lang language.Tag, verified int) error {
+func SetVerified(sitecontext serverassets.Datasource, theme string, key string, field string, lang language.Tag, verified int) error {
 
 	translation_info := sitecontext.GetTable("translation_info")
 	if translation_info == nil {

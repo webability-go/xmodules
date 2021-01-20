@@ -9,12 +9,15 @@ import (
 	serverassets "github.com/webability-go/xamboo/assets"
 
 	"github.com/webability-go/xmodules/base"
+	"github.com/webability-go/xmodules/translation/assets"
 )
 
 const (
 	MODULEID = "translation"
 	VERSION  = "0.0.1"
 )
+
+var ModuleTranslation = assets.ModuleEntries{}
 
 func init() {
 	m := &base.Module{

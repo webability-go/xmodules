@@ -8,6 +8,8 @@ import (
 	"github.com/webability-go/xdominion"
 	"github.com/webability-go/xmodules/base"
 	"github.com/webability-go/xmodules/translation"
+
+	serverassets "github.com/webability-go/xamboo/assets"
 )
 
 type StructureMetric struct {
@@ -16,7 +18,7 @@ type StructureMetric struct {
 	Data *xdominion.XRecord
 }
 
-func CreateStructureMetricByKey(sitecontext *base.Datasource, key int, lang language.Tag) base.Structure {
+func CreateStructureMetricByKey(sitecontext serverassets.Datasource, key int, lang language.Tag) base.Structure {
 	data, _ := sitecontext.GetTable("metric_unit").SelectOne(key)
 	if data == nil {
 		return nil
@@ -24,11 +26,12 @@ func CreateStructureMetricByKey(sitecontext *base.Datasource, key int, lang lang
 	return CreateStructureMetricByData(sitecontext, data, lang)
 }
 
-func CreateStructureMetricByData(sitecontext *base.Datasource, data xdominion.XRecordDef, lang language.Tag) base.Structure {
+func CreateStructureMetricByData(sitecontext serverassets.Datasource, data xdominion.XRecordDef, lang language.Tag) base.Structure {
 
 	key, _ := data.GetInt("key")
 
 	// builds main data: translations
+
 	if sitecontext.GetTable("metric_unit").Language != lang {
 		// Only 2 fields to translate: nombre, plural
 		translation.Translate(sitecontext, TRANSLATIONTHEME, strconv.Itoa(key), data, map[string]interface{}{"name": true, "plural": true}, sitecontext.GetTable("metric_unit").Language, lang)
@@ -38,12 +41,12 @@ func CreateStructureMetricByData(sitecontext *base.Datasource, data xdominion.XR
 }
 
 // ComplementData adds all the needed data from other objects /duplicable in the thread since the object will be destroyed at the end
-func (sm *StructureMetric) ComplementData(sitecontext *base.Datasource) {
+func (sm *StructureMetric) ComplementData(sitecontext serverassets.Datasource) {
 
 }
 
 // IsAuthorized returns true if the structure can be used on this site/language/device
-func (sm *StructureMetric) IsAuthorized(sitecontext *base.Datasource, site string, language string, device string) bool {
+func (sm *StructureMetric) IsAuthorized(sitecontext serverassets.Datasource, site string, language string, device string) bool {
 	return true
 }
 

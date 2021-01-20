@@ -7,6 +7,8 @@ import (
 
 	"github.com/webability-go/xmodules/base"
 	"github.com/webability-go/xmodules/translation"
+
+	serverassets "github.com/webability-go/xamboo/assets"
 )
 
 type StructureCountry struct {
@@ -15,7 +17,7 @@ type StructureCountry struct {
 	Data *xdominion.XRecord
 }
 
-func CreateStructureCountryByKey(sitecontext *base.Datasource, key string, lang language.Tag) base.Structure {
+func CreateStructureCountryByKey(sitecontext serverassets.Datasource, key string, lang language.Tag) base.Structure {
 	data, _ := sitecontext.GetTable("country_country").SelectOne(key)
 	if data == nil {
 		return nil
@@ -23,7 +25,7 @@ func CreateStructureCountryByKey(sitecontext *base.Datasource, key string, lang 
 	return CreateStructureCountryByData(sitecontext, data, lang)
 }
 
-func CreateStructureCountryByData(sitecontext *base.Datasource, data xdominion.XRecordDef, lang language.Tag) base.Structure {
+func CreateStructureCountryByData(sitecontext serverassets.Datasource, data xdominion.XRecordDef, lang language.Tag) base.Structure {
 
 	key, _ := data.GetString("key")
 
@@ -37,12 +39,12 @@ func CreateStructureCountryByData(sitecontext *base.Datasource, data xdominion.X
 }
 
 // ComplementData adds all the needed data from other objects /duplicable in the thread since the object will be destroyed at the end
-func (sc *StructureCountry) ComplementData(sitecontext *base.Datasource) {
+func (sc *StructureCountry) ComplementData(sitecontext serverassets.Datasource) {
 
 }
 
 // IsAuthorized returns true if the structure can be used on this site/language/device
-func (sc *StructureCountry) IsAuthorized(sitecontext *base.Datasource, site string, language string, device string) bool {
+func (sc *StructureCountry) IsAuthorized(sitecontext serverassets.Datasource, site string, language string, device string) bool {
 	return true
 }
 
