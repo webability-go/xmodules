@@ -66,6 +66,9 @@ import "github.com/webability-go/xmodules/ingredient"
 
 import "github.com/webability-go/xmodules/material"
 
+v2021-01-20:
+- All the modules: enhancement to meet the new main structures and mmodules definition for Xamboo (use of datasource interface, use of bridge and assets modules entries)
+
 v2020-05-25:
 - user: the main admin password is now md5 encrypted
 
