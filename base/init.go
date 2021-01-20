@@ -4,25 +4,39 @@
 package base
 
 import (
+	"fmt"
+
 	"golang.org/x/text/language"
 
-	"github.com/webability-go/xamboo/assets"
+	serverassets "github.com/webability-go/xamboo/assets"
+
+	"github.com/webability-go/xmodules/base/assets"
+	"github.com/webability-go/xmodules/tools"
 )
 
 const (
 	MODULEID = "base"
-	VERSION  = "0.1.0"
+	VERSION  = "0.1.1"
 )
 
+var ModuleBase = assets.ModuleEntries{
+	TryDatasource: TryDatasource,
+}
+
 func init() {
+	messages = tools.BuildMessages(smessages)
 	m := &Module{
-		ID:            MODULEID,
-		Version:       VERSION,
-		Languages:     map[language.Tag]string{language.English: "XModules base", language.Spanish: "Base XModules", language.French: "Base XModules"},
+		ID:      MODULEID,
+		Version: VERSION,
+		Languages: map[language.Tag]string{
+			language.English: tools.Message(messages, "MODULENAME", language.English),
+			language.Spanish: tools.Message(messages, "MODULENAME", language.Spanish),
+			language.French:  tools.Message(messages, "MODULENAME", language.French),
+		},
 		Needs:         []string{},
-		FSetup:        setupModule,
-		FSynchronize:  synchronizeModule,
-		FStartContext: startcontext,
+		FSetup:        setup,
+		FSynchronize:  synchronize,
+		FStartContext: startContext,
 	}
 	ModulesList.Register(m)
 }
@@ -33,47 +47,65 @@ func init() {
 // It must be called AFTER GetContainer
 // adds tables and caches to sitecontext::database
 // It should be called AFTER createContext
-func setupModule(ds assets.Datasource, prefix string) ([]string, error) {
+func setup(ds serverassets.Datasource, prefix string) ([]string, error) {
 
-	buildTables(ds)
-	buildCache(ds)
+	linkTables(ds)
 	ds.SetModule(MODULEID, VERSION)
 
 	return []string{}, nil
 }
 
-func synchronizeModule(ds assets.Datasource, prefix string) ([]string, error) {
+func synchronize(ds serverassets.Datasource, prefix string) ([]string, error) {
 
-	messages := []string{}
-	messages = append(messages, "Analysing base_module table.")
+	result := []string{}
+	tablename := "base_module"
 
-	base_module := ds.GetTable("base_module")
+	result = append(result, tools.Message(messages, "analyze", tablename))
+
+	base_module := ds.GetTable(tablename)
 	if base_module == nil {
-		messages = append(messages, "Critical Error: the base table base_module does not exist !!!: ")
-		return messages, nil
+		result = append(result, tools.Message(messages, "notable", tablename))
+		return result, nil
 	}
 	num, err := base_module.Count(nil)
 	if err != nil || num == 0 {
+		if err != nil {
+			result = append(result, tools.Message(messages, "tablenoexist", tablename, err))
+		}
 		err1 := base_module.Synchronize()
 		if err1 != nil {
-			messages = append(messages, "The table base_module was not created: "+err1.Error())
+			result = append(result, tools.Message(messages, "tableerror", tablename, err1))
 		} else {
-			messages = append(messages, "The table base_module was created (again)")
+			result = append(result, tools.Message(messages, "tablecreated", tablename))
 		}
 	} else {
-		messages = append(messages, "The table context_module was not created because it contains data.")
+		result = append(result, tools.Message(messages, "tablenotmodified", tablename))
 	}
 
 	// Be sure context module is on db: fill context module (we should get this from xmodule.conf)
-	err = AddModule(ds, MODULEID, "Contexts and Modules for Xamboo", VERSION)
-	if err == nil {
-		messages = append(messages, "The entry "+MODULEID+" was modified successfully in the base_module table.")
-	} else {
-		messages = append(messages, "Error modifying the entry "+MODULEID+" in the base_module table: "+err.Error())
+	// lets clone ds to begin a transaction
+	cds := ds.CloneShell()
+	_, err = cds.StartTransaction()
+	if err != nil {
+		result = append(result, err.Error())
+		return result, err
 	}
-	return messages, nil
+
+	err = AddModule(cds, MODULEID, tools.Message(messages, "MODULENAME"), VERSION)
+	fmt.Println("Adds the module in table")
+	if err == nil {
+		result = append(result, tools.Message(messages, "modulemodified", MODULEID))
+		result = append(result, tools.Message(messages, "commit"))
+		cds.Commit()
+		// TODO(Phil) should we also get the commit error if any?
+	} else {
+		result = append(result, tools.Message(messages, "rollback", err))
+		cds.Rollback()
+	}
+
+	return result, nil
 }
 
-func startcontext(ds assets.Datasource, ctx *assets.Context) error {
+func startContext(ds serverassets.Datasource, ctx *serverassets.Context) error {
 	return nil
 }

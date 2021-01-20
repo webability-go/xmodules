@@ -2,6 +2,9 @@ package user
 
 import (
 	"github.com/webability-go/xdominion"
+
+	serverassets "github.com/webability-go/xamboo/assets"
+
 	"github.com/webability-go/xmodules/base"
 )
 
@@ -10,7 +13,7 @@ type StructureUser struct {
 	Data *xdominion.XRecord
 }
 
-func CreateStructureUserByKey(ds *base.Datasource, key int) base.Structure {
+func CreateStructureUserByKey(ds serverassets.Datasource, key int) base.Structure {
 
 	user_user := ds.GetTable("user_user")
 	if user_user == nil {
@@ -25,7 +28,7 @@ func CreateStructureUserByKey(ds *base.Datasource, key int) base.Structure {
 	return CreateStructureUserByData(ds, data)
 }
 
-func CreateStructureUserByData(ds *base.Datasource, data xdominion.XRecordDef) base.Structure {
+func CreateStructureUserByData(ds serverassets.Datasource, data xdominion.XRecordDef) base.Structure {
 
 	key, _ := data.GetInt("key")
 
@@ -35,12 +38,12 @@ func CreateStructureUserByData(ds *base.Datasource, data xdominion.XRecordDef) b
 }
 
 // ComplementData adds all the needed data from other objects /duplicable in the thread since the object will be destroyed at the end
-func (sm *StructureUser) ComplementData(ds *base.Datasource) {
+func (sm *StructureUser) ComplementData(ds serverassets.Datasource) {
 
 }
 
 // IsAuthorized returns true if the structure can be used on this site/language/device
-func (sm *StructureUser) IsAuthorized(ds *base.Datasource, site string, language string, device string) bool {
+func (sm *StructureUser) IsAuthorized(ds serverassets.Datasource, site string, language string, device string) bool {
 	return true
 }
 

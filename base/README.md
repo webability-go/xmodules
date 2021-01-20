@@ -8,14 +8,23 @@ xmodules/base for Xamboo - GO
 The base package is used to control the applications and compiled xmodules for the Xamboo CMS, so each site is build on top of its base.
 The base contains links to databases, tables, logs, config params, supported languages and installed modules.
 The base package controls also the installed package on each datasource.
+The base package is compatible with database transactions and multithread.
+The base package support english, spanish and french installations.
 
+TO DO:
+=========
+- Finish translation of messages in spanish y French
+- Add messages in container.go
 
 Version Changes Control
 =======================
 
+v0.1.1 - 2021-01-17
+- Implementation of languages and messages
+
 v0.1.0 - 2020-05-25
 - Renamed to base instead of context
-- Now support new xamboo standar assets.Application for Applictions and XModules
+- Now support new xamboo standart assets.Application for Applications and XModules
 
 v0.0.1 - 2020-03-05
 - Implemented support for multithread (Mutex) on each object of the Container and base.

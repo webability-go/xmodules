@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<language id="editorgroup" lang="es">
+  <entry id="maintitle"><![CDATA[Grupo de Derechos de acceso del sistema.]]></entry>
+
+  <entry id="key">Clave</entry>
+  <entry id="namemail">Nombre / Correo</entry>
+  <entry id="profiles">Perfiles</entry>
+  <entry id="users">Usuarios</entry>
+
+</language>

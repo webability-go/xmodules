@@ -1,8 +1,13 @@
 package main
 
 import (
+	"encoding/json"
+	"fmt"
+	"time"
+
 	"github.com/webability-go/xamboo/assets"
 	"github.com/webability-go/xcore/v2"
+	"github.com/webability-go/xdominion"
 	"github.com/webability-go/xmodules/user/bridge"
 )
 
@@ -20,26 +25,109 @@ func Run(ctx *assets.Context, template *xcore.XTemplate, language *xcore.XLangua
 	return template.Execute(params)
 }
 
+func Accessescontainer(ctx *assets.Context, template *xcore.XTemplate, language *xcore.XLanguage, e interface{}) interface{} {
+
+	ok := bridge.Setup(ctx, "", bridge.USER)
+	if !ok {
+		return ""
+	}
+
+	//	init := time.Now()
+	jsondata := ctx.Request.Form.Get("data")
+	var data [][]int
+	if jsondata != "" {
+		err := json.Unmarshal([]byte(jsondata), &data)
+		if err != nil {
+			fmt.Println("ARRAY ERROR:", err)
+		}
+	}
+
+	if data == nil {
+		data = [][]int{{0, 49}}
+	}
+
+	t1 := time.Now()
+	total := bridge.ModuleUser.GetAccessesCount(ctx, nil)
+	t2 := time.Now()
+
+	result := map[string]interface{}{
+		"total":        total,
+		"subtimetotal": t2.Sub(t1),
+	}
+
+	// We load ALL the groups AND accesses
+
+	for _, set := range data {
+		min := set[0]
+		max := set[1]
+
+		t1 = time.Now()
+		accesses := bridge.ModuleUser.GetAccessesList(ctx, nil, &xdominion.XOrderBy{Field: "name", Operator: xdominion.ASC}, max-min+1, min)
+		t2 = time.Now()
+		result["subtime"] = t2.Sub(t1)
+
+		if accesses != nil {
+			num := min
+			for _, access := range *accesses {
+				profiles := "profiles"
+				users := "users"
+				buttons := "buttons"
+
+				fmt.Println(num, access, profiles, users, buttons)
+				num++
+			}
+
+			/*
+				array('clave' => $entrada->clave,
+				'nombre' => $entrada->nombre,
+				'perfiles' => $perfiles,
+				'usuarios' => $usuarios,
+				'comandos' => $botones
+				);
+			*/
+
+		}
+	}
+	fmt.Println("RESULT:", result)
+	return "DATA"
+	/*
+
+	   	// condicionar por orden y lista
+	   	foreach($data as $set)
+	   	{
+
+	   		if ($entradas)
+	   		{
+	   			$turn = true;
+	   			foreach($entradas as $entrada)
+	   			{
+	   				// Busca perfiles con este derechos
+	   				$perfiles = $this->searchperfiles($entrada->clave);
+	   				$usuarios = $this->searchusuarios($entrada->clave);
+
+	   				$botones = <<<EOF
+	   <input type="button" value="Modificar" onclick="derechos_editar('{$entrada->clave}');" />
+	   <input type="button" value="Borrar" onclick="derechos_borrar('{$entrada->clave}');" />
+	   EOF;
+	   				$rec['row'][$num++] = array('clave' => $entrada->clave,
+	   				'nombre' => $entrada->nombre,
+	   				'perfiles' => $perfiles,
+	   				'usuarios' => $usuarios,
+	   				'comandos' => $botones
+	   				);
+	   				$turn = !$turn;
+	   			}
+	   		}
+	   	}
+	   	// flag "fullload" is not set since we load only a part of the dynamic data
+	   	$end = microtime(true);
+	   	$rec['time'] = $end - $init;
+
+	   	return $rec;
+	*/
+}
+
 /*
-<?php
-
-class derechos extends \common\WAApplication
-{
-  private $usuarioEntity;
-
-  public function __construct($template, $language)
-  {
-    parent::__construct($template, $language);
-
-    $this->usuarioEntity = \entities\usuarioEntity::getInstance();
-  }
-
-  public function code($engine, $params)
-  {
-    $code = $this->template->resolve();
-    return $code;
-  }
-
   public function contenedoresdata()
   {
     $init = microtime(true);
@@ -178,45 +266,4 @@ EOF;
     return implode(', ', $resultado);
   }
 
-  public function synchro()
-  {
-    // scan menu
-    include_once($this->base->config->BASEDIR . 'application/pagesadmin/main/main.lib');
-    $main = new main(null, null);
-    $menu = $main->getMenuData();
-
-    $rights = array();
-    $num = 0; // num '0' no existira: la primera opcion es abierta sin derecho e incrementa a 1
-    foreach($menu as $group)
-    {
-      if ($group['right'])
-        $rights[$group['right']] = ($num<10?'0':'') . $num . '.00 ' . $group['name'];
-      $subnum = 1;
-      if (isset($group['pages']))
-      {
-        foreach($group['pages'] as $option)
-        {
-          if ($option['right'])
-            $rights[$option['right']] = ($num<10?'0':'') . $num . '.' . ($subnum<10?'0':'') . $subnum . ' ' . $option['name'];
-          $subnum++;
-        }
-      }
-      $num++;
-    }
-
-    foreach($rights as $right => $name)
-    {
-      $exist = $this->usuarioEntity->selectAdminDerecho($right);
-      if ($exist)
-        $this->usuarioEntity->updateAdminDerecho($right, array('nombre' => $name));
-      else
-        $this->usuarioEntity->insertAdminDerecho(array('clave' => $right, 'nombre' => $name));
-    }
-
-    return array('estatus' => 'OK');
-  }
-
-}
-
-?>
 */

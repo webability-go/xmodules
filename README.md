@@ -67,6 +67,9 @@ import "github.com/webability-go/xmodules/ingredient"
 import "github.com/webability-go/xmodules/material"
 
 v2020-05-25:
+- user: the main admin password is now md5 encrypted
+
+v2020-05-25:
 - Change on all modules to meet new modules standard for Xamboo 1.3 (Datasources, instead of Contexts (wrong nomination), Modules new function StartContext, assets.Datasource interface.)
 - The Xamboo server now controls the standard interfaces for XModules, Applications, Datasources, etc.
 - Context module renamed to Base
