@@ -11,11 +11,12 @@ import (
 	"github.com/webability-go/xmodules/tools"
 )
 
-func VerifyUserSession(ctx *assets.Context, ds *base.Datasource, origin string, device string) {
+func VerifyUserSession(ctx *assets.Context, xds assets.Datasource, origin string, device string) {
 
-	if !ds.IsModuleAuthorized("user") {
+	if !xds.IsModuleAuthorized("user") {
 		return
 	}
+	ds := xds.(*base.Datasource)
 
 	config := ds.Config
 	// Any sent session ?
@@ -84,8 +85,9 @@ func VerifyUserSession(ctx *assets.Context, ds *base.Datasource, origin string, 
 	ctx.Sessionparams.Set("userdata", userdata.Data)
 }
 
-func CreateSessionUser(ctx *assets.Context, ds *base.Datasource, sessionid string, IP string, origin string, device string, user *StructureUser) string {
+func CreateSessionUser(ctx *assets.Context, xds assets.Datasource, sessionid string, IP string, origin string, device string, user *StructureUser) string {
 
+	ds := xds.(*base.Datasource)
 	config := ds.Config
 
 	match, _ := regexp.MatchString("[a-zA-Z0-9]{24}", sessionid)
@@ -105,8 +107,9 @@ func CreateSessionUser(ctx *assets.Context, ds *base.Datasource, sessionid strin
 	return sessionid
 }
 
-func DestroySessionUser(ctx *assets.Context, ds *base.Datasource, sessionid string) {
+func DestroySessionUser(ctx *assets.Context, xds assets.Datasource, sessionid string) {
 
+	ds := xds.(*base.Datasource)
 	config := ds.Config
 	cookiedomain, _ := config.GetString("cookiedomain")
 	cookiename, _ := config.GetString("cookiename")

@@ -46,7 +46,7 @@ func init() {
 // adds tables and caches to sitecontext::database
 func Setup(ds serverassets.Datasource, prefix string) ([]string, error) {
 
-	buildTables(ds)
+	linkTables(ds)
 	createCache(ds)
 	ds.SetModule(MODULEID, VERSION)
 
@@ -59,16 +59,20 @@ func Synchronize(ds serverassets.Datasource, prefix string) ([]string, error) {
 
 	result := []string{}
 
-	// Needed modules: context and translation
-	vc := base.ModuleInstalledVersion(ds, "base")
-	if vc == "" {
-		result = append(result, "xmodules/base need to be installed before installing xmodules/user.")
+	ok, res := base.VerifyNeeds(ds, Needs)
+	result = append(result, res...)
+	if !ok {
 		return result, nil
 	}
 
-	// create tables
-	r, err := createTables(ds)
+	installed := base.ModuleInstalledVersion(ds, MODULEID)
+
+	// synchro tables
+	err, r := synchroTables(ds, installed)
 	result = append(result, r...)
+	if err != nil {
+		return result, err
+	}
 
 	cds := ds.CloneShell()
 	_, err = cds.StartTransaction()
@@ -77,30 +81,48 @@ func Synchronize(ds serverassets.Datasource, prefix string) ([]string, error) {
 		return result, err
 	}
 
-	// fill super admin
-	r, err = loadTables(cds)
-	result = append(result, r...)
-
-	// Inserting into context-modules
-	// Be sure context module is on db: fill context module (we should get this from xmodule.conf)
-	err = base.AddModule(cds, MODULEID, "Administration users", VERSION)
-	if err == nil {
-		result = append(result, "The entry "+MODULEID+" was modified successfully in the modules table.")
-		result = append(result, tools.Message(messages, "commit"))
-		cds.Commit()
+	// installation or upgrade ?
+	if installed != "" {
+		err, r = upgrade(cds, installed)
 	} else {
-		result = append(result, tools.Message(messages, "rollback", err))
-		cds.Rollback()
+		err, r = install(cds)
+	}
+	result = append(result, r...)
+	if err == nil {
+		err = base.AddModule(cds, MODULEID, tools.Message(messages, "MODULENAME"), VERSION)
+		if err == nil {
+			result = append(result, tools.Message(messages, "modulemodified", MODULEID))
+			result = append(result, tools.Message(messages, "commit"))
+			err = cds.Commit()
+			if err != nil {
+				result = append(result, err.Error())
+			}
+			return result, err
+		}
+	}
+	result = append(result, tools.Message(messages, "rollback", err))
+	err1 := cds.Rollback()
+	if err1 != nil {
+		result = append(result, err1.Error())
 	}
 
-	return result, nil
+	return result, err
 }
 
 func StartContext(ds serverassets.Datasource, ctx *serverassets.Context) error {
 
-	// TODO(phil) implement site, device (from CTX)
+	sitecontextname, _ := ctx.Sysparams.GetString("sitecontext")
+	// if browser module is activated, then ctx.Version has the device.
+	// Order preference to seek the device:
+	// 1. into ctx.Sessionparams["device"]
+	// 2. ctx.Version if sessionparam is not set.
+	// NOTE: device is ONLY informative
+	// If you use this module, the browser extension for Xamboo should always be activated to set ctx.Version correctly
+	device, _ := ctx.Sessionparams.GetString("device")
+	if device == "" {
+		device = ctx.Version
+	}
 
-	lds := ds.(*base.Datasource)
-	VerifyUserSession(ctx, lds, "xmodules", "pc")
+	VerifyUserSession(ctx, ds, sitecontextname, device)
 	return nil
 }

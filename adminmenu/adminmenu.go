@@ -41,9 +41,10 @@ func AddOption(ds serverassets.Datasource, data *xdominion.XRecord) error {
 
 	// Verify if it exists already
 
-	_, err := adminmenu_option.Insert(data)
+	key, _ := data.GetString("key")
+	_, err := adminmenu_option.Upsert(key, data)
 	if err != nil {
-		ds.Log("main", "Error inserting in adminmenu_option", err)
+		ds.Log("main", "Error upserting in adminmenu_option", err)
 		return err
 	}
 	return nil

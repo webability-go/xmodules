@@ -4,8 +4,6 @@
 package base
 
 import (
-	"fmt"
-
 	"golang.org/x/text/language"
 
 	serverassets "github.com/webability-go/xamboo/assets"
@@ -19,6 +17,7 @@ const (
 	VERSION  = "0.1.1"
 )
 
+var Needs = []string{}
 var ModuleBase = assets.ModuleEntries{
 	TryDatasource: TryDatasource,
 }
@@ -33,7 +32,7 @@ func init() {
 			language.Spanish: tools.Message(messages, "MODULENAME", language.Spanish),
 			language.French:  tools.Message(messages, "MODULENAME", language.French),
 		},
-		Needs:         []string{},
+		Needs:         Needs,
 		FSetup:        setup,
 		FSynchronize:  synchronize,
 		FStartContext: startContext,
@@ -58,31 +57,23 @@ func setup(ds serverassets.Datasource, prefix string) ([]string, error) {
 func synchronize(ds serverassets.Datasource, prefix string) ([]string, error) {
 
 	result := []string{}
-	tablename := "base_module"
 
-	result = append(result, tools.Message(messages, "analyze", tablename))
-
-	base_module := ds.GetTable(tablename)
-	if base_module == nil {
-		result = append(result, tools.Message(messages, "notable", tablename))
+	ok, res := VerifyNeeds(ds, Needs)
+	result = append(result, res...)
+	if !ok {
 		return result, nil
 	}
-	num, err := base_module.Count(nil)
-	if err != nil || num == 0 {
-		if err != nil {
-			result = append(result, tools.Message(messages, "tablenoexist", tablename, err))
-		}
-		err1 := base_module.Synchronize()
-		if err1 != nil {
-			result = append(result, tools.Message(messages, "tableerror", tablename, err1))
-		} else {
-			result = append(result, tools.Message(messages, "tablecreated", tablename))
-		}
-	} else {
-		result = append(result, tools.Message(messages, "tablenotmodified", tablename))
+
+	installed := ModuleInstalledVersion(ds, MODULEID)
+
+	// synchro tables
+	err, r := synchroTables(ds, installed)
+	result = append(result, r...)
+	if err != nil {
+		return result, err
 	}
 
-	// Be sure context module is on db: fill context module (we should get this from xmodule.conf)
+	// The rest of the process with a transaction
 	// lets clone ds to begin a transaction
 	cds := ds.CloneShell()
 	_, err = cds.StartTransaction()
@@ -91,19 +82,32 @@ func synchronize(ds serverassets.Datasource, prefix string) ([]string, error) {
 		return result, err
 	}
 
-	err = AddModule(cds, MODULEID, tools.Message(messages, "MODULENAME"), VERSION)
-	fmt.Println("Adds the module in table")
-	if err == nil {
-		result = append(result, tools.Message(messages, "modulemodified", MODULEID))
-		result = append(result, tools.Message(messages, "commit"))
-		cds.Commit()
-		// TODO(Phil) should we also get the commit error if any?
+	// installation or upgrade ?
+	if installed != "" {
+		err, r = upgrade(cds, installed)
 	} else {
-		result = append(result, tools.Message(messages, "rollback", err))
-		cds.Rollback()
+		err, r = install(cds)
+	}
+	result = append(result, r...)
+	if err == nil {
+		err = AddModule(cds, MODULEID, tools.Message(messages, "MODULENAME"), VERSION)
+		if err == nil {
+			result = append(result, tools.Message(messages, "modulemodified", MODULEID))
+			result = append(result, tools.Message(messages, "commit"))
+			err = cds.Commit()
+			if err != nil {
+				result = append(result, err.Error())
+			}
+			return result, err
+		}
+	}
+	result = append(result, tools.Message(messages, "rollback", err))
+	err1 := cds.Rollback()
+	if err1 != nil {
+		result = append(result, err1.Error())
 	}
 
-	return result, nil
+	return result, err
 }
 
 func startContext(ds serverassets.Datasource, ctx *serverassets.Context) error {

@@ -274,7 +274,7 @@ func GetDatasourceStats(ds *Datasource) *xcore.XDataset {
 	}
 	subdata["tables"] = tables
 
-	subdata["config"] = buildConfigSet(ds.Config)
+	subdata["config"] = tools.BuildConfigSet(ds.Config)
 
 	// analiza los módulos instalados
 	modules := map[string]interface{}{}

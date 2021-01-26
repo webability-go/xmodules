@@ -8,10 +8,10 @@ import (
 	"github.com/webability-go/xmodules/adminmenu"
 )
 
-func loadTables(ds serverassets.Datasource) ([]string, error) {
+func install(ds serverassets.Datasource) (error, []string) {
 
-	// Insert menu
-	adminmenu.AddGroup(ds, "admin", "System Administration")
+	// Group, just in case (upsert)
+	adminmenu.AddGroup(ds, "_admin", "System Administration")
 
 	mainoption := xdominion.XRecord{
 		"key":          "user",
@@ -27,7 +27,7 @@ func loadTables(ds serverassets.Datasource) ([]string, error) {
 
 	if err != nil {
 		ds.Log("main", "Error inserting admin adminmenu_option", err)
-		return []string{"xmodules::adminmenu::loadTables: Error upserting the admin adminmenu group"}, err
+		return err, []string{"xmodules::adminmenu::loadTables: Error upserting the admin adminmenu group"}
 	}
 
 	option := xdominion.XRecord{
@@ -44,8 +44,17 @@ func loadTables(ds serverassets.Datasource) ([]string, error) {
 
 	if err != nil {
 		ds.Log("main", "Error inserting admin adminmenu_option", err)
-		return []string{"xmodules::adminmenu::loadTables: Error upserting the admin adminmenu group"}, err
+		return err, []string{"xmodules::adminmenu::loadTables: Error upserting the admin adminmenu group"}
 	}
 
-	return []string{"ok"}, nil
+	return nil, []string{"ok"}
+}
+
+func upgrade(ds serverassets.Datasource, oldversion string) (error, []string) {
+
+	if oldversion < "0.0.1" {
+		// do things
+	}
+
+	return nil, []string{}
 }

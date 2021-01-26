@@ -1,31 +1,62 @@
 package base
 
 import (
-	"golang.org/x/text/language"
+	"github.com/webability-go/xdominion"
 
-	"github.com/webability-go/xconfig"
-	"github.com/webability-go/xcore/v2"
-
-	"github.com/webability-go/xamboo/assets"
+	serverassets "github.com/webability-go/xamboo/assets"
 )
 
-func linkTables(ds assets.Datasource) {
-
-	table := baseModule()
-	table.SetBase(ds.GetDatabase())
-	table.SetLanguage(language.English)
-	ds.SetTable("base_module", table)
+// Order to load/synchronize tables:
+var moduletablesorder = []string{
+	"base_module",
 }
 
-func buildConfigSet(config *xconfig.XConfig) xcore.XDataset {
-	data := xcore.XDataset{}
-	for id := range config.Parameters {
-		d, _ := config.Get(id)
-		if val, ok := d.(*xconfig.XConfig); ok {
-			data[id] = buildConfigSet(val)
-		} else {
-			data[id] = d
+// map[string] does not respect order
+var moduletables = map[string]func() *xdominion.XTable{
+	"base_module": baseModule,
+}
+
+func linkTables(ds serverassets.Datasource) {
+
+	for _, tbl := range moduletablesorder {
+		table := moduletables[tbl]()
+		table.SetBase(ds.GetDatabase())
+		ds.SetTable(tbl, table)
+	}
+}
+
+func synchroTables(ds serverassets.Datasource, oldversion string) (error, []string) {
+
+	result := []string{}
+
+	for _, tbl := range moduletablesorder {
+
+		err, res := SynchroTable(ds, tbl)
+		result = append(result, res...)
+		if err != nil {
+			return err, result
 		}
 	}
-	return data
+
+	if oldversion < "0.0.1" {
+		// do things
+	}
+
+	return nil, result
+}
+
+func install(ds serverassets.Datasource) (error, []string) {
+
+	// do things
+
+	return nil, []string{}
+}
+
+func upgrade(ds serverassets.Datasource, oldversion string) (error, []string) {
+
+	if oldversion < "0.0.1" {
+		// do things
+	}
+
+	return nil, []string{}
 }

@@ -19,15 +19,18 @@ const (
 )
 
 var Needs = []string{"base", "user", "adminmenu"}
-
 var ModuleUserAdmin = assets.ModuleEntries{}
 
 func init() {
 	messages = tools.BuildMessages(smessages)
 	m := &base.Module{
-		ID:            MODULEID,
-		Version:       VERSION,
-		Languages:     map[language.Tag]string{language.English: "Administration of users", language.Spanish: "Adminitración de usuarios", language.French: "Administration des utilisateurs"},
+		ID:      MODULEID,
+		Version: VERSION,
+		Languages: map[language.Tag]string{
+			language.English: tools.Message(messages, "MODULENAME", language.English),
+			language.Spanish: tools.Message(messages, "MODULENAME", language.Spanish),
+			language.French:  tools.Message(messages, "MODULENAME", language.French),
+		},
 		Needs:         Needs,
 		FSetup:        Setup,        // Called once at the main system startup, once PER CREATED xmodule CONTEXT (if set)
 		FSynchronize:  Synchronize,  // Called only to create/rebuild database objects and others on demand (if set)
@@ -50,15 +53,13 @@ func Synchronize(ds serverassets.Datasource, prefix string) ([]string, error) {
 
 	result := []string{}
 
-	lds := ds.(*base.Datasource)
-	for _, need := range Needs {
-		// Needed modules: context and translation
-		vc := base.ModuleInstalledVersion(lds, need)
-		if vc == "" {
-			result = append(result, "xmodules/"+need+" need to be installed before installing xmodules/"+MODULEID)
-			return result, nil
-		}
+	ok, res := base.VerifyNeeds(ds, Needs)
+	result = append(result, res...)
+	if !ok {
+		return result, nil
 	}
+
+	installed := base.ModuleInstalledVersion(ds, MODULEID)
 
 	cds := ds.CloneShell()
 	_, err := cds.StartTransaction()
@@ -67,20 +68,30 @@ func Synchronize(ds serverassets.Datasource, prefix string) ([]string, error) {
 		return result, err
 	}
 
-	// fill super admin
-	r, err := loadTables(cds)
-	result = append(result, r...)
-
-	// Inserting into context-modules
-	// Be sure context module is on db: fill context module (we should get this from xmodule.conf)
-	err = base.AddModule(cds, MODULEID, "Administration users", VERSION)
-	if err == nil {
-		result = append(result, "The entry "+MODULEID+" was modified successfully in the modules table.")
-		result = append(result, tools.Message(messages, "commit"))
-		cds.Commit()
+	var r []string
+	// installation or upgrade ?
+	if installed != "" {
+		err, r = upgrade(cds, installed)
 	} else {
-		result = append(result, tools.Message(messages, "rollback", err))
-		cds.Rollback()
+		err, r = install(cds)
+	}
+	result = append(result, r...)
+	if err == nil {
+		err = base.AddModule(cds, MODULEID, tools.Message(messages, "MODULENAME"), VERSION)
+		if err == nil {
+			result = append(result, tools.Message(messages, "modulemodified", MODULEID))
+			result = append(result, tools.Message(messages, "commit"))
+			err = cds.Commit()
+			if err != nil {
+				result = append(result, err.Error())
+			}
+		} else {
+			result = append(result, tools.Message(messages, "rollback", err))
+			err = cds.Rollback()
+			if err != nil {
+				result = append(result, err.Error())
+			}
+		}
 	}
 
 	return result, nil

@@ -11,6 +11,8 @@ import (
 	"github.com/webability-go/xdominion"
 
 	serverassets "github.com/webability-go/xamboo/assets"
+
+	"github.com/webability-go/xmodules/base"
 )
 
 // Order to load/synchronize tables:
@@ -41,7 +43,7 @@ var moduletables = map[string]func() *xdominion.XTable{
 	"user_sessionhistory":        userSessionHistory,
 }
 
-func buildTables(ds serverassets.Datasource) {
+func linkTables(ds serverassets.Datasource) {
 
 	for _, tbl := range moduletablesorder {
 		table := moduletables[tbl]()
@@ -83,39 +85,31 @@ func buildCache(ds serverassets.Datasource) []string {
 	return []string{}
 }
 
-func createTables(ds serverassets.Datasource) ([]string, error) {
+func synchroTables(ds serverassets.Datasource, oldversion string) (error, []string) {
 
 	result := []string{}
 
 	for _, tbl := range moduletablesorder {
 
-		table := ds.GetTable(tbl)
-		if table == nil {
-			return []string{"xmodules::user::createTables: Error, the table is not available on this datasource:" + tbl}, errors.New("Error")
-		}
-
-		result = append(result, "Analysing "+tbl+" table.")
-		num, err := table.Count(nil)
-		if err != nil || num == 0 {
-			err1 := table.Synchronize()
-			if err1 != nil {
-				result = append(result, "The table "+tbl+" was not created: "+err1.Error())
-			} else {
-				result = append(result, "The table "+tbl+" was created (again)")
-			}
-		} else {
-			result = append(result, "The table "+tbl+" was not created because it contains data.")
+		err, res := base.SynchroTable(ds, tbl)
+		result = append(result, res...)
+		if err != nil {
+			return err, result
 		}
 	}
 
-	return result, nil
+	if oldversion < "0.0.1" {
+		// do things
+	}
+
+	return nil, result
 }
 
-func loadTables(ds serverassets.Datasource) ([]string, error) {
+func install(ds serverassets.Datasource) (error, []string) {
 
 	user_user := ds.GetTable("user_user")
 	if user_user == nil {
-		return []string{"xmodules::user::createTables: Error, the table user_user is not available on this datasource"}, errors.New("error")
+		return errors.New("error"), []string{"xmodules::user::createTables: Error, the table user_user is not available on this datasource"}
 	}
 
 	bmd5 := md5.Sum([]byte("manager"))
@@ -133,9 +127,18 @@ func loadTables(ds serverassets.Datasource) ([]string, error) {
 	})
 	if err != nil {
 		ds.Log("main", "Error inserting admin user", err)
-		return []string{"xmodules::user::loadTables: Error upserting the admin user"}, errors.New("Error")
+		return errors.New("Error"), []string{"xmodules::user::loadTables: Error upserting the admin user"}
 	}
-	return []string{
+	return nil, []string{
 		fmt.Sprint(user_user.Count(nil)) + " admin user added",
-	}, nil
+	}
+}
+
+func upgrade(ds serverassets.Datasource, oldversion string) (error, []string) {
+
+	if oldversion < "0.0.1" {
+		// do things
+	}
+
+	return nil, []string{}
 }

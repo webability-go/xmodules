@@ -33,7 +33,6 @@ func Message(messages *map[language.Tag]*xcore.XLanguage, id string, params ...i
 	}
 
 	if len(params) > 0 {
-		fmt.Println(params)
 		msg = fmt.Sprintf(msg, params...)
 	}
 	return msg

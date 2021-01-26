@@ -10,6 +10,7 @@ import (
 
 	"github.com/webability-go/xmodules/adminmenu/assets"
 	"github.com/webability-go/xmodules/base"
+	"github.com/webability-go/xmodules/tools"
 )
 
 const (
@@ -18,6 +19,7 @@ const (
 	DATASOURCE = "adminmenudatasource"
 )
 
+var Needs = []string{"base", "user"}
 var ModuleAdminMenu = assets.ModuleEntries{
 	AddGroup:  AddGroup,
 	GetGroup:  GetGroup,
@@ -27,11 +29,16 @@ var ModuleAdminMenu = assets.ModuleEntries{
 }
 
 func init() {
+	messages = tools.BuildMessages(smessages)
 	m := &base.Module{
-		ID:            MODULEID,
-		Version:       VERSION,
-		Languages:     map[language.Tag]string{language.English: "Administration menu", language.Spanish: "Menu de administración", language.French: "Menu pour l'administration"},
-		Needs:         []string{"base", "user"},
+		ID:      MODULEID,
+		Version: VERSION,
+		Languages: map[language.Tag]string{
+			language.English: tools.Message(messages, "MODULENAME", language.English),
+			language.Spanish: tools.Message(messages, "MODULENAME", language.Spanish),
+			language.French:  tools.Message(messages, "MODULENAME", language.French),
+		},
+		Needs:         Needs,
 		FSetup:        Setup,        // Called once at the main system startup, once PER CREATED xmodule CONTEXT (if set)
 		FSynchronize:  Synchronize,  // Called only to create/rebuild database objects and others on demand (if set)
 		FStartContext: StartContext, // Called each time a new Server context is created  (if set)
@@ -43,49 +50,66 @@ func init() {
 // adds tables and caches to sitecontext::database
 func Setup(ds serverassets.Datasource, prefix string) ([]string, error) {
 
-	lds := ds.(*base.Datasource)
-	buildTables(lds)
-	createCache(lds)
-	lds.SetModule(MODULEID, VERSION)
-
-	go buildCache(lds)
+	linkTables(ds)
+	ds.SetModule(MODULEID, VERSION)
 
 	return []string{}, nil
 }
 
 func Synchronize(ds serverassets.Datasource, prefix string) ([]string, error) {
 
-	messages := []string{}
+	result := []string{}
 
-	lds := ds.(*base.Datasource)
-	// Needed modules: context and translation
-	vc := base.ModuleInstalledVersion(ds, "base")
-	if vc == "" {
-		messages = append(messages, "xmodules/base need to be installed before installing xmodules/adminmenu.")
-		return messages, nil
+	ok, res := base.VerifyNeeds(ds, Needs)
+	result = append(result, res...)
+	if !ok {
+		return result, nil
 	}
 
-	vc = base.ModuleInstalledVersion(ds, "user")
-	if vc == "" {
-		messages = append(messages, "xmodules/user need to be installed before installing xmodules/adminmenu.")
-		return messages, nil
+	installed := base.ModuleInstalledVersion(ds, MODULEID)
+
+	// synchro tables
+	err, r := synchroTables(ds, installed)
+	result = append(result, r...)
+	if err != nil {
+		return result, err
 	}
 
-	// create tables
-	messages = append(messages, createTables(lds)...)
-	// fill super admin
-	messages = append(messages, loadTables(lds)...)
+	// The rest of the process with a transaction
+	// lets clone ds to begin a transaction
+	cds := ds.CloneShell()
+	_, err = cds.StartTransaction()
+	if err != nil {
+		result = append(result, err.Error())
+		return result, err
+	}
 
-	// Inserting into context-modules
-	// Be sure context module is on db: fill context module (we should get this from xmodule.conf)
-	err := base.AddModule(ds, MODULEID, "Administration Admin menu", VERSION)
-	if err == nil {
-		messages = append(messages, "The entry "+MODULEID+" was modified successfully in the modules table.")
+	// installation or upgrade ?
+	if installed != "" {
+		err, r = upgrade(cds, installed)
 	} else {
-		messages = append(messages, "Error modifying the entry "+MODULEID+" in the modules table: "+err.Error())
+		err, r = install(cds)
+	}
+	result = append(result, r...)
+	if err == nil {
+		err = base.AddModule(cds, MODULEID, tools.Message(messages, "MODULENAME"), VERSION)
+		if err == nil {
+			result = append(result, tools.Message(messages, "modulemodified", MODULEID))
+			result = append(result, tools.Message(messages, "commit"))
+			err = cds.Commit()
+			if err != nil {
+				result = append(result, err.Error())
+			}
+			return result, err
+		}
+	}
+	result = append(result, tools.Message(messages, "rollback", err))
+	err1 := cds.Rollback()
+	if err1 != nil {
+		result = append(result, err1.Error())
 	}
 
-	return messages, nil
+	return result, err
 }
 
 func StartContext(ds serverassets.Datasource, ctx *serverassets.Context) error {
