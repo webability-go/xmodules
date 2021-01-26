@@ -5,22 +5,56 @@ import (
 
 	"github.com/webability-go/xdominion"
 
-	"github.com/webability-go/xmodules/base"
+	serverassets "github.com/webability-go/xamboo/assets"
+
+	"github.com/webability-go/xmodules/tools"
 	"github.com/webability-go/xmodules/user/assets"
 )
 
-func AddAccess(ds *base.Datasource, access *assets.Access) error {
+func AddAccessGroup(ds serverassets.Datasource, accessgroup *assets.AccessGroup) error {
 
-	user_access := ds.GetTable("user_access")
-	if user_access == nil {
-		errmsg := "xmodules::user::AddAccess: Error, the user_access table is not available on this datasource " + ds.Name
+	user_accessgroup := ds.GetTable("user_accessgroup")
+	if user_accessgroup == nil {
+		errmsg := tools.Message(messages, "notable", "user_accessgroup", ds.GetName())
 		ds.Log(errmsg)
 		return errors.New(errmsg)
+	}
+
+	_, err := user_accessgroup.Upsert(accessgroup.Key, xdominion.XRecord{
+		"key":         accessgroup.Key,
+		"name":        accessgroup.Name,
+		"description": accessgroup.Description,
+	})
+	if err != nil {
+		ds.Log("main", tools.Message(messages, "errorupsert", "user_accessgroup", err))
+		return err
 	}
 	return nil
 }
 
-func GetCountAccesses(ds *base.Datasource, cond *xdominion.XConditions) int {
+func AddAccess(ds serverassets.Datasource, access *assets.Access) error {
+
+	user_access := ds.GetTable("user_access")
+	if user_access == nil {
+		errmsg := tools.Message(messages, "notable", "user_access", ds.GetName())
+		ds.Log(errmsg)
+		return errors.New(errmsg)
+	}
+
+	_, err := user_access.Upsert(access.Key, xdominion.XRecord{
+		"key":         access.Key,
+		"name":        access.Name,
+		"group":       access.Group,
+		"description": access.Description,
+	})
+	if err != nil {
+		ds.Log("main", tools.Message(messages, "errorupsert", "user_access", err))
+		return err
+	}
+	return nil
+}
+
+func GetCountAccesses(ds serverassets.Datasource, cond *xdominion.XConditions) int {
 
 	user_access := ds.GetTable("user_access")
 	if user_access == nil {
@@ -31,7 +65,7 @@ func GetCountAccesses(ds *base.Datasource, cond *xdominion.XConditions) int {
 	return cnt
 }
 
-func GetAccessesList(ds *base.Datasource, cond *xdominion.XConditions, orderby *xdominion.XOrderBy, quantity int, first int) *xdominion.XRecords {
+func GetAccessesList(ds serverassets.Datasource, cond *xdominion.XConditions, orderby *xdominion.XOrderBy, quantity int, first int) *xdominion.XRecords {
 
 	user_access := ds.GetTable("user_access")
 	if user_access == nil {

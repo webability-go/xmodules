@@ -66,6 +66,11 @@ import "github.com/webability-go/xmodules/ingredient"
 
 import "github.com/webability-go/xmodules/material"
 
+v2021-01-25:
+- base, user, adminmenu and useradmin support now transactions to setup the modules.
+- Errors control and messages enhanced during the installation of the modules.
+- Separation of basic installation functions into the xmodules/base/installation.go
+
 v2021-01-20:
 - All the modules: enhancement to meet the new main structures and mmodules definition for Xamboo (use of datasource interface, use of bridge and assets modules entries)
 
