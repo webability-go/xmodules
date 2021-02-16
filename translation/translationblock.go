@@ -9,7 +9,7 @@ import (
 	"github.com/webability-go/xdominion"
 	//	"github.com/webability-go/xmodules/base"
 
-	serverassets "github.com/webability-go/xamboo/assets"
+	"github.com/webability-go/xamboo/applications"
 )
 
 type TranslationBlock struct {
@@ -40,7 +40,7 @@ func (tb *TranslationBlock) Set(field string, value string) {
 	tb.original[field] = value
 }
 
-func (tb *TranslationBlock) Verify(sitecontext serverassets.Datasource) {
+func (tb *TranslationBlock) Verify(sitecontext applications.Datasource) {
 
 	translation_info := sitecontext.GetTable("translation_info")
 	if translation_info == nil {
