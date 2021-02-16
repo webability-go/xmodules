@@ -10,7 +10,7 @@ import (
 	"github.com/webability-go/xcore/v2"
 	"github.com/webability-go/xdominion"
 
-	serverassets "github.com/webability-go/xamboo/assets"
+	"github.com/webability-go/xamboo/applications"
 
 	"github.com/webability-go/xmodules/base"
 )
@@ -43,7 +43,7 @@ var moduletables = map[string]func() *xdominion.XTable{
 	"user_sessionhistory":        userSessionHistory,
 }
 
-func linkTables(ds serverassets.Datasource) {
+func linkTables(ds applications.Datasource) {
 
 	for _, tbl := range moduletablesorder {
 		table := moduletables[tbl]()
@@ -52,14 +52,14 @@ func linkTables(ds serverassets.Datasource) {
 	}
 }
 
-func createCache(ds serverassets.Datasource) []string {
+func createCache(ds applications.Datasource) []string {
 
 	ds.SetCache("user:users", xcore.NewXCache("user:users", 0, 0))
 
 	return []string{}
 }
 
-func buildCache(ds serverassets.Datasource) []string {
+func buildCache(ds applications.Datasource) []string {
 
 	user_user := ds.GetTable("user_user")
 	if user_user == nil {
@@ -85,7 +85,7 @@ func buildCache(ds serverassets.Datasource) []string {
 	return []string{}
 }
 
-func synchroTables(ds serverassets.Datasource, oldversion string) (error, []string) {
+func synchroTables(ds applications.Datasource, oldversion string) (error, []string) {
 
 	result := []string{}
 
@@ -105,7 +105,7 @@ func synchroTables(ds serverassets.Datasource, oldversion string) (error, []stri
 	return nil, result
 }
 
-func install(ds serverassets.Datasource) (error, []string) {
+func install(ds applications.Datasource) (error, []string) {
 
 	user_user := ds.GetTable("user_user")
 	if user_user == nil {
@@ -134,7 +134,7 @@ func install(ds serverassets.Datasource) (error, []string) {
 	}
 }
 
-func upgrade(ds serverassets.Datasource, oldversion string) (error, []string) {
+func upgrade(ds applications.Datasource, oldversion string) (error, []string) {
 
 	if oldversion < "0.0.1" {
 		// do things

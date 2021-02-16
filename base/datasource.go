@@ -13,7 +13,7 @@ import (
 	"github.com/webability-go/xcore/v2"
 	"github.com/webability-go/xdominion"
 
-	"github.com/webability-go/xamboo/assets"
+	"github.com/webability-go/xamboo/applications"
 
 	"github.com/webability-go/xmodules/tools"
 )
@@ -181,7 +181,7 @@ func (ds *Datasource) IsModuleAuthorized(id string) bool {
 	return ds.GetModule(id) != ""
 }
 
-func (ds *Datasource) CloneShell() assets.Datasource {
+func (ds *Datasource) CloneShell() applications.Datasource {
 	if ds.cloned {
 		return ds
 	}

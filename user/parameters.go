@@ -5,10 +5,10 @@ import (
 
 	"github.com/webability-go/xdominion"
 
-	"github.com/webability-go/xmodules/base"
+	"github.com/webability-go/xamboo/applications"
 )
 
-func SetUserParam(ds *base.Datasource, user int, param string, value interface{}) {
+func SetUserParam(ds applications.Datasource, user int, param string, value interface{}) {
 
 	user_parameter := ds.GetTable("user_parameter")
 	if user_parameter == nil {
@@ -40,7 +40,25 @@ func SetUserParam(ds *base.Datasource, user int, param string, value interface{}
 	}
 }
 
-func GetUserParam(ds *base.Datasource, user int, param string) string {
+func AddUserParam(ds applications.Datasource, user int, param string, value interface{}) {
+
+	user_parameter := ds.GetTable("user_parameter")
+	if user_parameter == nil {
+		ds.Log("xmodules::user::SetUserParam: Error, the user_parameter table is not available on this datasource")
+		return
+	}
+	_, err := user_parameter.Insert(xdominion.XRecord{
+		"key":   0,
+		"user":  user,
+		"id":    param,
+		"value": value,
+	})
+	if err != nil {
+		ds.Log("xmodules::user::AddUserParam: Error inserting in the user_parameter table", err)
+	}
+}
+
+func GetUserParam(ds applications.Datasource, user int, param string) string {
 
 	user_parameter := ds.GetTable("user_parameter")
 	if user_parameter == nil {
@@ -51,12 +69,15 @@ func GetUserParam(ds *base.Datasource, user int, param string) string {
 		xdominion.NewXCondition("id", "=", param),
 		xdominion.NewXCondition("user", "=", user, "and"),
 	})
+	if data == nil {
+		return ""
+	}
 
 	value, _ := data.GetString("value")
 	return strings.TrimSpace(value)
 }
 
-func DelUserParam(ds *base.Datasource, user int, param string) {
+func DelUserParam(ds applications.Datasource, user int, param string) {
 
 	user_parameter := ds.GetTable("user_parameter")
 	if user_parameter == nil {

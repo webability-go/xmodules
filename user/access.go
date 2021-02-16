@@ -5,13 +5,13 @@ import (
 
 	"github.com/webability-go/xdominion"
 
-	serverassets "github.com/webability-go/xamboo/assets"
+	"github.com/webability-go/xamboo/applications"
 
 	"github.com/webability-go/xmodules/tools"
 	"github.com/webability-go/xmodules/user/assets"
 )
 
-func AddAccessGroup(ds serverassets.Datasource, accessgroup *assets.AccessGroup) error {
+func AddAccessGroup(ds applications.Datasource, accessgroup *assets.AccessGroup) error {
 
 	user_accessgroup := ds.GetTable("user_accessgroup")
 	if user_accessgroup == nil {
@@ -32,7 +32,7 @@ func AddAccessGroup(ds serverassets.Datasource, accessgroup *assets.AccessGroup)
 	return nil
 }
 
-func AddAccess(ds serverassets.Datasource, access *assets.Access) error {
+func AddAccess(ds applications.Datasource, access *assets.Access) error {
 
 	user_access := ds.GetTable("user_access")
 	if user_access == nil {
@@ -54,7 +54,7 @@ func AddAccess(ds serverassets.Datasource, access *assets.Access) error {
 	return nil
 }
 
-func GetCountAccesses(ds serverassets.Datasource, cond *xdominion.XConditions) int {
+func GetCountAccesses(ds applications.Datasource, cond *xdominion.XConditions) int {
 
 	user_access := ds.GetTable("user_access")
 	if user_access == nil {
@@ -65,7 +65,7 @@ func GetCountAccesses(ds serverassets.Datasource, cond *xdominion.XConditions) i
 	return cnt
 }
 
-func GetAccessesList(ds serverassets.Datasource, cond *xdominion.XConditions, orderby *xdominion.XOrderBy, quantity int, first int) *xdominion.XRecords {
+func GetAccessesList(ds applications.Datasource, cond *xdominion.XConditions, orderby *xdominion.XOrderBy, quantity int, first int) *xdominion.XRecords {
 
 	user_access := ds.GetTable("user_access")
 	if user_access == nil {

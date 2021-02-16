@@ -1,9 +1,10 @@
 package assets
 
 import (
-	"github.com/webability-go/xamboo/assets"
+	"github.com/webability-go/xamboo/applications"
+	"github.com/webability-go/xamboo/cms/context"
 )
 
 type ModuleEntries struct {
-	TryDatasource func(ctx *assets.Context, datasourcename string) assets.Datasource
+	TryDatasource func(ctx *context.Context, datasourcename string) applications.Datasource
 }

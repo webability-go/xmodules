@@ -2,11 +2,9 @@ package adminmenu
 
 import (
 	"fmt"
-	//	"time"
 
-	serverassets "github.com/webability-go/xamboo/assets"
+	"github.com/webability-go/xamboo/applications"
 
-	//	"github.com/webability-go/xcore/v2"
 	"github.com/webability-go/xdominion"
 	"github.com/webability-go/xmodules/base"
 	"github.com/webability-go/xmodules/tools"
@@ -26,7 +24,7 @@ var moduletables = map[string]func() *xdominion.XTable{
 	"adminmenu_option": adminmenuOption,
 }
 
-func linkTables(ds serverassets.Datasource) {
+func linkTables(ds applications.Datasource) {
 
 	for _, tbl := range moduletablesorder {
 		table := moduletables[tbl]()
@@ -35,7 +33,7 @@ func linkTables(ds serverassets.Datasource) {
 	}
 }
 
-func synchroTables(ds serverassets.Datasource, oldversion string) (error, []string) {
+func synchroTables(ds applications.Datasource, oldversion string) (error, []string) {
 
 	result := []string{}
 
@@ -55,7 +53,7 @@ func synchroTables(ds serverassets.Datasource, oldversion string) (error, []stri
 	return nil, result
 }
 
-func install(ds serverassets.Datasource) (error, []string) {
+func install(ds applications.Datasource) (error, []string) {
 
 	result := []string{}
 
@@ -134,7 +132,7 @@ func install(ds serverassets.Datasource) (error, []string) {
 	}
 }
 
-func upgrade(ds serverassets.Datasource, oldversion string) (error, []string) {
+func upgrade(ds applications.Datasource, oldversion string) (error, []string) {
 
 	if oldversion < "0.0.1" {
 		// do things

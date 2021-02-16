@@ -6,7 +6,8 @@ package base
 import (
 	"golang.org/x/text/language"
 
-	serverassets "github.com/webability-go/xamboo/assets"
+	"github.com/webability-go/xamboo/applications"
+	"github.com/webability-go/xamboo/cms/context"
 
 	"github.com/webability-go/xmodules/base/assets"
 	"github.com/webability-go/xmodules/tools"
@@ -46,7 +47,7 @@ func init() {
 // It must be called AFTER GetContainer
 // adds tables and caches to sitecontext::database
 // It should be called AFTER createContext
-func setup(ds serverassets.Datasource, prefix string) ([]string, error) {
+func setup(ds applications.Datasource, prefix string) ([]string, error) {
 
 	linkTables(ds)
 	ds.SetModule(MODULEID, VERSION)
@@ -54,7 +55,7 @@ func setup(ds serverassets.Datasource, prefix string) ([]string, error) {
 	return []string{}, nil
 }
 
-func synchronize(ds serverassets.Datasource, prefix string) ([]string, error) {
+func synchronize(ds applications.Datasource, prefix string) ([]string, error) {
 
 	result := []string{}
 
@@ -110,6 +111,6 @@ func synchronize(ds serverassets.Datasource, prefix string) ([]string, error) {
 	return result, err
 }
 
-func startContext(ds serverassets.Datasource, ctx *serverassets.Context) error {
+func startContext(ds applications.Datasource, ctx *context.Context) error {
 	return nil
 }
