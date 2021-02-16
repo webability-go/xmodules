@@ -3,12 +3,12 @@ package base
 import (
 	"errors"
 
-	serverassets "github.com/webability-go/xamboo/assets"
+	"github.com/webability-go/xamboo/applications"
 
 	"github.com/webability-go/xmodules/tools"
 )
 
-func VerifyNeeds(ds serverassets.Datasource, needs []string) (bool, []string) {
+func VerifyNeeds(ds applications.Datasource, needs []string) (bool, []string) {
 
 	result := []string{}
 	flag := true
@@ -27,7 +27,7 @@ func VerifyNeeds(ds serverassets.Datasource, needs []string) (bool, []string) {
 	return flag, []string{}
 }
 
-func SynchroTable(ds serverassets.Datasource, tablename string) (error, []string) {
+func SynchroTable(ds applications.Datasource, tablename string) (error, []string) {
 
 	result := []string{}
 	result = append(result, tools.Message(messages, "analyze", tablename))

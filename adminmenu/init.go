@@ -6,7 +6,8 @@ package adminmenu
 import (
 	"golang.org/x/text/language"
 
-	serverassets "github.com/webability-go/xamboo/assets"
+	"github.com/webability-go/xamboo/applications"
+	"github.com/webability-go/xamboo/cms/context"
 
 	"github.com/webability-go/xmodules/adminmenu/assets"
 	"github.com/webability-go/xmodules/base"
@@ -48,7 +49,7 @@ func init() {
 
 // InitModule is called during the init phase to link the module with the system
 // adds tables and caches to sitecontext::database
-func Setup(ds serverassets.Datasource, prefix string) ([]string, error) {
+func Setup(ds applications.Datasource, prefix string) ([]string, error) {
 
 	linkTables(ds)
 	ds.SetModule(MODULEID, VERSION)
@@ -56,7 +57,7 @@ func Setup(ds serverassets.Datasource, prefix string) ([]string, error) {
 	return []string{}, nil
 }
 
-func Synchronize(ds serverassets.Datasource, prefix string) ([]string, error) {
+func Synchronize(ds applications.Datasource, prefix string) ([]string, error) {
 
 	result := []string{}
 
@@ -112,7 +113,7 @@ func Synchronize(ds serverassets.Datasource, prefix string) ([]string, error) {
 	return result, err
 }
 
-func StartContext(ds serverassets.Datasource, ctx *serverassets.Context) error {
+func StartContext(ds applications.Datasource, ctx *context.Context) error {
 
 	return nil
 }

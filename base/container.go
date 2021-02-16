@@ -17,7 +17,8 @@ import (
 	"github.com/webability-go/xcore/v2"
 	"github.com/webability-go/xdominion"
 
-	"github.com/webability-go/xamboo/assets"
+	"github.com/webability-go/xamboo/applications"
+	"github.com/webability-go/xamboo/cms/context"
 
 	"github.com/webability-go/xmodules/tools"
 )
@@ -35,7 +36,7 @@ import (
 // every line can be repeated for each dbid or logid
 type Container struct {
 	mdatasources sync.RWMutex
-	datasources  map[string]assets.Datasource
+	datasources  map[string]applications.Datasource
 	CoreLog      *log.Logger
 }
 
@@ -51,22 +52,22 @@ func (cntl *ContainersList) GetContainer(id string) *Container {
 	return (*cntl)[id]
 }
 
-func (cnt *Container) SetDatasource(id string, ds assets.Datasource) {
+func (cnt *Container) SetDatasource(id string, ds applications.Datasource) {
 	cnt.mdatasources.Lock()
 	cnt.datasources[id] = ds
 	cnt.mdatasources.Unlock()
 }
 
-func (cnt *Container) GetDatasource(id string) assets.Datasource {
+func (cnt *Container) GetDatasource(id string) applications.Datasource {
 	cnt.mdatasources.RLock()
 	ds := cnt.datasources[id]
 	cnt.mdatasources.RUnlock()
 	return ds
 }
 
-func (cnt *Container) GetDatasources() map[string]assets.Datasource {
+func (cnt *Container) GetDatasources() map[string]applications.Datasource {
 	cnt.mdatasources.RLock()
-	dss := make(map[string]assets.Datasource)
+	dss := make(map[string]applications.Datasource)
 	for i, v := range cnt.datasources {
 		dss[i] = v
 	}
@@ -75,7 +76,7 @@ func (cnt *Container) GetDatasources() map[string]assets.Datasource {
 }
 
 // Createdatasource will create a new datasource, link databases and logs based on XConfig data
-func (cnt *Container) CreateDatasource(name string, config *xconfig.XConfig) (assets.Datasource, error) {
+func (cnt *Container) CreateDatasource(name string, config *xconfig.XConfig) (applications.Datasource, error) {
 	// Crear los datasourceos basados en el CoreConfig
 	ds := &Datasource{
 		Name:    name,
@@ -178,10 +179,10 @@ func (cnt *Container) CreateDatasource(name string, config *xconfig.XConfig) (as
 }
 
 // TryDatasource will create a new datasource, link databases and logs based on XConfig data
-func (cnt *Container) TryDatasource(ctx *assets.Context, datasourcename string) assets.Datasource {
+func (cnt *Container) TryDatasource(ctx *context.Context, datasourcename string) applications.Datasource {
 
 	var dsn string
-	var datasource assets.Datasource
+	var datasource applications.Datasource
 	if datasourcename != "" {
 		dsn, _ = ctx.Sysparams.GetString(datasourcename)
 		datasource = cnt.GetDatasource(dsn)
@@ -222,7 +223,7 @@ func Create(configfile string) *Container {
 	CoreLog.Println("xmodules::base::Create: Starting Core Log")
 
 	cnt := &Container{
-		datasources: map[string]assets.Datasource{},
+		datasources: map[string]applications.Datasource{},
 		CoreLog:     CoreLog,
 	}
 
@@ -239,7 +240,7 @@ func Create(configfile string) *Container {
 	return cnt
 }
 
-func TryDatasource(ctx *assets.Context, datasourcename string) assets.Datasource {
+func TryDatasource(ctx *context.Context, datasourcename string) applications.Datasource {
 
 	dscn, _ := ctx.Sysparams.GetString("datasourcecontainername")
 	cnt := Containers.GetContainer(dscn)

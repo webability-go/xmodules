@@ -4,14 +4,16 @@ import (
 	"net/http"
 	"regexp"
 
-	"github.com/webability-go/xamboo"
-	"github.com/webability-go/xamboo/assets"
+	//	"github.com/webability-go/xamboo"
+	"github.com/webability-go/xamboo/applications"
+	"github.com/webability-go/xamboo/cms/context"
 
 	"github.com/webability-go/xmodules/base"
 	"github.com/webability-go/xmodules/tools"
 )
 
-func VerifyUserSession(ctx *assets.Context, xds assets.Datasource, origin string, device string) {
+// SESSIONS
+func VerifyUserSession(ctx *context.Context, xds applications.Datasource, origin string, device string) {
 
 	if !xds.IsModuleAuthorized("user") {
 		return
@@ -27,7 +29,7 @@ func VerifyUserSession(ctx *assets.Context, xds assets.Datasource, origin string
 	if cookie != nil && len(cookie.Value) != 0 {
 		sessionid = cookie.Value
 	}
-	IP := ctx.Writer.(*xamboo.CoreWriter).RequestStat.IP
+	IP := "ip" // ctx.Writer.(*xamboo.CoreWriter).RequestStat.IP
 
 	// verify username, password, OrderSecurity connect/disconnect
 	order := ctx.Request.Form.Get("OrderSecurity")
@@ -85,7 +87,7 @@ func VerifyUserSession(ctx *assets.Context, xds assets.Datasource, origin string
 	ctx.Sessionparams.Set("userdata", userdata.Data)
 }
 
-func CreateSessionUser(ctx *assets.Context, xds assets.Datasource, sessionid string, IP string, origin string, device string, user *StructureUser) string {
+func CreateSessionUser(ctx *context.Context, xds applications.Datasource, sessionid string, IP string, origin string, device string, user *StructureUser) string {
 
 	ds := xds.(*base.Datasource)
 	config := ds.Config
@@ -107,7 +109,7 @@ func CreateSessionUser(ctx *assets.Context, xds assets.Datasource, sessionid str
 	return sessionid
 }
 
-func DestroySessionUser(ctx *assets.Context, xds assets.Datasource, sessionid string) {
+func DestroySessionUser(ctx *context.Context, xds applications.Datasource, sessionid string) {
 
 	ds := xds.(*base.Datasource)
 	config := ds.Config
@@ -288,3 +290,12 @@ func DestroySessionUser(ctx *assets.Context, sessionid string) {
 	* /
 }
 */
+
+// SECURITY Access
+func HasAccess(ds applications.Datasource, clientid int, access string, extra string) bool {
+
+	// 1. profile
+	// 2. direct acceses
+
+	return true
+}

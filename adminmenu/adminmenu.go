@@ -5,10 +5,10 @@ import (
 
 	"github.com/webability-go/xdominion"
 
-	serverassets "github.com/webability-go/xamboo/assets"
+	"github.com/webability-go/xamboo/applications"
 )
 
-func AddGroup(ds serverassets.Datasource, key string, name string) error {
+func AddGroup(ds applications.Datasource, key string, name string) error {
 	adminmenu_group := ds.GetTable("adminmenu_group")
 	if adminmenu_group == nil {
 		errmessage := "xmodules::adminmenu::AddGroup: Error, the adminmenu_group table is not available on this datasource"
@@ -26,11 +26,11 @@ func AddGroup(ds serverassets.Datasource, key string, name string) error {
 	return nil
 }
 
-func GetGroup(ds serverassets.Datasource, key string) (*xdominion.XRecord, error) {
+func GetGroup(ds applications.Datasource, key string) (*xdominion.XRecord, error) {
 	return nil, nil
 }
 
-func AddOption(ds serverassets.Datasource, data *xdominion.XRecord) error {
+func AddOption(ds applications.Datasource, data *xdominion.XRecord) error {
 
 	adminmenu_option := ds.GetTable("adminmenu_option")
 	if adminmenu_option == nil {
@@ -50,11 +50,11 @@ func AddOption(ds serverassets.Datasource, data *xdominion.XRecord) error {
 	return nil
 }
 
-func GetOption(ds serverassets.Datasource, key string) (*xdominion.XRecord, error) {
+func GetOption(ds applications.Datasource, key string) (*xdominion.XRecord, error) {
 	return nil, nil
 }
 
-func GetMenu(ds serverassets.Datasource, group string, father string) (*xdominion.XRecords, error) {
+func GetMenu(ds applications.Datasource, group string, father string) (*xdominion.XRecords, error) {
 
 	adminmenu_option := ds.GetTable("adminmenu_option")
 	if adminmenu_option == nil {

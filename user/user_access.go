@@ -23,6 +23,7 @@ func userAccess() *xdominion.XTable {
 	t.AddField(xdominion.XFieldVarChar{Name: "group", Size: 30, Constraints: xdominion.XConstraints{
 		xdominion.XConstraint{Type: xdominion.FK, Data: []string{"user_accessgroup", "user_acg_key"}},
 		xdominion.XConstraint{Type: xdominion.IN},
+		xdominion.XConstraint{Type: xdominion.NN},
 	}})
 
 	// description

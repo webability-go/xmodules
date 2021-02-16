@@ -1,14 +1,14 @@
 package useradmin
 
 import (
-	serverassets "github.com/webability-go/xamboo/assets"
+	"github.com/webability-go/xamboo/applications"
 
 	//	"github.com/webability-go/xcore/v2"
 	"github.com/webability-go/xdominion"
 	"github.com/webability-go/xmodules/adminmenu"
 )
 
-func install(ds serverassets.Datasource) (error, []string) {
+func install(ds applications.Datasource) (error, []string) {
 
 	// Group, just in case (upsert)
 	adminmenu.AddGroup(ds, "_admin", "System Administration")
@@ -50,7 +50,7 @@ func install(ds serverassets.Datasource) (error, []string) {
 	return nil, []string{"ok"}
 }
 
-func upgrade(ds serverassets.Datasource, oldversion string) (error, []string) {
+func upgrade(ds applications.Datasource, oldversion string) (error, []string) {
 
 	if oldversion < "0.0.1" {
 		// do things

@@ -3,7 +3,7 @@ package base
 import (
 	"github.com/webability-go/xdominion"
 
-	serverassets "github.com/webability-go/xamboo/assets"
+	"github.com/webability-go/xamboo/applications"
 )
 
 // Order to load/synchronize tables:
@@ -16,7 +16,7 @@ var moduletables = map[string]func() *xdominion.XTable{
 	"base_module": baseModule,
 }
 
-func linkTables(ds serverassets.Datasource) {
+func linkTables(ds applications.Datasource) {
 
 	for _, tbl := range moduletablesorder {
 		table := moduletables[tbl]()
@@ -25,7 +25,7 @@ func linkTables(ds serverassets.Datasource) {
 	}
 }
 
-func synchroTables(ds serverassets.Datasource, oldversion string) (error, []string) {
+func synchroTables(ds applications.Datasource, oldversion string) (error, []string) {
 
 	result := []string{}
 
@@ -45,14 +45,14 @@ func synchroTables(ds serverassets.Datasource, oldversion string) (error, []stri
 	return nil, result
 }
 
-func install(ds serverassets.Datasource) (error, []string) {
+func install(ds applications.Datasource) (error, []string) {
 
 	// do things
 
 	return nil, []string{}
 }
 
-func upgrade(ds serverassets.Datasource, oldversion string) (error, []string) {
+func upgrade(ds applications.Datasource, oldversion string) (error, []string) {
 
 	if oldversion < "0.0.1" {
 		// do things
