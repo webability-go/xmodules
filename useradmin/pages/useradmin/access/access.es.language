@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<language id="useradmin/access" lang="es">
+
+  <entry id="errordatasource">adminuser/access::%s - Error: no hay fuente de datos '%s'</entry>
+  <entry id="erroraccess">adminuser/access::%s - Error: el usuario '%d' no tiene acceso a esta pantalla</entry>
+
+  <entry id="reload">Recargar la lista</entry>
+  <entry id="insertnew">Nuevo acceso</entry>
+  <entry id="accessgroup">Administrar grupos de accesos</entry>
+  <entry id="title">Derechos de acceso del sistema.</entry>
+  <entry id="hint">Haz click sobre un renglón para visualizarlo:</entry>
+  <entry id="showsystem">Ver los derechos del sistema</entry>
+
+  <entry id="newaccess">Nuevo</entry>
+  <entry id="accesstitle">Derecho de acceso</entry>
+  <entry id="button.view">Ver</entry>
+  <entry id="button.edit">Editar</entry>
+  <entry id="button.delete">Borrar</entry>
+
+  <entry id="group">Grupo</entry>
+  <entry id="key">Clave</entry>
+  <entry id="name">Nombre</entry>
+  <entry id="description">Descripción</entry>
+  <entry id="profiles">Perfiles</entry>
+  <entry id="users">Usuarios</entry>
+  <entry id="commands">Comandos</entry>
+
+</language>

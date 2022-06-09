@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<application id="useradmin/profile/editor">
+
+  <container id="application" type="separatorContainer" width="max" height="max" mode="vertical" auto="yes">
+    <zone size="250">
+{{FORMPROFILE}}
+    </zone>
+    <zone id="extra" size="*">
+      <container type="separatorContainer" width="max" height="max" mode="horizontal" auto="yes">
+        <zone size="*" style="padding: 10px;">
+          <element type="htmlElement">##accesses.title##</element>
+          <element type="htmlElement" id="profile_accesses"></element>
+        </zone>
+        <zone size="*" style="padding: 10px;">
+          <element type="htmlElement">##users.title##</element>
+          <element type="htmlElement" id="profile_users"></element>
+        </zone>
+      </container>
+    </zone>
+  </container>
+
+  <element type="codeElement"><![CDATA[
+
+function useradmin_profile_{{KEY}}_editor_formlistener(type, mode, key, data)
+{
+  if (type == "success") // insert, update, delete OK
+  {
+    // reload the list
+    WA.$N('useradmin/profile|single|profiledata').reload();
+  }
+
+  if (type == "mode" && mode == 1)
+  {
+    WA.$N('useradmin/profile/editor|'+(key?key:'new')+'|application').hideZone('extra');
+  }
+
+  if (type == "fill") // insert, update, delete OK
+  {  // ensenar los dos tabs extras y cargarlos
+    if (mode != 1)
+    {
+      WA.$N('useradmin/profile/editor|'+(key?key:'new')+'|application').showZone('extra');
+      var request = WA.Managers.ajax.createRequest('/useradmin/profile/editor/getaccesses/html', 'POST', null, useradmin_profile_editor_{{KEY}}_fillaccesses, false);
+      request.addParameter('key', key);
+      request.send();
+      var request = WA.Managers.ajax.createRequest('/useradmin/profile/editor/getusers/html', 'POST', null, useradmin_profile_editor_{{KEY}}_fillusers, false);
+      request.addParameter('key', key);
+      request.send();
+    }
+  }
+}
+
+function useradmin_profile_editor_{{KEY}}_fillaccesses(request)
+{
+  WA.toDOM('useradmin/profile/editor|{{KEY}}|profile_accesses').innerHTML = request.responseText;
+}
+
+function useradmin_profile_editor_{{KEY}}_fillusers(request)
+{
+  WA.toDOM('useradmin/profile/editor|{{KEY}}|profile_users').innerHTML = request.responseText;
+}
+
+function useradmin_profile_editor_{{KEY}}_switchuser(node, key, id)
+{
+  var checked = node.checked;
+  var req = WA.Managers.ajax.createRequest('/useradmin/profile/editor/setuser/json', 'POST', 'key='+key+'&id='+id+'&checked='+checked, useradmin_profile_editor_{{KEY}}_getuser, true);
+}
+
+function useradmin_profile_editor_{{KEY}}_getuser(request)
+{
+  var code = WA.JSON.decode(request.responseText);
+  if (code.status != 'OK')
+    alert(request.responseText);
+}
+
+function useradmin_profile_editor_{{KEY}}_switchaccess(node, key, id)
+{
+  var checked = node.checked;
+  var req = WA.Managers.ajax.createRequest('/useradmin/profile/editor/setaccess/json', 'POST', 'key='+key+'&id='+id+'&checked='+checked, useradmin_profile_editor_{{KEY}}_getaccess, true);
+}
+
+function useradmin_profile_editor_{{KEY}}_getaccess(request)
+{
+  var code = WA.JSON.decode(request.responseText);
+  if (code.status != 'OK')
+    alert(request.responseText);
+}
+
+  ]]></element>
+
+  <event type="start">
+    <code><![CDATA[
+    function(e)
+    {
+      WA.$N('useradmin/profile/editor|{{KEY}}|formprofile').addListener(useradmin_profile_{{KEY}}_editor_formlistener);
+    }
+    ]]></code>
+  </event>
+
+</application>

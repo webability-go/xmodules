@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<language id="useradmin/accessgroup" lang="en">
+
+  <entry id="errordatasource">adminuser/accessgroup::%s - Error: there is no datasource '%s'</entry>
+  <entry id="erroraccess">adminuser/accessgroup::%s - Error: the user '%d' does not have access to this screen</entry>
+
+  <entry id="reload">Reload the list</entry>
+  <entry id="insertnew">New access group</entry>
+  <entry id="title">Groups of right accesses in the system.</entry>
+  <entry id="hint">Click on a line to view the information</entry>
+  <entry id="showsystem">View the system groups</entry>
+
+  <entry id="newaccessgroup">New</entry>
+  <entry id="accessgrouptitle">Groups of right accesses</entry>
+  <entry id="button.view">View</entry>
+  <entry id="button.edit">Edit</entry>
+  <entry id="button.delete">Delete</entry>
+
+  <entry id="key">Key</entry>
+  <entry id="name">Name</entry>
+  <entry id="commands">Commands</entry>
+
+</language>

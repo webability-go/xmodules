@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<language id="useradmin/accessgroup/editor" lang="es">
+
+  <entry id="errordatasource">adminuser/accessgroup/editor::%s - Error: no hay fuente de datos '%s'</entry>
+  <entry id="erroraccess">adminuser/accessgroup/editor::%s - Error: el usuario '%d' no tiene acceso a esta pantalla</entry>
+  <entry id="errortable">adminuser/access/editor::%s - Error: la tabla '%s' no existe en el datasource</entry>
+
+  <entry id="title">Grupos de derechos de acceso del sistema.</entry>
+  <entry id="hint">Haz click sobre un renglón para editarlo:</entry>
+
+  <entry id="mask.errormessage"><![CDATA[Los datos aún no son bien capturados. Por favor, verifique los mensajes y los campos en rojo antes de enviar la información.]]></entry>
+  <entry id="mask.servermessage"><![CDATA[Error: Los datos del registro no pudierón ser recuperados del servidor.]]></entry>
+  <entry id="mask.titleinsert"><![CDATA[Insertar un nuevo grupo de derechos de acceso del sistema:]]></entry>
+  <entry id="mask.titleinsert.message">Información agregada con éxito. Ya puede cerrar esta pantalla.</entry>
+  <entry id="mask.titleupdate"><![CDATA[Modificar los datos del grupo de derechos de acceso:]]></entry>
+  <entry id="mask.titleupdate.message">Información modificada con éxito. Ya puede cerrar esta pantalla.</entry>
+  <entry id="mask.titledelete"><![CDATA[Borrar el grupo de derechos de acceso del sistema:]]></entry>
+  <entry id="mask.titledelete.message">Información borrada con éxito. Ya puede cerrar esta pantalla.</entry>
+  <entry id="mask.titleview"><![CDATA[Datos del grupo de derechos de acceso del sistema:]]></entry>
+
+  <entry id="key.title">Clave:</entry>
+  <entry id="key.help.description">La clave del grupo de derechos de acceso contiene de 1 a 30 carácteres, en minúsculas. La clave tiene que empezar por una letra. Puede usar también cifras, '-' y '_'. Las claves empezando por _ son grupos de derechos de acceso de sistema y no pueden ser creados o modificados por el usuario.</entry>
+  <entry id="key.status.notnull">La clave no puede estar vacia.</entry>
+  <entry id="key.status.badformat">La clave tiene un formato erroneo.</entry>
+  <entry id="key.error">La clave de un grupo de derechos editado por el usuario no puede empezar por _.</entry>
+  <entry id="key.pruneerror">No puede pegar los hijos en un grupo cuya clave empieza por _.</entry>
+
+  <entry id="name.title">Nombre:</entry>
+  <entry id="name.help.description">El nombre del grupo de derechos de acceso es de 1 hasta 255 carácteres máximo.</entry>
+  <entry id="name.status.notnull">El nombre no puede estar vacio.</entry>
+
+  <entry id="prune.title">¿Borrar tambien los hijos?</entry>
+  <entry id="prune.help.description">Si selecciona Sí, entonces todos los derechos en este grupo serán borrados también. Si selecciona No, entonces los derechos en este grupo serán movidos al grupo seleccionado en el campo siguiente.</entry>
+  <entry id="prune.yes">Sí, borrar los hijos</entry>
+  <entry id="prune.no">No, seleccionar el grupo receptor</entry>
+
+  <entry id="grouptoprune.title">Grupo receptor:</entry>
+  <entry id="grouptoprune.help.description">Si seleccionó No en el campo anterior, entonces especifique el grupo que recibirá los derechos del grupo a borrar.</entry>
+
+  <entry id="formsubmit.insert.title">Grabar el nuevo grupo</entry>
+  <entry id="formsubmit.update.title">Guardar las modificaciones</entry>
+  <entry id="formsubmit.delete.title">Si, borrar este grupo</entry>
+  <entry id="formreset.title">Deshacer los cambios</entry>
+  <entry id="formview.title">Cancelar</entry>
+
+</language>

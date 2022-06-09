@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<application id="useradmin/accessgroup/editor">
+
+{{FORMACCESS}}
+
+  <element type="codeElement"><![CDATA[
+
+function useradmin_accessgroup_{{KEY}}_editor_formlistener(type, mode, key, data)
+{
+  if (type == "success") // insert, update, delete OK
+  {
+    // reload the list
+    WA.$N('useradmin/accessgroup|single|accessgroupdata').reload();
+  }
+}
+
+  ]]></element>
+
+  <event type="start">
+    <code><![CDATA[
+    function(e)
+    {
+      WA.$N('useradmin/accessgroup/editor|{{KEY}}|formaccessgroup').addListener(useradmin_accessgroup_{{KEY}}_editor_formlistener);
+    }
+    ]]></code>
+  </event>
+
+</application>

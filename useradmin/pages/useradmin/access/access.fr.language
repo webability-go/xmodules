@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<language id="useradmin/access" lang="fr">
+  <entry id="reload">Recharger la liste</entry>
+  <entry id="insertnew">Nouvel accès</entry>
+  <entry id="accessgroup">Administrer les groupes d'accès</entry>
+  <entry id="title">Droits d'accès du système.</entry>
+  <entry id="hint">Fais clic sur une ligne pour l'éditer:</entry>
+
+</language>

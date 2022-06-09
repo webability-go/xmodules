@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<language id="useradmin/accessgroup" lang="fr">
+
+  <entry id="errordatasource">adminuser/accessgroup::%s - Erreur: il n'y a pas de source de données '%s'</entry>
+  <entry id="erroraccess">adminuser/accessgroup::%s - Erreur: l'utilisateur '%d' n'a pas accès à cet écran</entry>
+
+  <entry id="reload">Recharger la liste</entry>
+  <entry id="insertnew">Nouveau groupe d'accès</entry>
+  <entry id="title">Groupes de droits d'accès du système.</entry>
+  <entry id="hint">Fais clic sur une ligne pour la visualiser</entry>
+  <entry id="showsystem">Voir les groupes du système</entry>
+
+  <entry id="newaccessgroup">Nouveau</entry>
+  <entry id="accessgrouptitle">Groupes de droits d'accès</entry>
+  <entry id="button.view">Voir</entry>
+  <entry id="button.edit">Editer</entry>
+  <entry id="button.delete">Effacer</entry>
+
+  <entry id="key">Clef</entry>
+  <entry id="name">Nom</entry>
+  <entry id="commands">Commandes</entry>
+
+</language>

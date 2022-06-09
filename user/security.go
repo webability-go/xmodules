@@ -1,6 +1,7 @@
 package user
 
 import (
+	"fmt"
 	"net/http"
 	"regexp"
 
@@ -77,14 +78,14 @@ func VerifyUserSession(ctx *context.Context, xds applications.Datasource, origin
 	//	ctx.Sessionparams.Set("clientid", clientid)
 
 	userkey, _ := sessiondata.GetInt("user")
-	userdata := GetUser(ds, userkey)
-	username, _ := userdata.Data.GetString("name")
+	userdata := GetUserByKey(ds, userkey)
+	username, _ := userdata.GetString("name")
 
 	ctx.Sessionparams.Set("usersessionid", sessionid)
 	ctx.Sessionparams.Set("userkey", userkey)
 	ctx.Sessionparams.Set("username", username)
 	ctx.Sessionparams.Set("usersession", sessiondata)
-	ctx.Sessionparams.Set("userdata", userdata.Data)
+	ctx.Sessionparams.Set("userdata", userdata)
 }
 
 func CreateSessionUser(ctx *context.Context, xds applications.Datasource, sessionid string, IP string, origin string, device string, user *StructureUser) string {
@@ -122,180 +123,86 @@ func DestroySessionUser(ctx *context.Context, xds applications.Datasource, sessi
 	CloseSession(ds, sessionid)
 }
 
-/* Verify cookie session against DB
-func LinkSessionUser(ctx *assets.Context) {
-
-	sitecontextname, _ := ctx.Sysparams.GetString("sitecontext")
-	sitecontext := base.Sites.GetContext(sitecontextname)
-	if sitecontext == nil {
-		return
-	}
-	// kiwi-gr, kiwi-im, crafto-gr, crafto-im are authorized normally. control, kiwi7, crafto7, central, cdn, are not
-	if !context.IsModuleAuthorized(sitecontext, "client") {
-		return
-	}
-
-	var clientsession *xdominion.XRecord
-
-	sessionid := ctx.Request.Form.Get("token")
-	if sessionid != "" {
-		clientsession = client.GetSession(sessionid)
-	}
-
-	config := base.Sites.GetContext("kiwi-gr").Config
-
-	if clientsession == nil {
-		// 1. check the cookie session
-		cookiename, _ := config.GetString("cookiename")
-		cookie, _ := ctx.Request.Cookie(cookiename)
-		// 1.bis If there is no cookie, there is no session
-		if cookie == nil || len(cookie.Value) == 0 {
-			return
-		}
-		sessionid = cookie.Value
-		clientsession = client.GetSession(sessionid)
-	}
-
-	if clientsession == nil {
-		// Si no hay sesion repertoriada, destruye todo
-		DestroySessionClient(ctx, sessionid)
-		return
-	}
-
-	checkIP, _ := ctx.Sysparams.GetBool("checkip")
-	IP, _ := clientsession.GetString("ip")
-	IPClient := ctx.Writer.(*server.CoreWriter).RequestStat.IP
-	if checkIP && IP != IPClient {
-		DestroySessionClient(ctx, sessionid)
-		return
-	}
-
-	// Actualiza el fin de la sesion con el tiempo actual
-	client.SetSessionTime(sessionid)
-
-	clave, _ := clientsession.GetInt("chef")
-	if clave != 0 {
-		client.SetClientTime(clave)
-		clientdata, _ := graph.GetClient(sitecontext, clave)
-		if clientdata != nil {
-			ctx.Sessionparams.Set("sessionid", sessionid)
-			ctx.Sessionparams.Set("clientid", clave)
-			ctx.Sessionparams.Set("clientdata", clientdata.Data)
-		}
-	}
-}
-
-/* connect clientid and force cookie
-func ForceUser(ctx *assets.Context, clientid int, longlogin int, origin string, source string, device string) {
-
-	sitecontextname, _ := ctx.Sysparams.GetString("sitecontext")
-	sitecontext := base.Sites.GetContext(sitecontextname)
-
-	// NO podemos conectar un cliente que no existe
-	clientdata, _ := graph.GetClient(sitecontext, clientid)
-	if clientdata == nil {
-		return
-	}
-
-	config := base.Sites.GetContext("kiwi-gr").Config
-
-	cookiename, _ := config.GetString("cookiename")
-	cookiedomain, _ := config.GetString("cookiedomain")
-
-	sessionid := CreateSessionClient(ctx, clientid, longlogin, origin, source, device)
-	ctx.Sessionparams.Set("clientid", clientid)
-	ctx.Sessionparams.Set("clientdata", clientdata.Data)
-
-	http.SetCookie(ctx.Writer, &http.Cookie{Name: cookiename, Value: sessionid, Path: "/", Domain: cookiedomain})
-
-	//  fmt.Println("Forzando el cliente=", clientid, "con la cookie", cookiename, "=", sessionid)
-}
-
-/*
-func CreateSessionUser(ctx *assets.Context, clientid int, longlogin int, origin string, source string, device string) string {
-
-	config := base.Sites.GetContext("kiwi-gr").Config
-
-	cookiesize, _ := config.GetInt("cookiesize")
-
-	// usuario actualmente conectado (cargado al principio del hit por cookie), o nada
-	clientcnx, _ := ctx.Sessionparams.GetInt("clientid")
-	sessionid, _ := ctx.Sessionparams.GetString("sessionid")
-
-	// Si ya estabamos conectados, crea una nueva sessionid
-	if sessionid != "" && clientcnx != clientid {
-		sessionid = ""
-	}
-	// crea sessionid
-	ip, _, _ := net.SplitHostPort(ctx.Request.RemoteAddr)
-	if sessionid == "" {
-		// busca un ID disponible
-		for {
-			sessionid = util.CreateKey(cookiesize, -1)
-			num, _ := client.KL_chefsesion.Count(xdominion.NewXCondition("clave", "=", sessionid))
-			if num == 0 {
-				break
-			}
-		}
-
-		_, err := client.KL_chefsesion.Insert(xdominion.XRecord{
-			"clave":       sessionid,
-			"chef":        clientid,
-			"fechainicio": time.Now(),
-			"fechafin":    time.Now(),
-			"ip":          ip,
-			"longlogin":   longlogin,
-			"origen":      origin + source,
-			"device":      device,
-		})
-		if err != nil {
-			fmt.Println("Error insertando sesion:", err)
-		}
-		ctx.Sessionparams.Set("sessionid", sessionid)
-		ctx.Sessionparams.Set("clientid", clientid)
-	} else {
-		_, err := client.KL_chefsesion.Update(sessionid, xdominion.XRecord{
-			"fechafin": time.Now(),
-			"origen":   origin + source,
-			"device":   device,
-		})
-		if err != nil {
-			fmt.Println("Error modificando sesion:", err)
-		}
-	}
-
-	ipdata := geoip.GetGeoData(ip)
-	_, err := client.KL_chef.Update(clientid, xdominion.XRecord{
-		"ultimopais":     ipdata.Country.IsoCode,
-		"ultimaconexion": time.Now(),
-		"intento":        0,
-	})
-	if err != nil {
-		fmt.Println("Error modificando chef:", err)
-	}
-	return sessionid
-}
-
-func DestroySessionUser(ctx *assets.Context, sessionid string) {
-	/*
-	     $this->siteSesion = null;
-	   $this->clientid = null;
-	   $this->chefData = null;
-	   SetCookie($this->base->config->cookiename, null, 0, '/', $this->base->config->COOKIEDOMAIN);
-
-	   // comparte con Base
-	   $this->base->clientid = $this->clientid;
-	   $this->chefEntity->chefData = $this->chefData;
-	   $this->base->siteSesion = $this->siteSesion;
-	* /
-}
-*/
-
 // SECURITY Access
-func HasAccess(ds applications.Datasource, clientid int, access string, extra string) bool {
+func HasAccess(ds applications.Datasource, userid int, args ...interface{}) bool {
 
 	// 1. profile
 	// 2. direct acceses
+	userdata := GetUserByKey(ds, userid)
+	if userdata == nil {
+		return false
+	}
 
-	return true
+	// superuser is always all access
+	super, _ := userdata.GetString("status")
+	if super == "S" {
+		return true
+	}
+	if super == "X" { // desactivated user, no access
+		return false
+	}
+
+	access := ""
+	extendedaccess := ""
+	ok := false
+	// any args ?
+	if len(args) > 0 {
+		access, ok = args[0].(string)
+		if !ok {
+			//			http.Error(ctx.Writer, "Error on user access verification", http.StatusUnauthorized)
+			return false
+		}
+	}
+	if len(args) > 1 {
+		extendedaccess = args[1].(string)
+		if !ok {
+			//			http.Error(ctx.Writer, "Error on user extended access verification", http.StatusUnauthorized)
+			return false
+		}
+	}
+	/*
+		// is access into user accesses ?
+		acc := GetUserAccess(ds, userid, access)
+
+		// is access in profile ?
+		pr := GetUserProfiles(ds, userid)
+		// loop sobre progiles
+		accpr := GetProfileAccess(ds, userid, access)
+	*/
+	fmt.Println("Access to check:", access, extendedaccess)
+
+	return false
 }
+
+/*
+public function hasAccess($claveusuario, $derecho)
+{
+	if (!$claveusuario)
+		return false;
+	$datausuario = $this->getUsuarioDataByKey($claveusuario);
+	if (!$datausuario)
+		return false;
+	if ($datausuario->estatus == "S") // super usuario
+		return true;
+
+	// 1. check access or extended
+	$data = $this->kl_adminderechousuario->doSelectCondition(array(new \dominion\DB_Condition('usuario', '=', $claveusuario), new \dominion\DB_Condition('derecho', '=', $derecho, 'and')));
+
+	if ($data && $data[0]->estatus == 1) // Authorized
+		return true;           // if denied for sure we return false
+	if ($data && $data[0]->estatus == 2) // Denied
+		return false;
+
+	$profiles = $this->kl_adminperfilusuario->doSelectCondition(array(new \dominion\DB_Condition('usuario', '=', $claveusuario)));
+	if ($profiles)
+	{
+		foreach($profiles as $pr)
+		{
+			$prof = $this->kl_adminperfilderecho->doSelectCondition(array(new \dominion\DB_Condition('perfil', '=', $pr->perfil), new \dominion\DB_Condition('derecho', '=', $derecho, 'and')));
+			if ($prof)
+				return true;    // found: authorized
+		}
+	}
+	return false;
+}
+*/

@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<application id="useradmin/profile">
+  <container type="separatorContainer" width="max" height="max" mode="vertical" auto="yes">
+    <zone id="filtercontainer" size="80">
+      <element type="htmlElement" ><![CDATA[
+
+<div style="padding: 10px;">
+  <button class="button reload" style="float: right;" onclick="useradmin_profile_reload();">##reload##</button>
+  <b>##title##</b><br />
+  ##hint##<br />
+  <button class="button insert" onclick="useradmin_profile_go('', 1);">##insertnew##</button>
+  <input id="useradmin/profile|single|showall" type="checkbox" {{CHECKED}}onchange="useradmin_profile_setshowall();">##showall##</button>
+</div>
+
+      ]]></element>
+    </zone>
+
+    <zone id="profilecontainer" size="*">
+      <container type="gridContainer" id="profiledata" width="max" height="max" haslistener="yes" classname="grid colored">
+        <zone type="column" size="130" field="key" title="##key##">
+        </zone>
+        <zone type="column" size="50" field="status" title="##status##">
+        </zone>
+        <zone type="column" size="300" field="name" title="##name##">
+        </zone>
+        <zone type="column" size="300" field="accesses" title="##accesses##">
+        </zone>
+        <zone type="column" size="300" field="users" title="##users##">
+        </zone>
+        <zone type="column" size="250" field="commands" title="##commands##">
+        </zone>
+
+        <event type="click">
+          <code><![CDATA[
+function(data)
+{
+  if (!data || !data.data)
+    return;
+
+  useradmin_profile_go(data.data.key, 4);
+}
+          ]]></code>
+        </event>
+
+      </container>
+    </zone>
+
+  </container>
+
+  <element type="codeElement"><![CDATA[
+
+function useradmin_profile_reload()
+{
+  WA.$N('useradmin/profile|single|profiledata').reload();
+}
+
+function useradmin_profile_setshowall()
+{
+  var checked = WA.toDOM("useradmin/profile|single|showall").checked;
+  var request = WA.Managers.ajax.createRequest('/useradmin/profile/filter/json', 'POST', null, useradmin_profile_getfilter, false);
+  request.addParameter('checked', checked);
+  request.send();
+}
+
+function useradmin_profile_getfilter(request)
+{
+  useradmin_profile_reload();
+}
+
+function useradmin_profile_go(key, mode)
+{
+  // open app to edit
+  var node = WA.$N('index|single|app_useradmin/profile/editor_'+(key?key:'new'));
+  if (!node)
+  {
+    var tree = {tag:'zone',attributes:{id:'app_useradmin/profile/editor_'+(key?key:'new'),title:'##profiletitle## - ' + (key?key:'##newprofile##'),closeable:'yes',application:'useradmin/profile/editor|'+(key?key:'new'),params:'mode='+mode+(key?'&Key='+key:'')}};
+    WA.$N('index|single|application').app.createTree('application', tree);
+  }
+  else
+  {
+    n = WA.$N('useradmin/profile/editor|'+(key?key:'new')+'|formprofile');
+    if (n && mode == 1)
+      n.doInsert();
+    else if (n && mode == 2)
+      n.doUpdate();
+    else if (n && mode == 3)
+      n.doDelete();
+    else if (n && mode == 4)
+      n.doView();
+  }
+  WA.$N('index|single|application').activateZone('app_useradmin/profile/editor_'+(key?key:'new'));
+}
+
+]]></element>
+
+</application>

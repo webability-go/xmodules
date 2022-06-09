@@ -1,7 +1,11 @@
 package base
 
 import (
+	// "embed"
 	"errors"
+	"io/fs"
+	"os"
+	"path/filepath"
 
 	"github.com/webability-go/xamboo/applications"
 
@@ -24,7 +28,7 @@ func VerifyNeeds(ds applications.Datasource, needs []string) (bool, []string) {
 		}
 	}
 
-	return flag, []string{}
+	return flag, result
 }
 
 func SynchroTable(ds applications.Datasource, tablename string) (error, []string) {
@@ -52,5 +56,44 @@ func SynchroTable(ds applications.Datasource, tablename string) (error, []string
 	} else {
 		result = append(result, tools.Message(messages, "tablenotmodified", tablename))
 	}
+	return nil, result
+}
+
+func SynchroFiles(origin fs.FS, destination string) (error, []string) {
+
+	result := []string{}
+
+	err := fs.WalkDir(origin, ".", func(path string, d fs.DirEntry, err error) error {
+		if err != nil {
+			result = append(result, "Error:")
+			return err
+		}
+
+		// if subdirectory, do nothing, the fs already have all the files into the structure
+		if d.IsDir() {
+			return nil
+		}
+
+		// read file in buffer
+		result = append(result, "Copy file: "+path+" to "+destination+path)
+		data, err := fs.ReadFile(origin, path)
+		if err != nil {
+			return err
+		}
+
+		dir := filepath.Dir(path)
+		if dir != "." {
+			os.MkdirAll(destination+dir, 0700)
+		}
+		err = os.WriteFile(destination+path, data, 0644)
+		if err != nil {
+			return err
+		}
+		return nil
+	})
+	if err != nil {
+		return err, result
+	}
+
 	return nil, result
 }

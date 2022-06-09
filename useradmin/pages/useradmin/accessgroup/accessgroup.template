@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<application id="useradmin/accessgroup">
+  <container type="separatorContainer" width="max" height="max" mode="vertical" auto="yes">
+    <zone id="filtercontainer" size="80">
+      <element type="htmlElement" ><![CDATA[
+
+<div style="padding: 10px;">
+  <button class="button reload" style="float: right;" onclick="useradmin_accessgroup_reload();">##reload##</button>
+  <b>##title##</b><br />
+  ##hint##<br />
+  <button class="button insert" onclick="useradmin_accessgroup_go('', 1);">##insertnew##</button>
+  <input id="useradmin/accessgroup|single|showsystem" type="checkbox" {{CHECKED}}onchange="useradmin_accessgroup_setshowsystem();">##showsystem##</button>
+</div>
+
+      ]]></element>
+    </zone>
+
+    <zone id="accessgroupcontainer" size="*">
+      <container type="gridContainer" id="accessgroupdata" width="max" height="max" haslistener="yes" classname="grid colored">
+        <zone type="column" size="250" field="key" title="##key##">
+        </zone>
+        <zone type="column" size="300" field="name" title="##name##">
+        </zone>
+        <zone type="column" size="250" field="commands" title="##commands##">
+        </zone>
+
+        <event type="click">
+          <code><![CDATA[
+function(data)
+{
+  if (!data || !data.data)
+    return;
+
+  useradmin_accessgroup_go(data.data.key, 4);
+}
+          ]]></code>
+        </event>
+
+      </container>
+    </zone>
+
+  </container>
+
+  <element type="codeElement"><![CDATA[
+
+function useradmin_accessgroup_reload()
+{
+  WA.$N('useradmin/accessgroup|single|accessgroupdata').reload();
+}
+
+function useradmin_accessgroup_setshowsystem()
+{
+  var checked = WA.toDOM("useradmin/accessgroup|single|showsystem").checked;
+  var request = WA.Managers.ajax.createRequest('/useradmin/accessgroup/filter/json', 'POST', null, useradmin_accessgroup_getfilter, false);
+  request.addParameter('checked', checked);
+  request.send();
+}
+
+function useradmin_accessgroup_getfilter(request)
+{
+  useradmin_accessgroup_reload();
+}
+
+function useradmin_accessgroup_go(key, mode)
+{
+  // open app to edit
+  var node = WA.$N('index|single|app_useradmin/accessgroup/editor_'+(key?key:'new'));
+  if (!node)
+  {
+    var tree = {tag:'zone',attributes:{id:'app_useradmin/accessgroup/editor_'+(key?key:'new'),title:'##accessgrouptitle## - ' + (key?key:'##newaccessgroup##'),closeable:'yes',application:'useradmin/accessgroup/editor|'+(key?key:'new'),params:'mode='+mode+(key?'&Key='+key:'')}};
+    WA.$N('index|single|application').app.createTree('application', tree);
+  }
+  else
+  {
+    n = WA.$N('useradmin/accessgroup/editor|'+(key?key:'new')+'|formaccessgroup');
+    if (n && mode == 1)
+      n.doInsert();
+    else if (n && mode == 2)
+      n.doUpdate();
+    else if (n && mode == 3)
+      n.doDelete();
+    else if (n && mode == 4)
+      n.doView();
+  }
+  WA.$N('index|single|application').activateZone('app_useradmin/accessgroup/editor_'+(key?key:'new'));
+}
+
+]]></element>
+
+</application>

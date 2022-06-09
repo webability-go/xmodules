@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<language id="useradmin/accessgroup" lang="es">
+
+  <entry id="errordatasource">adminuser/accessgroup::%s - Error: no hay fuente de datos '%s'</entry>
+  <entry id="erroraccess">adminuser/accessgroup::%s - Error: el usuario '%d' no tiene acceso a esta pantalla</entry>
+
+  <entry id="reload">Recargar la lista</entry>
+  <entry id="insertnew">Nuevo grupo de accesos</entry>
+  <entry id="title">Grupos de derechos de acceso del sistema.</entry>
+  <entry id="hint">Haz click sobre un renglón para visualizarlo</entry>
+  <entry id="showsystem">Ver los derechos del sistema</entry>
+
+  <entry id="newaccessgroup">Nuevo</entry>
+  <entry id="accessgrouptitle">Grupos de derechos</entry>
+  <entry id="button.view">Ver</entry>
+  <entry id="button.edit">Editar</entry>
+  <entry id="button.delete">Borrar</entry>
+
+  <entry id="key">Clave</entry>
+  <entry id="name">Nombre</entry>
+  <entry id="commands">Comandos</entry>
+
+</language>

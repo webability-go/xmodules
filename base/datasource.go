@@ -5,6 +5,7 @@ package base
 import (
 	"errors"
 	"log"
+	"strings"
 	"sync"
 
 	"golang.org/x/text/language"
@@ -25,7 +26,7 @@ import (
 type Datasource struct {
 	// The name of the datasource (informative only)
 	Name string
-	// A configuration for the datasource: (does not need lock to be accessed since it's a pointer)
+	// A configuration for the datasource: (does not need lock to be accessed since it's a pointer) lock yourself for now (next XConfig version will be TS)
 	Config *xconfig.XConfig
 	// Only one database per datasource
 	database *xdominion.XBase
@@ -91,6 +92,7 @@ func (ds *Datasource) GetLogs() map[string]*log.Logger {
 }
 
 func (ds *Datasource) Log(id string, messages ...interface{}) {
+
 	ds.mlogs.RLock()
 	l := ds.logs[id]
 	if l == nil {
@@ -158,6 +160,23 @@ func (ds *Datasource) SetModule(moduleid string, moduleversion string) {
 	ds.mmodules.Lock()
 	ds.modules[moduleid] = moduleversion
 	ds.mmodules.Unlock()
+}
+
+func (ds *Datasource) RegisterModule(mod applications.Module) {
+
+	modulelist, _ := ds.Config.GetStringCollection("module")
+	for _, m := range modulelist {
+		xm := strings.Split(m, "|")
+		modid := xm[0]
+		if modid != mod.GetID() {
+			continue
+		}
+		modprefix := ""
+		if len(xm) > 1 {
+			modprefix = xm[1]
+		}
+		mod.Setup(ds, modprefix)
+	}
 }
 
 func (ds *Datasource) GetModule(moduleid string) string {
@@ -251,4 +270,45 @@ func (ds *Datasource) Rollback() error {
 	}
 	ds.transaction = nil
 	return nil
+}
+
+// Analyze a datasource and gets back the main data
+func GetDatasourceStats(ds *Datasource) *xcore.XDataset {
+
+	subdata := xcore.XDataset{}
+	subdata["languages"] = ds.GetLanguages()
+	subdata["database"] = ds.GetDatabase()
+	subdata["logs"] = ds.GetLogs()
+
+	caches := []string{}
+	for id := range ds.GetCaches() {
+		caches = append(caches, id)
+	}
+	subdata["xcaches"] = caches
+
+	tables := map[string]string{}
+	for id, table := range ds.GetTables() {
+		if table.Base != nil {
+			db := table.Base.Database
+			tables[id] = db
+		} else {
+			tables[id] = "N/A"
+		}
+	}
+	subdata["tables"] = tables
+
+	subdata["config"] = tools.BuildConfigSet(ds.Config)
+
+	// analiza los módulos instalados
+	modules := map[string]interface{}{}
+	for id, v := range ds.GetModules() {
+		md := struct {
+			Version          string
+			InstalledVersion string
+		}{v, ModuleInstalledVersion(ds, id)}
+		modules[id] = md
+	}
+	subdata["modules"] = modules
+
+	return &subdata
 }

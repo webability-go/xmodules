@@ -112,21 +112,6 @@ func install(ds applications.Datasource) (error, []string) {
 		return err, result
 	}
 
-	option = xdominion.XRecord{
-		"key":          "_adminmenu_option",
-		"group":        "_admin",
-		"father":       "_adminmenu",
-		"name":         tools.Message(messages, "adminmenuoption.name"),
-		"access":       "_adminmenu",
-		"icon1":        "option.png",
-		"call1":        "adminmenu/option",
-		"description1": tools.Message(messages, "adminmenuoption.description1"),
-	}
-	err = AddOption(ds, &option)
-	if err != nil {
-		return err, result
-	}
-
 	return nil, []string{
 		fmt.Sprint(" admin menu options added"),
 	}

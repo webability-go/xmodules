@@ -42,14 +42,18 @@ type Container struct {
 
 type ContainersList map[string]*Container
 
-var Containers = &ContainersList{}
-
 func (cntl *ContainersList) AddContainer(id string, cnt *Container) {
 	(*cntl)[id] = cnt
 }
 
 func (cntl *ContainersList) GetContainer(id string) *Container {
 	return (*cntl)[id]
+}
+
+func (cntl *ContainersList) RegisterModule(mod applications.Module) {
+	for _, cnt := range *cntl {
+		cnt.RegisterModule(mod)
+	}
 }
 
 func (cnt *Container) SetDatasource(id string, ds applications.Datasource) {
@@ -178,6 +182,12 @@ func (cnt *Container) CreateDatasource(name string, config *xconfig.XConfig) (ap
 	return ds, nil
 }
 
+func (cnt *Container) RegisterModule(mod applications.Module) {
+	for _, ds := range cnt.datasources {
+		ds.RegisterModule(mod)
+	}
+}
+
 // TryDatasource will create a new datasource, link databases and logs based on XConfig data
 func (cnt *Container) TryDatasource(ctx *context.Context, datasourcename string) applications.Datasource {
 
@@ -248,45 +258,4 @@ func TryDatasource(ctx *context.Context, datasourcename string) applications.Dat
 		return cnt.TryDatasource(ctx, datasourcename)
 	}
 	return nil
-}
-
-// Analyze a datasource and gets back the main data
-func GetDatasourceStats(ds *Datasource) *xcore.XDataset {
-
-	subdata := xcore.XDataset{}
-	subdata["languages"] = ds.GetLanguages()
-	subdata["database"] = ds.GetDatabase()
-	subdata["logs"] = ds.GetLogs()
-
-	caches := []string{}
-	for id := range ds.GetCaches() {
-		caches = append(caches, id)
-	}
-	subdata["xcaches"] = caches
-
-	tables := map[string]string{}
-	for id, table := range ds.GetTables() {
-		if table.Base != nil {
-			db := table.Base.Database
-			tables[id] = db
-		} else {
-			tables[id] = "N/A"
-		}
-	}
-	subdata["tables"] = tables
-
-	subdata["config"] = tools.BuildConfigSet(ds.Config)
-
-	// analiza los módulos instalados
-	modules := map[string]interface{}{}
-	for id, v := range ds.GetModules() {
-		md := struct {
-			Version          string
-			InstalledVersion string
-		}{v, ModuleInstalledVersion(ds, id)}
-		modules[id] = md
-	}
-	subdata["modules"] = modules
-
-	return &subdata
 }

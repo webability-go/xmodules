@@ -4,6 +4,9 @@
 package useradmin
 
 import (
+	"embed"
+	"io/fs"
+
 	"golang.org/x/text/language"
 
 	"github.com/webability-go/xamboo/applications"
@@ -14,25 +17,24 @@ import (
 	"github.com/webability-go/xmodules/useradmin/assets"
 )
 
-const (
-	MODULEID = "useradmin"
-	VERSION  = "0.0.1"
-)
+//go:embed languages/*.language
+var fsmessages embed.FS
+var messages *map[language.Tag]*xcore.XLanguage
 
-var Needs = []string{"base", "user", "adminmenu"}
-var ModuleUserAdmin = assets.ModuleEntries{}
+//go:embed pages static
+var files embed.FS
 
 func init() {
-	messages = tools.BuildMessages(smessages)
+	messages = tools.BuildMessagesFS(fsmessages, "languages")
 	m := &base.Module{
-		ID:      MODULEID,
-		Version: VERSION,
+		ID:      assets.MODULEID,
+		Version: assets.VERSION,
 		Languages: map[language.Tag]string{
 			language.English: tools.Message(messages, "MODULENAME", language.English),
 			language.Spanish: tools.Message(messages, "MODULENAME", language.Spanish),
 			language.French:  tools.Message(messages, "MODULENAME", language.French),
 		},
-		Needs:         Needs,
+		Needs:         assets.Needs,
 		FSetup:        Setup,        // Called once at the main system startup, once PER CREATED xmodule CONTEXT (if set)
 		FSynchronize:  Synchronize,  // Called only to create/rebuild database objects and others on demand (if set)
 		FStartContext: StartContext, // Called each time a new Server context is created  (if set)
@@ -45,7 +47,7 @@ func init() {
 func Setup(ds applications.Datasource, prefix string) ([]string, error) {
 
 	// no tables on this module
-	ds.SetModule(MODULEID, VERSION)
+	ds.SetModule(assets.MODULEID, assets.VERSION)
 
 	return []string{}, nil
 }
@@ -54,13 +56,13 @@ func Synchronize(ds applications.Datasource, prefix string) ([]string, error) {
 
 	result := []string{}
 
-	ok, res := base.VerifyNeeds(ds, Needs)
+	ok, res := base.VerifyNeeds(ds, assets.Needs)
 	result = append(result, res...)
 	if !ok {
 		return result, nil
 	}
 
-	installed := base.ModuleInstalledVersion(ds, MODULEID)
+	installed := base.ModuleInstalledVersion(ds, assets.MODULEID)
 
 	cds := ds.CloneShell()
 	_, err := cds.StartTransaction()
@@ -78,9 +80,9 @@ func Synchronize(ds applications.Datasource, prefix string) ([]string, error) {
 	}
 	result = append(result, r...)
 	if err == nil {
-		err = base.AddModule(cds, MODULEID, tools.Message(messages, "MODULENAME"), VERSION)
+		err = base.AddModule(cds, assets.MODULEID, tools.Message(messages, "MODULENAME"), assets.VERSION)
 		if err == nil {
-			result = append(result, tools.Message(messages, "modulemodified", MODULEID))
+			result = append(result, tools.Message(messages, "modulemodified", assets.MODULEID))
 			result = append(result, tools.Message(messages, "commit"))
 			err = cds.Commit()
 			if err != nil {
@@ -93,6 +95,24 @@ func Synchronize(ds applications.Datasource, prefix string) ([]string, error) {
 				result = append(result, err.Error())
 			}
 		}
+	}
+
+	// copy files
+	bcds := cds.(*base.Datasource)
+	pathadmin, _ := bcds.Config.GetString("pathinstalladmin")
+	pages, _ := fs.Sub(files, "pages")
+	err, rsf := base.SynchroFiles(pages, pathadmin)
+	result = append(result, rsf...)
+	if err != nil {
+		result = append(result, err.Error())
+	}
+
+	pathadminstatic, _ := bcds.Config.GetString("pathinstalladminstatic")
+	static, _ := fs.Sub(files, "static")
+	err, rsf = base.SynchroFiles(static, pathadminstatic)
+	result = append(result, rsf...)
+	if err != nil {
+		result = append(result, err.Error())
 	}
 
 	return result, nil

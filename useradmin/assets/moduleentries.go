@@ -1,11 +1,11 @@
 package assets
 
-import (
-//"github.com/webability-go/xdominion"
-
-//	"github.com/webability-go/xamboo/assets"
-//	"github.com/webability-go/xmodules/base"
+const (
+	MODULEID   = "useradmin"
+	VERSION    = "0.0.4"
+	DATASOURCE = "useradmindatasource"
+	ACCESS     = "_useradmin_access"
+	PREFIX     = "useradmin"
 )
 
-type ModuleEntries struct {
-}
+var Needs = []string{"base", "user", "adminmenu"}

@@ -13,17 +13,14 @@ import (
 	"github.com/webability-go/xmodules/translation/assets"
 )
 
-const (
-	MODULEID = "translation"
-	VERSION  = "0.0.1"
-)
-
-var ModuleTranslation = assets.ModuleEntries{}
+var ModuleEntries = assets.ModuleEntries{
+	TranslateOne: TranslateOne,
+}
 
 func init() {
 	m := &base.Module{
-		ID:           MODULEID,
-		Version:      VERSION,
+		ID:           assets.MODULEID,
+		Version:      assets.VERSION,
 		Languages:    map[language.Tag]string{language.English: "Translation tables", language.Spanish: "Tablas de traducción", language.French: "Tables de traduction"},
 		Needs:        []string{"base"},
 		FSetup:       Setup,
@@ -38,7 +35,7 @@ func Setup(ds applications.Datasource, prefix string) ([]string, error) {
 
 	ctx := ds.(*base.Datasource)
 	buildTables(ctx)
-	ctx.SetModule(MODULEID, VERSION)
+	ctx.SetModule(assets.MODULEID, assets.VERSION)
 
 	return []string{}, nil
 }
@@ -66,11 +63,11 @@ func Synchronize(ds applications.Datasource, prefix string) ([]string, error) {
 
 	// Inserting into base-modules
 	// Be sure base module is on db: fill base module (we should get this from xmodule.conf)
-	err := base.AddModule(ctx, MODULEID, "Multilanguages translation tables for Xamboo", VERSION)
+	err := base.AddModule(ctx, assets.MODULEID, "Multilanguages translation tables for Xamboo", assets.VERSION)
 	if err == nil {
-		messages = append(messages, "The entry "+MODULEID+" was modified successfully in the modules table.")
+		messages = append(messages, "The entry "+assets.MODULEID+" was modified successfully in the modules table.")
 	} else {
-		messages = append(messages, "Error modifying the entry "+MODULEID+" in the modules table: "+err.Error())
+		messages = append(messages, "Error modifying the entry "+assets.MODULEID+" in the modules table: "+err.Error())
 	}
 
 	return messages, nil
@@ -78,4 +75,8 @@ func Synchronize(ds applications.Datasource, prefix string) ([]string, error) {
 
 func StartContext(ds applications.Datasource, ctx *context.Context) error {
 	return nil
+}
+
+func TranslateOne(input string) (string, error) {
+	return "TRANSLATED: {" + input + "}", nil
 }

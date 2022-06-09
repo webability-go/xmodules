@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<language id="useradmin/profile" lang="es">
+
+  <entry id="errordatasource">adminuser/profile::%s - Error: no hay fuente de datos '%s'</entry>
+  <entry id="erroraccess">adminuser/profile::%s - Error: el usuario '%d' no tiene acceso a esta pantalla</entry>
+
+  <entry id="reload">Recargar la lista</entry>
+  <entry id="insertnew">Nuevo perfil</entry>
+  <entry id="title">Perfiles de usuarios del sistema.</entry>
+  <entry id="hint">Haz click sobre un renglón para visualizarlo:</entry>
+  <entry id="showall">Ver los perfiles desactivados</entry>
+
+  <entry id="newprofile">Nuevo</entry>
+  <entry id="profiletitle">Perfil</entry>
+  <entry id="button.view">Ver</entry>
+  <entry id="button.edit">Editar</entry>
+  <entry id="button.delete">Borrar</entry>
+
+  <entry id="key">Clave</entry>
+  <entry id="status">Estatus</entry>
+  <entry id="status.yes">Act.</entry>
+  <entry id="status.no">Desact.</entry>
+  <entry id="name">Nombre</entry>
+  <entry id="description">Descripción</entry>
+  <entry id="accesses">Accesos</entry>
+  <entry id="users">Usuarios</entry>
+  <entry id="commands">Comandos</entry>
+
+</language>

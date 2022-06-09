@@ -4,12 +4,16 @@
 package base
 
 import (
+	"embed"
+	"sync"
+
 	"golang.org/x/text/language"
+
+	"github.com/webability-go/xcore/v2"
 
 	"github.com/webability-go/xamboo/applications"
 	"github.com/webability-go/xamboo/cms/context"
 
-	"github.com/webability-go/xmodules/base/assets"
 	"github.com/webability-go/xmodules/tools"
 )
 
@@ -19,12 +23,19 @@ const (
 )
 
 var Needs = []string{}
-var ModuleBase = assets.ModuleEntries{
-	TryDatasource: TryDatasource,
-}
+
+// var Containers = &ContainersList{}
+var Containers *ContainersList
+var ContainersLock sync.RWMutex
+
+//go:embed languages/*.language
+var fsmessages embed.FS
+var messages *map[language.Tag]*xcore.XLanguage
 
 func init() {
-	messages = tools.BuildMessages(smessages)
+	// Creates the Containers into the init() to avoid the GO 1.16.1 error on creating global variables on plugins and not using them directly
+	Containers = &ContainersList{}
+	messages = tools.BuildMessagesFS(fsmessages, "languages")
 	m := &Module{
 		ID:      MODULEID,
 		Version: VERSION,
