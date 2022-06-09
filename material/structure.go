@@ -9,7 +9,7 @@ import (
 	"github.com/webability-go/xmodules/base"
 	"github.com/webability-go/xmodules/translation"
 
-	serverassets "github.com/webability-go/xamboo/assets"
+	"github.com/webability-go/xamboo/applications"
 )
 
 type StructureMaterial struct {
@@ -18,7 +18,7 @@ type StructureMaterial struct {
 	Data *xdominion.XRecord
 }
 
-func CreateStructureMaterialByKey(sitecontext serverassets.Datasource, key int, lang language.Tag) base.Structure {
+func CreateStructureMaterialByKey(sitecontext applications.Datasource, key int, lang language.Tag) base.Structure {
 	data, _ := sitecontext.GetTable("kl_material").SelectOne(key)
 	if data == nil {
 		return nil
@@ -26,7 +26,7 @@ func CreateStructureMaterialByKey(sitecontext serverassets.Datasource, key int, 
 	return CreateStructureMaterialByData(sitecontext, data, lang)
 }
 
-func CreateStructureMaterialByData(sitecontext serverassets.Datasource, data xdominion.XRecordDef, lang language.Tag) base.Structure {
+func CreateStructureMaterialByData(sitecontext applications.Datasource, data xdominion.XRecordDef, lang language.Tag) base.Structure {
 
 	key, _ := data.GetInt("clave")
 
@@ -40,12 +40,12 @@ func CreateStructureMaterialByData(sitecontext serverassets.Datasource, data xdo
 }
 
 // ComplementData adds all the needed data from other objects /duplicable in the thread since the object will be destroyed at the end
-func (sm *StructureMaterial) ComplementData(sitecontext serverassets.Datasource) {
+func (sm *StructureMaterial) ComplementData(sitecontext applications.Datasource) {
 
 }
 
 // IsAuthorized returns true if the structure can be used on this site/language/device
-func (sm *StructureMaterial) IsAuthorized(sitecontext serverassets.Datasource, site string, language string, device string) bool {
+func (sm *StructureMaterial) IsAuthorized(sitecontext applications.Datasource, site string, language string, device string) bool {
 	return true
 }
 
