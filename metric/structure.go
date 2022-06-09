@@ -9,7 +9,7 @@ import (
 	"github.com/webability-go/xmodules/base"
 	"github.com/webability-go/xmodules/translation"
 
-	serverassets "github.com/webability-go/xamboo/assets"
+	"github.com/webability-go/xamboo/applications"
 )
 
 type StructureMetric struct {
@@ -18,7 +18,7 @@ type StructureMetric struct {
 	Data *xdominion.XRecord
 }
 
-func CreateStructureMetricByKey(sitecontext serverassets.Datasource, key int, lang language.Tag) base.Structure {
+func CreateStructureMetricByKey(sitecontext applications.Datasource, key int, lang language.Tag) base.Structure {
 	data, _ := sitecontext.GetTable("metric_unit").SelectOne(key)
 	if data == nil {
 		return nil
@@ -26,7 +26,7 @@ func CreateStructureMetricByKey(sitecontext serverassets.Datasource, key int, la
 	return CreateStructureMetricByData(sitecontext, data, lang)
 }
 
-func CreateStructureMetricByData(sitecontext serverassets.Datasource, data xdominion.XRecordDef, lang language.Tag) base.Structure {
+func CreateStructureMetricByData(sitecontext applications.Datasource, data xdominion.XRecordDef, lang language.Tag) base.Structure {
 
 	key, _ := data.GetInt("key")
 
@@ -41,12 +41,12 @@ func CreateStructureMetricByData(sitecontext serverassets.Datasource, data xdomi
 }
 
 // ComplementData adds all the needed data from other objects /duplicable in the thread since the object will be destroyed at the end
-func (sm *StructureMetric) ComplementData(sitecontext serverassets.Datasource) {
+func (sm *StructureMetric) ComplementData(sitecontext applications.Datasource) {
 
 }
 
 // IsAuthorized returns true if the structure can be used on this site/language/device
-func (sm *StructureMetric) IsAuthorized(sitecontext serverassets.Datasource, site string, language string, device string) bool {
+func (sm *StructureMetric) IsAuthorized(sitecontext applications.Datasource, site string, language string, device string) bool {
 	return true
 }
 
