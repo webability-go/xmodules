@@ -116,7 +116,7 @@ func install(ds applications.Datasource) (error, []string) {
 	// insert super admin
 	_, err := user_user.Upsert(1, xdominion.XRecord{
 		"key":          1,
-		"status":       "A",
+		"status":       "S",
 		"name":         "System Manager",
 		"un":           "system",
 		"pw":           hex.EncodeToString(bmd5[:]),

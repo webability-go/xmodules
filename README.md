@@ -66,6 +66,12 @@ import "github.com/webability-go/xmodules/ingredient"
 
 import "github.com/webability-go/xmodules/material"
 
+v2022-06-09:
+- Go 1.17 and Xamboo 1.6 compatibility: Now uses embed FS, languages, and functions entry table, not anymore a bridge
+
+v2021-03-12:
+- Go 1.16.1 compatibility: modified global variables assignment to be sure they are set correctly, now into init()
+
 v2021-02-16:
 - All the modules have been changed to meet new Xamboo applications interfaces
 

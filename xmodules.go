@@ -1,3 +1,3 @@
 package xmodules
 
-const VERSION = "2021.02.16"
+const VERSION = "2022.06.09"

@@ -21,6 +21,10 @@ type Modules map[string]applications.Module
 func (ml *Modules) Register(m applications.Module) {
 	id := m.GetID()
 	(*ml)[id] = m
+
+	if Containers != nil {
+		Containers.RegisterModule(m)
+	}
 }
 
 func (ml *Modules) Get(id string) applications.Module {
@@ -37,6 +41,8 @@ type Module struct {
 	FSetup        func(applications.Datasource, string) ([]string, error)
 	FSynchronize  func(applications.Datasource, string) ([]string, error)
 	FStartContext func(applications.Datasource, *context.Context) error
+
+	Entries interface{}
 }
 
 func (m *Module) GetID() string {
@@ -60,6 +66,7 @@ func (m *Module) GetInstalledVersion(ds applications.Datasource) string {
 }
 
 func (m *Module) Setup(ds applications.Datasource, prefix string) ([]string, error) {
+
 	if m.FSetup != nil {
 		return m.FSetup(ds, prefix)
 	}
@@ -121,4 +128,15 @@ func AddModule(ds applications.Datasource, id string, name string, version strin
 		"version": version,
 	}, ds.GetTransaction())
 	return err
+}
+
+func GetEntries(ctx *context.Context, moduleid string) interface{} {
+
+	// scan ctx.Plugins to find the correct module and ModuleEntries
+	module := ModulesList.Get(moduleid)
+	if module == nil {
+		ctx.LoggerError.Println("base::module::GetEntries - Module ", moduleid, " not found in module list")
+		return nil
+	}
+	return (module.(*Module)).Entries
 }

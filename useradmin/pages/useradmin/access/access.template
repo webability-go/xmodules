@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<application id="useradmin/access">
+  <container type="separatorContainer" width="max" height="max" mode="vertical" auto="yes">
+    <zone id="filtercontainer" size="80">
+      <element type="htmlElement" ><![CDATA[
+
+<div style="padding: 10px;">
+  <button class="button reload" style="float: right;" onclick="useradmin_access_reload();">##reload##</button>
+  <b>##title##</b><br />
+  ##hint##<br />
+  <button style="float: right;" class="button" onclick="useradmin_access_groupgo();">##accessgroup##</button>
+  <button class="button insert" onclick="useradmin_access_go('', 1);">##insertnew##</button>
+  <input id="useradmin/access|single|showsystem" type="checkbox" {{CHECKED}}onchange="useradmin_access_setshowsystem();">##showsystem##</button>
+</div>
+
+      ]]></element>
+    </zone>
+
+    <zone id="accesscontainer" size="*">
+      <container type="gridContainer" id="accessdata" width="max" height="max" haslistener="yes" classname="grid colored">
+        <zone type="column" size="120" field="group" title="##group##">
+        </zone>
+        <zone type="column" size="130" field="key" title="##key##">
+        </zone>
+        <zone type="column" size="300" field="name" title="##name##">
+        </zone>
+        <zone type="column" size="200" field="profiles" title="##profiles##">
+        </zone>
+        <zone type="column" size="300" field="users" title="##users##">
+        </zone>
+        <zone type="column" size="250" field="commands" title="##commands##">
+        </zone>
+
+        <event type="click">
+          <code><![CDATA[
+function(data)
+{
+  if (!data || !data.data)
+    return;
+
+  useradmin_access_go(data.data.key, 4);
+}
+          ]]></code>
+        </event>
+
+      </container>
+    </zone>
+
+  </container>
+
+  <element type="codeElement"><![CDATA[
+
+function useradmin_access_reload()
+{
+  WA.$N('useradmin/access|single|accessdata').reload();
+}
+
+function useradmin_access_setshowsystem()
+{
+  var checked = WA.toDOM("useradmin/access|single|showsystem").checked;
+  var request = WA.Managers.ajax.createRequest('/useradmin/access/filter/json', 'POST', null, useradmin_access_getfilter, false);
+  request.addParameter('checked', checked);
+  request.send();
+}
+
+function useradmin_access_getfilter(request)
+{
+  useradmin_access_reload();
+}
+
+function useradmin_access_go(key, mode)
+{
+  // open app to edit
+  var node = WA.$N('index|single|app_useradmin/access/editor_'+(key?key:'new'));
+  if (!node)
+  {
+    var tree = {tag:'zone',attributes:{id:'app_useradmin/access/editor_'+(key?key:'new'),title:'##accesstitle## - ' + (key?key:'##newaccess##'),closeable:'yes',application:'useradmin/access/editor|'+(key?key:'new'),params:'mode='+mode+(key?'&Key='+key:'')}};
+    WA.$N('index|single|application').app.createTree('application', tree);
+  }
+  else
+  {
+    n = WA.$N('useradmin/access/editor|'+(key?key:'new')+'|formaccess');
+    if (n && mode == 1)
+      n.doInsert();
+    else if (n && mode == 2)
+      n.doUpdate();
+    else if (n && mode == 3)
+      n.doDelete();
+    else if (n && mode == 4)
+      n.doView();
+  }
+  WA.$N('index|single|application').activateZone('app_useradmin/access/editor_'+(key?key:'new'));
+}
+
+function useradmin_access_groupgo()
+{
+  // open app to edit
+  var node = WA.$N('index|single|app_useradmin/accessgroup');
+  if (!node)
+  {
+    var tree = {tag:'zone',attributes:{id:'app_useradmin/accessgroup',title:'Grupos de Derechos',closeable:'yes',application:'useradmin/accessgroup|single'}};
+    WA.$N('index|single|application').app.createTree('application', tree);
+  }
+  WA.$N('index|single|application').activateZone('app_useradmin/accessgroup');
+}
+
+]]></element>
+
+</application>

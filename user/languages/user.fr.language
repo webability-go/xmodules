@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<language id="user" lang="fr">
+  <!--  Module installation messages -->
+  <!--  init.go -->
+  <entry id="MODULENAME">Utilisateurs pour l'administration</entry>
+  <entry id="modulemodified">L'entrée %s a été modifiée avec succès dans la table base_module.</entry>
+  <entry id="commit">Instalation réussie.</entry>
+  <entry id="rollback">Instalation avec erreur: %s</entry>
+
+  <entry id="moduleerror">Erreur en modifiant l'entrée %s dans la table base_module: %s</entry>
+  <!--  Datasources transactions -->
+  <entry id="transaction.exist">Error creating a transaction: There is already a started transaction.</entry>
+  <entry id="transaction.none">Error searching the transaction: There is no available transaction.</entry>
+  <entry id="transaction.commitnone">Error searching the transaction to commit: There is no available transaction.</entry>
+  <entry id="transaction.rollbacknone">Error searching the transaction to rollback: There is no available transaction.</entry>
+  <entry id="transaction.error">Error in the transaction: %s</entry>
+  <!--  Containers -->
+  <entry id="database.none">There is no available database in the datasource</entry>
+</language>

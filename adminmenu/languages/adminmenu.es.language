@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<language id="adminmenu" lang="es">
+
+  <!--  Module installation messages -->
+  <!--  init.go -->
+  <entry id="MODULENAME">Menu de administración</entry>
+  <entry id="modulemodified">La entrada %s fue modificada con exito en la tabla base_module.</entry>
+  <entry id="commit">Instalación exitosa.</entry>
+  <entry id="rollback">Instalación con error: %s</entry>
+
+  <!--  util.go -->
+  <entry id="MAINMENU">Menú de administración por defecto</entry>
+  <entry id="accessgroup.name">Grupos de accesos de la administración de menús</entry>
+  <entry id="accessgroup.description">Grupos de accesos de la administración de menús</entry>
+  <entry id="access.name">Acceso de la administración de menús</entry>
+  <entry id="access.description">Acceso de la administración de menús</entry>
+  <entry id="menufolder.name">Constructor de menús</entry>
+  <entry id="menufolder.description1">Haz clic sobre esta linea para ver las diferentes opciones para la administración de menús.</entry>
+  <entry id="adminmenugroup.name">Grupos y opciones de menús</entry>
+  <entry id="adminmenugroup.description1">Grupos y opciones de menús</entry>
+
+  <entry id="moduleerror">Error modificando la entrada %s en la tabla base_module: %s</entry>
+  <!--  Datasources transactions -->
+  <entry id="transaction.exist">Error creating a transaction: There is already a started transaction.</entry>
+  <entry id="transaction.none">Error searching the transaction: There is no available transaction.</entry>
+  <entry id="transaction.commitnone">Error searching the transaction to commit: There is no available transaction.</entry>
+  <entry id="transaction.rollbacknone">Error searching the transaction to rollback: There is no available transaction.</entry>
+  <entry id="transaction.error">Error in the transaction: %s</entry>
+  <!--  Containers -->
+  <entry id="database.none">There is no available database in the datasource</entry>
+</language>

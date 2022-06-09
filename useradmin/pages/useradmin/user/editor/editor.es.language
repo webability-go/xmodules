@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<language id="useradmin/user/editor" lang="es">
+
+  <entry id="errordatasource">adminuser/user/editor::%s - Error: no hay fuente de datos '%s'</entry>
+  <entry id="erroraccess">adminuser/user/editor::%s - Error: el usuario '%d' no tiene acceso a esta pantalla</entry>
+  <entry id="errortable">adminuser/user/editor::%s - Error: la tabla '%s' no existe en el datasource</entry>
+
+  <entry id="title">Edición del usuario administrador.</entry>
+  <entry id="hint">Haz click sobre un renglón para editarlo:</entry>
+
+  <entry id="mask.errormessage"><![CDATA[Los datos aún no son bien capturados. Por favor, verifique los mensajes y los campos en rojo antes de enviar la información.]]></entry>
+  <entry id="mask.servermessage"><![CDATA[Error: Los datos del registro no pudierón ser recuperados del servidor.]]></entry>
+  <entry id="mask.titleinsert"><![CDATA[Insertar un nuevo usuario administrador:]]></entry>
+  <entry id="mask.titleinsert.message">Información agregada con éxito. Ya puede cerrar esta pantalla.</entry>
+  <entry id="mask.titleupdate"><![CDATA[Modificar los datos del usuario administrador:]]></entry>
+  <entry id="mask.titleupdate.message">Información modificada con éxito. Ya puede cerrar esta pantalla.</entry>
+  <entry id="mask.titledelete"><![CDATA[Borrar el usuario administrador:]]></entry>
+  <entry id="mask.titledelete.message">Información borrada con éxito. Ya puede cerrar esta pantalla.</entry>
+  <entry id="mask.titleview"><![CDATA[Datos del usuario administrador:]]></entry>
+
+  <entry id="key.title">Clave:</entry>
+  <entry id="key.help.description">La clave del usuario adiministrador es un entero auto incrementado y manejado por el sistema.</entry>
+  <entry id="key.auto">Asignación automática</entry>
+
+  <entry id="status.title">Estatus:</entry>
+  <entry id="status.help.description">El estatus del usuario administrador puede ser uno de los tres valores: A = Activado, es sujeto al filtro de seguridad de derechos de acceso y perfile. S = Super usuario, tiene por defecto todos los derechos de acceso del sistema. X = Desactivado. No tendrá ningún acceso, ni de conectarse.</entry>
+  <entry id="status.status.notnull">El estatus no puede estar vacio.</entry>
+  <entry id="status.active">Activado</entry>
+  <entry id="status.superuser">Super usuario</entry>
+  <entry id="status.down">Desactivado</entry>
+
+  <entry id="name.title">Nombre:</entry>
+  <entry id="name.help.description">El nombre del usuario es de 1 hasta 200 carácteres máximo.</entry>
+  <entry id="name.status.notnull">El nombre no puede estar vacio.</entry>
+
+  <entry id="un.title">Usuario de acceso:</entry>
+  <entry id="un.help.description">El usuario de acceso se usará como usuario para conectarte, es de 1 hasta 200 carácteres máximo. Puede ser el correo electrónico del usuario también.</entry>
+  <entry id="un.status.notnull">El usuario de acceso no puede estar vacio.</entry>
+
+  <entry id="pw.title">Contraseña:</entry>
+  <entry id="pw.help.description">Es la contraseña para conectarse que va de par con el usuario de acceso, es de 1 hasta 200 carácteres máximo.</entry>
+  <entry id="pw.status.notnull">La contraseña no puede estar vacia.</entry>
+
+  <entry id="mail.title">Correo electrónico:</entry>
+  <entry id="mail.help.description">El nombre del usuario es de 1 hasta 200 carácteres máximo.</entry>
+  <entry id="mail.status.notnull">El nombre no puede estar vacio.</entry>
+
+  <entry id="sex.title">Sexo:</entry>
+  <entry id="sex.help.description">El sexo del usuario, feminino o masculino.</entry>
+  <entry id="sex.status.notnull">El sexo no puede estar vacio.</entry>
+  <entry id="sex.masc">Masculino</entry>
+  <entry id="sex.fem">Feminino</entry>
+
+  <entry id="fields.title">Campos de datos:</entry>
+  <entry id="fields.help.description">Los campos de datos se ponen un por linea con el formato Paramtro=Valor.</entry>
+
+  <entry id="info.title">Información extra:</entry>
+  <entry id="info.help.description">Puede capturar aqui cualquier información complementaria sobre el usuario.</entry>
+
+  <entry id="father.title">Usuario responsable:</entry>
+  <entry id="father.help.description">Puede asignar otro usuario responsabe de este usuario. El usuario responsable puede administrar sus derechos y sus datos.</entry>
+
+  <entry id="formsubmit.insert.title">Grabar el nuevo usuario</entry>
+  <entry id="formsubmit.update.title">Guardar las modificaciones</entry>
+  <entry id="formsubmit.delete.title">Sí, borrar este usuario</entry>
+  <entry id="formreset.title">Reinicinar</entry>
+  <entry id="formview.title">Cancelar</entry>
+
+  <entry id="profiles.title">Perfiles suscritos por este usuario:</entry>
+  <entry id="accesses.title">Accessos otorgados a este usuario:</entry>
+  <entry id="accesses.hierarchy">Heredado</entry>
+  <entry id="accesses.yes">Otorgado</entry>
+  <entry id="accesses.no">Denegado</entry>
+</language>

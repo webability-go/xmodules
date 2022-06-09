@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<application id="useradmin/user">
+  <container type="separatorContainer" width="max" height="max" mode="vertical" auto="yes">
+    <zone id="filtercontainer" size="80">
+      <element type="htmlElement" ><![CDATA[
+
+<div style="padding: 10px;">
+  <button class="button reload" style="float: right;" onclick="useradmin_user_reload();">##reload##</button>
+  <b>##title##</b><br />
+  ##hint##<br />
+  <button class="button insert" onclick="useradmin_user_go('', 1);">##insertnew##</button>
+  <input id="useradmin/user|single|showall" type="checkbox" {{CHECKED}}onchange="useradmin_user_setshowall();">##showall##</button>
+</div>
+
+      ]]></element>
+    </zone>
+
+    <zone id="usercontainer" size="*">
+      <container type="gridContainer" id="userdata" width="max" height="max" haslistener="yes" classname="grid colored">
+        <zone type="column" size="130" field="key" title="##key##">
+        </zone>
+        <zone type="column" size="50" field="status" title="##status##">
+        </zone>
+        <zone type="column" size="300" field="name" title="##name##">
+        </zone>
+        <zone type="column" size="300" field="profiles" title="##profiles##">
+        </zone>
+        <zone type="column" size="300" field="accesses" title="##accesses##">
+        </zone>
+        <zone type="column" size="250" field="commands" title="##commands##">
+        </zone>
+
+        <event type="click">
+          <code><![CDATA[
+function(data)
+{
+  if (!data || !data.data)
+    return;
+
+  useradmin_user_go(data.data.key, 4);
+}
+          ]]></code>
+        </event>
+
+      </container>
+    </zone>
+
+  </container>
+
+  <element type="codeElement"><![CDATA[
+
+function useradmin_user_reload()
+{
+  WA.$N('useradmin/user|single|userdata').reload();
+}
+
+function useradmin_user_setshowall()
+{
+  var checked = WA.toDOM("useradmin/user|single|showall").checked;
+  var request = WA.Managers.ajax.createRequest('/useradmin/user/filter/json', 'POST', null, useradmin_user_getfilter, false);
+  request.addParameter('checked', checked);
+  request.send();
+}
+
+function useradmin_user_getfilter(request)
+{
+  useradmin_user_reload();
+}
+
+function useradmin_user_go(key, mode)
+{
+  // open app to edit
+  var node = WA.$N('index|single|app_useradmin/user/editor_'+(key?key:'new'));
+  if (!node)
+  {
+    var tree = {tag:'zone',attributes:{id:'app_useradmin/user/editor_'+(key?key:'new'),title:'##usertitle## - ' + (key?key:'##newuser##'),closeable:'yes',application:'useradmin/user/editor|'+(key?key:'new'),params:'mode='+mode+(key?'&Key='+key:'')}};
+    WA.$N('index|single|application').app.createTree('application', tree);
+  }
+  else
+  {
+    n = WA.$N('useradmin/user/editor|'+(key?key:'new')+'|formuser');
+    if (n && mode == 1)
+      n.doInsert();
+    else if (n && mode == 2)
+      n.doUpdate();
+    else if (n && mode == 3)
+      n.doDelete();
+    else if (n && mode == 4)
+      n.doView();
+  }
+  WA.$N('index|single|application').activateZone('app_useradmin/user/editor_'+(key?key:'new'));
+}
+
+]]></element>
+
+</application>

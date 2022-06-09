@@ -16,6 +16,10 @@ The user package is used to build a set of administration users with all the sec
 Version Changes Control
 =======================
 
+v0.1.0 - 2022-03-
+- First official release. Working on the xmodules/base, Xamboo, XCore, XDominion and XMask of this date.
+- Admin pages integrated in xmodule
+
 v0.0.1 - 2020-05-08
 - Compatible with xmodule context standard
 
@@ -31,8 +35,6 @@ v0.0.0 - 2020-01-03
 
 v0.0.0 - 2019-12-18
 - First release of module
-
-
 
 Manual:
 =======================
@@ -59,3 +61,23 @@ import "github.com/webability-go/xmodules/user"
 To use the package:
 
 import "github.com/webability-go/xmodules/user"
+
+-----------------------
+3. Normalization
+
+All the concept of the module must be called by se same ywa among messages, screens and data.
+English:
+- Group of right accesses
+- Right access
+- User Profile
+- Administration User
+Spanish:
+- Grupo de permisos de accesos
+- Permiso de Acceso
+- Perfil de usuario
+- Usuario Administrador
+French:
+- Groupe d'accès
+- Droit d'accès
+- Profil d'utilisateur
+- Utilisateur administrateur

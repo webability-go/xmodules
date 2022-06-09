@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<language id="useradmin/user" lang="es">
+
+  <entry id="errordatasource">adminuser/user::%s - Error: no hay fuente de datos '%s'</entry>
+  <entry id="erroraccess">adminuser/user::%s - Error: el usuario '%d' no tiene acceso a esta pantalla</entry>
+
+  <entry id="reload">Recargar la lista</entry>
+  <entry id="insertnew">Nuevo usuario</entry>
+  <entry id="title">Usuarios del sistema.</entry>
+  <entry id="hint">Haz click sobre un renglón para visualizarlo:</entry>
+  <entry id="showall">Ver los usuarios desactivados</entry>
+
+  <entry id="newuser">Nuevo</entry>
+  <entry id="usertitle">Usuario</entry>
+  <entry id="button.view">Ver</entry>
+  <entry id="button.edit">Editar</entry>
+  <entry id="button.delete">Borrar</entry>
+
+  <entry id="key">Clave</entry>
+  <entry id="status">Estatus</entry>
+  <entry id="status.yes">Act.</entry>
+  <entry id="status.no">Desact.</entry>
+  <entry id="name">Nombre</entry>
+  <entry id="description">Descripción</entry>
+  <entry id="accesses">Accesos</entry>
+  <entry id="profiles">Perfiles</entry>
+  <entry id="commands">Comandos</entry>
+
+</language>

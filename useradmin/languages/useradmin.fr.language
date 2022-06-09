@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<language id="useradmin" lang="fr">
+  <!--  Module installation messages -->
+  <!--  init.go -->
+  <entry id="MODULENAME">Outils pour administrer les utilisateurs</entry>
+  <entry id="modulemodified">L'entrée %s a été modifiée avec succès dans la table base_module.</entry>
+  <entry id="commit">Instalation réussie.</entry>
+  <entry id="rollback">Instalation avec erreur: %s</entry>
+
+  <entry id="accessgroup.name">Groupe des accès d'administration des utilisateurs</entry>
+  <entry id="accessgroup.description">Groupe des accès d'administration des utilisateurs</entry>
+  <entry id="mainuser.name">Accès principal d'administration des utilisateurs</entry>
+  <entry id="mainuser.description">Accès principal d'administration des utilisateurs</entry>
+  <entry id="access.name">Accès d'administration des accès utilisateurs</entry>
+  <entry id="access.description">Accès d'administration des accès utilisateurs</entry>
+  <entry id="profile.name">Accès d'administration des profils utilisateurs</entry>
+  <entry id="profile.description">Accès d'administration des profils utilisateurs</entry>
+  <entry id="user.name">Accès d'administration des utilisateurs</entry>
+  <entry id="user.description">Accès d'administration des utilisateurs</entry>
+
+  <entry id="userfolder.name">Administration des utilisateurs</entry>
+  <entry id="userfolder.description">Administration des utilisateurs</entry>
+  <entry id="useraccess.name">Accès</entry>
+  <entry id="useraccess.description">Droits d'accès</entry>
+  <entry id="userprofile.name">Profils</entry>
+  <entry id="userprofile.description">Profils</entry>
+  <entry id="useruser.name">Utilisateurs</entry>
+  <entry id="useruser.description">Utilisateurs</entry>
+
+  <entry id="moduleerror">Erreur en modifiant l'entrée %s dans la table base_module: %s</entry>
+  <!--  Datasources transactions -->
+  <entry id="transaction.exist">Error creating a transaction: There is already a started transaction.</entry>
+  <entry id="transaction.none">Error searching the transaction: There is no available transaction.</entry>
+  <entry id="transaction.commitnone">Error searching the transaction to commit: There is no available transaction.</entry>
+  <entry id="transaction.rollbacknone">Error searching the transaction to rollback: There is no available transaction.</entry>
+  <entry id="transaction.error">Error in the transaction: %s</entry>
+  <!--  Containers -->
+  <entry id="database.none">There is no available database in the datasource</entry>
+</language>

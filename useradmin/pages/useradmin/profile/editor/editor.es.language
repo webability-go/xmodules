@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<language id="useradmin/profile/editor" lang="es">
+
+  <entry id="errordatasource">adminuser/profile/editor::%s - Error: no hay fuente de datos '%s'</entry>
+  <entry id="erroraccess">adminuser/profile/editor::%s - Error: el usuario '%d' no tiene acceso a esta pantalla</entry>
+  <entry id="errortable">adminuser/profile/editor::%s - Error: la tabla '%s' no existe en el datasource</entry>
+
+  <entry id="title">Perfil de derechos.</entry>
+  <entry id="hint">Haz click sobre un renglón para editarlo:</entry>
+
+  <entry id="mask.errormessage"><![CDATA[Los datos aún no son bien capturados. Por favor, verifique los mensajes y los campos en rojo antes de enviar la información.]]></entry>
+  <entry id="mask.servermessage"><![CDATA[Error: Los datos del registro no pudierón ser recuperados del servidor.]]></entry>
+  <entry id="mask.titleinsert"><![CDATA[Insertar un nuevo perfil de derechos:]]></entry>
+  <entry id="mask.titleinsert.message">Información agregada con éxito. Ya puede cerrar esta pantalla.</entry>
+  <entry id="mask.titleupdate"><![CDATA[Modificar los datos del perfil de derechos:]]></entry>
+  <entry id="mask.titleupdate.message">Información modificada con éxito. Ya puede cerrar esta pantalla.</entry>
+  <entry id="mask.titledelete"><![CDATA[Borrar el perfil de derechos:]]></entry>
+  <entry id="mask.titledelete.message">Información borrada con éxito. Ya puede cerrar esta pantalla.</entry>
+  <entry id="mask.titleview"><![CDATA[Datos del perfil de derechos:]]></entry>
+
+  <entry id="key.title">Clave</entry>
+  <entry id="key.help.description.title">La clave del perfil contiene de 1 a 30 carácteres, en minusculas. Puede usar también cifras, '-' y '_'. Las claves solo pueden empezar por una letra.</entry>
+  <entry id="key.status.notnull">La clave no puede estar vacia.</entry>
+
+  <entry id="name.title">Nombre</entry>
+  <entry id="name.help.description.title">El nomnbre perfil es de 1 hasta 255 carácteres máximo.</entry>
+  <entry id="name.status.notnull">El nombre no puede estar vacio.</entry>
+
+  <entry id="description.title">Descripción</entry>
+  <entry id="description.help.description.title">La descripción es un texto libre, hasta 4000 carácteres.</entry>
+
+  <entry id="status.title">Estatus</entry>
+  <entry id="status.help.description">Puede activar o desactivar un perfil en cualquier momento. Si el perfil esta desactivado, su conjunto de usuarios/derechos es ignorado por el sistema.</entry>
+  <entry id="status.yes">Activado</entry>
+  <entry id="status.no">Desactivado</entry>
+
+  <entry id="prune.title">¿Borrar tambien los hijos?</entry>
+  <entry id="prune.help.description">Si selecciona Sí, entonces toda informacion relacionada con este perfil será borrada también. Si selecciona No, entonces la información será movida al perfil seleccionado en el campo siguiente.</entry>
+  <entry id="prune.yes">Sí, borrar los hijos</entry>
+  <entry id="prune.no">No, seleccionar el perfil receptor</entry>
+
+  <entry id="profiletoprune.title">Perfil receptor:</entry>
+  <entry id="profiletoprune.help.description">Si seleccionó No en el campo anterior, entonces especifique el perfil que recibirá la información relacionada al perfil a borrar.</entry>
+
+  <entry id="formsubmit.insert.title">Grabar el nuevo perfil</entry>
+  <entry id="formsubmit.update.title">Guardar las modificaciones</entry>
+  <entry id="formsubmit.delete.title">Si, borrar este perfil</entry>
+  <entry id="formreset.title">Reinicinar</entry>
+  <entry id="formview.title">Cancelar</entry>
+
+  <entry id="accesses.title">Accesos que usan este perfil:</entry>
+  <entry id="users.title">Usuarios que usan este perfil:</entry>
+</language>

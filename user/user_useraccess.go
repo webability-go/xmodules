@@ -25,7 +25,7 @@ func userUserAccess() *xdominion.XTable {
 		xdominion.XConstraint{Type: xdominion.DC},
 	}})
 
-	// 1 if this access is denied
+	// 1 if this access is denied, or 0
 	t.AddField(xdominion.XFieldInteger{Name: "denied", Constraints: xdominion.XConstraints{
 		xdominion.XConstraint{Type: xdominion.NN},
 	}})
