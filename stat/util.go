@@ -4,12 +4,11 @@ import (
 	"strconv"
 	"time"
 
+	"github.com/webability-go/xamboo/applications"
 	"golang.org/x/text/language"
-
-	"github.com/webability-go/xmodules/base"
 )
 
-func buildTables(ctx *base.Datasource, prefix string) {
+func buildTables(ds applications.Datasource, prefix string) {
 
 	// open 12 tables for each file
 	for i := 1; i < 13; i++ {
@@ -20,9 +19,9 @@ func buildTables(ctx *base.Datasource, prefix string) {
 		m += strconv.Itoa(i)
 
 		table := stat_stat(prefix, m)
-		table.SetBase(ctx.GetDatabase())
+		table.SetBase(ds.GetDatabase())
 		table.SetLanguage(language.English)
-		ctx.SetTable(prefix+"stat_"+m, table)
+		ds.SetTable(prefix+"stat_"+m, table)
 	}
 }
 

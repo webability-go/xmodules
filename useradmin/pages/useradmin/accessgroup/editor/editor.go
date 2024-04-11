@@ -217,7 +217,7 @@ func predelete(m *xdommask.Mask, ctx *context.Context, key interface{}, oldrec *
 		return errors.New(keyerror)
 	}
 
-	userentries := userassets.GetEntries(ctx)
+	userentries := userassets.GetEntries(ctx.LoggerError)
 	ds := base.TryDatasource(ctx, userassets.DATASOURCE)
 
 	prune, _ := rec.GetString("prune")

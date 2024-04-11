@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<language id="usda" lang="es">
+  <!--  Module installation messages -->
+  <!--  init.go -->
+  <entry id="MODULENAME">USDA</entry>
+  <entry id="modulemodified">La entrada %s fue modificada con exito en la tabla base_module.</entry>
+  <entry id="commit">Instalación exitosa.</entry>
+  <entry id="rollback">Instalación con error: %s</entry>
+</language>

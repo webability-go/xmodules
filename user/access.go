@@ -64,6 +64,22 @@ func AddAccess(ds applications.Datasource, access *assets.Access) error {
 	return err
 }
 
+func DelAccessByKey(ds applications.Datasource, key string) error {
+
+	user_access := ds.GetTable("user_access")
+	if user_access == nil {
+		errmsg := tools.Message(messages, "error.notable", "access", "DelAccess", "user_access", ds.GetName())
+		ds.Log("error", errmsg)
+		return errors.New(errmsg)
+	}
+
+	_, err := user_access.Delete(key)
+	if err != nil {
+		ds.Log("error", tools.Message(messages, "error.delete", "access", "DelAccess", "user_access", err))
+	}
+	return err
+}
+
 func GetAccessesCount(ds applications.Datasource, cond *xdominion.XConditions) int {
 
 	user_access := ds.GetTable("user_access")

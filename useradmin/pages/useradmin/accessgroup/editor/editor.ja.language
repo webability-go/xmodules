@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<language id="editor" lang="ja">
+  <entry id="erroraccess" status="1701369766|1|1"><![CDATA[adminuser/accessgroup/editor::%s - エラー：ユーザー'%d'はこの画面にアクセス権がありません]]></entry>
+  <entry id="errordatasource" status="1701369766|1|1"><![CDATA[adminuser/accessgroup/editor::%s - エラー：データソース'%s'がありません]]></entry>
+  <entry id="errortable" status="1701369766|1|1"><![CDATA[adminuser/access/editor::%s - エラー：データソースにテーブル'%s'が存在しません]]></entry>
+  <entry id="formreset.title" status="1701369766|1|1"><![CDATA[変更を元に戻す]]></entry>
+  <entry id="formsubmit.delete.title" status="1701369766|1|1"><![CDATA[はい、このグループを削除する]]></entry>
+  <entry id="formsubmit.insert.title" status="1701369766|1|1"><![CDATA[新しいグループを保存する]]></entry>
+  <entry id="formsubmit.update.title" status="1701369766|1|1"><![CDATA[変更を保存する]]></entry>
+  <entry id="formview.title" status="1701369766|1|1"><![CDATA[キャンセル]]></entry>
+  <entry id="grouptoprune.help.description" status="1701369766|1|1"><![CDATA[前のフィールドでいいえを選択した場合は、削除するグループの権限を受け取るグループを指定してください。]]></entry>
+  <entry id="grouptoprune.title" status="1701369766|1|1"><![CDATA[受信グループ：]]></entry>
+  <entry id="hint" status="1701369766|1|1"><![CDATA[行をクリックして編集します：]]></entry>
+  <entry id="key.error" status="1701369766|1|1"><![CDATA[ユーザーによって編集されたアクセス権グループのキーは_で始めることはできません。]]></entry>
+  <entry id="key.help.description" status="1701369766|1|1"><![CDATA[アクセス権グループのキーは1〜30文字で、小文字で始まる必要があります。また、文字、'-'、および'_'を使用することもできます。_で始まるキーはシステムのアクセス権グループであり、ユーザーによって作成または変更することはできません。]]></entry>
+  <entry id="key.pruneerror" status="1701369766|1|1"><![CDATA[_で始まるキーを持つグループに子を貼り付けることはできません。]]></entry>
+  <entry id="key.status.badformat" status="1701369766|1|1"><![CDATA[キーの形式が正しくありません。]]></entry>
+  <entry id="key.status.notnull" status="1701369766|1|1"><![CDATA[キーを空にすることはできません。]]></entry>
+  <entry id="key.title" status="1701369766|1|1"><![CDATA[キー：]]></entry>
+  <entry id="mask.errormessage" status="1701369766|1|1"><![CDATA[データが正しく入力されていません。情報を送信する前にメッセージと赤いフィールドを確認してください。]]></entry>
+  <entry id="mask.servermessage" status="1701369766|1|1"><![CDATA[エラー：レコードのデータをサーバーから取得できませんでした。]]></entry>
+  <entry id="mask.titledelete" status="1701369766|1|1"><![CDATA[システムのアクセス権グループを削除する：]]></entry>
+  <entry id="mask.titledelete.message" status="1701369766|1|1"><![CDATA[情報が正常に削除されました。この画面を閉じることができます。]]></entry>
+  <entry id="mask.titleinsert" status="1701369766|1|1"><![CDATA[新しいシステムアクセス権グループを挿入する：]]></entry>
+  <entry id="mask.titleinsert.message" status="1701369766|1|1"><![CDATA[情報が正常に追加されました。この画面を閉じることができます。]]></entry>
+  <entry id="mask.titleupdate" status="1701369766|1|1"><![CDATA[アクセス権グループのデータを変更する：]]></entry>
+  <entry id="mask.titleupdate.message" status="1701369766|1|1"><![CDATA[情報が正常に変更されました。この画面を閉じることができます。]]></entry>
+  <entry id="mask.titleview" status="1701369766|1|1"><![CDATA[システムのアクセス権グループのデータ：]]></entry>
+  <entry id="name.help.description" status="1701369766|1|1"><![CDATA[アクセス権グループの名前は最大255文字までです。]]></entry>
+  <entry id="name.status.notnull" status="1701369766|1|1"><![CDATA[名前は空にすることはできません。]]></entry>
+  <entry id="name.title" status="1701369766|1|1"><![CDATA[名前：]]></entry>
+  <entry id="prune.help.description" status="1701369766|1|1"><![CDATA[はいを選択すると、このグループのすべての権限が削除されます。いいえを選択すると、このグループの権限が次のフィールドで選択したグループに移動されます。]]></entry>
+  <entry id="prune.no" status="1701369766|1|1"><![CDATA[いいえ、受信グループを選択しない]]></entry>
+  <entry id="prune.title" status="1701369766|1|1"><![CDATA[子も削除しますか？]]></entry>
+  <entry id="prune.yes" status="1701369766|1|1"><![CDATA[はい、子を削除する]]></entry>
+  <entry id="title" status="1701369766|1|1"><![CDATA[システムのアクセス権グループ。]]></entry>
+</language>

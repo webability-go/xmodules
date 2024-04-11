@@ -129,6 +129,19 @@ func GetUserAccesses(ds applications.Datasource, userkey int, quantity int) (*xd
 	return data, err
 }
 
+// GetUserAccess to get the record of an access for the user
+func GetUserAccess(ds applications.Datasource, userkey int, access string) (*xdominion.XRecord, error) {
+
+	user_useraccess := ds.GetTable("user_useraccess")
+	if user_useraccess == nil {
+		ds.Log("xmodules::user::GetUserAccess: Error, the user_useraccess table is not available on this datasource")
+		return nil, errors.New("xmodules::user::GetUserAccess: Error, the user_userprofile table is not available on this datasource")
+	}
+	cond := &xdominion.XConditions{xdominion.NewXCondition("user", "=", userkey), xdominion.NewXCondition("access", "=", access, "and")}
+	data, err := user_useraccess.SelectOne(cond)
+	return data, err
+}
+
 // GetCountry to get the data of a country from cache/db in the specified language
 func SetUserAccess(ds applications.Datasource, user int, access string, status int) error {
 

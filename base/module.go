@@ -2,6 +2,7 @@ package base
 
 import (
 	"errors"
+	"log"
 
 	"golang.org/x/text/language"
 
@@ -91,6 +92,7 @@ func (m *Module) StartContext(ds applications.Datasource, ctx *context.Context) 
 // "" not installed
 // "version.number" version installed
 func ModuleInstalledVersion(ds applications.Datasource, id string) string {
+
 	base_module := ds.GetTable("base_module")
 	if base_module == nil {
 		ds.Log("main", tools.Message(messages, "notable", "base_module"))
@@ -130,12 +132,12 @@ func AddModule(ds applications.Datasource, id string, name string, version strin
 	return err
 }
 
-func GetEntries(ctx *context.Context, moduleid string) interface{} {
+func GetEntries(errorlog *log.Logger, moduleid string) interface{} {
 
 	// scan ctx.Plugins to find the correct module and ModuleEntries
 	module := ModulesList.Get(moduleid)
 	if module == nil {
-		ctx.LoggerError.Println("base::module::GetEntries - Module ", moduleid, " not found in module list")
+		errorlog.Println("base::module::GetEntries - Module ", moduleid, " not found in module list")
 		return nil
 	}
 	return (module.(*Module)).Entries

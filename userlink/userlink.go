@@ -7,20 +7,20 @@ import (
 	"fmt"
 	"strconv"
 
+	"github.com/webability-go/xamboo/applications"
 	"github.com/webability-go/xdominion"
-	"github.com/webability-go/xmodules/base"
 )
 
-func SynchroUsers(sitecontext *base.Datasource, fromcontext *base.Datasource) []string {
+func SynchroUsers(ds applications.Datasource, fds applications.Datasource) []string {
 
 	msg := []string{}
 
 	// load from origin context
-	table := fromcontext.GetTable("user_user")
+	table := fds.GetTable("user_user")
 	if table == nil {
 		return []string{"Error: the origin table user_user does not exist."}
 	}
-	totable := sitecontext.GetTable("user_user")
+	totable := ds.GetTable("user_user")
 	if totable == nil {
 		return []string{"Error: the destination table user_user does not exist."}
 	}

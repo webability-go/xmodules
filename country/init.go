@@ -38,12 +38,11 @@ func init() {
 // adds tables and caches to ctx::database
 func Setup(ds applications.Datasource, prefix string) ([]string, error) {
 
-	ctx := ds.(*base.Datasource)
-	buildTables(ctx)
-	createCache(ctx)
-	ctx.SetModule(MODULEID, VERSION)
+	buildTables(ds)
+	createCache(ds)
+	ds.SetModule(MODULEID, VERSION)
 
-	go buildCache(ctx)
+	go buildCache(ds)
 
 	return []string{}, nil
 }
@@ -52,30 +51,29 @@ func Synchronize(ds applications.Datasource, prefix string) ([]string, error) {
 
 	messages := []string{}
 
-	ctx := ds.(*base.Datasource)
 	// Needed modules: base and translation
-	vc := base.ModuleInstalledVersion(ctx, "base")
+	vc := base.ModuleInstalledVersion(ds, "base")
 	if vc == "" {
 		messages = append(messages, "xmodules/base need to be installed before installing xmodules/country.")
 		return messages, nil
 	}
-	vc = base.ModuleInstalledVersion(ctx, "translation")
+	vc = base.ModuleInstalledVersion(ds, "translation")
 	if vc == "" {
 		messages = append(messages, "xmodules/translation need to be installed before installing xmodules/country.")
 		return messages, nil
 	}
 
-	translation.AddTheme(ctx, TRANSLATIONTHEME, "Countries", translation.SOURCETABLE, "", "name")
+	translation.AddTheme(ds, TRANSLATIONTHEME, "Countries", translation.SOURCETABLE, "", "name")
 
 	// create tables
-	messages = append(messages, createTables(ctx)...)
+	messages = append(messages, createTables(ds)...)
 
 	// fill countries and translations
-	messages = append(messages, loadTables(ctx, prefix)...)
+	messages = append(messages, loadTables(ds, prefix)...)
 
 	// Inserting into base-modules
 	// Be sure base module is on db: fill base module (we should get this from xmodule.conf)
-	err := base.AddModule(ctx, MODULEID, "List of official countries and ISO codes", VERSION)
+	err := base.AddModule(ds, MODULEID, "List of official countries and ISO codes", VERSION)
 	if err == nil {
 		messages = append(messages, "The entry "+MODULEID+" was modified successfully in the modules table.")
 	} else {

@@ -4,27 +4,71 @@
 package translation
 
 import (
+	"embed"
+	"io/fs"
+
 	"golang.org/x/text/language"
+
+	"github.com/webability-go/xcore/v2"
 
 	"github.com/webability-go/xamboo/applications"
 	"github.com/webability-go/xamboo/cms/context"
-
 	"github.com/webability-go/xmodules/base"
+	"github.com/webability-go/xmodules/tools"
+
 	"github.com/webability-go/xmodules/translation/assets"
 )
 
-var ModuleEntries = assets.ModuleEntries{
-	TranslateOne: TranslateOne,
-}
+//go:embed languages/*.language
+var fsmessages embed.FS
+var messages *map[language.Tag]*xcore.XLanguage
+
+//go:embed pages static
+var files embed.FS
 
 func init() {
+	messages = tools.BuildMessagesFS(fsmessages, "languages")
 	m := &base.Module{
-		ID:           assets.MODULEID,
-		Version:      assets.VERSION,
-		Languages:    map[language.Tag]string{language.English: "Translation tables", language.Spanish: "Tablas de traducción", language.French: "Tables de traduction"},
-		Needs:        []string{"base"},
-		FSetup:       Setup,
-		FSynchronize: Synchronize,
+		ID:      assets.MODULEID,
+		Version: assets.VERSION,
+		Languages: map[language.Tag]string{
+			language.English: tools.Message(messages, "MODULENAME", language.English),
+			language.Spanish: tools.Message(messages, "MODULENAME", language.Spanish),
+		},
+		Needs:         assets.Needs,
+		FSetup:        Setup,
+		FSynchronize:  Synchronize,
+		FStartContext: StartContext,
+		Entries: &assets.ModuleEntries{
+			GetLanguageByKey:       GetLanguageByKey,
+			GetLanguagesCount:      GetLanguagesCount,
+			GetLanguagesList:       GetLanguagesList,
+			DeleteLanguageChildren: DeleteLanguageChildren,
+			PruneLanguageChildren:  PruneLanguageChildren,
+
+			GetSourceByKey:       GetSourceByKey,
+			GetSourcesCount:      GetSourcesCount,
+			GetSourcesList:       GetSourcesList,
+			DeleteSourceChildren: DeleteSourceChildren,
+			PruneSourceChildren:  PruneSourceChildren,
+
+			GetThemeByKey:       GetThemeByKey,
+			GetThemeByName:      GetThemeByName,
+			AddTheme:            AddTheme,
+			DelThemeByKey:       DelThemeByKey,
+			GetThemesCount:      GetThemesCount,
+			GetThemesList:       GetThemesList,
+			DeleteThemeChildren: DeleteThemeChildren,
+			PruneThemeChildren:  PruneThemeChildren,
+
+			GetTranslationsCount:      GetTranslationsCount,
+			GetTranslationsList:       GetTranslationsList,
+			DeleteTranslationChildren: DeleteTranslationChildren,
+			PruneTranslationChildren:  PruneTranslationChildren,
+
+			GetTraduccion: GetTraduccion,
+			SetTraduccion: SetTraduccion,
+		},
 	}
 	base.ModulesList.Register(m)
 }
@@ -33,50 +77,84 @@ func init() {
 // adds tables and caches to ctx::database
 func Setup(ds applications.Datasource, prefix string) ([]string, error) {
 
-	ctx := ds.(*base.Datasource)
-	buildTables(ctx)
-	ctx.SetModule(assets.MODULEID, assets.VERSION)
+	linkTables(ds)
+	createCache(ds)
+	ds.SetModule(assets.MODULEID, assets.VERSION)
 
 	return []string{}, nil
 }
 
 func Synchronize(ds applications.Datasource, prefix string) ([]string, error) {
 
-	messages := []string{}
+	result := []string{}
 
-	ctx := ds.(*base.Datasource)
-	// Needed modules: base
-	vc := base.ModuleInstalledVersion(ctx, "base")
-	if vc == "" {
-		messages = append(messages, "xmodules/base need to be installed before installing xmodules/translation.")
-		return messages, nil
-	}
-	vc1 := base.ModuleInstalledVersion(ctx, "user")
-	vc2 := base.ModuleInstalledVersion(ctx, "userlink")
-	if vc1 == "" && vc2 == "" {
-		messages = append(messages, "xmodules/user or xmodules/userlink need to be installed before installing xmodules/translation.")
-		return messages, nil
+	ok, res := base.VerifyNeeds(ds, assets.Needs)
+	result = append(result, res...)
+	if !ok {
+		return result, nil
 	}
 
-	// create tables
-	messages = append(messages, createTables(ctx)...)
+	installed := base.ModuleInstalledVersion(ds, assets.MODULEID)
 
-	// Inserting into base-modules
-	// Be sure base module is on db: fill base module (we should get this from xmodule.conf)
-	err := base.AddModule(ctx, assets.MODULEID, "Multilanguages translation tables for Xamboo", assets.VERSION)
-	if err == nil {
-		messages = append(messages, "The entry "+assets.MODULEID+" was modified successfully in the modules table.")
+	// synchro tables
+	err, r := synchroTables(ds, installed)
+	result = append(result, r...)
+	if err != nil {
+		return result, err
+	}
+
+	cds := ds.CloneShell()
+	_, err = cds.StartTransaction()
+	if err != nil {
+		result = append(result, err.Error())
+		return result, err
+	}
+
+	// installation or upgrade ?
+	if installed != "" {
+		err, r = upgrade(cds, installed)
 	} else {
-		messages = append(messages, "Error modifying the entry "+assets.MODULEID+" in the modules table: "+err.Error())
+		err, r = install(cds)
+	}
+	result = append(result, r...)
+	if err == nil {
+		err = base.AddModule(cds, assets.MODULEID, tools.Message(messages, "MODULENAME"), assets.VERSION)
+		if err == nil {
+			result = append(result, tools.Message(messages, "modulemodified", assets.MODULEID))
+			result = append(result, tools.Message(messages, "commit"))
+			err = cds.Commit()
+			if err != nil {
+				result = append(result, err.Error())
+			}
+		} else {
+			result = append(result, tools.Message(messages, "rollback", err))
+			err = cds.Rollback()
+			if err != nil {
+				result = append(result, err.Error())
+			}
+		}
 	}
 
-	return messages, nil
+	// copy files
+	pathadmin, _ := cds.GetConfig().GetString("pathinstalladmin")
+	pages, _ := fs.Sub(files, "pages")
+	err, rsf := base.SynchroFiles(pages, pathadmin)
+	result = append(result, rsf...)
+	if err != nil {
+		result = append(result, err.Error())
+	}
+
+	pathadminstatic, _ := cds.GetConfig().GetString("pathinstalladminstatic")
+	static, _ := fs.Sub(files, "static")
+	err, rsf = base.SynchroFiles(static, pathadminstatic)
+	result = append(result, rsf...)
+	if err != nil {
+		result = append(result, err.Error())
+	}
+
+	return result, nil
 }
 
 func StartContext(ds applications.Datasource, ctx *context.Context) error {
 	return nil
-}
-
-func TranslateOne(input string) (string, error) {
-	return "TRANSLATED: {" + input + "}", nil
 }

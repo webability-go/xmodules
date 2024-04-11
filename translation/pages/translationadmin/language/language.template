@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<application id="translationadmin/language">
+  <container type="separatorContainer" width="max" height="max" mode="vertical" auto="yes">
+
+    <zone id="filtercontainer" size="80">
+      <element type="htmlElement" ><![CDATA[
+
+<div style="padding: 10px;">
+  <button class="button reload" style="float: right;" onclick="translationadmin_language_reload();">##reload##</button>
+  <button class="button insert" style="float: right;" onclick="translationadmin_language_go('', 1);">##insertnew##</button>
+  <b>##title##</b><br />
+  ##hint##<br />
+
+  <button class="button insert" style="float: right;" onclick="translationadmin_language_cleansearch();">##cleanfilter##</button>
+  ##searchtitle## <input id="translationadmin/language|single|search" type="text" value="{{SEARCHFILTER}}">
+  <button class="button insert" onclick="translationadmin_language_setsearch();">##searchbutton##</button>
+
+</div>
+
+      ]]></element>
+    </zone>
+    <zone id="languagecontainer" size="*">
+      <container type="gridContainer" id="languagedata" width="max" height="max" haslistener="yes" classname="grid colored">
+        <zone type="column" size="70" field="clave" title="##key##" sortable="yes">
+        </zone>
+        <zone type="column" size="300" field="nombre" title="##name##" sortable="yes">
+        </zone>
+        <zone type="column" size="200" field="quantity" title="##quantity##">
+        </zone>
+        <zone type="column" size="250" field="commands" title="##commands##">
+        </zone>
+
+        <event type="click">
+          <code><![CDATA[
+function(data)
+{
+  if (!data || !data.data)
+    return;
+
+  translationadmin_language_go(data.data.key, 4);
+}
+          ]]></code>
+        </event>
+
+      </container>
+    </zone>
+
+  </container>
+
+  <element type="codeElement"><![CDATA[
+
+function translationadmin_language_reload()
+{
+  WA.$N('translationadmin/language|single|languagedata').reload();
+}
+
+function translationadmin_language_setsearch()
+{
+  var checked = WA.toDOM("translationadmin/language|single|showall").checked;
+  var filter = WA.toDOM("translationadmin/language|single|search").value;
+  var request = WA.Managers.ajax.createRequest('/translationadmin/language/filter/json', 'POST', null, translationadmin_language_getfilter, false);
+  request.addParameter('checked', checked);
+  request.addParameter('filter', filter);
+  request.send();
+}
+
+function translationadmin_language_cleansearch()
+{
+  WA.toDOM("translationadmin/language|single|showall").checked = false;
+  WA.toDOM("translationadmin/language|single|search").value = "";
+  translationadmin_language_setsearch();
+}
+
+function translationadmin_language_getfilter(request)
+{
+  translationadmin_language_reload();
+}
+
+function translationadmin_language_go(key, mode)
+{
+  // open app to edit
+  var node = WA.$N('index|single|app_translationadmin/language/editor_'+(key?key:'new'));
+  if (!node)
+  {
+    var tree = {tag:'zone',attributes:{id:'app_translationadmin/language/editor_'+(key?key:'new'),title:'##languagetitle## - ' + (key?key:'##newlanguage##'),closeable:'yes',application:'translationadmin/language/editor|'+(key?key:'new'),params:'mode='+mode+(key?'&Key='+key:'')}};
+    WA.$N('index|single|application').app.createTree('application', tree);
+  }
+  else
+  {
+    n = WA.$N('translationadmin/language/editor|'+(key?key:'new')+'|formlanguage');
+    if (n && mode == 1)
+      n.doInsert();
+    else if (n && mode == 2)
+      n.doUpdate();
+    else if (n && mode == 3)
+      n.doDelete();
+    else if (n && mode == 4)
+      n.doView();
+  }
+  WA.$N('index|single|application').activateZone('app_translationadmin/language/editor_'+(key?key:'new'));
+}
+
+]]></element>
+
+</application>

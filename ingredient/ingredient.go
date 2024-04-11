@@ -8,52 +8,52 @@ import (
 
 	"golang.org/x/text/language"
 
-	"github.com/webability-go/xmodules/base"
+	"github.com/webability-go/xamboo/applications"
 	"github.com/webability-go/xmodules/metric"
 )
 
-func GetPasillo(ctx *base.Datasource, clave int, lang language.Tag) *StructurePasillo {
+func GetPasillo(ds applications.Datasource, clave int, lang language.Tag) *StructurePasillo {
 
 	canonical := lang.String()
 
-	data, _ := ctx.GetCache("ingredient:pasillos:" + canonical).Get(strconv.Itoa(clave))
+	data, _ := ds.GetCache("ingredient:pasillos:" + canonical).Get(strconv.Itoa(clave))
 	if data == nil {
-		sm := CreateStructurePasilloByKey(ctx, clave, lang)
+		sm := CreateStructurePasilloByKey(ds, clave, lang)
 		if sm == nil {
-			ctx.Log("graph", "xmodules::ingredient::GetPasillo: No hay pasillo creado:", clave, lang)
+			ds.Log("graph", "xmodules::ingredient::GetPasillo: No hay pasillo creado:", clave, lang)
 			return nil
 		}
-		ctx.GetCache("ingredient:pasillos:"+canonical).Set(strconv.Itoa(clave), sm)
+		ds.GetCache("ingredient:pasillos:"+canonical).Set(strconv.Itoa(clave), sm)
 		return sm.(*StructurePasillo)
 	}
 	return data.(*StructurePasillo)
 }
 
-func GetIngredient(ctx *base.Datasource, clave int, lang language.Tag) *StructureIngredient {
+func GetIngredient(ds applications.Datasource, clave int, lang language.Tag) *StructureIngredient {
 
 	canonical := lang.String()
 
-	data, _ := ctx.GetCache("ingredient:ingredientes:" + canonical).Get(strconv.Itoa(clave))
+	data, _ := ds.GetCache("ingredient:ingredientes:" + canonical).Get(strconv.Itoa(clave))
 	if data == nil {
-		sm := CreateStructureIngredientByKey(ctx, clave, lang)
+		sm := CreateStructureIngredientByKey(ds, clave, lang)
 		if sm == nil {
-			ctx.Log("graph", "xmodules::ingredient::GetIngredient: No hay ingrediente creado:", clave, lang)
+			ds.Log("graph", "xmodules::ingredient::GetIngredient: No hay ingrediente creado:", clave, lang)
 			return nil
 		}
-		ctx.GetCache("ingredient:ingredientes:"+canonical).Set(strconv.Itoa(clave), sm)
+		ds.GetCache("ingredient:ingredientes:"+canonical).Set(strconv.Itoa(clave), sm)
 		return sm.(*StructureIngredient)
 	}
 	return data.(*StructureIngredient)
 }
 
-func ConvertToSI(ctx *base.Datasource, ingrediente int, scantidad string, medida int, cantidadsi int, medidasi int) (float64, int, string) {
+func ConvertToSI(ds applications.Datasource, ingrediente int, scantidad string, medida int, cantidadsi int, medidasi int) (float64, int, string) {
 
 	if scantidad == "" || medida == 0 {
 		return 0, -1, "Los parámetros aún son incompletos"
 	}
 
 	if cantidadsi != 0 && medidasi != 0 {
-		return ConvertToSI(ctx, ingrediente, fmt.Sprint(cantidadsi), medidasi, 0, 0)
+		return ConvertToSI(ds, ingrediente, fmt.Sprint(cantidadsi), medidasi, 0, 0)
 	}
 
 	// cantidad es correcta ?
@@ -64,7 +64,7 @@ func ConvertToSI(ctx *base.Datasource, ingrediente int, scantidad string, medida
 
 	var factorconversion float64 = 0
 	// medida es cuantificable ?
-	medidadata := metric.GetMetric(ctx, medida, language.Spanish) // el idioma no importa aqui, estamos calculando cifras solamente
+	medidadata := metric.GetMetric(ds, medida, language.Spanish) // el idioma no importa aqui, estamos calculando cifras solamente
 	unidadsi, _ := medidadata.Data.GetInt("unidadsi")
 	if unidadsi != 0 {
 		factorconversion, _ = medidadata.Data.GetFloat("factorconversion")
@@ -72,12 +72,12 @@ func ConvertToSI(ctx *base.Datasource, ingrediente int, scantidad string, medida
 		// CASO ESPECIAL: por pieza
 		// verificar si tenemos un peso/unidad en el ingrediente x defecto (ejemplo: 1 huevo, 1 manzana, etc)
 		if medida == metric.UNIT_NOTVISIBLE || medida == metric.UNIT_VISIBLE {
-			ingredientedata := GetIngredient(ctx, ingrediente, language.Spanish) // el idioma no importa aqui, estamos calculando cifras solamente
+			ingredientedata := GetIngredient(ds, ingrediente, language.Spanish) // el idioma no importa aqui, estamos calculando cifras solamente
 			usi, _ := ingredientedata.Data.GetInt("unidadsi")
 			if usi != 0 {
 				unidadsi = usi
 				csi, _ := ingredientedata.Data.GetFloat("cantidad")
-				medidadata = metric.GetMetric(ctx, usi, language.Spanish)
+				medidadata = metric.GetMetric(ds, usi, language.Spanish)
 				factorconversion, _ = medidadata.Data.GetFloat("factorconversion")
 				cantidad = cantidad * csi
 			} else {
@@ -91,28 +91,28 @@ func ConvertToSI(ctx *base.Datasource, ingrediente int, scantidad string, medida
 	return factorconversion * cantidad, unidadsi, ""
 }
 
-func GetIngredientCompositeName(ctx *base.Datasource, quantity string, ingredientkey int, metrickey int, extra string, system int, lang language.Tag) string {
+func GetIngredientCompositeName(ds applications.Datasource, quantity string, ingredientkey int, metrickey int, extra string, system int, lang language.Tag) string {
 
 	nombrecompuesto := ""
 	switch lang {
 	case language.Spanish:
-		nombrecompuesto = CompositeNameSpanish(ctx, quantity, ingredientkey, metrickey, extra, system)
+		nombrecompuesto = CompositeNameSpanish(ds, quantity, ingredientkey, metrickey, extra, system)
 	case language.English:
-		nombrecompuesto = CompositeNameEnglish(ctx, quantity, ingredientkey, metrickey, extra, system)
+		nombrecompuesto = CompositeNameEnglish(ds, quantity, ingredientkey, metrickey, extra, system)
 	}
 	return nombrecompuesto
 }
 
-func CompositeNameSpanish(ctx *base.Datasource, quantity string, ingredientkey int, metrickey int, extra string, system int) string {
+func CompositeNameSpanish(ds applications.Datasource, quantity string, ingredientkey int, metrickey int, extra string, system int) string {
 
 	xquantity := metric.ParseQuantity(quantity)
-	ingredient := GetIngredient(ctx, ingredientkey, language.Spanish)
+	ingredient := GetIngredient(ds, ingredientkey, language.Spanish)
 	if ingredient == nil {
 		// log this
 		return "Error in CompositeNameSpanish::ingredient NIL"
 	}
 	ingredientdata := ingredient.GetData()
-	metricstructure := metric.GetMetric(ctx, metrickey, language.Spanish)
+	metricstructure := metric.GetMetric(ds, metrickey, language.Spanish)
 	if metricstructure == nil {
 		// log this
 		return "Error in CompositeNameSpanish::metric NIL"
@@ -123,7 +123,7 @@ func CompositeNameSpanish(ctx *base.Datasource, quantity string, ingredientkey i
 	state, _ := ingredientdata.GetInt("type")
 
 	if system != 0 { // 1, 2, 3: convertir al sistema solicitado antes de crear composite
-		xquantity, metricdata = metric.ConvertMetrics(ctx, xquantity, density, state, metricdata, system)
+		xquantity, metricdata = metric.ConvertMetrics(ds, xquantity, density, state, metricdata, system)
 		quantity = fmt.Sprint(xquantity)
 	}
 
@@ -162,16 +162,16 @@ func CompositeNameSpanish(ctx *base.Datasource, quantity string, ingredientkey i
 	return composite
 }
 
-func CompositeNameEnglish(ctx *base.Datasource, quantity string, ingredientkey int, metrickey int, extra string, system int) string {
+func CompositeNameEnglish(ds applications.Datasource, quantity string, ingredientkey int, metrickey int, extra string, system int) string {
 
 	xquantity := metric.ParseQuantity(quantity)
-	ingredient := GetIngredient(ctx, ingredientkey, language.English)
+	ingredient := GetIngredient(dsa, ingredientkey, language.English)
 	if ingredient == nil {
 		// log this
 		return "Error in CompositeNameSpanish::ingredient NIL"
 	}
 	ingredientdata := ingredient.GetData()
-	metricstructure := metric.GetMetric(ctx, metrickey, language.English)
+	metricstructure := metric.GetMetric(ds, metrickey, language.English)
 	if metricstructure == nil {
 		// log this
 		return "Error in CompositeNameSpanish::metric NIL"
@@ -182,7 +182,7 @@ func CompositeNameEnglish(ctx *base.Datasource, quantity string, ingredientkey i
 	state, _ := ingredientdata.GetInt("type")
 
 	if system != 0 { // 1, 2, 3: convertir al sistema solicitado antes de crear composite
-		xquantity, metricdata = metric.ConvertMetrics(ctx, xquantity, density, state, metricdata, system)
+		xquantity, metricdata = metric.ConvertMetrics(ds, xquantity, density, state, metricdata, system)
 		quantity = fmt.Sprint(xquantity)
 	}
 

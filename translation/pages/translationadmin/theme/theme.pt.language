@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<language id="theme" lang="pt">
+  <entry id="button.delete" status="1701370176|1|1"><![CDATA[Excluir]]></entry>
+  <entry id="button.edit" status="1701370176|1|1"><![CDATA[Editar]]></entry>
+  <entry id="button.view" status="1701370176|1|1"><![CDATA[Ver]]></entry>
+  <entry id="cleanfilter" status="1701370176|1|1"><![CDATA[Limpar filtro]]></entry>
+  <entry id="commands" status="1701370176|1|1"><![CDATA[Comandos]]></entry>
+  <entry id="config" status="1701370176|1|1"><![CDATA[Configuração]]></entry>
+  <entry id="erroraccess" status="1701370176|1|1"><![CDATA[translationadmin/theme::%s - Erro: o usuário '%d' não tem acesso a esta tela]]></entry>
+  <entry id="errordatasource" status="1701370176|1|1"><![CDATA[translationadmin/theme::%s - Erro: não há fonte de dados '%s']]></entry>
+  <entry id="hint" status="1701370176|1|1"><![CDATA[Clique em uma linha para visualizá-la:]]></entry>
+  <entry id="insertnew" status="1701370176|1|1"><![CDATA[Novo tema de tradução]]></entry>
+  <entry id="key" status="1701370176|1|1"><![CDATA[Chave]]></entry>
+  <entry id="name" status="1701370176|1|1"><![CDATA[Nome]]></entry>
+  <entry id="newtheme" status="1701370176|1|1"><![CDATA[Novo]]></entry>
+  <entry id="quantity" status="1701370176|1|1"><![CDATA[Quantidade de traduções:]]></entry>
+  <entry id="reload" status="1701370176|1|1"><![CDATA[Recarregar lista]]></entry>
+  <entry id="searchbutton" status="1701370176|1|1"><![CDATA[Buscar]]></entry>
+  <entry id="searchtitle" status="1701370176|1|1"><![CDATA[Filtrar (chave ou nome):]]></entry>
+  <entry id="source" status="1701370176|1|1"><![CDATA[Fonte]]></entry>
+  <entry id="source.1" status="1701370176|1|1"><![CDATA[Banco de dados]]></entry>
+  <entry id="source.2" status="1701370176|1|1"><![CDATA[Arquivo .language da página]]></entry>
+  <entry id="source.3" status="1701370176|1|1"><![CDATA[Arquivo específico]]></entry>
+  <entry id="themetitle" status="1701370176|1|1"><![CDATA[Tema de tradução]]></entry>
+  <entry id="title" status="1701370176|1|1"><![CDATA[Lista de temas de tradução]]></entry>
+</language>

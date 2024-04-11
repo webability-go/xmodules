@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<language id="editor" lang="ja">
+  <entry id="config.help.description" status="1701369971|1|1"><![CDATA[file。path=[directory] 言語ファイルを検索する基本ディレクトリ]]></entry>
+  <entry id="config.title" status="1701369886|1|1"><![CDATA[設定：]]></entry>
+  <entry id="erroraccess" status="1701369886|1|1"><![CDATA[translationadmin/source/editor::%s - エラー：ユーザー '%d' はこの画面にアクセスできません]]></entry>
+  <entry id="errordatasource" status="1701369886|1|1"><![CDATA[translationadmin/source/editor::%s - エラー：データソース '%s' が見つかりません]]></entry>
+  <entry id="errortable" status="1701369886|1|1"><![CDATA[translationadmin/source/editor::%s - エラー：データソースにテーブル '%s' が存在しません]]></entry>
+  <entry id="formreset.title" status="1701369886|1|1"><![CDATA[リセット]]></entry>
+  <entry id="formsubmit.delete.title" status="1701369886|1|1"><![CDATA[はい、このテキストソースを削除する]]></entry>
+  <entry id="formsubmit.insert.title" status="1701369886|1|1"><![CDATA[テキストソースを保存する]]></entry>
+  <entry id="formsubmit.update.title" status="1701369886|1|1"><![CDATA[変更を保存する]]></entry>
+  <entry id="formview.title" status="1701369886|1|1"><![CDATA[キャンセル]]></entry>
+  <entry id="hint" status="1701369886|1|1"><![CDATA[編集するために行をクリックしてください：]]></entry>
+  <entry id="key.auto" status="1701369886|1|1"><![CDATA[自動割り当て]]></entry>
+  <entry id="key.help.description" status="1701369886|1|1"><![CDATA[テキストのキーは連続した番号です。]]></entry>
+  <entry id="key.title" status="1701369886|1|1"><![CDATA[キー]]></entry>
+  <entry id="mask.errormessage" status="1701369886|1|1"><![CDATA[データがまだ正しく入力されていません。情報を送信する前に、メッセージと赤いフィールドを確認してください。]]></entry>
+  <entry id="mask.servermessage" status="1701369886|1|1"><![CDATA[エラー：レコードのデータがサーバーから取得できませんでした。]]></entry>
+  <entry id="mask.titledelete" status="1701369886|1|1"><![CDATA[言語の削除：]]></entry>
+  <entry id="mask.titledelete.message" status="1701369886|1|1"><![CDATA[情報が正常に削除されました。この画面を閉じることができます。]]></entry>
+  <entry id="mask.titleinsert" status="1701369886|1|1"><![CDATA[新しいテキストソースを挿入する：]]></entry>
+  <entry id="mask.titleinsert.message" status="1701369886|1|1"><![CDATA[情報が正常に追加されました。この画面を閉じることができます。]]></entry>
+  <entry id="mask.titleupdate" status="1701369886|1|1"><![CDATA[言語のデータを変更する：]]></entry>
+  <entry id="mask.titleupdate.message" status="1701369886|1|1"><![CDATA[情報が正常に変更されました。この画面を閉じることができます。]]></entry>
+  <entry id="mask.titleview" status="1701369886|1|1"><![CDATA[テキストソースのデータ：]]></entry>
+  <entry id="name.help.description" status="1701369886|1|1"><![CDATA[テキストソースの名前は1〜255文字以内である必要があります。]]></entry>
+  <entry id="name.status.notnull" status="1701369886|1|1"><![CDATA[名前を空にすることはできません。]]></entry>
+  <entry id="name.title" status="1701369886|1|1"><![CDATA[名前]]></entry>
+  <entry id="prune.help.description" status="1701369886|1|1"><![CDATA[「はい」を選択すると、このソースに関連するすべての翻訳が削除されます。 「いいえ」を選択すると、情報は次のフィールドで選択した言語に移動されます。]]></entry>
+  <entry id="prune.no" status="1701369886|1|1"><![CDATA[いいえ、受信ソースを選択する]]></entry>
+  <entry id="prune.title" status="1701369886|1|1"><![CDATA[子要素も削除しますか？]]></entry>
+  <entry id="prune.yes" status="1701369886|1|1"><![CDATA[はい、子要素も削除する]]></entry>
+  <entry id="sourcetoprune.help.description" status="1701369886|1|1"><![CDATA[前のフィールドで「いいえ」を選択した場合、削除するソースに関連する情報を受け取るソースを指定してください。]]></entry>
+  <entry id="sourcetoprune.title" status="1701369886|1|1"><![CDATA[受信テキストソース：]]></entry>
+  <entry id="title" status="1701369886|1|1"><![CDATA[システムで認識されているテキストソース。]]></entry>
+</language>

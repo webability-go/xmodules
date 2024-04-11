@@ -1,7 +1,8 @@
 package user
 
 import (
-	"fmt"
+	//	"fmt"
+
 	"net/http"
 	"regexp"
 
@@ -9,23 +10,23 @@ import (
 	"github.com/webability-go/xamboo/applications"
 	"github.com/webability-go/xamboo/cms/context"
 
-	"github.com/webability-go/xmodules/base"
 	"github.com/webability-go/xmodules/tools"
 )
 
 // SESSIONS
-func VerifyUserSession(ctx *context.Context, xds applications.Datasource, origin string, device string) {
+func VerifyUserSession(ctx *context.Context, ds applications.Datasource, origin string, device string) {
 
-	if !xds.IsModuleAuthorized("user") {
+	if !ds.IsModuleAuthorized("user") {
 		return
 	}
-	ds := xds.(*base.Datasource)
 
-	config := ds.Config
+	// security is based on SITE, not DS (not ds.Config)
+	config := ctx.Sysparams
 	// Any sent session ?
 	sessionid := ""
 	cookiename, _ := config.GetString("cookiename")
 	cookie, _ := ctx.Request.Cookie(cookiename)
+
 	// 1.bis If there is no cookie, there is no session
 	if cookie != nil && len(cookie.Value) != 0 {
 		sessionid = cookie.Value
@@ -88,10 +89,9 @@ func VerifyUserSession(ctx *context.Context, xds applications.Datasource, origin
 	ctx.Sessionparams.Set("userdata", userdata)
 }
 
-func CreateSessionUser(ctx *context.Context, xds applications.Datasource, sessionid string, IP string, origin string, device string, user *StructureUser) string {
+func CreateSessionUser(ctx *context.Context, ds applications.Datasource, sessionid string, IP string, origin string, device string, user *StructureUser) string {
 
-	ds := xds.(*base.Datasource)
-	config := ds.Config
+	config := ctx.Sysparams
 
 	match, _ := regexp.MatchString("[a-zA-Z0-9]{24}", sessionid)
 	if !match {
@@ -110,10 +110,9 @@ func CreateSessionUser(ctx *context.Context, xds applications.Datasource, sessio
 	return sessionid
 }
 
-func DestroySessionUser(ctx *context.Context, xds applications.Datasource, sessionid string) {
+func DestroySessionUser(ctx *context.Context, ds applications.Datasource, sessionid string) {
 
-	ds := xds.(*base.Datasource)
-	config := ds.Config
+	config := ctx.Sysparams
 	cookiedomain, _ := config.GetString("cookiedomain")
 	cookiename, _ := config.GetString("cookiename")
 
@@ -126,8 +125,8 @@ func DestroySessionUser(ctx *context.Context, xds applications.Datasource, sessi
 // SECURITY Access
 func HasAccess(ds applications.Datasource, userid int, args ...interface{}) bool {
 
-	// 1. profile
-	// 2. direct acceses
+	// 1. check direct acceses
+	// 2. or check if in profile
 	userdata := GetUserByKey(ds, userid)
 	if userdata == nil {
 		return false
@@ -160,6 +159,29 @@ func HasAccess(ds applications.Datasource, userid int, args ...interface{}) bool
 			return false
 		}
 	}
+
+	if extendedaccess == "" {
+		// simple access:
+		// 1. check into user_useraccess
+		acc, err := GetUserAccess(ds, userid, access)
+		if err != nil {
+			ds.Log("xmodules::user::HasAccess:1:" + err.Error())
+			return false
+		}
+		if acc != nil { // if any record, direct right on access
+			denied, _ := acc.GetInt("denied")
+			return denied == 0 // if denied == 1: do not acces, else, access
+		}
+		// If we are here, the access is herency of profile
+		hasaccess, err := HasProfilesAccessUser(ds, userid, access)
+		if err != nil {
+			ds.Log("xmodules::user::HasAccess:2:" + err.Error())
+			return false
+		}
+		return hasaccess
+	} else {
+
+	}
 	/*
 		// is access into user accesses ?
 		acc := GetUserAccess(ds, userid, access)
@@ -169,7 +191,6 @@ func HasAccess(ds applications.Datasource, userid int, args ...interface{}) bool
 		// loop sobre progiles
 		accpr := GetProfileAccess(ds, userid, access)
 	*/
-	fmt.Println("Access to check:", access, extendedaccess)
 
 	return false
 }

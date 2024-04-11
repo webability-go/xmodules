@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<language id="tools" lang="en">
+  <entry id="erroraccess" status="1701369524|1|1"><![CDATA[translationadmin/tools::%s - Error: user '%d' does not have access to this screen]]></entry>
+  <entry id="errordatasource" status="1701369524|1|1"><![CDATA[translationadmin/tools::%s - Error: no data source '%s' found]]></entry>
+  <entry id="errortable" status="1701369524|1|1"><![CDATA[translationadmin/tools::%s - Error: table '%s' does not exist in the datasource]]></entry>
+  <entry id="hint" status="1701369524|1|1"><![CDATA[Click on a tool to call it]]></entry>
+  <entry id="searchfiles1" status="1701369524|1|1"><![CDATA[Search through the code's .language files (modules)]]></entry>
+  <entry id="searchfiles2" status="1701369524|1|1"><![CDATA[Search through the pages' .language files]]></entry>
+  <entry id="searchfiles3" status="1701369524|1|1"><![CDATA[Search through the Javascript files]]></entry>
+  <entry id="title" status="1701369524|1|1"><![CDATA[Translation Tools.]]></entry>
+  <entry id="translationtitle" status="1701369524|1|1"><![CDATA[Site Languages and Translations]]></entry>
+  <entry id="verifytranslation" status="1701369524|1|1"><![CDATA[Verify the integrity of the translations]]></entry>
+</language>

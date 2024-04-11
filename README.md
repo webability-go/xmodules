@@ -66,6 +66,13 @@ import "github.com/webability-go/xmodules/ingredient"
 
 import "github.com/webability-go/xmodules/material"
 
+v2022-12-02:
+- base>module>GetEntries now accept a logger parameter, to log the possible errors, instead of the full context (unnecessary)
+
+
+v2022-07-04:
+- Client module has been separated as a xamboo module
+
 v2022-06-09:
 - Go 1.17 and Xamboo 1.6 compatibility: Now uses embed FS, languages, and functions entry table, not anymore a bridge
 

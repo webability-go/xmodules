@@ -167,11 +167,12 @@ func build(mask *xdommask.Mask, ctx *context.Context) error {
 	f14 := xdommask.NewMaskedField("pw")
 	f14.Title = "##pw.title##"
 	f14.HelpDescription = "##pw.help.description##"
-	f14.NotNullModes = xdommask.INSERT | xdommask.UPDATE
+	//	f14.NotNullModes = xdommask.INSERT | xdommask.UPDATE
 	f14.AuthModes = xdommask.INSERT | xdommask.UPDATE | xdommask.DELETE | xdommask.VIEW
 	f14.HelpModes = xdommask.INSERT | xdommask.UPDATE
 	f14.ViewModes = xdommask.DELETE | xdommask.VIEW
-	f14.StatusNotNull = "##pw.status.notnull##"
+	//	f14.StatusNotNull = "##pw.status.notnull##"
+	f14.MD5Encrypted = true
 	f14.MaxLength = 200
 	f14.Size = "400"
 	f14.URLVariable = "pw"
@@ -295,7 +296,7 @@ func preupdate(m *xdommask.Mask, ctx *context.Context, key interface{}, oldrec *
 func predelete(m *xdommask.Mask, ctx *context.Context, key interface{}, oldrec *xdominion.XRecord, rec *xdominion.XRecord) error {
 	ikey := key.(int)
 
-	userentries := userassets.GetEntries(ctx)
+	userentries := userassets.GetEntries(ctx.LoggerError)
 	ds := base.TryDatasource(ctx, assets.DATASOURCE)
 
 	// delete children
@@ -324,7 +325,7 @@ func Getprofiles(ctx *context.Context, template *xcore.XTemplate, language *xcor
 
 	result := []string{}
 
-	userentries := userassets.GetEntries(ctx)
+	userentries := userassets.GetEntries(ctx.LoggerError)
 	ds := base.TryDatasource(ctx, userassets.DATASOURCE)
 	key := ctx.Request.Form.Get("key")
 	ikey, _ := strconv.Atoi(key)
@@ -367,7 +368,7 @@ func Getaccesses(ctx *context.Context, template *xcore.XTemplate, language *xcor
 
 	result := []string{}
 
-	userentries := userassets.GetEntries(ctx)
+	userentries := userassets.GetEntries(ctx.LoggerError)
 	ds := base.TryDatasource(ctx, userassets.DATASOURCE)
 	key := ctx.Request.Form.Get("key")
 	ikey, _ := strconv.Atoi(key)
@@ -425,7 +426,7 @@ func Setprofile(ctx *context.Context, template *xcore.XTemplate, language *xcore
 		return ""
 	}
 
-	userentries := userassets.GetEntries(ctx)
+	userentries := userassets.GetEntries(ctx.LoggerError)
 	ds := base.TryDatasource(ctx, userassets.DATASOURCE)
 	key := ctx.Request.Form.Get("key")
 	ikey, _ := strconv.Atoi(key)
@@ -444,7 +445,7 @@ func Setaccess(ctx *context.Context, template *xcore.XTemplate, language *xcore.
 		return ""
 	}
 
-	userentries := userassets.GetEntries(ctx)
+	userentries := userassets.GetEntries(ctx.LoggerError)
 	ds := base.TryDatasource(ctx, userassets.DATASOURCE)
 	user := ctx.Request.Form.Get("key")
 	iuser, _ := strconv.Atoi(user)

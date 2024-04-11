@@ -218,7 +218,7 @@ func predelete(m *xdommask.Mask, ctx *context.Context, key interface{}, oldrec *
 
 	skey := key.(string)
 
-	userentries := userassets.GetEntries(ctx)
+	userentries := userassets.GetEntries(ctx.LoggerError)
 	ds := base.TryDatasource(ctx, userassets.DATASOURCE)
 
 	prune, _ := rec.GetString("prune")
@@ -260,7 +260,7 @@ func Getaccesses(ctx *context.Context, template *xcore.XTemplate, language *xcor
 
 	result := []string{}
 
-	userentries := userassets.GetEntries(ctx)
+	userentries := userassets.GetEntries(ctx.LoggerError)
 	ds := base.TryDatasource(ctx, userassets.DATASOURCE)
 	key := ctx.Request.Form.Get("key")
 
@@ -301,7 +301,7 @@ func Getusers(ctx *context.Context, template *xcore.XTemplate, language *xcore.X
 
 	result := []string{}
 
-	userentries := userassets.GetEntries(ctx)
+	userentries := userassets.GetEntries(ctx.LoggerError)
 	ds := base.TryDatasource(ctx, userassets.DATASOURCE)
 	key := ctx.Request.Form.Get("key")
 
@@ -346,7 +346,7 @@ func Setaccess(ctx *context.Context, template *xcore.XTemplate, language *xcore.
 		return ""
 	}
 
-	userentries := userassets.GetEntries(ctx)
+	userentries := userassets.GetEntries(ctx.LoggerError)
 	ds := base.TryDatasource(ctx, userassets.DATASOURCE)
 	key := ctx.Request.Form.Get("key")
 	access := ctx.Request.Form.Get("id")
@@ -364,7 +364,7 @@ func Setuser(ctx *context.Context, template *xcore.XTemplate, language *xcore.XL
 		return ""
 	}
 
-	userentries := userassets.GetEntries(ctx)
+	userentries := userassets.GetEntries(ctx.LoggerError)
 	ds := base.TryDatasource(ctx, userassets.DATASOURCE)
 	key := ctx.Request.Form.Get("key")
 	user := ctx.Request.Form.Get("id")

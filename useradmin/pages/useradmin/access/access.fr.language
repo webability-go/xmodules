@@ -1,9 +1,23 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<language id="useradmin/access" lang="fr">
-  <entry id="reload">Recharger la liste</entry>
-  <entry id="insertnew">Nouvel accès</entry>
-  <entry id="accessgroup">Administrer les groupes d'accès</entry>
-  <entry id="title">Droits d'accès du système.</entry>
-  <entry id="hint">Fais clic sur une ligne pour l'éditer:</entry>
-
+<language id="access" lang="fr">
+  <entry id="accessgroup" status="1701369060|1|1"><![CDATA[Gérer les groupes d'accès]]></entry>
+  <entry id="accesstitle" status="1701369060|1|1"><![CDATA[Droit d'accès]]></entry>
+  <entry id="button.delete" status="1701369060|1|1"><![CDATA[Supprimer]]></entry>
+  <entry id="button.edit" status="1701369060|1|1"><![CDATA[Modifier]]></entry>
+  <entry id="button.view" status="1701369060|1|1"><![CDATA[Voir]]></entry>
+  <entry id="commands" status="1701369060|1|1"><![CDATA[Commandes]]></entry>
+  <entry id="description" status="1701369060|1|1"><![CDATA[Description]]></entry>
+  <entry id="erroraccess" status="1701369060|1|1"><![CDATA[adminuser/access::%s - Erreur : l'utilisateur '%d' n'a pas accès à cette page]]></entry>
+  <entry id="errordatasource" status="1701369060|1|1"><![CDATA[adminuser/access::%s - Erreur : aucune source de données '%s']]></entry>
+  <entry id="group" status="1701369060|1|1"><![CDATA[Groupe]]></entry>
+  <entry id="hint" status="1701369060|1|1"><![CDATA[Cliquez sur une ligne pour la visualiser :]]></entry>
+  <entry id="insertnew" status="1701369060|1|1"><![CDATA[Nouvel accès]]></entry>
+  <entry id="key" status="1701369060|1|1"><![CDATA[Mot de passe]]></entry>
+  <entry id="name" status="1701369060|1|1"><![CDATA[Nom]]></entry>
+  <entry id="newaccess" status="1701369060|1|1"><![CDATA[Nouveau]]></entry>
+  <entry id="profiles" status="1701369060|1|1"><![CDATA[Profils]]></entry>
+  <entry id="reload" status="1701369060|1|1"><![CDATA[Recharger la liste]]></entry>
+  <entry id="showsystem" status="1701369060|1|1"><![CDATA[Voir les droits du système]]></entry>
+  <entry id="title" status="1701369060|1|1"><![CDATA[Droits d'accès du système.]]></entry>
+  <entry id="users" status="1701369060|1|1"><![CDATA[Utilisateurs]]></entry>
 </language>

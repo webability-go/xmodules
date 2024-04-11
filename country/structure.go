@@ -17,22 +17,22 @@ type StructureCountry struct {
 	Data *xdominion.XRecord
 }
 
-func CreateStructureCountryByKey(sitecontext applications.Datasource, key string, lang language.Tag) base.Structure {
-	data, _ := sitecontext.GetTable("country_country").SelectOne(key)
+func CreateStructureCountryByKey(ds applications.Datasource, key string, lang language.Tag) base.Structure {
+	data, _ := ds.GetTable("country_country").SelectOne(key)
 	if data == nil {
 		return nil
 	}
-	return CreateStructureCountryByData(sitecontext, data, lang)
+	return CreateStructureCountryByData(ds, data, lang)
 }
 
-func CreateStructureCountryByData(sitecontext applications.Datasource, data xdominion.XRecordDef, lang language.Tag) base.Structure {
+func CreateStructureCountryByData(ds applications.Datasource, data xdominion.XRecordDef, lang language.Tag) base.Structure {
 
 	key, _ := data.GetString("key")
 
 	// builds main data: translations
-	if sitecontext.GetTable("country_country").Language != lang {
+	if ds.GetTable("country_country").Language != lang {
 		// Only 1 fields to translate: name
-		translation.Translate(sitecontext, TRANSLATIONTHEME, key, data, map[string]interface{}{"name": true}, sitecontext.GetTable("country_country").Language, lang)
+		translation.Translate(ds, TRANSLATIONTHEME, key, data, map[string]interface{}{"name": true}, ds.GetTable("country_country").Language, lang)
 	}
 
 	return &StructureCountry{Key: key, Lang: lang, Data: data.(*xdominion.XRecord)}

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<application id="translationadmin/theme/editor">
+
+  <container id="application" type="separatorContainer" width="max" height="max" mode="vertical" auto="yes">
+    <zone size="*">
+{{FORMTHEME}}
+    </zone>
+  </container>
+
+
+  <element type="codeElement"><![CDATA[
+
+    function translationadmin_theme_editor_{{KEY}}_formlistener(type, mode, key, data)
+    {
+      if (type == "success") // insert, update, delete OK
+      {
+        // reload the list
+        WA.$N('translationadmin/theme|single|themedata').reload();
+      }
+    }
+  ]]></element>
+
+  <event type="start">
+    <code><![CDATA[
+    function(e)
+    {
+      WA.$N('translationadmin/theme/editor|{{KEY}}|formtheme').addListener(translationadmin_theme_editor_{{KEY}}_formlistener);
+
+    }
+    ]]></code>
+  </event>
+
+</application>

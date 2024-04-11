@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<language id="ingredient" lang="es">
+  <!--  Module installation messages -->
+  <!--  init.go -->
+  <entry id="MODULENAME">Puente ChatGPT</entry>
+  <entry id="modulemodified">La entrada %s fue modificada con exito en la tabla base_module.</entry>
+  <entry id="commit">Instalación exitosa.</entry>
+  <entry id="rollback">Instalación con error: %s</entry>
+
+  <!--  errors manager -->
+  <entry id="error.notable">client::%s::%s - Error, the table %s is not available on the datasource %s.</entry>
+  <entry id="error.upsert">client::%s::%s - Error, upserting in %s: %s</entry>
+  <entry id="error.select">client::%s::%s - Error, selecting in %s: %s</entry>
+  <entry id="error.delete">client::%s::%s - Error, deleting in %s: %s</entry>
+
+  <entry id="moduleerror">Error modificando la entrada %s en la tabla base_module: %s</entry>
+  <!--  Datasources transactions -->
+  <entry id="transaction.exist">Error creating a transaction: There is already a started transaction.</entry>
+  <entry id="transaction.none">Error searching the transaction: There is no available transaction.</entry>
+  <entry id="transaction.commitnone">Error searching the transaction to commit: There is no available transaction.</entry>
+  <entry id="transaction.rollbacknone">Error searching the transaction to rollback: There is no available transaction.</entry>
+  <entry id="transaction.error">Error in the transaction: %s</entry>
+  <!--  Containers -->
+  <entry id="database.none">There is no available database in the datasource</entry>
+</language>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<language id="user" lang="ja">
+  <entry id="MODULENAME" status="1701369703|1|1"><![CDATA[管理者ユーザー]]></entry>
+  <entry id="commit" status="1701369703|1|1"><![CDATA[インストールが成功しました。]]></entry>
+  <entry id="database.none" status="1701369703|1|1"><![CDATA[データソースに利用可能なデータベースがありません]]></entry>
+  <entry id="moduleerror" status="1701369703|1|1"><![CDATA[ベースモジュールのテーブルでのエントリー%sの変更中にエラーが発生しました：%s]]></entry>
+  <entry id="modulemodified" status="1701369703|1|1"><![CDATA[ベースモジュールのテーブルでのエントリー%sが正常に変更されました。]]></entry>
+  <entry id="rollback" status="1701369703|1|1"><![CDATA[エラーが発生したインストール：%s]]></entry>
+  <entry id="transaction.commitnone" status="1701369703|1|1"><![CDATA[コミットするトランザクションの検索中にエラーが発生しました：利用可能なトランザクションがありません。]]></entry>
+  <entry id="transaction.error" status="1701369703|1|1"><![CDATA[トランザクション中にエラーが発生しました：%s]]></entry>
+  <entry id="transaction.exist" status="1701369703|1|1"><![CDATA[トランザクションの作成中にエラーが発生しました：既に開始されたトランザクションがあります。]]></entry>
+  <entry id="transaction.none" status="1701369703|1|1"><![CDATA[トランザクションの検索中にエラーが発生しました：利用可能なトランザクションがありません。]]></entry>
+  <entry id="transaction.rollbacknone" status="1701369703|1|1"><![CDATA[ロールバックするトランザクションの検索中にエラーが発生しました：利用可能なトランザクションがありません。]]></entry>
+</language>

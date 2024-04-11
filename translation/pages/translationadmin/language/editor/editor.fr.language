@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<language id="editor" lang="fr">
+  <entry id="config.help.description" status="1701369166|1|1"><![CDATA[La configuration est une série de paramètres sous la forme paramètre=valeur. Paramètres reconnus par le système : domain=domaine public correspondant à la langue. country=pays ISO où cette langue est officielle. Il peut y avoir plusieurs country=]]></entry>
+  <entry id="config.title" status="1701369166|1|1"><![CDATA[Configuration :]]></entry>
+  <entry id="default.help.description" status="1701369166|1|1"><![CDATA[Il ne peut y avoir qu'une seule langue par défaut. Si vous sélectionnez "Oui", les autres sont automatiquement mis à Non.]]></entry>
+  <entry id="default.no" status="1701369166|1|1"><![CDATA[Non]]></entry>
+  <entry id="default.status.notnull" status="1701369166|1|1"><![CDATA[Le statut ne peut pas être vide.]]></entry>
+  <entry id="default.title" status="1701369166|1|1"><![CDATA[Langue par défaut :]]></entry>
+  <entry id="default.yes" status="1701369166|1|1"><![CDATA[Oui]]></entry>
+  <entry id="erroraccess" status="1701369166|1|1"><![CDATA[translationadmin/language/editor::%s - Erreur : l'utilisateur '%d' n'a pas accès à cet écran]]></entry>
+  <entry id="errordatasource" status="1701369166|1|1"><![CDATA[translationadmin/language/editor::%s - Erreur : aucune source de données '%s']]></entry>
+  <entry id="errortable" status="1701369166|1|1"><![CDATA[translationadmin/language/editor::%s - Erreur : la table '%s' n'existe pas dans la source de données]]></entry>
+  <entry id="formreset.title" status="1701369166|1|1"><![CDATA[Réinitialiser]]></entry>
+  <entry id="formsubmit.delete.title" status="1701369166|1|1"><![CDATA[Oui, supprimer cette langue]]></entry>
+  <entry id="formsubmit.insert.title" status="1701369166|1|1"><![CDATA[Enregistrer la langue]]></entry>
+  <entry id="formsubmit.update.title" status="1701369166|1|1"><![CDATA[Enregistrer les modifications]]></entry>
+  <entry id="formview.title" status="1701369166|1|1"><![CDATA[Annuler]]></entry>
+  <entry id="hint" status="1701369166|1|1"><![CDATA[Cliquez sur une ligne pour l'éditer :]]></entry>
+  <entry id="key.help.description" status="1701369166|1|1"><![CDATA[La clé de la langue contient de 2 à 5 caractères, en minuscules. Elle est généralement composée de l'ID de la langue, éventuellement suivi d'un tiret et du pays de la langue pour la régionalisation.]]></entry>
+  <entry id="key.status.badformat" status="1701369166|1|1"><![CDATA[La clé n'a pas un format autorisé.]]></entry>
+  <entry id="key.status.notnull" status="1701369166|1|1"><![CDATA[La clé ne peut pas être vide.]]></entry>
+  <entry id="key.title" status="1701369166|1|1"><![CDATA[Clé]]></entry>
+  <entry id="languagetoprune.help.description" status="1701369166|1|1"><![CDATA[Si vous avez sélectionné Non dans le champ précédent, veuillez spécifier la langue qui recevra les informations liées à la langue à supprimer.]]></entry>
+  <entry id="languagetoprune.title" status="1701369166|1|1"><![CDATA[Langue réceptrice :]]></entry>
+  <entry id="mask.errormessage" status="1701369166|1|1"><![CDATA[Les données ne sont pas correctement saisies. Veuillez vérifier les messages et les champs en rouge avant d'envoyer les informations.]]></entry>
+  <entry id="mask.servermessage" status="1701369166|1|1"><![CDATA[Erreur : les données d'enregistrement n'ont pas pu être récupérées depuis le serveur.]]></entry>
+  <entry id="mask.titledelete" status="1701369166|1|1"><![CDATA[Supprimer la langue :]]></entry>
+  <entry id="mask.titledelete.message" status="1701369166|1|1"><![CDATA[Informations supprimées avec succès. Vous pouvez maintenant fermer cet écran.]]></entry>
+  <entry id="mask.titleinsert" status="1701369166|1|1"><![CDATA[Insérer une nouvelle langue :]]></entry>
+  <entry id="mask.titleinsert.message" status="1701369166|1|1"><![CDATA[Informations ajoutées avec succès. Vous pouvez maintenant fermer cet écran.]]></entry>
+  <entry id="mask.titleupdate" status="1701369166|1|1"><![CDATA[Modifier les données de la langue :]]></entry>
+  <entry id="mask.titleupdate.message" status="1701369166|1|1"><![CDATA[Informations modifiées avec succès. Vous pouvez maintenant fermer cet écran.]]></entry>
+  <entry id="mask.titleview" status="1701369166|1|1"><![CDATA[Données de la langue :]]></entry>
+  <entry id="name.help.description" status="1701369166|1|1"><![CDATA[Le nom de la langue est composé de 1 à 255 caractères maximum.]]></entry>
+  <entry id="name.status.notnull" status="1701369166|1|1"><![CDATA[Le nom ne peut pas être vide.]]></entry>
+  <entry id="name.title" status="1701369166|1|1"><![CDATA[Nom]]></entry>
+  <entry id="prune.help.description" status="1701369166|1|1"><![CDATA[Si vous sélectionnez Oui, alors toutes les traductions liées à cette langue seront également supprimées. Si vous sélectionnez Non, alors les informations seront déplacées vers la langue sélectionnée dans le champ suivant.]]></entry>
+  <entry id="prune.no" status="1701369166|1|1"><![CDATA[Non, sélectionner le canal récepteur]]></entry>
+  <entry id="prune.title" status="1701369166|1|1"><![CDATA[Supprimer également les enfants ?]]></entry>
+  <entry id="prune.yes" status="1701369166|1|1"><![CDATA[Oui, supprimer les enfants]]></entry>
+  <entry id="title" status="1701369166|1|1"><![CDATA[Langues connues par le système.]]></entry>
+</language>

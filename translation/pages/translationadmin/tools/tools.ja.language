@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<language id="tools" lang="ja">
+  <entry id="erroraccess" status="1701369922|1|1"><![CDATA[translationadmin/tools::%s - エラー: ユーザー'%d'はこの画面にアクセスできません]]></entry>
+  <entry id="errordatasource" status="1701369922|1|1"><![CDATA[translationadmin/tools::%s - エラー: データソース'%s'が見つかりません]]></entry>
+  <entry id="errortable" status="1701369922|1|1"><![CDATA[translationadmin/tools::%s - エラー: データソースにテーブル'%s'が存在しません]]></entry>
+  <entry id="hint" status="1701369922|1|1"><![CDATA[ツールを呼び出すにはクリックしてください]]></entry>
+  <entry id="searchfiles1" status="1701369922|1|1"><![CDATA[コードの.languageファイル（モジュール）で検索する]]></entry>
+  <entry id="searchfiles2" status="1701369922|1|1"><![CDATA[ページの.languageファイルで検索する]]></entry>
+  <entry id="searchfiles3" status="1701369922|1|1"><![CDATA[JavaScriptのファイルで検索する]]></entry>
+  <entry id="title" status="1701369922|1|1"><![CDATA[翻訳ツール]]></entry>
+  <entry id="translationtitle" status="1701369922|1|1"><![CDATA[言語とサイトの翻訳]]></entry>
+  <entry id="verifytranslation" status="1701369922|1|1"><![CDATA[翻訳の整合性を確認する]]></entry>
+</language>

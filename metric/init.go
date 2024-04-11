@@ -38,26 +38,24 @@ func init() {
 // adds tables and caches to ctx::database
 func Setup(ds applications.Datasource, prefix string) ([]string, error) {
 
-	ctx := ds.(*base.Datasource)
-	buildTables(ctx)
-	createCache(ctx)
-	ctx.SetModule(MODULEID, VERSION)
+	buildTables(ds)
+	createCache(ds)
+	ds.SetModule(MODULEID, VERSION)
 
-	go buildCache(ctx)
+	go buildCache(ds)
 
 	return []string{}, nil
 }
 
 func Synchronize(ds applications.Datasource, prefix string) ([]string, error) {
 
-	ctx := ds.(*base.Datasource)
-	translation.AddTheme(ctx, TRANSLATIONTHEME, "Metric units", translation.SOURCETABLE, "", "name,plural")
+	translation.AddTheme(ds, TRANSLATIONTHEME, "Metric units", translation.SOURCETABLE, "", "name,plural")
 
 	messages := []string{}
 	messages = append(messages, "Analysing metric_unit table.")
-	num, err := ctx.GetTable("metric_unit").Count(nil)
+	num, err := ds.GetTable("metric_unit").Count(nil)
 	if err != nil || num == 0 {
-		err1 := ctx.GetTable("metric_unit").Synchronize()
+		err1 := ds.GetTable("metric_unit").Synchronize()
 		if err1 != nil {
 			messages = append(messages, "The table metric_unit was not created: "+err1.Error())
 		} else {

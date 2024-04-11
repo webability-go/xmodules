@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<language id="translation" lang="ja">
+  <entry id="MODULENAME" status="1701369841|1|1"><![CDATA[Kiwilimonの翻訳エンティティ]]></entry>
+  <entry id="commit" status="1701369841|1|1"><![CDATA[インストールが成功しました。]]></entry>
+  <entry id="database.none" status="1701369841|1|1"><![CDATA[データソースに利用可能なデータベースがありません。]]></entry>
+  <entry id="error.delete" status="1701369841|1|1"><![CDATA[client::%s::%s - エラー、%sでの削除中にエラーが発生しました：%s]]></entry>
+  <entry id="error.notable" status="1701369841|1|1"><![CDATA[client::%s::%s - エラー、テーブル%sはデータソース%sで利用できません。]]></entry>
+  <entry id="error.select" status="1701369841|1|1"><![CDATA[client::%s::%s - エラー、%sでの選択中にエラーが発生しました：%s]]></entry>
+  <entry id="error.upsert" status="1701369841|1|1"><![CDATA[client::%s::%s - エラー、%sでの挿入/更新中にエラーが発生しました：%s]]></entry>
+  <entry id="moduleerror" status="1701369841|1|1"><![CDATA[エントリ%sのbase_moduleテーブルの変更中にエラーが発生しました：%s]]></entry>
+  <entry id="modulemodified" status="1701369841|1|1"><![CDATA[エントリ%sがbase_moduleテーブルで正常に変更されました。]]></entry>
+  <entry id="rollback" status="1701369841|1|1"><![CDATA[エラーが発生したインストール：%s]]></entry>
+  <entry id="transaction.commitnone" status="1701369841|1|1"><![CDATA[トランザクションの検索エラー：利用可能なトランザクションがありません。]]></entry>
+  <entry id="transaction.error" status="1701369841|1|1"><![CDATA[トランザクションエラー：%s]]></entry>
+  <entry id="transaction.exist" status="1701369841|1|1"><![CDATA[トランザクションの作成エラー：既に開始されたトランザクションがあります。]]></entry>
+  <entry id="transaction.none" status="1701369841|1|1"><![CDATA[トランザクションの検索エラー：利用可能なトランザクションがありません。]]></entry>
+  <entry id="transaction.rollbacknone" status="1701369841|1|1"><![CDATA[トランザクションの検索エラー：利用可能なトランザクションがありません。]]></entry>
+  <entry id="translation.description" status="1701369841|1|1"><![CDATA[翻訳の管理へのアクセス]]></entry>
+  <entry id="translation.name" status="1701369841|1|1"><![CDATA[翻訳の管理へのアクセス]]></entry>
+  <entry id="translationfolder.description" status="1701369841|1|1"><![CDATA[翻訳の管理]]></entry>
+  <entry id="translationfolder.name" status="1701369841|1|1"><![CDATA[翻訳の管理]]></entry>
+  <entry id="translationgroup.description" status="1701369841|1|1"><![CDATA[翻訳の管理アクセスグループ]]></entry>
+  <entry id="translationgroup.name" status="1701369841|1|1"><![CDATA[翻訳の管理アクセスグループ]]></entry>
+  <entry id="translationlanguage.description" status="1701369841|1|1"><![CDATA[言語の管理へのアクセス]]></entry>
+  <entry id="translationlanguage.name" status="1701369841|1|1"><![CDATA[言語の管理へのアクセス]]></entry>
+  <entry id="translationlanguageoption.description" status="1701369841|1|1"><![CDATA[既知の言語]]></entry>
+  <entry id="translationlanguageoption.name" status="1701369841|1|1"><![CDATA[既知の言語]]></entry>
+  <entry id="translationoption.description" status="1701369841|1|1"><![CDATA[翻訳]]></entry>
+  <entry id="translationoption.name" status="1701369841|1|1"><![CDATA[翻訳]]></entry>
+  <entry id="translationsource.description" status="1701369841|1|1"><![CDATA[テキストのソースの管理へのアクセス]]></entry>
+  <entry id="translationsource.name" status="1701369841|1|1"><![CDATA[テキストのソースの管理へのアクセス]]></entry>
+  <entry id="translationsourceoption.description" status="1701369841|1|1"><![CDATA[テキストのソース]]></entry>
+  <entry id="translationsourceoption.name" status="1701369841|1|1"><![CDATA[テキストのソース]]></entry>
+  <entry id="translationtheme.description" status="1701369841|1|1"><![CDATA[翻訳テーマの管理へのアクセス]]></entry>
+  <entry id="translationtheme.name" status="1701369841|1|1"><![CDATA[翻訳テーマの管理へのアクセス]]></entry>
+  <entry id="translationthemeoption.description" status="1701369841|1|1"><![CDATA[翻訳テーマ]]></entry>
+  <entry id="translationthemeoption.name" status="1701369841|1|1"><![CDATA[翻訳テーマ]]></entry>
+  <entry id="translationtools.description" status="1701369841|1|1"><![CDATA[翻訳ツールへのアクセス]]></entry>
+  <entry id="translationtools.name" status="1701369841|1|1"><![CDATA[翻訳ツールへのアクセス]]></entry>
+  <entry id="translationtoolsoption.description" status="1701369841|1|1"><![CDATA[ツール]]></entry>
+  <entry id="translationtoolsoption.name" status="1701369841|1|1"><![CDATA[ツール]]></entry>
+</language>

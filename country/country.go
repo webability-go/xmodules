@@ -3,20 +3,19 @@
 package country
 
 import (
+	"github.com/webability-go/xamboo/applications"
 	"golang.org/x/text/language"
-
-	"github.com/webability-go/xmodules/base"
 )
 
-func createTables(ctx *base.Datasource) []string {
+func createTables(ds applications.Datasource) []string {
 
 	messages := []string{}
 
 	for _, tbl := range moduletablesorder {
 		messages = append(messages, "Analysing "+tbl+" table.")
-		num, err := ctx.GetTable(tbl).Count(nil)
+		num, err := ds.GetTable(tbl).Count(nil)
 		if err != nil || num == 0 {
-			err1 := ctx.GetTable(tbl).Synchronize()
+			err1 := ds.GetTable(tbl).Synchronize()
 			if err1 != nil {
 				messages = append(messages, "The table "+tbl+" was not created: "+err1.Error())
 			} else {
@@ -31,18 +30,18 @@ func createTables(ctx *base.Datasource) []string {
 }
 
 // GetCountry to get the data of a country from cache/db in the specified language
-func GetCountry(ctx *base.Datasource, key string, lang language.Tag) *StructureCountry {
+func GetCountry(ds applications.Datasource, key string, lang language.Tag) *StructureCountry {
 
 	canonical := lang.String()
 
-	data, _ := ctx.GetCache("country:countries:" + canonical).Get(key)
+	data, _ := ds.GetCache("country:countries:" + canonical).Get(key)
 	if data == nil {
-		sm := CreateStructureCountryByKey(ctx, key, lang)
+		sm := CreateStructureCountryByKey(ds, key, lang)
 		if sm == nil {
-			ctx.Log("graph", "xmodules::country::GetGountry: there is no country created:", key, lang)
+			ds.Log("graph", "xmodules::country::GetGountry: there is no country created:", key, lang)
 			return nil
 		}
-		ctx.GetCache("country:countries:"+canonical).Set(key, sm)
+		ds.GetCache("country:countries:"+canonical).Set(key, sm)
 		return sm.(*StructureCountry)
 	}
 	return data.(*StructureCountry)

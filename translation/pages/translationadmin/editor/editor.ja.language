@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<language id="editor" lang="ja">
+  <entry id="commands" status="1701369844|1|1"><![CDATA[コマンド：]]></entry>
+  <entry id="erroraccess" status="1701369844|1|1"><![CDATA[translationadmin/editor::%s - エラー：ユーザー '%d' はこの画面にアクセスする権限がありません]]></entry>
+  <entry id="errordatasource" status="1701369844|1|1"><![CDATA[translationadmin/editor::%s - エラー：データソース '%s' が見つかりません]]></entry>
+  <entry id="errortable" status="1701369844|1|1"><![CDATA[translationadmin/editor::%s - エラー：データソースにテーブル '%s' が存在しません]]></entry>
+  <entry id="key" status="1701369844|1|1"><![CDATA[フィールド/キー：]]></entry>
+  <entry id="original" status="1701369844|1|1"><![CDATA[オリジナル：]]></entry>
+  <entry id="translation" status="1701369844|1|1"><![CDATA[翻訳：]]></entry>
+</language>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<language id="editor" lang="pt">
+  <entry id="erroraccess" status="1701370071|1|1"><![CDATA[adminuser/accessgroup/editor::%s - Erro: o usuário '%d' não tem acesso a esta tela]]></entry>
+  <entry id="errordatasource" status="1701370071|1|1"><![CDATA[adminuser/accessgroup/editor::%s - Erro: não há fonte de dados '%s']]></entry>
+  <entry id="errortable" status="1701370071|1|1"><![CDATA[adminuser/access/editor::%s - Erro: a tabela '%s' não existe no datasource]]></entry>
+  <entry id="formreset.title" status="1701370071|1|1"><![CDATA[Desfazer as alterações]]></entry>
+  <entry id="formsubmit.delete.title" status="1701370071|1|1"><![CDATA[Excluir este grupo]]></entry>
+  <entry id="formsubmit.insert.title" status="1701370071|1|1"><![CDATA[Salvar o novo grupo]]></entry>
+  <entry id="formsubmit.update.title" status="1701370071|1|1"><![CDATA[Salvar as modificações]]></entry>
+  <entry id="formview.title" status="1701370071|1|1"><![CDATA[Cancelar]]></entry>
+  <entry id="grouptoprune.help.description" status="1701370071|1|1"><![CDATA[Se selecionou Não no campo anterior, então especifique o grupo que receberá os direitos do grupo a ser excluído.]]></entry>
+  <entry id="grouptoprune.title" status="1701370071|1|1"><![CDATA[Grupo receptor:]]></entry>
+  <entry id="hint" status="1701370071|1|1"><![CDATA[Clique em uma linha para editá-la:]]></entry>
+  <entry id="key.error" status="1701370071|1|1"><![CDATA[A chave de um grupo de direitos editada pelo usuário não pode começar com _.]]></entry>
+  <entry id="key.help.description" status="1701370071|1|1"><![CDATA[A chave do grupo de direitos de acesso contém de 1 a 30 caracteres, em minúsculas. A chave deve começar com uma letra. Você também pode usar números, '-' e '_'. As chaves começando com _ são grupos de direitos de acesso de sistema e não podem ser criadas ou modificadas pelo usuário.]]></entry>
+  <entry id="key.pruneerror" status="1701370071|1|1"><![CDATA[Você não pode colar filhos em um grupo cuja chave começa com _.]]></entry>
+  <entry id="key.status.badformat" status="1701370071|1|1"><![CDATA[A chave está em um formato incorreto.]]></entry>
+  <entry id="key.status.notnull" status="1701370071|1|1"><![CDATA[A chave não pode estar vazia.]]></entry>
+  <entry id="key.title" status="1701370071|1|1"><![CDATA[Chave:]]></entry>
+  <entry id="mask.errormessage" status="1701370071|1|1"><![CDATA[Os dados ainda não estão corretamente preenchidos. Por favor, verifique as mensagens e os campos em vermelho antes de enviar as informações.]]></entry>
+  <entry id="mask.servermessage" status="1701370071|1|1"><![CDATA[Erro: Os dados do registro não puderam ser recuperados do servidor.]]></entry>
+  <entry id="mask.titledelete" status="1701370071|1|1"><![CDATA[Excluir o grupo de direitos de acesso do sistema:]]></entry>
+  <entry id="mask.titledelete.message" status="1701370071|1|1"><![CDATA[Informações excluídas com sucesso. Agora você pode fechar esta tela.]]></entry>
+  <entry id="mask.titleinsert" status="1701370071|1|1"><![CDATA[Inserir um novo grupo de direitos de acesso do sistema:]]></entry>
+  <entry id="mask.titleinsert.message" status="1701370071|1|1"><![CDATA[Informações adicionadas com sucesso. Agora você pode fechar esta tela.]]></entry>
+  <entry id="mask.titleupdate" status="1701370071|1|1"><![CDATA[Modificar os dados do grupo de direitos de acesso:]]></entry>
+  <entry id="mask.titleupdate.message" status="1701370071|1|1"><![CDATA[Informações modificadas com sucesso. Agora você pode fechar esta tela.]]></entry>
+  <entry id="mask.titleview" status="1701370071|1|1"><![CDATA[Dados do grupo de direitos de acesso do sistema:]]></entry>
+  <entry id="name.help.description" status="1701370071|1|1"><![CDATA[O nome do grupo de direitos de acesso contém de 1 a 255 caracteres no máximo.]]></entry>
+  <entry id="name.status.notnull" status="1701370071|1|1"><![CDATA[O nome não pode estar vazio.]]></entry>
+  <entry id="name.title" status="1701370071|1|1"><![CDATA[Nome:]]></entry>
+  <entry id="prune.help.description" status="1701370071|1|1"><![CDATA[Se você selecionar Sim, então todos os direitos neste grupo também serão excluídos. Se você selecionar Não, então os direitos neste grupo serão movidos para o grupo selecionado no campo seguinte.]]></entry>
+  <entry id="prune.no" status="1701370071|1|1"><![CDATA[Não, selecionar o grupo receptor]]></entry>
+  <entry id="prune.title" status="1701370071|1|1"><![CDATA[Excluir também os filhos?]]></entry>
+  <entry id="prune.yes" status="1701370071|1|1"><![CDATA[Sim, excluir os filhos]]></entry>
+  <entry id="title" status="1701370071|1|1"><![CDATA[Grupos de direitos de acesso do sistema.]]></entry>
+</language>

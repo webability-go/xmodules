@@ -1,10 +1,11 @@
 package assets
 
 import (
+	"log"
+
 	"github.com/webability-go/xdominion"
 
 	"github.com/webability-go/xamboo/applications"
-	"github.com/webability-go/xamboo/cms/context"
 
 	"github.com/webability-go/xmodules/base"
 )
@@ -64,8 +65,8 @@ type ModuleEntries struct {
 	HasAccess func(ds applications.Datasource, userid int, args ...interface{}) bool
 }
 
-func GetEntries(ctx *context.Context) *ModuleEntries {
-	me := base.GetEntries(ctx, MODULEID)
+func GetEntries(logger *log.Logger) *ModuleEntries {
+	me := base.GetEntries(logger, MODULEID)
 	if me == nil {
 		return nil
 	}

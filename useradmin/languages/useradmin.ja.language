@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<language id="useradmin" lang="ja">
+  <entry id="MODULENAME" status="1701369969|1|1"><![CDATA[ユーザー管理ツール]]></entry>
+  <entry id="access.description" status="1701369969|1|1"><![CDATA[ユーザーアクセス管理へのアクセス]]></entry>
+  <entry id="access.name" status="1701369969|1|1"><![CDATA[ユーザーアクセス管理へのアクセス]]></entry>
+  <entry id="accessgroup.description" status="1701369969|1|1"><![CDATA[ユーザー管理のアクセスグループ]]></entry>
+  <entry id="accessgroup.name" status="1701369969|1|1"><![CDATA[ユーザー管理のアクセスグループ]]></entry>
+  <entry id="commit" status="1701369969|1|1"><![CDATA[インストールが成功しました。]]></entry>
+  <entry id="database.none" status="1701369969|1|1"><![CDATA[データソースに利用可能なデータベースがありません。]]></entry>
+  <entry id="mainuser.description" status="1701369969|1|1"><![CDATA[ユーザー管理のメインアクセス]]></entry>
+  <entry id="mainuser.name" status="1701369969|1|1"><![CDATA[ユーザー管理のメインアクセス]]></entry>
+  <entry id="moduleerror" status="1701369969|1|1"><![CDATA[%sのエントリをベースモジュールテーブルで変更中にエラーが発生しました: %s]]></entry>
+  <entry id="modulemodified" status="1701369969|1|1"><![CDATA[%sのエントリがベースモジュールテーブルで正常に変更されました。]]></entry>
+  <entry id="profile.description" status="1701369969|1|1"><![CDATA[ユーザープロファイル管理へのアクセス]]></entry>
+  <entry id="profile.name" status="1701369969|1|1"><![CDATA[ユーザープロファイル管理へのアクセス]]></entry>
+  <entry id="rollback" status="1701369969|1|1"><![CDATA[エラーが発生しました: %s]]></entry>
+  <entry id="transaction.commitnone" status="1701369969|1|1"><![CDATA[トランザクションの検索エラー: 利用可能なトランザクションがありません。]]></entry>
+  <entry id="transaction.error" status="1701369969|1|1"><![CDATA[トランザクションエラー: %s]]></entry>
+  <entry id="transaction.exist" status="1701369969|1|1"><![CDATA[トランザクションの作成エラー: 既に開始されているトランザクションがあります。]]></entry>
+  <entry id="transaction.none" status="1701369969|1|1"><![CDATA[トランザクションの検索エラー: 利用可能なトランザクションがありません。]]></entry>
+  <entry id="transaction.rollbacknone" status="1701369969|1|1"><![CDATA[トランザクションのロールバックのためのトランザクションの検索エラー: 利用可能なトランザクションがありません。]]></entry>
+  <entry id="user.description" status="1701369969|1|1"><![CDATA[ユーザー管理へのアクセス]]></entry>
+  <entry id="user.name" status="1701369969|1|1"><![CDATA[ユーザー管理へのアクセス]]></entry>
+  <entry id="useraccess.description" status="1701369969|1|1"><![CDATA[全アクセス]]></entry>
+  <entry id="useraccess.name" status="1701369969|1|1"><![CDATA[アクセス権限]]></entry>
+  <entry id="userfolder.description" status="1701369716|1|1"><![CDATA[ アクセス権限]]></entry>
+  <entry id="userfolder.name" status="1701369969|1|1"><![CDATA[ユーザー管理]]></entry>
+  <entry id="userprofile.description" status="1701369969|1|1"><![CDATA[全プロファイル]]></entry>
+  <entry id="userprofile.name" status="1701369969|1|1"><![CDATA[プロファイル]]></entry>
+  <entry id="useruser.description" status="1701369969|1|1"><![CDATA[ユーザーのリストと編集]]></entry>
+  <entry id="useruser.name" status="1701369969|1|1"><![CDATA[ユーザー]]></entry>
+</language>

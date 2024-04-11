@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<language id="editor" lang="pt">
+  <entry id="commands" status="1701370126|1|1"><![CDATA[Comandos:]]></entry>
+  <entry id="erroraccess" status="1701370126|1|1"><![CDATA[translationadmin/editor::%s - Erro: o usuário '%d' não tem acesso a esta tela]]></entry>
+  <entry id="errordatasource" status="1701370126|1|1"><![CDATA[translationadmin/editor::%s - Erro: não há fonte de dados '%s']]></entry>
+  <entry id="errortable" status="1701370126|1|1"><![CDATA[translationadmin/editor::%s - Erro: a tabela '%s' não existe no datasource]]></entry>
+  <entry id="key" status="1701370126|1|1"><![CDATA[Campo/Chave:]]></entry>
+  <entry id="original" status="1701370126|1|1"><![CDATA[Original:]]></entry>
+  <entry id="translation" status="1701370126|1|1"><![CDATA[Traduzido:]]></entry>
+</language>

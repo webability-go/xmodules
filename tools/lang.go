@@ -2,6 +2,7 @@ package tools
 
 import (
 	"embed"
+	"errors"
 	"fmt"
 	"log"
 
@@ -12,13 +13,17 @@ import (
 	"github.com/webability-go/xamboo/loggers"
 )
 
-// Language is the default system language to search messages in this language in priority
-// It may be changed by the code at anytime. Recommended to change it to your language when you init your libraries
-var Language language.Tag = language.English
+// FUNCTIONS MADE TO BE USED BY BACK CODE WITH AN ARRAY OF TRANSLATION TABLES BUILD WTITH BuildMessagesFS
+
+// If the first parameter is a datasource, will take the default language of the datasource.
+// If the first parameter is a Language, will take the language of the parameter.
+// If there is nothing found for the language, will take the english language, then the id itself
+
+var Language = language.English
 
 func Message(messages *map[language.Tag]*xcore.XLanguage, id string, params ...interface{}) string {
 
-	lang := Language
+	var lang language.Tag
 	ok := false
 	if len(params) > 0 {
 		lang, ok = params[0].(language.Tag)
@@ -27,6 +32,12 @@ func Message(messages *map[language.Tag]*xcore.XLanguage, id string, params ...i
 		} else {
 			lang = Language
 		}
+	}
+	if (*messages)[lang] == nil {
+		lang = Language
+	}
+	if (*messages)[lang] == nil {
+		lang = language.English
 	}
 	msg := (*messages)[lang].Get(id)
 	if msg == "" && lang != language.English && (*messages)[language.English] != nil {
@@ -42,18 +53,27 @@ func Message(messages *map[language.Tag]*xcore.XLanguage, id string, params ...i
 	return msg
 }
 
-func BuildMessages(data map[language.Tag]map[string]string) *map[language.Tag]*xcore.XLanguage {
-	bdata := map[language.Tag]*xcore.XLanguage{}
-	for l, t := range data {
-		xl := xcore.NewXLanguage("messages", l)
-		for id, val := range t {
-			xl.Set(id, val)
-		}
-		bdata[l] = xl
-	}
-	return &bdata
+func ErrorMessage(messages *map[language.Tag]*xcore.XLanguage, id string, params ...interface{}) error {
+
+	message := Message(messages, id, params...)
+	return errors.New(message)
 }
 
+func MessageLog(log *log.Logger, messages *map[language.Tag]*xcore.XLanguage, id string, params ...interface{}) string {
+
+	message := Message(messages, id, params...)
+	log.Println(message)
+	return message
+}
+
+func ErrorMessageLog(log *log.Logger, messages *map[language.Tag]*xcore.XLanguage, id string, params ...interface{}) error {
+
+	message := Message(messages, id, params...)
+	log.Println(message)
+	return errors.New(message)
+}
+
+// FUNCTIONS MADE TO BE USED BY FRONT PAGES WITH AN ALREADY SELECTED LANGUAGE
 func LogMessage(log *log.Logger, lang *xcore.XLanguage, id string, params ...interface{}) string {
 
 	msg := lang.Get(id)
@@ -76,7 +96,11 @@ func WajafLogErrorMessage(log *log.Logger, lang *xcore.XLanguage, id string, par
 
 func BuildMessagesFS(fs embed.FS, path string) *map[language.Tag]*xcore.XLanguage {
 
-	slg := loggers.GetCoreLogger("errors")
+	// TODO(Phil) this is a workaround for the GetCoreLogger when the logger does not exists, it gives a panic error !!!
+	slg := loggers.Create("errors", "stdout:", nil, nil).Logger
+	if loggers.Loggers["X[errors]"] != nil {
+		slg = loggers.GetCoreLogger("errors")
+	}
 	messages := &map[language.Tag]*xcore.XLanguage{}
 
 	files, _ := fs.ReadDir(path)
@@ -89,7 +113,7 @@ func BuildMessagesFS(fs embed.FS, path string) *map[language.Tag]*xcore.XLanguag
 		data, _ := fs.ReadFile(pathname)
 		xlanguage, err := xcore.NewXLanguageFromXMLString(string(data))
 		if err != nil {
-			slg.Println("Error reading module messages:", err)
+			slg.Println("Error reading module messages:", pathname, err)
 			continue
 		}
 		lang := xlanguage.GetLanguage()

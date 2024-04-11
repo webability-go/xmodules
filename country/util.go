@@ -9,9 +9,9 @@ import (
 
 	"golang.org/x/text/language"
 
+	"github.com/webability-go/xamboo/applications"
 	"github.com/webability-go/xcore/v2"
 	"github.com/webability-go/xdominion"
-	"github.com/webability-go/xmodules/base"
 	"github.com/webability-go/xmodules/translation"
 )
 
@@ -25,33 +25,33 @@ var moduletables = map[string]func() *xdominion.XTable{
 	"country_country": countryCountry,
 }
 
-func buildTables(ctx *base.Datasource) {
+func buildTables(ds applications.Datasource) {
 
 	for _, tbl := range moduletablesorder {
 		table := moduletables[tbl]()
-		table.SetBase(ctx.GetDatabase())
+		table.SetBase(ds.GetDatabase())
 		table.SetLanguage(language.English)
-		ctx.SetTable(tbl, table)
+		ds.SetTable(tbl, table)
 	}
 }
 
-func createCache(ctx *base.Datasource) []string {
+func createCache(ds applications.Datasource) []string {
 
-	for _, lang := range ctx.GetLanguages() {
+	for _, lang := range ds.GetLanguages() {
 		canonical := lang.String()
-		ctx.SetCache("country:countries:"+canonical, xcore.NewXCache("country:countries:"+canonical, 0, 0))
+		ds.SetCache("country:countries:"+canonical, xcore.NewXCache("country:countries:"+canonical, 0, 0))
 	}
 	return []string{}
 }
 
-func buildCache(ctx *base.Datasource) []string {
+func buildCache(ds applications.Datasource) []string {
 
 	// Lets protect us for race condition since map[] of Tables and XCaches are not thread safe
-	country_country := ctx.GetTable("country_country")
+	country_country := ds.GetTable("country_country")
 	caches := map[string]*xcore.XCache{}
-	for _, lang := range ctx.GetLanguages() {
+	for _, lang := range ds.GetLanguages() {
 		canonical := lang.String()
-		caches["country:countries:"+canonical] = ctx.GetCache("country:countries:" + canonical)
+		caches["country:countries:"+canonical] = ds.GetCache("country:countries:" + canonical)
 	}
 
 	// Loads all data in XCache
@@ -60,13 +60,13 @@ func buildCache(ctx *base.Datasource) []string {
 		return []string{"No hay paises en la tabla"}
 	}
 
-	for _, lang := range ctx.GetLanguages() {
+	for _, lang := range ds.GetLanguages() {
 		canonical := lang.String()
 
 		all := []string{}
 		for _, m := range *countries {
 			// creates structure on language
-			str := CreateStructureCountryByData(ctx, m.Clone(), lang)
+			str := CreateStructureCountryByData(ds, m.Clone(), lang)
 			key, _ := m.GetString("key")
 			all = append(all, key)
 			caches["country:countries:"+canonical].Set(key, str)
@@ -77,10 +77,10 @@ func buildCache(ctx *base.Datasource) []string {
 	return []string{}
 }
 
-func loadTables(ctx *base.Datasource, filespath string) []string {
+func loadTables(ds applications.Datasource, filespath string) []string {
 
 	// borra toda la data porque la vamos a insertar de nuevo (si se puede: FK bloquea)
-	ctx.GetTable("country_country").Delete(nil)
+	ds.GetTable("country_country").Delete(nil)
 
 	// 4 archivos de importación
 	DMPCOUNTRY := filespath + "countries.en.dmp"
@@ -89,7 +89,7 @@ func loadTables(ctx *base.Datasource, filespath string) []string {
 	data := readFile(DMPCOUNTRY)
 	for _, r := range *data {
 		key, _ := r.(*xdominion.XRecord).GetString("key")
-		ctx.GetTable("country_country").Upsert(key, *r.(*xdominion.XRecord))
+		ds.GetTable("country_country").Upsert(key, *r.(*xdominion.XRecord))
 		num++
 	}
 
@@ -100,7 +100,7 @@ func loadTables(ctx *base.Datasource, filespath string) []string {
 		key, _ := r.(*xdominion.XRecord).GetString("key")
 		name, _ := r.(*xdominion.XRecord).GetString("name")
 
-		err := translation.SetTranslation(ctx, name, TRANSLATIONTHEME, key, "name", language.Spanish, 1)
+		err := translation.SetTranslation(ds, name, TRANSLATIONTHEME, key, "name", language.Spanish, 1)
 		if err != nil {
 			fmt.Println(err)
 		}

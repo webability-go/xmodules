@@ -32,6 +32,22 @@ func AddAccessGroup(ds applications.Datasource, accessgroup *assets.AccessGroup)
 	return err
 }
 
+func DelAccessGroupByKey(ds applications.Datasource, key string) error {
+
+	user_accessgroup := ds.GetTable("user_accessgroup")
+	if user_accessgroup == nil {
+		errmsg := tools.Message(messages, "error.notable", "access", "DelAccessGroup", "user_accessgroup", ds.GetName())
+		ds.Log("error", errmsg)
+		return errors.New(errmsg)
+	}
+
+	_, err := user_accessgroup.Delete(key)
+	if err != nil {
+		ds.Log("error", tools.Message(messages, "error.delete", "access", "DelAccessGroup", "user_accessgroup", err))
+	}
+	return err
+}
+
 func GetAccessGroupsCount(ds applications.Datasource, cond *xdominion.XConditions) int {
 
 	user_accessgroup := ds.GetTable("user_accessgroup")

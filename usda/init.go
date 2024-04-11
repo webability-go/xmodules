@@ -4,32 +4,39 @@
 package usda
 
 import (
+	"embed"
+
 	"golang.org/x/text/language"
+
+	"github.com/webability-go/xcore/v2"
 
 	"github.com/webability-go/xamboo/applications"
 	"github.com/webability-go/xamboo/cms/context"
 
 	"github.com/webability-go/xmodules/base"
-	"github.com/webability-go/xmodules/translation"
+	"github.com/webability-go/xmodules/tools"
+
 	"github.com/webability-go/xmodules/usda/assets"
 )
 
-const (
-	MODULEID         = "usda"
-	VERSION          = "0.0.1"
-	TRANSLATIONTHEME = "nutrient"
-)
-
-var ModuleUsda = assets.ModuleEntries{}
+//go:embed languages/*.language
+var fsmessages embed.FS
+var messages *map[language.Tag]*xcore.XLanguage
 
 func init() {
+	messages = tools.BuildMessagesFS(fsmessages, "languages")
 	m := &base.Module{
-		ID:           MODULEID,
-		Version:      VERSION,
-		Languages:    map[language.Tag]string{language.English: "USDA Database", language.Spanish: "Base de datos de la USDA", language.French: "Base de données de la USDA"},
-		Needs:        []string{"base"},
-		FSetup:       Setup,
-		FSynchronize: Synchronize,
+		ID:      assets.MODULEID,
+		Version: assets.VERSION,
+		Languages: map[language.Tag]string{
+			language.English: tools.Message(messages, "MODULENAME", language.English),
+			language.Spanish: tools.Message(messages, "MODULENAME", language.Spanish),
+		},
+		Needs:         assets.Needs,
+		FSetup:        Setup,
+		FSynchronize:  Synchronize,
+		FStartContext: StartContext,
+		Entries:       &assets.ModuleEntries{},
 	}
 	base.ModulesList.Register(m)
 }
@@ -38,34 +45,32 @@ func init() {
 // adds tables and caches to sitecontext::database
 func Setup(ds applications.Datasource, prefix string) ([]string, error) {
 
-	ctx := ds.(*base.Datasource)
-	buildTables(ctx)
-	createCache(ctx)
-	ctx.SetModule(MODULEID, VERSION)
+	buildTables(ds)
+	createCache(ds)
+	ds.SetModule(assets.MODULEID, assets.VERSION)
 
-	go buildCache(ctx)
+	go buildCache(ds)
 
 	return []string{}, nil
 }
 
 func Synchronize(ds applications.Datasource, prefix string) ([]string, error) {
 
-	ctx := ds.(*base.Datasource)
-	translation.AddTheme(ctx, TRANSLATIONTHEME, "USDA nutrients", translation.SOURCETABLE, "", "name,tag")
+	//	translation.AddTheme(ds, TRANSLATIONTHEME, "USDA nutrients", translation.SOURCETABLE, "", "name,tag")
 
 	messages := []string{}
-	messages = append(messages, createTables(ctx)...)
+	messages = append(messages, createTables(ds)...)
 
 	// Be sure base module is on db: fill base module (we should get this from xmodule.conf)
-	err := base.AddModule(ctx, MODULEID, "List of USDA food and nutrients", VERSION)
+	err := base.AddModule(ds, assets.MODULEID, "List of USDA food and nutrients", assets.VERSION)
 	if err == nil {
-		messages = append(messages, "The entry "+MODULEID+" was modified successfully in the modules table.")
+		messages = append(messages, "The entry "+assets.MODULEID+" was modified successfully in the modules table.")
 	} else {
-		messages = append(messages, "Error modifying the entry "+MODULEID+" in the modules table: "+err.Error())
+		messages = append(messages, "Error modifying the entry "+assets.MODULEID+" in the modules table: "+err.Error())
 	}
 
-	messages = append(messages, loadTables(ctx, prefix)...)
-	messages = append(messages, buildCache(ctx)...)
+	messages = append(messages, loadTables(ds, prefix)...)
+	messages = append(messages, buildCache(ds)...)
 
 	return messages, nil
 }

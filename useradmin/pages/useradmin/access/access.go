@@ -29,7 +29,7 @@ func Run(ctx *context.Context, template *xcore.XTemplate, language *xcore.XLangu
 		return ""
 	}
 
-	userentries := userassets.GetEntries(ctx)
+	userentries := userassets.GetEntries(ctx.LoggerError)
 	ds := base.TryDatasource(ctx, userassets.DATASOURCE)
 	userkey, _ := ctx.Sessionparams.GetInt("userkey")
 
@@ -65,7 +65,7 @@ func Accessdata(ctx *context.Context, template *xcore.XTemplate, language *xcore
 		dataarray = [][]int{{0, 49}}
 	}
 
-	userentries := userassets.GetEntries(ctx)
+	userentries := userassets.GetEntries(ctx.LoggerError)
 	ds := base.TryDatasource(ctx, userassets.DATASOURCE)
 
 	showsystem := userentries.GetUserParam(ds, userkey, ACCESS_SHOWSYSTEM)
@@ -130,7 +130,7 @@ func Filter(ctx *context.Context, template *xcore.XTemplate, language *xcore.XLa
 		return ""
 	}
 
-	userentries := userassets.GetEntries(ctx)
+	userentries := userassets.GetEntries(ctx.LoggerError)
 	ds := base.TryDatasource(ctx, userassets.DATASOURCE)
 	userkey, _ := ctx.Sessionparams.GetInt("userkey")
 
@@ -142,7 +142,7 @@ func Filter(ctx *context.Context, template *xcore.XTemplate, language *xcore.XLa
 
 func searchProfiles(ctx *context.Context, ds applications.Datasource, key string) string {
 
-	userentries := userassets.GetEntries(ctx)
+	userentries := userassets.GetEntries(ctx.LoggerError)
 	recs, err := userentries.GetAccessProfiles(ds, key, 10)
 	if recs == nil || err != nil || len(*recs) == 0 {
 		return "--"
@@ -157,7 +157,7 @@ func searchProfiles(ctx *context.Context, ds applications.Datasource, key string
 
 func searchUsers(ctx *context.Context, ds applications.Datasource, key string) string {
 
-	userentries := userassets.GetEntries(ctx)
+	userentries := userassets.GetEntries(ctx.LoggerError)
 	recs, err := userentries.GetAccessUsers(ds, key, 10)
 	if recs == nil || err != nil || len(*recs) == 0 {
 		return "--"

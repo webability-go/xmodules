@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<language id="editor" lang="en">
+  <entry id="accesses.title" status="1701369449|1|1"><![CDATA[Accesses using this profile:]]></entry>
+  <entry id="description.help.description.title" status="1701369449|1|1"><![CDATA[Description is a free text, up to 4000 characters.]]></entry>
+  <entry id="description.title" status="1701369449|1|1"><![CDATA[Description]]></entry>
+  <entry id="erroraccess" status="1701369449|1|1"><![CDATA[adminuser/profile/editor::%s - Error: User '%d' does not have access to this screen]]></entry>
+  <entry id="errordatasource" status="1701369449|1|1"><![CDATA[adminuser/profile/editor::%s - Error: No data source '%s']]></entry>
+  <entry id="errortable" status="1701369449|1|1"><![CDATA[adminuser/profile/editor::%s - Error: Table '%s' does not exist in the datasource]]></entry>
+  <entry id="formreset.title" status="1701369449|1|1"><![CDATA[Reset]]></entry>
+  <entry id="formsubmit.delete.title" status="1701369449|1|1"><![CDATA[Yes, delete this profile]]></entry>
+  <entry id="formsubmit.insert.title" status="1701369449|1|1"><![CDATA[Save new profile]]></entry>
+  <entry id="formsubmit.update.title" status="1701369449|1|1"><![CDATA[Save modifications]]></entry>
+  <entry id="formview.title" status="1701369449|1|1"><![CDATA[Cancel]]></entry>
+  <entry id="hint" status="1701369449|1|1"><![CDATA[Click on a row to edit it:]]></entry>
+  <entry id="key.help.description.title" status="1701369449|1|1"><![CDATA[Profile password contains 1 to 30 characters, in lowercase. You can also use numbers, '-' and '_'. Passwords can only start with a letter.]]></entry>
+  <entry id="key.status.notnull" status="1701369449|1|1"><![CDATA[Password cannot be empty.]]></entry>
+  <entry id="key.title" status="1701369449|1|1"><![CDATA[Password]]></entry>
+  <entry id="mask.errormessage" status="1701369449|1|1"><![CDATA[Data is not properly captured yet. Please verify the messages and the fields in red before submitting the information.]]></entry>
+  <entry id="mask.servermessage" status="1701369449|1|1"><![CDATA[Error: Registration data could not be retrieved from the server.]]></entry>
+  <entry id="mask.titledelete" status="1701369449|1|1"><![CDATA[Delete profile:]]></entry>
+  <entry id="mask.titledelete.message" status="1701369449|1|1"><![CDATA[Information deleted successfully. You can now close this screen.]]></entry>
+  <entry id="mask.titleinsert" status="1701369449|1|1"><![CDATA[Insert a new profile:]]></entry>
+  <entry id="mask.titleinsert.message" status="1701369449|1|1"><![CDATA[Information added successfully. You can now close this screen.]]></entry>
+  <entry id="mask.titleupdate" status="1701369449|1|1"><![CDATA[Modify profile data:]]></entry>
+  <entry id="mask.titleupdate.message" status="1701369449|1|1"><![CDATA[Information modified successfully. You can now close this screen.]]></entry>
+  <entry id="mask.titleview" status="1701369449|1|1"><![CDATA[Profile data:]]></entry>
+  <entry id="name.help.description.title" status="1701369449|1|1"><![CDATA[Profile name is from 1 to 255 characters maximum.]]></entry>
+  <entry id="name.status.notnull" status="1701369449|1|1"><![CDATA[Name cannot be empty.]]></entry>
+  <entry id="name.title" status="1701369449|1|1"><![CDATA[Name]]></entry>
+  <entry id="profiletoprune.help.description" status="1701369449|1|1"><![CDATA[If you selected No in the previous field, then specify the profile that will receive the information related to the profile to be deleted.]]></entry>
+  <entry id="profiletoprune.title" status="1701369449|1|1"><![CDATA[Receiving profile:]]></entry>
+  <entry id="prune.help.description" status="1701369449|1|1"><![CDATA[If you select Yes, then all information related to this profile will also be deleted. If you select No, then the information will be moved to the selected profile in the next field.]]></entry>
+  <entry id="prune.no" status="1701369449|1|1"><![CDATA[No, select the receiving profile]]></entry>
+  <entry id="prune.title" status="1701369449|1|1"><![CDATA[Delete children as well?]]></entry>
+  <entry id="prune.yes" status="1701369449|1|1"><![CDATA[Yes, delete children]]></entry>
+  <entry id="status.help.description" status="1701369449|1|1"><![CDATA[You can activate or deactivate a profile at any time. If the profile is deactivated, its set of users/rights is ignored by the system.]]></entry>
+  <entry id="status.no" status="1701369449|1|1"><![CDATA[Disabled]]></entry>
+  <entry id="status.title" status="1701369449|1|1"><![CDATA[Status]]></entry>
+  <entry id="status.yes" status="1701369449|1|1"><![CDATA[Enabled]]></entry>
+  <entry id="title" status="1701369449|1|1"><![CDATA[Profile rights.]]></entry>
+  <entry id="users.title" status="1701369449|1|1"><![CDATA[Users using this profile:]]></entry>
+</language>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<language id="base" lang="ja">
+  <entry id="MODULENAME" status="1701369696|1|1"><![CDATA[ベースXModules]]></entry>
+  <entry id="analyze" status="1701369696|1|1"><![CDATA[テーブル%sを解析中です。]]></entry>
+  <entry id="commit" status="1701369696|1|1"><![CDATA[インストールが成功しました。]]></entry>
+  <entry id="database.none" status="1701369696|1|1"><![CDATA[データソースに利用可能なデータベースはありません。]]></entry>
+  <entry id="moduleerror" status="1701369696|1|1"><![CDATA[テーブルbase_moduleでエントリー%sを変更する際のエラー: %s]]></entry>
+  <entry id="modulemodified" status="1701369696|1|1"><![CDATA[テーブルbase_moduleで、エントリー%sが正常に変更されました。]]></entry>
+  <entry id="moduleneeded" status="1701369696|1|1"><![CDATA['%s'を確認中: モジュール'%s'はインストールされていません: ERROR。]]></entry>
+  <entry id="moduleok" status="1701369696|1|1"><![CDATA['%s'を確認中: モジュール'%s'はインストールされています: OK。]]></entry>
+  <entry id="notable" status="1701369696|1|1"><![CDATA[クリティカルエラー: モジュール'base'のテーブル'%s'が存在しません。]]></entry>
+  <entry id="rollback" status="1701369696|1|1"><![CDATA[エラーが発生したため、インストールが中断されました: %s]]></entry>
+  <entry id="tablecreated" status="1701369696|1|1"><![CDATA[テーブル%sが再度作成されました。]]></entry>
+  <entry id="tableerror" status="1701369696|1|1"><![CDATA[テーブル%sを作成できませんでした: %s]]></entry>
+  <entry id="tablenoexist" status="1701369696|1|1"><![CDATA[データベース内にテーブル%sが存在しません: %s]]></entry>
+  <entry id="tablenotmodified" status="1701369696|1|1"><![CDATA[テーブル%sは既に存在し、データが含まれているため作成されませんでした。]]></entry>
+  <entry id="transaction.commitnone" status="1701369696|1|1"><![CDATA[コミットするトランザクションを検索する際のエラー: 利用可能なトランザクションはありません。]]></entry>
+  <entry id="transaction.error" status="1701369696|1|1"><![CDATA[トランザクションエラー: %s]]></entry>
+  <entry id="transaction.exist" status="1701369696|1|1"><![CDATA[トランザクションを作成する際のエラー: 既に開始されたトランザクションがあります。]]></entry>
+  <entry id="transaction.none" status="1701369696|1|1"><![CDATA[トランザクションを検索する際のエラー: 利用可能なトランザクションはありません。]]></entry>
+  <entry id="transaction.rollbacknone" status="1701369696|1|1"><![CDATA[トランザクションをロールバックする際のエラー: 利用可能なトランザクションはありません。]]></entry>
+</language>

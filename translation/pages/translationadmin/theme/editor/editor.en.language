@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<language id="editor" lang="en">
+  <entry id="description.help.description" status="1701369518|1|1"><![CDATA[The video channel description is up to 4000 characters maximum.]]></entry>
+  <entry id="description.title" status="1701369518|1|1"><![CDATA[Description:]]></entry>
+  <entry id="erroraccess" status="1701369518|1|1"><![CDATA[translationadmin/theme/editor::%s - Error: user '%d' does not have access to this screen]]></entry>
+  <entry id="errordatasource" status="1701369518|1|1"><![CDATA[translationadmin/theme/editor::%s - Error: no data source '%s']]></entry>
+  <entry id="errortable" status="1701369518|1|1"><![CDATA[translationadmin/theme/editor::%s - Error: table '%s' does not exist in the datasource]]></entry>
+  <entry id="formreset.title" status="1701369518|1|1"><![CDATA[Reset]]></entry>
+  <entry id="formsubmit.delete.title" status="1701369518|1|1"><![CDATA[Yes, delete this channel]]></entry>
+  <entry id="formsubmit.insert.title" status="1701369518|1|1"><![CDATA[Save the new channel]]></entry>
+  <entry id="formsubmit.update.title" status="1701369518|1|1"><![CDATA[Save modifications]]></entry>
+  <entry id="formview.title" status="1701369518|1|1"><![CDATA[Cancel]]></entry>
+  <entry id="hint" status="1701369518|1|1"><![CDATA[Click on a row to edit it:]]></entry>
+  <entry id="key.help.description" status="1701369518|1|1"><![CDATA[The video channel key contains 1 to 5 characters, in lowercase. You can also use numbers, '-' and '_'.]]></entry>
+  <entry id="key.status.badformat" status="1701369518|1|1"><![CDATA[The key does not have an authorized format.]]></entry>
+  <entry id="key.status.notnull" status="1701369518|1|1"><![CDATA[The key cannot be empty.]]></entry>
+  <entry id="key.title" status="1701369518|1|1"><![CDATA[Key]]></entry>
+  <entry id="mask.errormessage" status="1701369518|1|1"><![CDATA[The data is not yet captured correctly. Please check the messages and the fields in red before submitting the information.]]></entry>
+  <entry id="mask.servermessage" status="1701369518|1|1"><![CDATA[Error: Unable to retrieve record data from the server.]]></entry>
+  <entry id="mask.titledelete" status="1701369518|1|1"><![CDATA[Delete the video channel:]]></entry>
+  <entry id="mask.titledelete.message" status="1701369518|1|1"><![CDATA[Information successfully deleted. You can now close this screen.]]></entry>
+  <entry id="mask.titleinsert" status="1701369518|1|1"><![CDATA[Insert a new video channel:]]></entry>
+  <entry id="mask.titleinsert.message" status="1701369518|1|1"><![CDATA[Information successfully added. You can now close this screen.]]></entry>
+  <entry id="mask.titleupdate" status="1701369518|1|1"><![CDATA[Modify video channel data:]]></entry>
+  <entry id="mask.titleupdate.message" status="1701369518|1|1"><![CDATA[Information successfully modified. You can now close this screen.]]></entry>
+  <entry id="mask.titleview" status="1701369518|1|1"><![CDATA[Video channel data:]]></entry>
+  <entry id="name.help.description" status="1701369518|1|1"><![CDATA[The video channel name is from 1 to 255 characters maximum.]]></entry>
+  <entry id="name.status.notnull" status="1701369518|1|1"><![CDATA[The name cannot be empty.]]></entry>
+  <entry id="name.title" status="1701369518|1|1"><![CDATA[Name]]></entry>
+  <entry id="prune.help.description" status="1701369518|1|1"><![CDATA[If you select Yes, then all videos related to this channel will also be deleted. If you select No, then the information will be moved to the selected channel in the following field.]]></entry>
+  <entry id="prune.no" status="1701369518|1|1"><![CDATA[No, select the receiving channel]]></entry>
+  <entry id="prune.title" status="1701369518|1|1"><![CDATA[Delete the children as well?]]></entry>
+  <entry id="prune.yes" status="1701369518|1|1"><![CDATA[Yes, delete the children]]></entry>
+  <entry id="status.active" status="1701369518|1|1"><![CDATA[Enabled]]></entry>
+  <entry id="status.down" status="1701369518|1|1"><![CDATA[Disabled]]></entry>
+  <entry id="status.help.description" status="1701369518|1|1"><![CDATA[The status of the video channel can be one of two values: 1 = Enabled, 2 = Disabled.]]></entry>
+  <entry id="status.status.notnull" status="1701369518|1|1"><![CDATA[The status cannot be empty.]]></entry>
+  <entry id="status.title" status="1701369518|1|1"><![CDATA[Status:]]></entry>
+  <entry id="themetoprune.help.description" status="1701369518|1|1"><![CDATA[If you selected No in the previous field, then specify the channel that will receive the related access information to be deleted.]]></entry>
+  <entry id="themetoprune.title" status="1701369518|1|1"><![CDATA[Receiving group:]]></entry>
+  <entry id="title" status="1701369518|1|1"><![CDATA[Video channel.]]></entry>
+</language>

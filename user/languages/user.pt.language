@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<language id="user" lang="pt">
+  <entry id="MODULENAME" status="1701370028|1|1"><![CDATA[Administradores de usuários]]></entry>
+  <entry id="commit" status="1701370028|1|1"><![CDATA[Instalação bem-sucedida.]]></entry>
+  <entry id="database.none" status="1701370028|1|1"><![CDATA[Não há banco de dados disponível no datasource]]></entry>
+  <entry id="moduleerror" status="1701370028|1|1"><![CDATA[Erro ao modificar a entrada %s na tabela base_module: %s]]></entry>
+  <entry id="modulemodified" status="1701370028|1|1"><![CDATA[A entrada %s foi modificada com sucesso na tabela base_module.]]></entry>
+  <entry id="rollback" status="1701370028|1|1"><![CDATA[Instalação com erro: %s]]></entry>
+  <entry id="transaction.commitnone" status="1701370028|1|1"><![CDATA[Erro ao pesquisar a transação para confirmar: Não há transação disponível.]]></entry>
+  <entry id="transaction.error" status="1701370028|1|1"><![CDATA[Erro na transação: %s]]></entry>
+  <entry id="transaction.exist" status="1701370028|1|1"><![CDATA[Erro ao criar uma transação: Já existe uma transação iniciada.]]></entry>
+  <entry id="transaction.none" status="1701370028|1|1"><![CDATA[Erro ao pesquisar a transação: Não há transação disponível.]]></entry>
+  <entry id="transaction.rollbacknone" status="1701370028|1|1"><![CDATA[Erro ao pesquisar a transação para reverter: Não há transação disponível.]]></entry>
+</language>

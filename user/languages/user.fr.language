@@ -1,19 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <language id="user" lang="fr">
-  <!--  Module installation messages -->
-  <!--  init.go -->
-  <entry id="MODULENAME">Utilisateurs pour l'administration</entry>
-  <entry id="modulemodified">L'entrée %s a été modifiée avec succès dans la table base_module.</entry>
-  <entry id="commit">Instalation réussie.</entry>
-  <entry id="rollback">Instalation avec erreur: %s</entry>
-
-  <entry id="moduleerror">Erreur en modifiant l'entrée %s dans la table base_module: %s</entry>
-  <!--  Datasources transactions -->
-  <entry id="transaction.exist">Error creating a transaction: There is already a started transaction.</entry>
-  <entry id="transaction.none">Error searching the transaction: There is no available transaction.</entry>
-  <entry id="transaction.commitnone">Error searching the transaction to commit: There is no available transaction.</entry>
-  <entry id="transaction.rollbacknone">Error searching the transaction to rollback: There is no available transaction.</entry>
-  <entry id="transaction.error">Error in the transaction: %s</entry>
-  <!--  Containers -->
-  <entry id="database.none">There is no available database in the datasource</entry>
+  <entry id="MODULENAME" status="1701369048|1|1"><![CDATA[Utilisateurs administrateurs]]></entry>
+  <entry id="commit" status="1701369048|1|1"><![CDATA[Installation réussie.]]></entry>
+  <entry id="database.none" status="1701369048|1|1"><![CDATA[Il n'y a aucune base de données disponible dans la source de données]]></entry>
+  <entry id="moduleerror" status="1701369048|1|1"><![CDATA[Erreur lors de la modification de l'entrée %s dans la table base_module: %s]]></entry>
+  <entry id="modulemodified" status="1701369048|1|1"><![CDATA[L'entrée %s a été modifiée avec succès dans la table base_module.]]></entry>
+  <entry id="rollback" status="1701369048|1|1"><![CDATA[Installation avec erreur: %s]]></entry>
+  <entry id="transaction.commitnone" status="1701369048|1|1"><![CDATA[Erreur lors de la recherche de la transaction à valider: Il n'y a aucune transaction disponible.]]></entry>
+  <entry id="transaction.error" status="1701369048|1|1"><![CDATA[Erreur dans la transaction: %s]]></entry>
+  <entry id="transaction.exist" status="1701369048|1|1"><![CDATA[Erreur lors de la création d'une transaction: Il y a déjà une transaction en cours.]]></entry>
+  <entry id="transaction.none" status="1701369048|1|1"><![CDATA[Erreur lors de la recherche de la transaction: Il n'y a aucune transaction disponible.]]></entry>
+  <entry id="transaction.rollbacknone" status="1701369048|1|1"><![CDATA[Erreur lors de la recherche de la transaction à annuler: Il n'y a aucune transaction disponible.]]></entry>
 </language>

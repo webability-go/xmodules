@@ -7,6 +7,7 @@ import (
 	"io/ioutil"
 	"net/http"
 	"os"
+	"path/filepath"
 )
 
 /*
@@ -164,4 +165,33 @@ func CreateDirectoryObject(clave, nivel int, prefix string) (string, error) {
 		return prefix + "/" + GetMD5Hash("kl123kl"+fmt.Sprint(clave)) + "/", nil
 	}
 	return "", errors.New("error nivel")
+}
+
+func IsFile(path string) (bool, error) {
+	f, err := os.Stat(path)
+	if err == nil && !f.IsDir() {
+		return true, nil
+	}
+	return false, err
+}
+
+func IsDir(path string) (bool, error) {
+	f, err := os.Stat(path)
+	if err == nil && f.IsDir() {
+		return true, nil
+	}
+	return false, err
+}
+
+// VerifyImage
+// first parameter returns the list of messages of things done, second parameter returns changed name of file if needed, or empty
+func VerifyImage(path, filename string, expectedname string, status bool) ([]string, string) {
+	result := []string{}
+	newname := ""
+	ext := filepath.Ext(filename)
+	if expectedname != "" && filename[:len(filename)-len(ext)] != expectedname {
+		// file error, try to find file and rename file if possible
+
+	}
+	return result, newname
 }

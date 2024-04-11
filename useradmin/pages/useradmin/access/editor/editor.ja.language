@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<language id="editor" lang="ja">
+  <entry id="accesstoprune.help.description" status="1701369742|1|1"><![CDATA[前のフィールドでいいえを選択した場合、削除するアクセスに関連する情報を受け取るアクセスを指定してください。]]></entry>
+  <entry id="accesstoprune.title" status="1701369742|1|1"><![CDATA[受信グループ：]]></entry>
+  <entry id="description.help.description.title" status="1701369742|1|1"><![CDATA[説明は最大4000文字までの自由なテキストです。]]></entry>
+  <entry id="description.title" status="1701369742|1|1"><![CDATA[説明]]></entry>
+  <entry id="erroraccess" status="1701369742|1|1"><![CDATA[adminuser/access/editor::%s - エラー：ユーザー '%d' はこの画面にアクセスできません]]></entry>
+  <entry id="errordatasource" status="1701369742|1|1"><![CDATA[adminuser/access/editor::%s - エラー：データソース '%s' がありません]]></entry>
+  <entry id="errortable" status="1701369742|1|1"><![CDATA[adminuser/access/editor::%s - エラー：データソースにテーブル '%s' が存在しません]]></entry>
+  <entry id="formreset.title" status="1701369742|1|1"><![CDATA[リセット]]></entry>
+  <entry id="formsubmit.delete.title" status="1701369742|1|1"><![CDATA[はい、このグループを削除します]]></entry>
+  <entry id="formsubmit.insert.title" status="1701369742|1|1"><![CDATA[新しいグループを保存する]]></entry>
+  <entry id="formsubmit.update.title" status="1701369742|1|1"><![CDATA[変更を保存する]]></entry>
+  <entry id="formview.title" status="1701369742|1|1"><![CDATA[キャンセル]]></entry>
+  <entry id="group.help.description.title" status="1701369742|1|1"><![CDATA[この権限が所属するグループを選択してください。_で始まるグループはモジュール用に予約されています（手動でキャプチャされたアクセス権には使用しないでください）。]]></entry>
+  <entry id="group.title" status="1701369742|1|1"><![CDATA[グループ]]></entry>
+  <entry id="hint" status="1701369742|1|1"><![CDATA[編集するために行をクリックしてください：]]></entry>
+  <entry id="key.help.description.title" status="1701369742|1|1"><![CDATA[アクセス権のキーには、1から30文字の小文字を含めることができます。数字、'-'、および'_'も使用できます。_で始まるキーはシステムのアクセス権であり、ユーザーが作成すべきではありません。]]></entry>
+  <entry id="key.status.badformat" status="1701369742|1|1"><![CDATA[キーは許可された形式ではありません。]]></entry>
+  <entry id="key.status.notnull" status="1701369742|1|1"><![CDATA[キーは空にすることはできません。]]></entry>
+  <entry id="key.title" status="1701369742|1|1"><![CDATA[キー]]></entry>
+  <entry id="mask.errormessage" status="1701369742|1|1"><![CDATA[データがまだ正しくキャプチャされていません。情報を送信する前に、メッセージと赤いフィールドを確認してください。]]></entry>
+  <entry id="mask.servermessage" status="1701369742|1|1"><![CDATA[エラー：レコードのデータをサーバーから取得できませんでした。]]></entry>
+  <entry id="mask.titledelete" status="1701369742|1|1"><![CDATA[システムのアクセス権を削除しますか？]]></entry>
+  <entry id="mask.titledelete.message" status="1701369742|1|1"><![CDATA[情報は正常に削除されました。この画面を閉じることができます。]]></entry>
+  <entry id="mask.titleinsert" status="1701369742|1|1"><![CDATA[新しいシステムのアクセス権を挿入する：]]></entry>
+  <entry id="mask.titleinsert.message" status="1701369742|1|1"><![CDATA[情報が正常に追加されました。この画面を閉じることができます。]]></entry>
+  <entry id="mask.titleupdate" status="1701369742|1|1"><![CDATA[アクセス権のデータを変更する：]]></entry>
+  <entry id="mask.titleupdate.message" status="1701369742|1|1"><![CDATA[情報は正常に変更されました。この画面を閉じることができます。]]></entry>
+  <entry id="mask.titleview" status="1701369742|1|1"><![CDATA[システムのアクセス権のデータ：]]></entry>
+  <entry id="name.help.description.title" status="1701369742|1|1"><![CDATA[アクセス権の名前は最大255文字までです。]]></entry>
+  <entry id="name.status.notnull" status="1701369742|1|1"><![CDATA[名前は空にすることはできません。]]></entry>
+  <entry id="name.title" status="1701369742|1|1"><![CDATA[名前]]></entry>
+  <entry id="profiles.title" status="1701369742|1|1"><![CDATA[アクセスを使用しているプロファイル：]]></entry>
+  <entry id="prune.help.description" status="1701369742|1|1"><![CDATA[はいを選択すると、このアクセスに関連するすべての情報も削除されます。いいえを選択すると、情報は次のフィールドで選択したアクセスに移動されます。]]></entry>
+  <entry id="prune.no" status="1701369742|1|1"><![CDATA[いいえ、受信アクセスを選択してください]]></entry>
+  <entry id="prune.title" status="1701369742|1|1"><![CDATA[子を削除しますか？]]></entry>
+  <entry id="prune.yes" status="1701369742|1|1"><![CDATA[はい、子を削除します]]></entry>
+  <entry id="title" status="1701369742|1|1"><![CDATA[システムのアクセス権。]]></entry>
+  <entry id="users.hierarchy" status="1701369742|1|1"><![CDATA[継承]]></entry>
+  <entry id="users.no" status="1701369742|1|1"><![CDATA[拒否]]></entry>
+  <entry id="users.title" status="1701369742|1|1"><![CDATA[このアクセスを使用しているユーザー：]]></entry>
+  <entry id="users.yes" status="1701369742|1|1"><![CDATA[許可されました]]></entry>
+</language>

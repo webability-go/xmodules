@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<language id="accessgroup" lang="pt">
+  <entry id="accessgrouptitle" status="1701370058|1|1"><![CDATA[Grupos de direitos]]></entry>
+  <entry id="button.delete" status="1701370058|1|1"><![CDATA[Excluir]]></entry>
+  <entry id="button.edit" status="1701370058|1|1"><![CDATA[Editar]]></entry>
+  <entry id="button.view" status="1701370058|1|1"><![CDATA[Ver]]></entry>
+  <entry id="commands" status="1701370058|1|1"><![CDATA[Comandos]]></entry>
+  <entry id="erroraccess" status="1701370058|1|1"><![CDATA[adminuser/accessgroup::%s - Erro: o usuário '%d' não tem acesso a esta tela]]></entry>
+  <entry id="errordatasource" status="1701370058|1|1"><![CDATA[adminuser/accessgroup::%s - Erro: não há fonte de dados '%s']]></entry>
+  <entry id="hint" status="1701370058|1|1"><![CDATA[Clique em uma linha para visualizá-la]]></entry>
+  <entry id="insertnew" status="1701370058|1|1"><![CDATA[Novo grupo de acesso]]></entry>
+  <entry id="key" status="1701370058|1|1"><![CDATA[Senha]]></entry>
+  <entry id="name" status="1701370058|1|1"><![CDATA[Nome]]></entry>
+  <entry id="newaccessgroup" status="1701370058|1|1"><![CDATA[Novo]]></entry>
+  <entry id="reload" status="1701370058|1|1"><![CDATA[Recarregar lista]]></entry>
+  <entry id="showsystem" status="1701370058|1|1"><![CDATA[Ver direitos do sistema]]></entry>
+  <entry id="title" status="1701370058|1|1"><![CDATA[Grupos de direitos de acesso do sistema.]]></entry>
+</language>

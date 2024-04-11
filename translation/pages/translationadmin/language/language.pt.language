@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<language id="language" lang="pt">
+  <entry id="button.delete" status="1701370144|1|1"><![CDATA[Apagar]]></entry>
+  <entry id="button.edit" status="1701370144|1|1"><![CDATA[Editar]]></entry>
+  <entry id="button.view" status="1701370144|1|1"><![CDATA[Ver]]></entry>
+  <entry id="cleanfilter" status="1701370144|1|1"><![CDATA[Limpar filtro]]></entry>
+  <entry id="commands" status="1701370144|1|1"><![CDATA[Comandos]]></entry>
+  <entry id="erroraccess" status="1701370144|1|1"><![CDATA[translationadmin/language::%s - Erro: o usuário '%d' não tem acesso a esta tela]]></entry>
+  <entry id="errordatasource" status="1701370144|1|1"><![CDATA[translationadmin/language::%s - Erro: não há fonte de dados '%s']]></entry>
+  <entry id="hint" status="1701370144|1|1"><![CDATA[Clique em uma linha para visualizá-la:]]></entry>
+  <entry id="insertnew" status="1701370144|1|1"><![CDATA[Novo idioma]]></entry>
+  <entry id="key" status="1701370144|1|1"><![CDATA[Chave]]></entry>
+  <entry id="languagetitle" status="1701370144|1|1"><![CDATA[Idioma]]></entry>
+  <entry id="name" status="1701370144|1|1"><![CDATA[Nome]]></entry>
+  <entry id="newlanguage" status="1701370144|1|1"><![CDATA[Novo]]></entry>
+  <entry id="quantity" status="1701370144|1|1"><![CDATA[# tópicos / # entradas]]></entry>
+  <entry id="reload" status="1701370144|1|1"><![CDATA[Recarregar a lista]]></entry>
+  <entry id="searchbutton" status="1701370144|1|1"><![CDATA[Pesquisar]]></entry>
+  <entry id="searchtitle" status="1701370144|1|1"><![CDATA[Filtrar (chave ou nome):]]></entry>
+  <entry id="title" status="1701370144|1|1"><![CDATA[Lista de idiomas conhecidos.]]></entry>
+</language>

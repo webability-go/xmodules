@@ -5,31 +5,31 @@ import (
 
 	"golang.org/x/text/language"
 
-	"github.com/webability-go/xmodules/base"
+	"github.com/webability-go/xamboo/applications"
 	"github.com/webability-go/xmodules/metric"
 )
 
-func GetMaterial(ctx *base.Datasource, clave int, lang language.Tag) *StructureMaterial {
+func GetMaterial(ds applications.Datasource, clave int, lang language.Tag) *StructureMaterial {
 
 	canonical := lang.String()
 
-	data, _ := ctx.GetCache("materiales:" + canonical).Get(strconv.Itoa(clave))
+	data, _ := ds.GetCache("materiales:" + canonical).Get(strconv.Itoa(clave))
 	if data == nil {
-		sm := CreateStructureMaterialByKey(ctx, clave, lang)
+		sm := CreateStructureMaterialByKey(ds, clave, lang)
 		if sm == nil {
-			ctx.Log("graph", "xmodules::material::GetMaterial: No hay material creado:", clave, lang)
+			ds.Log("graph", "xmodules::material::GetMaterial: No hay material creado:", clave, lang)
 			return nil
 		}
-		ctx.GetCache("materiales:"+canonical).Set(strconv.Itoa(clave), sm)
+		ds.GetCache("materiales:"+canonical).Set(strconv.Itoa(clave), sm)
 		return sm.(*StructureMaterial)
 	}
 	return data.(*StructureMaterial)
 }
 
-func GetMaterialCompositeName(ctx *base.Datasource, quantity string, materialkey int, metrickey int, extra string, system int, lang language.Tag) string {
+func GetMaterialCompositeName(ds applications.Datasource, quantity string, materialkey int, metrickey int, extra string, system int, lang language.Tag) string {
 
-	materialstructure := GetMaterial(ctx, materialkey, lang)
-	metricstructure := metric.GetMetric(ctx, metrickey, lang)
+	materialstructure := GetMaterial(ds, materialkey, lang)
+	metricstructure := metric.GetMetric(ds, metrickey, lang)
 	if materialstructure == nil || metricstructure == nil {
 		return extra
 	}

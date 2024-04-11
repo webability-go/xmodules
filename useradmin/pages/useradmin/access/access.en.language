@@ -1,9 +1,23 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<language id="useradmin/access" lang="en">
-  <entry id="reload">Reload the list</entry>
-  <entry id="insertnew">New access</entry>
-  <entry id="accessgroup">Admin groups of accesses</entry>
-  <entry id="title">Accesses for users in the system.</entry>
-  <entry id="hint">Click on a line to edit the information:</entry>
-
+<language id="access" lang="en">
+  <entry id="accessgroup" status="1701369415|1|1"><![CDATA[Manage access groups]]></entry>
+  <entry id="accesstitle" status="1701369415|1|1"><![CDATA[Access rights]]></entry>
+  <entry id="button.delete" status="1701369415|1|1"><![CDATA[Delete]]></entry>
+  <entry id="button.edit" status="1701369415|1|1"><![CDATA[Edit]]></entry>
+  <entry id="button.view" status="1701369415|1|1"><![CDATA[View]]></entry>
+  <entry id="commands" status="1701369415|1|1"><![CDATA[Commands]]></entry>
+  <entry id="description" status="1701369415|1|1"><![CDATA[Description]]></entry>
+  <entry id="erroraccess" status="1701369415|1|1"><![CDATA[adminuser/access::%s - Error: User '%d' does not have access to this screen]]></entry>
+  <entry id="errordatasource" status="1701369415|1|1"><![CDATA[adminuser/access::%s - Error: No data source '%s']]></entry>
+  <entry id="group" status="1701369415|1|1"><![CDATA[Group]]></entry>
+  <entry id="hint" status="1701369415|1|1"><![CDATA[Click on a line to display it:]]></entry>
+  <entry id="insertnew" status="1701369415|1|1"><![CDATA[New access]]></entry>
+  <entry id="key" status="1701369415|1|1"><![CDATA[Password]]></entry>
+  <entry id="name" status="1701369415|1|1"><![CDATA[Name]]></entry>
+  <entry id="newaccess" status="1701369415|1|1"><![CDATA[New]]></entry>
+  <entry id="profiles" status="1701369415|1|1"><![CDATA[Profiles]]></entry>
+  <entry id="reload" status="1701369415|1|1"><![CDATA[Reload the list]]></entry>
+  <entry id="showsystem" status="1701369415|1|1"><![CDATA[View system rights]]></entry>
+  <entry id="title" status="1701369415|1|1"><![CDATA[System access rights]]></entry>
+  <entry id="users" status="1701369415|1|1"><![CDATA[Users]]></entry>
 </language>

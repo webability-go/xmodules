@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<language id="source" lang="ja">
+  <entry id="button.delete" status="1701369976|1|1"><![CDATA[削除]]></entry>
+  <entry id="button.edit" status="1701369976|1|1"><![CDATA[編集]]></entry>
+  <entry id="button.view" status="1701369976|1|1"><![CDATA[見る]]></entry>
+  <entry id="cleanfilter" status="1701369976|1|1"><![CDATA[フィルタをクリア]]></entry>
+  <entry id="commands" status="1701369976|1|1"><![CDATA[コマンド]]></entry>
+  <entry id="erroraccess" status="1701369976|1|1"><![CDATA[translationadmin/source::%s - エラー：ユーザー'%d'はこの画面にアクセスできません]]></entry>
+  <entry id="errordatasource" status="1701369976|1|1"><![CDATA[translationadmin/source::%s - エラー：データソース'%s'がありません]]></entry>
+  <entry id="hint" status="1701369976|1|1"><![CDATA[行をクリックして表示します。]]></entry>
+  <entry id="insertnew" status="1701369976|1|1"><![CDATA[新しいテキストソース]]></entry>
+  <entry id="key" status="1701369976|1|1"><![CDATA[キー]]></entry>
+  <entry id="name" status="1701369976|1|1"><![CDATA[名前]]></entry>
+  <entry id="newsource" status="1701369976|1|1"><![CDATA[新しい]]></entry>
+  <entry id="quantity" status="1701369976|1|1"><![CDATA[#のテーマ / #のエントリ]]></entry>
+  <entry id="reload" status="1701369891|1|1"><![CDATA[ データソース]]></entry>
+  <entry id="searchbutton" status="1701369976|1|1"><![CDATA[検索]]></entry>
+  <entry id="searchtitle" status="1701369976|1|1"><![CDATA[フィルター（キーまたは名前）：]]></entry>
+  <entry id="sourcetitle" status="1701369976|1|1"><![CDATA[データソース]]></entry>
+  <entry id="title" status="1701369976|1|1"><![CDATA[既知のソースのリスト。]]></entry>
+</language>

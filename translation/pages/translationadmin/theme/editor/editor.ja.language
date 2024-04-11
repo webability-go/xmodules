@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<language id="editor" lang="ja">
+  <entry id="description.help.description" status="1701369911|1|1"><![CDATA[ビデオチャンネルの説明は最大4000文字までです。]]></entry>
+  <entry id="description.title" status="1701369911|1|1"><![CDATA[説明：]]></entry>
+  <entry id="erroraccess" status="1701369911|1|1"><![CDATA[translationadmin/theme/editor::%s - エラー：ユーザー '%d' はこの画面にアクセスできません]]></entry>
+  <entry id="errordatasource" status="1701369911|1|1"><![CDATA[translationadmin/theme/editor::%s - エラー：データソース '%s' が見つかりません]]></entry>
+  <entry id="errortable" status="1701369911|1|1"><![CDATA[translationadmin/theme/editor::%s - エラー：データソース内のテーブル '%s' が存在しません]]></entry>
+  <entry id="formreset.title" status="1701369911|1|1"><![CDATA[リセット]]></entry>
+  <entry id="formsubmit.delete.title" status="1701369911|1|1"><![CDATA[はい、このチャンネルを削除する]]></entry>
+  <entry id="formsubmit.insert.title" status="1701369911|1|1"><![CDATA[新しいチャンネルを保存する]]></entry>
+  <entry id="formsubmit.update.title" status="1701369911|1|1"><![CDATA[変更を保存する]]></entry>
+  <entry id="formview.title" status="1701369911|1|1"><![CDATA[キャンセル]]></entry>
+  <entry id="hint" status="1701369911|1|1"><![CDATA[編集するには行をクリックしてください：]]></entry>
+  <entry id="key.help.description" status="1701369911|1|1"><![CDATA[ビデオチャンネルのキーは1〜5文字で、小文字である必要があります。数字、'-'、および '_' も使用できます。]]></entry>
+  <entry id="key.status.badformat" status="1701369911|1|1"><![CDATA[キーは許可されている形式ではありません。]]></entry>
+  <entry id="key.status.notnull" status="1701369911|1|1"><![CDATA[キーは空にできません。]]></entry>
+  <entry id="key.title" status="1701369911|1|1"><![CDATA[キー]]></entry>
+  <entry id="mask.errormessage" status="1701369911|1|1"><![CDATA[データがまだ正しくキャプチャされていません。情報を送信する前にメッセージと赤いフィールドを確認してください。]]></entry>
+  <entry id="mask.servermessage" status="1701369911|1|1"><![CDATA[エラー：レコードのデータはサーバーから取得できませんでした。]]></entry>
+  <entry id="mask.titledelete" status="1701369911|1|1"><![CDATA[ビデオチャンネルを削除する：]]></entry>
+  <entry id="mask.titledelete.message" status="1701369911|1|1"><![CDATA[情報が正常に削除されました。この画面を閉じることができます。]]></entry>
+  <entry id="mask.titleinsert" status="1701369911|1|1"><![CDATA[新しいビデオチャンネルを挿入する：]]></entry>
+  <entry id="mask.titleinsert.message" status="1701369911|1|1"><![CDATA[情報が正常に追加されました。この画面を閉じることができます。]]></entry>
+  <entry id="mask.titleupdate" status="1701369911|1|1"><![CDATA[ビデオチャンネルのデータを変更する：]]></entry>
+  <entry id="mask.titleupdate.message" status="1701369911|1|1"><![CDATA[情報が正常に変更されました。この画面を閉じることができます。]]></entry>
+  <entry id="mask.titleview" status="1701369911|1|1"><![CDATA[ビデオチャンネルのデータ：]]></entry>
+  <entry id="name.help.description" status="1701369911|1|1"><![CDATA[ビデオチャンネルの名前は最大255文字までです。]]></entry>
+  <entry id="name.status.notnull" status="1701369911|1|1"><![CDATA[名前は空にできません。]]></entry>
+  <entry id="name.title" status="1701369911|1|1"><![CDATA[名前]]></entry>
+  <entry id="prune.help.description" status="1701369911|1|1"><![CDATA[はいを選択すると、このチャンネルに関連するすべてのビデオも削除されます。いいえを選択すると、情報は次のフィールドで選択したチャンネルに移動されます。]]></entry>
+  <entry id="prune.no" status="1701369911|1|1"><![CDATA[いいえ、受信チャンネルを選択する]]></entry>
+  <entry id="prune.title" status="1701369911|1|1"><![CDATA[子供たちも削除しますか？]]></entry>
+  <entry id="prune.yes" status="1701369911|1|1"><![CDATA[はい、子供たちも削除する]]></entry>
+  <entry id="status.active" status="1701369911|1|1"><![CDATA[有効]]></entry>
+  <entry id="status.down" status="1701369911|1|1"><![CDATA[無効]]></entry>
+  <entry id="status.help.description" status="1701369911|1|1"><![CDATA[ビデオチャンネルのステータスは次の2つの値のいずれかにすることができます：1 = 有効、2 = 無効。]]></entry>
+  <entry id="status.status.notnull" status="1701369911|1|1"><![CDATA[ステータスは空にできません。]]></entry>
+  <entry id="status.title" status="1701369911|1|1"><![CDATA[ステータス：]]></entry>
+  <entry id="themetoprune.help.description" status="1701369911|1|1"><![CDATA[前のフィールドでいいえを選択した場合、削除アクセスに関連する情報を受け取るチャンネルを指定してください。]]></entry>
+  <entry id="themetoprune.title" status="1701369911|1|1"><![CDATA[受信グループ：]]></entry>
+  <entry id="title" status="1701369911|1|1"><![CDATA[ビデオチャンネル。]]></entry>
+</language>

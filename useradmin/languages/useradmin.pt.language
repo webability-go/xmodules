@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<language id="useradmin" lang="pt">
+  <entry id="MODULENAME" status="1701370035|1|1"><![CDATA[Ferramentas para administrar usuários]]></entry>
+  <entry id="access.description" status="1701370035|1|1"><![CDATA[Acesso à administração de acessos de usuários]]></entry>
+  <entry id="access.name" status="1701370035|1|1"><![CDATA[Acesso à administração de acessos de usuários]]></entry>
+  <entry id="accessgroup.description" status="1701370035|1|1"><![CDATA[Grupos de acesso à administração de usuários]]></entry>
+  <entry id="accessgroup.name" status="1701370035|1|1"><![CDATA[Grupos de acesso à administração de usuários]]></entry>
+  <entry id="commit" status="1701370035|1|1"><![CDATA[Instalação bem-sucedida.]]></entry>
+  <entry id="database.none" status="1701370035|1|1"><![CDATA[Não há banco de dados disponível no datasource]]></entry>
+  <entry id="mainuser.description" status="1701370035|1|1"><![CDATA[Acesso principal para a administração de usuários]]></entry>
+  <entry id="mainuser.name" status="1701370035|1|1"><![CDATA[Acesso principal para a administração de usuários]]></entry>
+  <entry id="moduleerror" status="1701370035|1|1"><![CDATA[Erro ao modificar a entrada %s na tabela base_module: %s]]></entry>
+  <entry id="modulemodified" status="1701370035|1|1"><![CDATA[A entrada %s foi modificada com sucesso na tabela base_module.]]></entry>
+  <entry id="profile.description" status="1701370035|1|1"><![CDATA[Acesso à administração de perfis de usuários]]></entry>
+  <entry id="profile.name" status="1701370035|1|1"><![CDATA[Acesso à administração de perfis de usuários]]></entry>
+  <entry id="rollback" status="1701370035|1|1"><![CDATA[Instalação com erro: %s]]></entry>
+  <entry id="transaction.commitnone" status="1701370035|1|1"><![CDATA[Erro ao buscar a transação para confirmar: Não há transação disponível.]]></entry>
+  <entry id="transaction.error" status="1701370035|1|1"><![CDATA[Erro na transação: %s]]></entry>
+  <entry id="transaction.exist" status="1701370035|1|1"><![CDATA[Erro ao criar uma transação: Já existe uma transação iniciada.]]></entry>
+  <entry id="transaction.none" status="1701370035|1|1"><![CDATA[Erro ao buscar a transação: Não há transação disponível.]]></entry>
+  <entry id="transaction.rollbacknone" status="1701370035|1|1"><![CDATA[Erro ao buscar a transação para desfazer: Não há transação disponível.]]></entry>
+  <entry id="user.description" status="1701370035|1|1"><![CDATA[Acesso à administração de usuários]]></entry>
+  <entry id="user.name" status="1701370035|1|1"><![CDATA[Acesso à administração de usuários]]></entry>
+  <entry id="useraccess.description" status="1701370035|1|1"><![CDATA[Todos os acessos]]></entry>
+  <entry id="useraccess.name" status="1701370035|1|1"><![CDATA[Direitos de acesso]]></entry>
+  <entry id="userfolder.description" status="1701370035|1|1"><![CDATA[Direitos, Perfis e Usuários]]></entry>
+  <entry id="userfolder.name" status="1701370035|1|1"><![CDATA[Administração de usuários]]></entry>
+  <entry id="userprofile.description" status="1701370035|1|1"><![CDATA[Todos os perfis]]></entry>
+  <entry id="userprofile.name" status="1701370035|1|1"><![CDATA[Perfis]]></entry>
+  <entry id="useruser.description" status="1701370035|1|1"><![CDATA[Lista e edição de usuários]]></entry>
+  <entry id="useruser.name" status="1701370035|1|1"><![CDATA[Usuários]]></entry>
+</language>

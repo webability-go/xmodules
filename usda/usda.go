@@ -3,17 +3,17 @@ package usda
 import (
 	"golang.org/x/text/language"
 
+	"github.com/webability-go/xamboo/applications"
 	"github.com/webability-go/xdominion"
-	"github.com/webability-go/xmodules/base"
 )
 
-func GetNutrients(sitecontext *base.Datasource, lang language.Tag) []string {
+func GetNutrients(ds applications.Datasource, lang language.Tag) []string {
 
 	canonical := lang.String()
 
-	cache := sitecontext.GetCache("usda:nutrients:" + canonical)
+	cache := ds.GetCache("usda:nutrients:" + canonical)
 	if cache == nil {
-		sitecontext.Log("main", "xmodules::usda::GetNutrients: Error, the nutrients cache is not available on this site context")
+		ds.Log("main", "xmodules::usda::GetNutrients: Error, the nutrients cache is not available on this site context")
 		return nil
 	}
 
@@ -24,21 +24,21 @@ func GetNutrients(sitecontext *base.Datasource, lang language.Tag) []string {
 	return data.([]string)
 }
 
-func GetNutrient(sitecontext *base.Datasource, key string, lang language.Tag) *StructureNutrient {
+func GetNutrient(ds applications.Datasource, key string, lang language.Tag) *StructureNutrient {
 
 	canonical := lang.String()
 
-	cache := sitecontext.GetCache("usda:nutrients:" + canonical)
+	cache := ds.GetCache("usda:nutrients:" + canonical)
 	if cache == nil {
-		sitecontext.Log("main", "xmodules::usda::GetNutrient: Error, the nutrients cache is not available on this site context")
+		ds.Log("main", "xmodules::usda::GetNutrient: Error, the nutrients cache is not available on this site context")
 		return nil
 	}
 
 	data, _ := cache.Get(key)
 	if data == nil {
-		sm := CreateStructureNutrientByKey(sitecontext, key, lang)
+		sm := CreateStructureNutrientByKey(ds, key, lang)
 		if sm == nil {
-			sitecontext.Log("graph", "xmodules::usda::GetNutrient: No hay nutriente creado:", key, lang)
+			ds.Log("graph", "xmodules::usda::GetNutrient: No hay nutriente creado:", key, lang)
 			return nil
 		}
 		cache.Set(key, sm)
@@ -47,11 +47,11 @@ func GetNutrient(sitecontext *base.Datasource, key string, lang language.Tag) *S
 	return data.(*StructureNutrient)
 }
 
-func GetFoodNutrients(sitecontext *base.Datasource, key string) *xdominion.XRecords {
+func GetFoodNutrients(ds applications.Datasource, key string) *xdominion.XRecords {
 
-	usda_foodnutrient := sitecontext.GetTable("usda_foodnutrient")
+	usda_foodnutrient := ds.GetTable("usda_foodnutrient")
 	if usda_foodnutrient == nil {
-		sitecontext.Log("main", "xmodules::usda::GetFoodNutrients: Error, the usda_foodnutrient table is not available on this context")
+		ds.Log("main", "xmodules::usda::GetFoodNutrients: Error, the usda_foodnutrient table is not available on this context")
 		return nil
 	}
 
