@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<language id="source" lang="en">
+  <entry id="button.delete" status="1701369508|1|1"><![CDATA[Delete]]></entry>
+  <entry id="button.edit" status="1701369508|1|1"><![CDATA[Edit]]></entry>
+  <entry id="button.view" status="1701369508|1|1"><![CDATA[View]]></entry>
+  <entry id="cleanfilter" status="1701369508|1|1"><![CDATA[Clear filter]]></entry>
+  <entry id="commands" status="1701369508|1|1"><![CDATA[Commands]]></entry>
+  <entry id="erroraccess" status="1701369508|1|1"><![CDATA[translationadmin/source::%s - Error: user '%d' does not have access to this screen]]></entry>
+  <entry id="errordatasource" status="1701369508|1|1"><![CDATA[translationadmin/source::%s - Error: no data source '%s' found]]></entry>
+  <entry id="hint" status="1701369508|1|1"><![CDATA[Click on a row to visualize it:]]></entry>
+  <entry id="insertnew" status="1701369508|1|1"><![CDATA[New text source]]></entry>
+  <entry id="key" status="1701369508|1|1"><![CDATA[Key]]></entry>
+  <entry id="name" status="1701369508|1|1"><![CDATA[Name]]></entry>
+  <entry id="newsource" status="1701369508|1|1"><![CDATA[New]]></entry>
+  <entry id="quantity" status="1701369508|1|1"><![CDATA[# topics / # entries]]></entry>
+  <entry id="reload" status="1701369508|1|1"><![CDATA[Reload the list]]></entry>
+  <entry id="searchbutton" status="1701369508|1|1"><![CDATA[Search]]></entry>
+  <entry id="searchtitle" status="1701369508|1|1"><![CDATA[Filter (key or name):]]></entry>
+  <entry id="sourcetitle" status="1701369508|1|1"><![CDATA[Data source]]></entry>
+  <entry id="title" status="1701369508|1|1"><![CDATA[List of known sources.]]></entry>
+</language>

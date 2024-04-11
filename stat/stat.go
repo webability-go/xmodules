@@ -1,21 +1,21 @@
 package stat
 
 import (
+	"github.com/webability-go/xamboo/applications"
 	"github.com/webability-go/xdominion"
-	"github.com/webability-go/xmodules/base"
 )
 
-func RegisterStat(sitecontext *base.Datasource, prefix string, data xdominion.XRecord) {
+func RegisterStat(ds applications.Datasource, prefix string, data xdominion.XRecord) {
 
-	table := sitecontext.GetTable(prefix + "stat_" + getMonth())
+	table := ds.GetTable(prefix + "stat_" + getMonth())
 	if table == nil {
-		sitecontext.Log("main", "xmodules::stat::RegisterStat: Error, the table does not exist in the context: ", prefix+"stat_"+getMonth())
+		ds.Log("main", "xmodules::stat::RegisterStat: Error, the table does not exist in the context: ", prefix+"stat_"+getMonth())
 		return
 	}
 
 	data.Set("clave", 0)
 	_, err := table.Insert(data)
 	if err != nil {
-		sitecontext.Log("main", "Error insertando el log:", err)
+		ds.Log("main", "Error insertando el log:", err)
 	}
 }

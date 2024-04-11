@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<language id="translationadmin" lang="en">
+  <entry id="allthethemes" status="1701369526|1|1"><![CDATA[All topics]]></entry>
+  <entry id="cleanfilter" status="1701369526|1|1"><![CDATA[Clear filter]]></entry>
+  <entry id="erroraccess" status="1701369526|1|1"><![CDATA[translationadmin::%s - Error: user '%d' does not have access to this screen]]></entry>
+  <entry id="errordatasource" status="1701369526|1|1"><![CDATA[translationadmin::%s - Error: no data source '%s']]></entry>
+  <entry id="insertnew" status="1701369526|1|1"><![CDATA[New translation]]></entry>
+  <entry id="reload" status="1701369526|1|1"><![CDATA[Reload the list]]></entry>
+  <entry id="searchbutton" status="1701369526|1|1"><![CDATA[Search]]></entry>
+  <entry id="searchtitle" status="1701369526|1|1"><![CDATA[Filter (key, id or name):]]></entry>
+  <entry id="title" status="1701369526|1|1"><![CDATA[List of Translations.]]></entry>
+</language>

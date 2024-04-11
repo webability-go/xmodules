@@ -5,54 +5,54 @@ import (
 
 	"golang.org/x/text/language"
 
+	"github.com/webability-go/xamboo/applications"
 	"github.com/webability-go/xcore/v2"
-	"github.com/webability-go/xmodules/base"
 )
 
-func buildTables(ctx *base.Datasource) {
+func buildTables(ds applications.Datasource) {
 
-	ctx.SetTable("ingredient_aisle", ingredientAisle())
-	ctx.GetTable("ingredient_aisle").SetBase(ctx.GetDatabase())
-	ctx.GetTable("ingredient_aisle").SetLanguage(language.Spanish)
+	ds.SetTable("ingredient_aisle", ingredientAisle())
+	ds.GetTable("ingredient_aisle").SetBase(ds.GetDatabase())
+	ds.GetTable("ingredient_aisle").SetLanguage(language.Spanish)
 
-	ctx.SetTable("ingredient_ingredient", ingredientIngredient())
-	ctx.GetTable("ingredient_ingredient").SetBase(ctx.GetDatabase())
-	ctx.GetTable("ingredient_ingredient").SetLanguage(language.Spanish)
+	ds.SetTable("ingredient_ingredient", ingredientIngredient())
+	ds.GetTable("ingredient_ingredient").SetBase(ds.GetDatabase())
+	ds.GetTable("ingredient_ingredient").SetLanguage(language.Spanish)
 }
 
-func createCache(ctx *base.Datasource) []string {
+func createCache(ds applications.Datasource) []string {
 
-	for _, lang := range ctx.GetLanguages() {
+	for _, lang := range ds.GetLanguages() {
 		canonical := lang.String()
-		ctx.SetCache("ingredient:pasillos:"+canonical, xcore.NewXCache("ingredient:pasillos:"+canonical, 0, 0))
-		ctx.SetCache("ingredient:ingredientes:"+canonical, xcore.NewXCache("ingredient:ingredientes:"+canonical, 0, 0))
+		ds.SetCache("ingredient:pasillos:"+canonical, xcore.NewXCache("ingredient:pasillos:"+canonical, 0, 0))
+		ds.SetCache("ingredient:ingredientes:"+canonical, xcore.NewXCache("ingredient:ingredientes:"+canonical, 0, 0))
 	}
 	return []string{}
 }
 
-func buildCache(ctx *base.Datasource) []string {
+func buildCache(ds applications.Datasource) []string {
 
 	// Lets protect us for race condition since map[] of Tables and XCaches are not thread safe
-	ingredient_aisle := ctx.GetTable("ingredient_aisle")
-	ingredient_ingredient := ctx.GetTable("ingredient_ingredient")
+	ingredient_aisle := ds.GetTable("ingredient_aisle")
+	ingredient_ingredient := ds.GetTable("ingredient_ingredient")
 	caches := map[string]*xcore.XCache{}
-	for _, lang := range ctx.GetLanguages() {
+	for _, lang := range ds.GetLanguages() {
 		canonical := lang.String()
-		caches["ingredient:pasillos:"+canonical] = ctx.GetCache("ingredient:pasillos:" + canonical)
-		caches["ingredient:ingredientes:"+canonical] = ctx.GetCache("ingredient:ingredientes:" + canonical)
+		caches["ingredient:pasillos:"+canonical] = ds.GetCache("ingredient:pasillos:" + canonical)
+		caches["ingredient:ingredientes:"+canonical] = ds.GetCache("ingredient:ingredientes:" + canonical)
 	}
 
 	// Loads all data in XCache
 	pasillos, _ := ingredient_aisle.SelectAll()
 
-	for _, lang := range ctx.GetLanguages() {
+	for _, lang := range ds.GetLanguages() {
 		canonical := lang.String()
 
 		all := []int{}
 		if pasillos != nil {
 			for _, m := range *pasillos {
 				// creates structure on language
-				str := CreateStructurePasilloByData(ctx, m.Clone(), lang)
+				str := CreateStructurePasilloByData(ds, m.Clone(), lang)
 				key, _ := m.GetInt("clave")
 				all = append(all, key)
 				caches["ingredient:pasillos:"+canonical].Set(strconv.Itoa(key), str)
@@ -64,13 +64,13 @@ func buildCache(ctx *base.Datasource) []string {
 	// Loads all data in XCache
 	ingredients, _ := ingredient_ingredient.SelectAll()
 
-	for _, lang := range ctx.GetLanguages() {
+	for _, lang := range ds.GetLanguages() {
 		canonical := lang.String()
 
 		if ingredients != nil {
 			for _, m := range *ingredients {
 				// creates structure on language
-				str := CreateStructureIngredientByData(ctx, m.Clone(), lang)
+				str := CreateStructureIngredientByData(ds, m.Clone(), lang)
 				key, _ := m.GetInt("clave")
 				caches["ingredient:ingredientes:"+canonical].Set(strconv.Itoa(key), str)
 			}

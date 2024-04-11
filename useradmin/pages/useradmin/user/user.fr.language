@@ -1,9 +1,24 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<language id="useradmin/user" lang="fr">
-  <entry id="reload">Recharger la liste</entry>
-  <entry id="insertnew">Nouvel accès</entry>
-  <entry id="accessgroup">Administrer les groupes d'accès</entry>
-  <entry id="title">Droits d'accès du système.</entry>
-  <entry id="hint">Fais clic sur une ligne pour l'éditer:</entry>
-
+<language id="user" lang="fr">
+  <entry id="accesses" status="1701369131|1|1"><![CDATA[Accès]]></entry>
+  <entry id="button.delete" status="1701369131|1|1"><![CDATA[Supprimer]]></entry>
+  <entry id="button.edit" status="1701369131|1|1"><![CDATA[Modifier]]></entry>
+  <entry id="button.view" status="1701369131|1|1"><![CDATA[Voir]]></entry>
+  <entry id="commands" status="1701369131|1|1"><![CDATA[Commandes]]></entry>
+  <entry id="description" status="1701369131|1|1"><![CDATA[Description]]></entry>
+  <entry id="erroraccess" status="1701369131|1|1"><![CDATA[adminuser/user::%s - Erreur : l'utilisateur '%d' n'a pas accès à cette page]]></entry>
+  <entry id="errordatasource" status="1701369131|1|1"><![CDATA[adminuser/user::%s - Erreur : aucune source de données '%s']]></entry>
+  <entry id="hint" status="1701369131|1|1"><![CDATA[Cliquez sur une ligne pour l'afficher :]]></entry>
+  <entry id="insertnew" status="1701369131|1|1"><![CDATA[Nouvel utilisateur]]></entry>
+  <entry id="key" status="1701369131|1|1"><![CDATA[Mot de passe]]></entry>
+  <entry id="name" status="1701369131|1|1"><![CDATA[Nom]]></entry>
+  <entry id="newuser" status="1701369131|1|1"><![CDATA[Nouveau]]></entry>
+  <entry id="profiles" status="1701369131|1|1"><![CDATA[Profils]]></entry>
+  <entry id="reload" status="1701369131|1|1"><![CDATA[Recharger la liste]]></entry>
+  <entry id="showall" status="1701369131|1|1"><![CDATA[Voir les utilisateurs désactivés]]></entry>
+  <entry id="status" status="1701369131|1|1"><![CDATA[Statut]]></entry>
+  <entry id="status.no" status="1701369131|1|1"><![CDATA[Désact.]]></entry>
+  <entry id="status.yes" status="1701369131|1|1"><![CDATA[Act.]]></entry>
+  <entry id="title" status="1701369131|1|1"><![CDATA[Utilisateurs du système.]]></entry>
+  <entry id="usertitle" status="1701369131|1|1"><![CDATA[Utilisateur]]></entry>
 </language>

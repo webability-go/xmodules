@@ -25,14 +25,16 @@ import (
 
 // Container if the list of created datasources
 // The XConfig file must have this syntax:
-//  database.[dbid].type=[dbtype]
-//  database.[dbid].username=[dbusername]
-//  database.[dbid].password=[dbpassword]
-//  database.[dbid].database=[dbname]
-//  database.[dbid].server=[dbserver]
-//  database.[dbid].ssl=[dbsslflag]
 //
-//  log.[logid].file=[pathtologfile]
+//	database.[dbid].type=[dbtype]
+//	database.[dbid].username=[dbusername]
+//	database.[dbid].password=[dbpassword]
+//	database.[dbid].database=[dbname]
+//	database.[dbid].server=[dbserver]
+//	database.[dbid].ssl=[dbsslflag]
+//
+//	log.[logid].file=[pathtologfile]
+//
 // every line can be repeated for each dbid or logid
 type Container struct {
 	mdatasources sync.RWMutex
@@ -212,12 +214,13 @@ func (cnt *Container) TryDatasource(ctx *context.Context, datasourcename string)
 
 // Create will scan a full config file for Containers
 // The XConfig file must have this syntax:
-//  datasource=[datasourceid1]
-//  datasource=[datasourceid2]
-//  datasource=[datasourceid3]
-//  datasourceid1-config=[path-to-config-file]
-//  datasourceid2-config=[path-to-config-file]
-//  datasourceid3-config=[path-to-config-file]
+//
+//	datasource=[datasourceid1]
+//	datasource=[datasourceid2]
+//	datasource=[datasourceid3]
+//	datasourceid1-config=[path-to-config-file]
+//	datasourceid2-config=[path-to-config-file]
+//	datasourceid3-config=[path-to-config-file]
 func Create(configfile string) *Container {
 
 	CoreConfig := xconfig.New()
@@ -227,7 +230,8 @@ func Create(configfile string) *Container {
 	logstr, _ := CoreConfig.GetString("logcore")
 	logw, err := os.OpenFile(logstr, os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
 	if err != nil {
-		fmt.Println("Error opening core log file xmodules::app::init:", err)
+		fmt.Println("Error opening core log file xmodules::base::Create:", logstr, err)
+		return nil
 	}
 	CoreLog := log.New(logw, "Core: ", log.Ldate|log.Ltime|log.Lshortfile)
 	CoreLog.Println("xmodules::base::Create: Starting Core Log")

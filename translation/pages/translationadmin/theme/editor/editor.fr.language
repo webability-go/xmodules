@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<language id="editor" lang="fr">
+  <entry id="description.help.description" status="1701369199|1|1"><![CDATA[La description du canal de vidéos peut contenir jusqu'à 4000 caractères maximum.]]></entry>
+  <entry id="description.title" status="1701369199|1|1"><![CDATA[Description :]]></entry>
+  <entry id="erroraccess" status="1701369199|1|1"><![CDATA[translationadmin/theme/editor::%s - Erreur : l'utilisateur '%d' n'a pas accès à cette fenêtre]]></entry>
+  <entry id="errordatasource" status="1701369199|1|1"><![CDATA[translationadmin/theme/editor::%s - Erreur : aucune source de données '%s']]></entry>
+  <entry id="errortable" status="1701369199|1|1"><![CDATA[translationadmin/theme/editor::%s - Erreur : la table '%s' n'existe pas dans la source de données]]></entry>
+  <entry id="formreset.title" status="1701369199|1|1"><![CDATA[Réinitialiser]]></entry>
+  <entry id="formsubmit.delete.title" status="1701369199|1|1"><![CDATA[Oui, supprimer ce canal]]></entry>
+  <entry id="formsubmit.insert.title" status="1701369199|1|1"><![CDATA[Enregistrer le nouveau canal]]></entry>
+  <entry id="formsubmit.update.title" status="1701369199|1|1"><![CDATA[Enregistrer les modifications]]></entry>
+  <entry id="formview.title" status="1701369199|1|1"><![CDATA[Annuler]]></entry>
+  <entry id="hint" status="1701369199|1|1"><![CDATA[Cliquez sur une ligne pour la modifier :]]></entry>
+  <entry id="key.help.description" status="1701369199|1|1"><![CDATA[La clé du canal de vidéos doit contenir de 1 à 5 caractères, en minuscules. Vous pouvez également utiliser des chiffres, '-' et '_'.]]></entry>
+  <entry id="key.status.badformat" status="1701369199|1|1"><![CDATA[La clé n'a pas un format autorisé.]]></entry>
+  <entry id="key.status.notnull" status="1701369199|1|1"><![CDATA[La clé ne peut pas être vide.]]></entry>
+  <entry id="key.title" status="1701369199|1|1"><![CDATA[Clé]]></entry>
+  <entry id="mask.errormessage" status="1701369199|1|1"><![CDATA[Les données ne sont pas encore correctement saisies. Veuillez vérifier les messages et les champs en rouge avant d'envoyer les informations.]]></entry>
+  <entry id="mask.servermessage" status="1701369199|1|1"><![CDATA[Erreur : Les données d'enregistrement n'ont pas pu être récupérées depuis le serveur.]]></entry>
+  <entry id="mask.titledelete" status="1701369199|1|1"><![CDATA[Supprimer le canal de vidéos :]]></entry>
+  <entry id="mask.titledelete.message" status="1701369199|1|1"><![CDATA[Information supprimée avec succès. Vous pouvez maintenant fermer cette fenêtre.]]></entry>
+  <entry id="mask.titleinsert" status="1701369199|1|1"><![CDATA[Insérer un nouveau canal de vidéos :]]></entry>
+  <entry id="mask.titleinsert.message" status="1701369199|1|1"><![CDATA[Information ajoutée avec succès. Vous pouvez maintenant fermer cette fenêtre.]]></entry>
+  <entry id="mask.titleupdate" status="1701369199|1|1"><![CDATA[Modifier les données du canal de vidéos :]]></entry>
+  <entry id="mask.titleupdate.message" status="1701369199|1|1"><![CDATA[Information modifiée avec succès. Vous pouvez maintenant fermer cette fenêtre.]]></entry>
+  <entry id="mask.titleview" status="1701369199|1|1"><![CDATA[Données du canal de vidéos :]]></entry>
+  <entry id="name.help.description" status="1701369199|1|1"><![CDATA[Le nom du canal de vidéos peut contenir jusqu'à 255 caractères maximum.]]></entry>
+  <entry id="name.status.notnull" status="1701369199|1|1"><![CDATA[Le nom ne peut pas être vide.]]></entry>
+  <entry id="name.title" status="1701369199|1|1"><![CDATA[Nom]]></entry>
+  <entry id="prune.help.description" status="1701369199|1|1"><![CDATA[Si vous sélectionnez Oui, toutes les vidéos liées à ce canal seront également supprimées. Si vous sélectionnez Non, les informations seront déplacées vers le canal sélectionné dans le champ suivant.]]></entry>
+  <entry id="prune.no" status="1701369199|1|1"><![CDATA[Non, sélectionner le canal destinataire]]></entry>
+  <entry id="prune.title" status="1701369199|1|1"><![CDATA[Supprimer également les enfants ?]]></entry>
+  <entry id="prune.yes" status="1701369199|1|1"><![CDATA[Oui, supprimer les enfants]]></entry>
+  <entry id="status.active" status="1701369199|1|1"><![CDATA[Activé]]></entry>
+  <entry id="status.down" status="1701369199|1|1"><![CDATA[Désactivé]]></entry>
+  <entry id="status.help.description" status="1701369199|1|1"><![CDATA[Le statut du canal de vidéos peut prendre l'une des deux valeurs suivantes : 1 = Activé, 2 = Désactivé.]]></entry>
+  <entry id="status.status.notnull" status="1701369199|1|1"><![CDATA[Le statut ne peut pas être vide.]]></entry>
+  <entry id="status.title" status="1701369199|1|1"><![CDATA[Statut :]]></entry>
+  <entry id="themetoprune.help.description" status="1701369199|1|1"><![CDATA[Si vous avez sélectionné Non dans le champ précédent, veuillez spécifier le canal qui recevra les informations liées à l'accès à supprimer.]]></entry>
+  <entry id="themetoprune.title" status="1701369199|1|1"><![CDATA[Groupe destinataire :]]></entry>
+  <entry id="title" status="1701369199|1|1"><![CDATA[Canal de vidéos.]]></entry>
+</language>

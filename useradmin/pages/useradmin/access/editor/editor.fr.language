@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<language id="editor" lang="fr">
+  <entry id="accesstoprune.help.description" status="1701369076|1|1"><![CDATA[Si vous avez sélectionné Non dans le champ précédent, veuillez spécifier l'accès qui recevra les informations liées à l'accès à supprimer.]]></entry>
+  <entry id="accesstoprune.title" status="1701369076|1|1"><![CDATA[Groupe destinataire:]]></entry>
+  <entry id="description.help.description.title" status="1701369076|1|1"><![CDATA[La description est un texte libre, jusqu'à 4000 caractères.]]></entry>
+  <entry id="description.title" status="1701369076|1|1"><![CDATA[Description]]></entry>
+  <entry id="erroraccess" status="1701369076|1|1"><![CDATA[adminuser/access/editor::%s - Erreur: l'utilisateur '%d' n'a pas accès à cet écran]]></entry>
+  <entry id="errordatasource" status="1701369076|1|1"><![CDATA[adminuser/access/editor::%s - Erreur: aucune source de données '%s']]></entry>
+  <entry id="errortable" status="1701369076|1|1"><![CDATA[adminuser/access/editor::%s - Erreur: la table '%s' n'existe pas dans la source de données]]></entry>
+  <entry id="formreset.title" status="1701369076|1|1"><![CDATA[Réinitialiser]]></entry>
+  <entry id="formsubmit.delete.title" status="1701369076|1|1"><![CDATA[Oui, supprimer ce groupe]]></entry>
+  <entry id="formsubmit.insert.title" status="1701369076|1|1"><![CDATA[Enregistrer le nouveau groupe]]></entry>
+  <entry id="formsubmit.update.title" status="1701369076|1|1"><![CDATA[Enregistrer les modifications]]></entry>
+  <entry id="formview.title" status="1701369076|1|1"><![CDATA[Annuler]]></entry>
+  <entry id="group.help.description.title" status="1701369076|1|1"><![CDATA[Sélectionnez un groupe auquel appartient ce droit. Les groupes commençant par _ sont réservés aux modules (ne les utilisez pas pour les droits d'accès saisis manuellement).]]></entry>
+  <entry id="group.title" status="1701369076|1|1"><![CDATA[Groupe]]></entry>
+  <entry id="hint" status="1701369076|1|1"><![CDATA[Cliquez sur une ligne pour l'éditer :]]></entry>
+  <entry id="key.help.description.title" status="1701369076|1|1"><![CDATA[La clé du droit d'accès contient de 1 à 30 caractères en minuscules. Vous pouvez également utiliser des chiffres, '-' et '_'. Les clés commençant par _ sont des droits d'accès système et ne devraient pas être créées par l'utilisateur.]]></entry>
+  <entry id="key.status.badformat" status="1701369076|1|1"><![CDATA[La clé n'a pas un format autorisé.]]></entry>
+  <entry id="key.status.notnull" status="1701369076|1|1"><![CDATA[La clé ne peut pas être vide.]]></entry>
+  <entry id="key.title" status="1701369076|1|1"><![CDATA[Clé]]></entry>
+  <entry id="mask.errormessage" status="1701369076|1|1"><![CDATA[Les données ne sont pas encore correctement saisies. Veuillez vérifier les messages et les champs en rouge avant d'envoyer les informations.]]></entry>
+  <entry id="mask.servermessage" status="1701369076|1|1"><![CDATA[Erreur: Les données d'enregistrement n'ont pas pu être récupérées depuis le serveur.]]></entry>
+  <entry id="mask.titledelete" status="1701369076|1|1"><![CDATA[Supprimer le droit d'accès système:]]></entry>
+  <entry id="mask.titledelete.message" status="1701369076|1|1"><![CDATA[Informations effacées avec succès. Vous pouvez maintenant fermer cet écran.]]></entry>
+  <entry id="mask.titleinsert" status="1701369076|1|1"><![CDATA[Insérer un nouveau droit d'accès système:]]></entry>
+  <entry id="mask.titleinsert.message" status="1701369076|1|1"><![CDATA[Informations ajoutées avec succès. Vous pouvez maintenant fermer cet écran.]]></entry>
+  <entry id="mask.titleupdate" status="1701369076|1|1"><![CDATA[Modifier les données du droit d'accès:]]></entry>
+  <entry id="mask.titleupdate.message" status="1701369076|1|1"><![CDATA[Informations modifiées avec succès. Vous pouvez maintenant fermer cet écran.]]></entry>
+  <entry id="mask.titleview" status="1701369076|1|1"><![CDATA[Données du droit d'accès système:]]></entry>
+  <entry id="name.help.description.title" status="1701369076|1|1"><![CDATA[Le nom du droit d'accès est de 1 à 255 caractères maximum.]]></entry>
+  <entry id="name.status.notnull" status="1701369076|1|1"><![CDATA[Le nom ne peut pas être vide.]]></entry>
+  <entry id="name.title" status="1701369076|1|1"><![CDATA[Nom]]></entry>
+  <entry id="profiles.title" status="1701369076|1|1"><![CDATA[Profils utilisant cet accès:]]></entry>
+  <entry id="prune.help.description" status="1701369076|1|1"><![CDATA[Si vous sélectionnez Oui, alors toutes les informations liées à ce droit seront également supprimées. Si vous sélectionnez Non, alors les informations seront déplacées vers l'accès sélectionné dans le champ suivant.]]></entry>
+  <entry id="prune.no" status="1701369076|1|1"><![CDATA[Non, sélectionner l'accès destinataire]]></entry>
+  <entry id="prune.title" status="1701369076|1|1"><![CDATA[Supprimer également les enfants ?]]></entry>
+  <entry id="prune.yes" status="1701369076|1|1"><![CDATA[Oui, supprimer les enfants]]></entry>
+  <entry id="title" status="1701369076|1|1"><![CDATA[Droits d'accès système.]]></entry>
+  <entry id="users.hierarchy" status="1701369076|1|1"><![CDATA[Hérité]]></entry>
+  <entry id="users.no" status="1701369076|1|1"><![CDATA[Refusé]]></entry>
+  <entry id="users.title" status="1701369076|1|1"><![CDATA[Utilisateurs utilisant cet accès:]]></entry>
+  <entry id="users.yes" status="1701369076|1|1"><![CDATA[Accordé]]></entry>
+</language>

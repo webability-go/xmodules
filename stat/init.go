@@ -35,10 +35,9 @@ func init() {
 // adds tables and caches to ctx::database
 func Setup(ds applications.Datasource, prefix string) ([]string, error) {
 
-	ctx := ds.(*base.Datasource)
-	buildTables(ctx, prefix)
+	buildTables(ds, prefix)
 	//	createCache(ctx)
-	ctx.SetModule(MODULEID, VERSION)
+	ds.SetModule(MODULEID, VERSION)
 
 	//	go buildCache(ctx)
 
@@ -49,9 +48,8 @@ func Synchronize(ds applications.Datasource, prefix string) ([]string, error) {
 
 	messages := []string{}
 
-	ctx := ds.(*base.Datasource)
 	// Needed modules: base and translation
-	vc := base.ModuleInstalledVersion(ctx, "base")
+	vc := base.ModuleInstalledVersion(ds, "base")
 	if vc == "" {
 		messages = append(messages, "xmodules/base need to be installed before installing xmodules/stat.")
 		return messages, nil
@@ -65,7 +63,7 @@ func Synchronize(ds applications.Datasource, prefix string) ([]string, error) {
 		m += strconv.Itoa(i)
 
 		messages = append(messages, "Analysing "+prefix+"stat_"+m+" table.")
-		table := ctx.GetTable(prefix + "stat_" + m)
+		table := ds.GetTable(prefix + "stat_" + m)
 		if table == nil {
 			messages = append(messages, "xmodules::stat::SynchronizeModule: Error, the table does not exist in the base: "+prefix+"stat_"+m)
 			return messages, nil
@@ -86,7 +84,7 @@ func Synchronize(ds applications.Datasource, prefix string) ([]string, error) {
 
 	// Inserting into base-modules
 	// Be sure base module is on db: fill base module (we should get this from xmodule.conf)
-	err := base.AddModule(ctx, MODULEID, "Statistics", VERSION)
+	err := base.AddModule(ds, MODULEID, "Statistics", VERSION)
 	if err == nil {
 		messages = append(messages, "The entry "+MODULEID+" was modified successfully in the modules table.")
 	} else {

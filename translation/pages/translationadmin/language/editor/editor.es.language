@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<language id="translationadmin/language/editor" lang="es">
+
+  <entry id="errordatasource">translationadmin/language/editor::%s - Error: no hay fuente de datos '%s'</entry>
+  <entry id="erroraccess">translationadmin/language/editor::%s - Error: el usuario '%d' no tiene acceso a esta pantalla</entry>
+  <entry id="errortable">translationadmin/language/editor::%s - Error: la tabla '%s' no existe en el datasource</entry>
+
+  <entry id="title">Idiomas conocidos por el sistema.</entry>
+  <entry id="hint">Haz click sobre un renglón para editarlo:</entry>
+
+  <entry id="mask.errormessage"><![CDATA[Los datos aún no son bien capturados. Por favor, verifique los mensajes y los campos en rojo antes de enviar la información.]]></entry>
+  <entry id="mask.servermessage"><![CDATA[Error: Los datos del registro no pudierón ser recuperados del servidor.]]></entry>
+  <entry id="mask.titleinsert"><![CDATA[Insertar un nuevo idioma:]]></entry>
+  <entry id="mask.titleinsert.message">Información agregada con éxito. Ya puede cerrar esta pantalla.</entry>
+  <entry id="mask.titleupdate"><![CDATA[Modificar los datos del idioma:]]></entry>
+  <entry id="mask.titleupdate.message">Información modificada con éxito. Ya puede cerrar esta pantalla.</entry>
+  <entry id="mask.titledelete"><![CDATA[Borrar el idioma:]]></entry>
+  <entry id="mask.titledelete.message">Información borrada con éxito. Ya puede cerrar esta pantalla.</entry>
+  <entry id="mask.titleview"><![CDATA[Datos del idioma:]]></entry>
+
+  <entry id="key.title">Clave</entry>
+  <entry id="key.help.description">La clave del idioma contiene de 2 a 5 carácteres, en minusculas. Esta normalmente compuesto del ID del idioma, y opcionalmente seguido por un guión y el pais del idioma para la regionalización.</entry>
+  <entry id="key.status.notnull">La clave no puede estar vacia.</entry>
+  <entry id="key.status.badformat">La clave no tiene un formato autorizado.</entry>
+
+  <entry id="name.title">Nombre</entry>
+  <entry id="name.help.description">El nombre del idioma es de 1 hasta 255 carácteres máximo.</entry>
+  <entry id="name.status.notnull">El nombre no puede estar vacio.</entry>
+
+  <entry id="default.title">Idioma por defecto:</entry>
+  <entry id="default.help.description">Solamente puede haber un idioma por defecto. Si selecciona "Si", los demas son automaticamente puestos a No.</entry>
+  <entry id="default.status.notnull">El estatus no puede estar vacio.</entry>
+  <entry id="default.yes">Si</entry>
+  <entry id="default.no">No</entry>
+
+  <entry id="config.title">Configuración:</entry>
+  <entry id="config.help.description">La configuración es una serie de parametros bajo la forma parametro=valor. Parámetros reconocidos por el sistema: domain=dominion público correspondiente al idioma. country=ISO pais donde este idioma es oficial. Puede haver varios country=</entry>
+
+  <entry id="prune.title">¿Borrar tambien los hijos?</entry>
+  <entry id="prune.help.description">Si selecciona Sí, entonces todos las traducciones relacionadas con este idioma serán borrados también. Si selecciona No, entonces la información será movida al idioma seleccionado en el campo siguiente.</entry>
+  <entry id="prune.yes">Sí, borrar los hijos</entry>
+  <entry id="prune.no">No, seleccionar el canal receptor</entry>
+
+  <entry id="languagetoprune.title">Idioma receptor:</entry>
+  <entry id="languagetoprune.help.description">Si seleccionó No en el campo anterior, entonces especifique el idioma que recibirá la información relacionada al idioma a borrar.</entry>
+
+  <entry id="formsubmit.insert.title">Grabar el idioma</entry>
+  <entry id="formsubmit.update.title">Guardar las modificaciones</entry>
+  <entry id="formsubmit.delete.title">Si, borrar este idioma</entry>
+  <entry id="formreset.title">Reinicinar</entry>
+  <entry id="formview.title">Cancelar</entry>
+</language>

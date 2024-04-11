@@ -5,13 +5,13 @@ import (
 	"strings"
 	"time"
 
+	"github.com/webability-go/xamboo/applications"
 	"github.com/webability-go/xdominion"
 
-	"github.com/webability-go/xmodules/base"
 	"github.com/webability-go/xmodules/tools"
 )
 
-func GetSession(ds *base.Datasource, sessionid string) *xdominion.XRecord {
+func GetSession(ds applications.Datasource, sessionid string) *xdominion.XRecord {
 
 	user_session := ds.GetTable("user_session")
 	if user_session == nil {
@@ -23,7 +23,7 @@ func GetSession(ds *base.Datasource, sessionid string) *xdominion.XRecord {
 	return data
 }
 
-func CreateSession(ds *base.Datasource, key int, sessionid string, IP string, origin string, device string) string {
+func CreateSession(ds applications.Datasource, key int, sessionid string, IP string, origin string, device string) string {
 
 	user_session := ds.GetTable("user_session")
 	if user_session == nil {
@@ -80,7 +80,7 @@ func CreateSession(ds *base.Datasource, key int, sessionid string, IP string, or
 	return sessionid
 }
 
-func CloseSession(ds *base.Datasource, sessionid string) string {
+func CloseSession(ds applications.Datasource, sessionid string) string {
 
 	user_session := ds.GetTable("user_session")
 	if user_session == nil {
@@ -98,4 +98,20 @@ func CloseSession(ds *base.Datasource, sessionid string) string {
 		return sessionid
 	}
 	return ""
+}
+
+func RefreshSession(ds applications.Datasource, sessionid string) {
+
+	user_session := ds.GetTable("user_session")
+	if user_session == nil {
+		ds.Log("xmodules::user::RefreshSession: Error, the user_session table is not available on this datasource")
+		return
+	}
+	_, err := user_session.Update(sessionid, xdominion.XRecord{
+		"lastmodif": time.Now(),
+	})
+	if err != nil {
+		ds.Log("xmodules::user::RefreshSession: Error refreshing session:" + err.Error())
+		return
+	}
 }

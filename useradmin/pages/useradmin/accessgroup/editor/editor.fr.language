@@ -1,46 +1,37 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<language id="useradmin/accessgroup/editor" lang="fr">
-
-  <entry id="errordatasource">adminuser/accessgroup/editor::%s - Error: no hay fuente de datos '%s'</entry>
-  <entry id="erroraccess">adminuser/accessgroup/editor::%s - Error: el usuario '%d' no tiene acceso a esta pantalla</entry>
-  <entry id="errortable">adminuser/access/editor::%s - Error: la tabla '%s' no existe en el datasource</entry>
-
-  <entry id="title">Grupos de derechos de acceso del sistema.</entry>
-  <entry id="hint">Haz click sobre un renglón para editarlo:</entry>
-
-  <entry id="mask.errormessage"><![CDATA[Los datos aún no son bien capturados. Por favor, verifique los mensajes y los campos en rojo antes de enviar la información.]]></entry>
-  <entry id="mask.servermessage"><![CDATA[Error: Los datos del registro no pudierón ser recuperados del servidor.]]></entry>
-  <entry id="mask.titleinsert"><![CDATA[Insertar un nuevo grupo de derechos de acceso del sistema:]]></entry>
-  <entry id="mask.titleinsert.message">Información agregada con éxito. Ya puede cerrar esta pantalla.</entry>
-  <entry id="mask.titleupdate"><![CDATA[Modificar los datos del grupo de derechos de acceso:]]></entry>
-  <entry id="mask.titleupdate.message">Información modificada con éxito. Ya puede cerrar esta pantalla.</entry>
-  <entry id="mask.titledelete"><![CDATA[Borrar el grupo de derechos de acceso del sistema:]]></entry>
-  <entry id="mask.titledelete.message">Información borrada con éxito. Ya puede cerrar esta pantalla.</entry>
-  <entry id="mask.titleview"><![CDATA[Datos del grupo de derechos de acceso del sistema:]]></entry>
-
-  <entry id="key.title">Clave:</entry>
-  <entry id="key.help.description">La clave del grupo de derechos de acceso contiene de 1 a 30 carácteres, en minúsculas. La clave tiene que empezar por una letra. Puede usar también cifras, '-' y '_'. Las claves empezando por _ son grupos de derechos de acceso de sistema y no pueden ser creados o modificados por el usuario.</entry>
-  <entry id="key.status.notnull">La clave no puede estar vacia.</entry>
-  <entry id="key.status.badformat">La clave tiene un formato erroneo.</entry>
-  <entry id="key.error">La clave de un grupo de derechos editado por el usuario no puede empezar por _.</entry>
-  <entry id="key.pruneerror">No puede pegar los hijos en un grupo cuya clave empieza por _.</entry>
-
-  <entry id="name.title">Nombre:</entry>
-  <entry id="name.help.description">El nombre del grupo de derechos de acceso es de 1 hasta 255 carácteres máximo.</entry>
-  <entry id="name.status.notnull">El nombre no puede estar vacio.</entry>
-
-  <entry id="prune.title">¿Borrar tambien los hijos?</entry>
-  <entry id="prune.help.description">Si selecciona Sí, entonces todos los derechos en este grupo serán borrados también. Si selecciona No, entonces los derechos en este grupo serán movidos al grupo seleccionado en el campo siguiente.</entry>
-  <entry id="prune.yes">Sí, borrar los hijos</entry>
-  <entry id="prune.no">No, seleccionar el grupo receptor</entry>
-
-  <entry id="grouptoprune.title">Grupo receptor:</entry>
-  <entry id="grouptoprune.help.description">Si seleccionó No en el campo anterior, entonces especifique el grupo que recibirá los derechos del grupo a borrar.</entry>
-
-  <entry id="formsubmit.insert.title">Grabar el nuevo grupo</entry>
-  <entry id="formsubmit.update.title">Guardar las modificaciones</entry>
-  <entry id="formsubmit.delete.title">Si, borrar este grupo</entry>
-  <entry id="formreset.title">Deshacer los cambios</entry>
-  <entry id="formview.title">Cancelar</entry>
-
+<language id="editor" lang="fr">
+  <entry id="erroraccess" status="1701369093|1|1"><![CDATA[adminuser/accessgroup/editor::%s - Erreur : l'utilisateur '%d' n'a pas accès à cette fenêtre.]]></entry>
+  <entry id="errordatasource" status="1701369093|1|1"><![CDATA[adminuser/accessgroup/editor::%s - Erreur : aucune source de données '%s'.]]></entry>
+  <entry id="errortable" status="1701369093|1|1"><![CDATA[adminuser/access/editor::%s - Erreur : la table '%s' n'existe pas dans la source de données.]]></entry>
+  <entry id="formreset.title" status="1701369093|1|1"><![CDATA[Annuler les modifications]]></entry>
+  <entry id="formsubmit.delete.title" status="1701369093|1|1"><![CDATA[Oui, supprimer ce groupe]]></entry>
+  <entry id="formsubmit.insert.title" status="1701369093|1|1"><![CDATA[Enregistrer le nouveau groupe]]></entry>
+  <entry id="formsubmit.update.title" status="1701369093|1|1"><![CDATA[Enregistrer les modifications]]></entry>
+  <entry id="formview.title" status="1701369093|1|1"><![CDATA[Annuler]]></entry>
+  <entry id="grouptoprune.help.description" status="1701369093|1|1"><![CDATA[Si vous avez sélectionné Non dans le champ précédent, veuillez spécifier le groupe qui recevra les droits du groupe à supprimer.]]></entry>
+  <entry id="grouptoprune.title" status="1701369093|1|1"><![CDATA[Groupe destinataire :]]></entry>
+  <entry id="hint" status="1701369093|1|1"><![CDATA[Cliquez sur une ligne pour la modifier :]]></entry>
+  <entry id="key.error" status="1701369093|1|1"><![CDATA[La clé d'un groupe de droits édité par l'utilisateur ne peut pas commencer par _.]]></entry>
+  <entry id="key.help.description" status="1701369093|1|1"><![CDATA[La clé du groupe de droits d'accès doit contenir entre 1 et 30 caractères en minuscules. La clé doit commencer par une lettre. Vous pouvez également utiliser des chiffres, '-' et '_'. Les clés commençant par _ sont des groupes de droits d'accès système et ne peuvent pas être créés ou modifiés par l'utilisateur.]]></entry>
+  <entry id="key.pruneerror" status="1701369093|1|1"><![CDATA[Vous ne pouvez pas coller les enfants dans un groupe dont la clé commence par _.]]></entry>
+  <entry id="key.status.badformat" status="1701369093|1|1"><![CDATA[La clé a un format incorrect.]]></entry>
+  <entry id="key.status.notnull" status="1701369093|1|1"><![CDATA[La clé ne peut pas être vide.]]></entry>
+  <entry id="key.title" status="1701369093|1|1"><![CDATA[Clé :]]></entry>
+  <entry id="mask.errormessage" status="1701369093|1|1"><![CDATA[Les données ne sont pas encore correctement saisies. Veuillez vérifier les messages et les champs en rouge avant d'envoyer les informations.]]></entry>
+  <entry id="mask.servermessage" status="1701369093|1|1"><![CDATA[Erreur : Les données de l'enregistrement n'ont pas pu être récupérées depuis le serveur.]]></entry>
+  <entry id="mask.titledelete" status="1701369093|1|1"><![CDATA[Supprimer le groupe de droits d'accès système :]]></entry>
+  <entry id="mask.titledelete.message" status="1701369093|1|1"><![CDATA[Informations supprimées avec succès. Vous pouvez maintenant fermer cette fenêtre.]]></entry>
+  <entry id="mask.titleinsert" status="1701369093|1|1"><![CDATA[Insérer un nouveau groupe de droits d'accès au système :]]></entry>
+  <entry id="mask.titleinsert.message" status="1701369093|1|1"><![CDATA[Informations ajoutées avec succès. Vous pouvez maintenant fermer cette fenêtre.]]></entry>
+  <entry id="mask.titleupdate" status="1701369093|1|1"><![CDATA[Modifier les données du groupe de droits d'accès :]]></entry>
+  <entry id="mask.titleupdate.message" status="1701369093|1|1"><![CDATA[Informations modifiées avec succès. Vous pouvez maintenant fermer cette fenêtre.]]></entry>
+  <entry id="mask.titleview" status="1701369093|1|1"><![CDATA[Données du groupe de droits d'accès système :]]></entry>
+  <entry id="name.help.description" status="1701369093|1|1"><![CDATA[Le nom du groupe de droits d'accès doit contenir entre 1 et 255 caractères maximum.]]></entry>
+  <entry id="name.status.notnull" status="1701369093|1|1"><![CDATA[Le nom ne peut pas être vide.]]></entry>
+  <entry id="name.title" status="1701369093|1|1"><![CDATA[Nom :]]></entry>
+  <entry id="prune.help.description" status="1701369093|1|1"><![CDATA[Si vous sélectionnez Oui, alors tous les droits de ce groupe seront également supprimés. Si vous sélectionnez Non, alors les droits de ce groupe seront déplacés vers le groupe sélectionné dans le champ suivant.]]></entry>
+  <entry id="prune.no" status="1701369093|1|1"><![CDATA[Non, sélectionner le groupe destinataire]]></entry>
+  <entry id="prune.title" status="1701369093|1|1"><![CDATA[Supprimer aussi les enfants ?]]></entry>
+  <entry id="prune.yes" status="1701369093|1|1"><![CDATA[Oui, supprimer les enfants]]></entry>
+  <entry id="title" status="1701369093|1|1"><![CDATA[Groupes de droits d'accès système.]]></entry>
 </language>

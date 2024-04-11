@@ -35,26 +35,24 @@ func init() {
 // adds tables and caches to ctx::database
 func Setup(ds applications.Datasource, prefix string) ([]string, error) {
 
-	ctx := ds.(*base.Datasource)
-	buildTables(ctx)
-	createCache(ctx)
-	ctx.SetModule(MODULEID, VERSION)
+	buildTables(ds)
+	createCache(ds)
+	ds.SetModule(MODULEID, VERSION)
 
-	go buildCache(ctx)
+	go buildCache(ds)
 
 	return []string{}, nil
 }
 
 func Synchronize(ds applications.Datasource, prefix string) ([]string, error) {
 
-	ctx := ds.(*base.Datasource)
-	translation.AddTheme(ctx, TRANSLATIONTHEME, "Material", translation.SOURCETABLE, "", "name,plural")
+	translation.AddTheme(ds, TRANSLATIONTHEME, "Material", translation.SOURCETABLE, "", "name,plural")
 
 	messages := []string{}
 	messages = append(messages, "Analysing material_material table.")
-	num, err := ctx.GetTable("material_material").Count(nil)
+	num, err := ds.GetTable("material_material").Count(nil)
 	if err != nil || num == 0 {
-		err1 := ctx.GetTable("material_material").Synchronize()
+		err1 := ds.GetTable("material_material").Synchronize()
 		if err1 != nil {
 			messages = append(messages, "The table material_material was not created: "+err1.Error())
 		} else {

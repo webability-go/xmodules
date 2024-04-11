@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<language id="translation" lang="en">
+  <entry id="MODULENAME" status="1701369480|1|1"><![CDATA[Kiwilimon Translations Entity]]></entry>
+  <entry id="commit" status="1701369480|1|1"><![CDATA[Successful installation.]]></entry>
+  <entry id="database.none" status="1701369480|1|1"><![CDATA[There is no available database in the datasource]]></entry>
+  <entry id="error.delete" status="1701369480|1|1"><![CDATA[client::%s::%s - Error, deleting in %s: %s]]></entry>
+  <entry id="error.notable" status="1701369480|1|1"><![CDATA[client::%s::%s - Error, the table %s is not available on the datasource %s.]]></entry>
+  <entry id="error.select" status="1701369480|1|1"><![CDATA[client::%s::%s - Error, selecting in %s: %s]]></entry>
+  <entry id="error.upsert" status="1701369480|1|1"><![CDATA[client::%s::%s - Error, upserting in %s: %s]]></entry>
+  <entry id="moduleerror" status="1701369480|1|1"><![CDATA[Error modifying the entry %s in the base_module table: %s]]></entry>
+  <entry id="modulemodified" status="1701369480|1|1"><![CDATA[The entry %s was successfully modified in the base_module table.]]></entry>
+  <entry id="rollback" status="1701369480|1|1"><![CDATA[Installation with error: %s]]></entry>
+  <entry id="transaction.commitnone" status="1701369480|1|1"><![CDATA[Error searching the transaction to commit: There is no available transaction.]]></entry>
+  <entry id="transaction.error" status="1701369480|1|1"><![CDATA[Error in the transaction: %s]]></entry>
+  <entry id="transaction.exist" status="1701369480|1|1"><![CDATA[Error creating a transaction: There is already a started transaction.]]></entry>
+  <entry id="transaction.none" status="1701369480|1|1"><![CDATA[Error searching the transaction: There is no available transaction.]]></entry>
+  <entry id="transaction.rollbacknone" status="1701369480|1|1"><![CDATA[Error searching the transaction to rollback: There is no available transaction.]]></entry>
+  <entry id="translation.description" status="1701369480|1|1"><![CDATA[Translation Administration Access]]></entry>
+  <entry id="translation.name" status="1701369480|1|1"><![CDATA[Translation Administration Access]]></entry>
+  <entry id="translationfolder.description" status="1701369480|1|1"><![CDATA[Translation Administration]]></entry>
+  <entry id="translationfolder.name" status="1701369480|1|1"><![CDATA[Translation Administration]]></entry>
+  <entry id="translationgroup.description" status="1701369480|1|1"><![CDATA[Translation Administration Access Group]]></entry>
+  <entry id="translationgroup.name" status="1701369480|1|1"><![CDATA[Translation Administration Access Group]]></entry>
+  <entry id="translationlanguage.description" status="1701369480|1|1"><![CDATA[Language Administration Access]]></entry>
+  <entry id="translationlanguage.name" status="1701369480|1|1"><![CDATA[Language Administration Access]]></entry>
+  <entry id="translationlanguageoption.description" status="1701369480|1|1"><![CDATA[Known Languages]]></entry>
+  <entry id="translationlanguageoption.name" status="1701369480|1|1"><![CDATA[Known Languages]]></entry>
+  <entry id="translationoption.description" status="1701369480|1|1"><![CDATA[translations]]></entry>
+  <entry id="translationoption.name" status="1701369480|1|1"><![CDATA[translations]]></entry>
+  <entry id="translationsource.description" status="1701369480|1|1"><![CDATA[Text Sources Administration Access]]></entry>
+  <entry id="translationsource.name" status="1701369480|1|1"><![CDATA[Text Sources Administration Access]]></entry>
+  <entry id="translationsourceoption.description" status="1701369480|1|1"><![CDATA[Text Sources]]></entry>
+  <entry id="translationsourceoption.name" status="1701369480|1|1"><![CDATA[Text Sources]]></entry>
+  <entry id="translationtheme.description" status="1701369480|1|1"><![CDATA[Translation Topics Administration Access]]></entry>
+  <entry id="translationtheme.name" status="1701369480|1|1"><![CDATA[Translation Topics Administration Access]]></entry>
+  <entry id="translationthemeoption.description" status="1701369480|1|1"><![CDATA[Translation Topics]]></entry>
+  <entry id="translationthemeoption.name" status="1701369480|1|1"><![CDATA[Translation Topics]]></entry>
+  <entry id="translationtools.description" status="1701369480|1|1"><![CDATA[Translation Tools Access]]></entry>
+  <entry id="translationtools.name" status="1701369480|1|1"><![CDATA[Translation Tools Access]]></entry>
+  <entry id="translationtoolsoption.description" status="1701369480|1|1"><![CDATA[Tools]]></entry>
+  <entry id="translationtoolsoption.name" status="1701369480|1|1"><![CDATA[Tools]]></entry>
+</language>

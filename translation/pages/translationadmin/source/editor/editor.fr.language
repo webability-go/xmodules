@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<language id="editor" lang="fr">
+  <entry id="config.help.description" status="1701369360|1|1"><![CDATA[file. path=[répertoire] Le répertoire de base où rechercher les fichiers de langues.]]></entry>
+  <entry id="config.title" status="1701369182|1|1"><![CDATA[Configuration :]]></entry>
+  <entry id="erroraccess" status="1701369182|1|1"><![CDATA[translationadmin/source/editor::%s - Erreur: l'utilisateur '%d' n'a pas accès à cet écran]]></entry>
+  <entry id="errordatasource" status="1701369182|1|1"><![CDATA[translationadmin/source/editor::%s - Erreur: aucune source de données '%s']]></entry>
+  <entry id="errortable" status="1701369182|1|1"><![CDATA[translationadmin/source/editor::%s - Erreur: la table '%s' n'existe pas dans la source de données]]></entry>
+  <entry id="formreset.title" status="1701369182|1|1"><![CDATA[Réinitialiser]]></entry>
+  <entry id="formsubmit.delete.title" status="1701369182|1|1"><![CDATA[Oui, supprimer cette source de texte]]></entry>
+  <entry id="formsubmit.insert.title" status="1701369182|1|1"><![CDATA[Enregistrer la source de texte]]></entry>
+  <entry id="formsubmit.update.title" status="1701369182|1|1"><![CDATA[Enregistrer les modifications]]></entry>
+  <entry id="formview.title" status="1701369182|1|1"><![CDATA[Annuler]]></entry>
+  <entry id="hint" status="1701369182|1|1"><![CDATA[Cliquez sur une ligne pour la modifier :]]></entry>
+  <entry id="key.auto" status="1701369182|1|1"><![CDATA[Allocation automatique]]></entry>
+  <entry id="key.help.description" status="1701369182|1|1"><![CDATA[La clé de la clé du texte est un numéro consécutif.]]></entry>
+  <entry id="key.title" status="1701369182|1|1"><![CDATA[Clé]]></entry>
+  <entry id="mask.errormessage" status="1701369182|1|1"><![CDATA[Les données ne sont pas encore correctement saisies. Veuillez vérifier les messages et les champs en rouge avant d'envoyer les informations.]]></entry>
+  <entry id="mask.servermessage" status="1701369182|1|1"><![CDATA[Erreur : les données de l'enregistrement n'ont pas pu être récupérées depuis le serveur.]]></entry>
+  <entry id="mask.titledelete" status="1701369182|1|1"><![CDATA[Supprimer la langue :]]></entry>
+  <entry id="mask.titledelete.message" status="1701369182|1|1"><![CDATA[Informations supprimées avec succès. Vous pouvez maintenant fermer cet écran.]]></entry>
+  <entry id="mask.titleinsert" status="1701369182|1|1"><![CDATA[Insérer une nouvelle source de texte :]]></entry>
+  <entry id="mask.titleinsert.message" status="1701369182|1|1"><![CDATA[Informations ajoutées avec succès. Vous pouvez maintenant fermer cet écran.]]></entry>
+  <entry id="mask.titleupdate" status="1701369182|1|1"><![CDATA[Modifier les données de la langue :]]></entry>
+  <entry id="mask.titleupdate.message" status="1701369182|1|1"><![CDATA[Informations modifiées avec succès. Vous pouvez maintenant fermer cet écran.]]></entry>
+  <entry id="mask.titleview" status="1701369182|1|1"><![CDATA[Données de la source de texte :]]></entry>
+  <entry id="name.help.description" status="1701369182|1|1"><![CDATA[Le nom de la source de texte doit comporter entre 1 et 255 caractères maximum.]]></entry>
+  <entry id="name.status.notnull" status="1701369182|1|1"><![CDATA[Le nom ne peut pas être vide.]]></entry>
+  <entry id="name.title" status="1701369182|1|1"><![CDATA[Nom]]></entry>
+  <entry id="prune.help.description" status="1701369182|1|1"><![CDATA[Si vous sélectionnez Oui, alors toutes les traductions liées à cette source seront également supprimées. Si vous sélectionnez Non, alors les informations seront déplacées vers la langue sélectionnée dans le champ suivant.]]></entry>
+  <entry id="prune.no" status="1701369182|1|1"><![CDATA[Non, sélectionner la source réceptrice]]></entry>
+  <entry id="prune.title" status="1701369182|1|1"><![CDATA[Supprimer également les enfants ?]]></entry>
+  <entry id="prune.yes" status="1701369182|1|1"><![CDATA[Oui, supprimer les enfants]]></entry>
+  <entry id="sourcetoprune.help.description" status="1701369182|1|1"><![CDATA[Si vous avez sélectionné Non dans le champ précédent, veuillez spécifier la source qui recevra les informations liées à la source à supprimer.]]></entry>
+  <entry id="sourcetoprune.title" status="1701369182|1|1"><![CDATA[Source de texte réceptrice :]]></entry>
+  <entry id="title" status="1701369182|1|1"><![CDATA[Sources de texte connues par le système.]]></entry>
+</language>

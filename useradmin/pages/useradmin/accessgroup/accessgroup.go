@@ -25,7 +25,7 @@ func Run(ctx *context.Context, template *xcore.XTemplate, language *xcore.XLangu
 		return ""
 	}
 
-	userentries := userassets.GetEntries(ctx)
+	userentries := userassets.GetEntries(ctx.LoggerError)
 	ds := base.TryDatasource(ctx, userassets.DATASOURCE)
 	userkey, _ := ctx.Sessionparams.GetInt("userkey")
 
@@ -59,7 +59,7 @@ func Accessgroupdata(ctx *context.Context, template *xcore.XTemplate, language *
 		dataarray = [][]int{{0, 49}}
 	}
 
-	userentries := userassets.GetEntries(ctx)
+	userentries := userassets.GetEntries(ctx.LoggerError)
 	ds := base.TryDatasource(ctx, userassets.DATASOURCE)
 	userkey, _ := ctx.Sessionparams.GetInt("userkey")
 
@@ -117,7 +117,7 @@ func Filter(ctx *context.Context, template *xcore.XTemplate, language *xcore.XLa
 		return ""
 	}
 
-	userentries := userassets.GetEntries(ctx)
+	userentries := userassets.GetEntries(ctx.LoggerError)
 	ds := base.TryDatasource(ctx, userassets.DATASOURCE)
 	userkey, _ := ctx.Sessionparams.GetInt("userkey")
 

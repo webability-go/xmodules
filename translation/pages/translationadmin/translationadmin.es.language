@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<language id="translationadmin" lang="es">
+
+  <entry id="errordatasource">translationadmin::%s - Error: no hay fuente de datos '%s'</entry>
+  <entry id="erroraccess">translationadmin::%s - Error: el usuario '%d' no tiene acceso a esta pantalla</entry>
+
+  <entry id="reload">Recargar la lista</entry>
+  <entry id="insertnew">Nueva traducción</entry>
+  <entry id="title">Lista de Traducciones.</entry>
+  <entry id="allthethemes">Todos los temas</entry>
+  <entry id="searchtitle">Filtrar (clave, id o nombre):</entry>
+  <entry id="searchbutton">Buscar</entry>
+  <entry id="cleanfilter">Vaciar filtro</entry>
+
+</language>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<language id="adminmenu" lang="ja">
+  <entry id="MAINMENU" status="1701369683|1|1"><![CDATA[デフォルトの管理メニュー]]></entry>
+  <entry id="MODULENAME" status="1701369683|1|1"><![CDATA[管理メニュー]]></entry>
+  <entry id="access.description" status="1701369683|1|1"><![CDATA[メニュー管理へのアクセス]]></entry>
+  <entry id="access.name" status="1701369683|1|1"><![CDATA[メニュー管理へのアクセス]]></entry>
+  <entry id="accessgroup.description" status="1701369683|1|1"><![CDATA[メニュー管理のアクセスグループ]]></entry>
+  <entry id="accessgroup.name" status="1701369683|1|1"><![CDATA[メニュー管理のアクセスグループ]]></entry>
+  <entry id="adminmenugroup.description1" status="1701369683|1|1"><![CDATA[メニューのグループとオプション]]></entry>
+  <entry id="adminmenugroup.name" status="1701369683|1|1"><![CDATA[メニューのグループとオプション]]></entry>
+  <entry id="commit" status="1701369683|1|1"><![CDATA[インストールが成功しました。]]></entry>
+  <entry id="database.none" status="1701369683|1|1"><![CDATA[データソースに利用可能なデータベースがありません]]></entry>
+  <entry id="menufolder.description1" status="1701369683|1|1"><![CDATA[メニュー管理のさまざまなオプションを表示するには、この行をクリックしてください。]]></entry>
+  <entry id="menufolder.name" status="1701369683|1|1"><![CDATA[メニューのビルダー]]></entry>
+  <entry id="moduleerror" status="1701369683|1|1"><![CDATA[base_module テーブルで %s のエントリを変更する際のエラー：%s]]></entry>
+  <entry id="modulemodified" status="1701369683|1|1"><![CDATA[%s のエントリが base_module テーブルで正常に変更されました。]]></entry>
+  <entry id="rollback" status="1701369683|1|1"><![CDATA[エラーが発生しました： %s のインストール]]></entry>
+  <entry id="transaction.commitnone" status="1701369683|1|1"><![CDATA[コミットするトランザクションの検索エラー：利用可能なトランザクションはありません。]]></entry>
+  <entry id="transaction.error" status="1701369683|1|1"><![CDATA[トランザクションエラー： %s]]></entry>
+  <entry id="transaction.exist" status="1701369683|1|1"><![CDATA[トランザクションの作成エラー：既に開始されたトランザクションがあります。]]></entry>
+  <entry id="transaction.none" status="1701369683|1|1"><![CDATA[トランザクションの検索エラー：利用可能なトランザクションはありません。]]></entry>
+  <entry id="transaction.rollbacknone" status="1701369683|1|1"><![CDATA[ロールバックするトランザクションの検索エラー：利用可能なトランザクションはありません。]]></entry>
+</language>

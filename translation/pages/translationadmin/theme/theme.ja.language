@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<language id="theme" lang="ja">
+  <entry id="button.delete" status="1701369917|1|1"><![CDATA[削除する]]></entry>
+  <entry id="button.edit" status="1701369917|1|1"><![CDATA[編集する]]></entry>
+  <entry id="button.view" status="1701369917|1|1"><![CDATA[表示する]]></entry>
+  <entry id="cleanfilter" status="1701369917|1|1"><![CDATA[フィルターをクリアする]]></entry>
+  <entry id="commands" status="1701369917|1|1"><![CDATA[コマンド]]></entry>
+  <entry id="config" status="1701369917|1|1"><![CDATA[設定]]></entry>
+  <entry id="erroraccess" status="1701369917|1|1"><![CDATA[translationadmin/theme::%s - エラー：ユーザー'%d'はこの画面にアクセスできません]]></entry>
+  <entry id="errordatasource" status="1701369917|1|1"><![CDATA[translationadmin/theme::%s - エラー：データソース'%s'がありません]]></entry>
+  <entry id="hint" status="1701369917|1|1"><![CDATA[行をクリックして表示します：]]></entry>
+  <entry id="insertnew" status="1701369917|1|1"><![CDATA[新しい翻訳のテーマ]]></entry>
+  <entry id="key" status="1701369917|1|1"><![CDATA[キー]]></entry>
+  <entry id="name" status="1701369917|1|1"><![CDATA[名前]]></entry>
+  <entry id="newtheme" status="1701369917|1|1"><![CDATA[新規作成]]></entry>
+  <entry id="quantity" status="1701369917|1|1"><![CDATA[翻訳の数：]]></entry>
+  <entry id="reload" status="1701369917|1|1"><![CDATA[リストをリロードする]]></entry>
+  <entry id="searchbutton" status="1701369917|1|1"><![CDATA[検索する]]></entry>
+  <entry id="searchtitle" status="1701369917|1|1"><![CDATA[フィルター（キーまたは名前）：]]></entry>
+  <entry id="source" status="1701369917|1|1"><![CDATA[ソース]]></entry>
+  <entry id="source.1" status="1701369917|1|1"><![CDATA[データベース]]></entry>
+  <entry id="source.2" status="1701369917|1|1"><![CDATA[.languageページのファイル]]></entry>
+  <entry id="source.3" status="1701369917|1|1"><![CDATA[特定のファイル]]></entry>
+  <entry id="themetitle" status="1701369917|1|1"><![CDATA[翻訳のテーマ]]></entry>
+  <entry id="title" status="1701369917|1|1"><![CDATA[翻訳のテーマリスト]]></entry>
+</language>

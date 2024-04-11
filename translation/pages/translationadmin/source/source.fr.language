@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<language id="source" lang="fr">
+  <entry id="button.delete" status="1701369186|1|1"><![CDATA[Supprimer]]></entry>
+  <entry id="button.edit" status="1701369186|1|1"><![CDATA[Modifier]]></entry>
+  <entry id="button.view" status="1701369186|1|1"><![CDATA[Voir]]></entry>
+  <entry id="cleanfilter" status="1701369186|1|1"><![CDATA[Vider le filtre]]></entry>
+  <entry id="commands" status="1701369186|1|1"><![CDATA[Commandes]]></entry>
+  <entry id="erroraccess" status="1701369186|1|1"><![CDATA[translationadmin/source::%s - Erreur : l'utilisateur '%d' n'a pas accès à cette page]]></entry>
+  <entry id="errordatasource" status="1701369186|1|1"><![CDATA[translationadmin/source::%s - Erreur : aucune source de données '%s']]></entry>
+  <entry id="hint" status="1701369186|1|1"><![CDATA[Cliquez sur une ligne pour l'afficher :]]></entry>
+  <entry id="insertnew" status="1701369186|1|1"><![CDATA[Nouvelle source de textes]]></entry>
+  <entry id="key" status="1701369186|1|1"><![CDATA[Clé]]></entry>
+  <entry id="name" status="1701369186|1|1"><![CDATA[Nom]]></entry>
+  <entry id="newsource" status="1701369186|1|1"><![CDATA[Nouveau]]></entry>
+  <entry id="quantity" status="1701369186|1|1"><![CDATA[# thèmes / # entrées]]></entry>
+  <entry id="reload" status="1701369186|1|1"><![CDATA[Recharger la liste]]></entry>
+  <entry id="searchbutton" status="1701369186|1|1"><![CDATA[Rechercher]]></entry>
+  <entry id="searchtitle" status="1701369186|1|1"><![CDATA[Filtrer (clé ou nom) :]]></entry>
+  <entry id="sourcetitle" status="1701369186|1|1"><![CDATA[Source de données]]></entry>
+  <entry id="title" status="1701369186|1|1"><![CDATA[Liste des sources connues.]]></entry>
+</language>

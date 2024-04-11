@@ -1,9 +1,24 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<language id="useradmin/profile" lang="en">
-  <entry id="reload">Reload the list</entry>
-  <entry id="insertnew">New access</entry>
-  <entry id="accessgroup">Admin groups of accesses</entry>
-  <entry id="title">Accesses for users in the system.</entry>
-  <entry id="hint">Click on a line to edit the information:</entry>
-
+<language id="profile" lang="en">
+  <entry id="accesses" status="1701369452|1|1"><![CDATA[Access]]></entry>
+  <entry id="button.delete" status="1701369452|1|1"><![CDATA[Delete]]></entry>
+  <entry id="button.edit" status="1701369452|1|1"><![CDATA[Edit]]></entry>
+  <entry id="button.view" status="1701369452|1|1"><![CDATA[View]]></entry>
+  <entry id="commands" status="1701369452|1|1"><![CDATA[Commands]]></entry>
+  <entry id="description" status="1701369452|1|1"><![CDATA[Description]]></entry>
+  <entry id="erroraccess" status="1701369452|1|1"><![CDATA[adminuser/profile::%s - Error: user '%d' does not have access to this screen]]></entry>
+  <entry id="errordatasource" status="1701369452|1|1"><![CDATA[adminuser/profile::%s - Error: no data source '%s']]></entry>
+  <entry id="hint" status="1701369452|1|1"><![CDATA[Click on a row to display it:]]></entry>
+  <entry id="insertnew" status="1701369452|1|1"><![CDATA[New profile]]></entry>
+  <entry id="key" status="1701369452|1|1"><![CDATA[Password]]></entry>
+  <entry id="name" status="1701369452|1|1"><![CDATA[Name]]></entry>
+  <entry id="newprofile" status="1701369452|1|1"><![CDATA[New]]></entry>
+  <entry id="profiletitle" status="1701369452|1|1"><![CDATA[Profile]]></entry>
+  <entry id="reload" status="1701369452|1|1"><![CDATA[Reload the list]]></entry>
+  <entry id="showall" status="1701369452|1|1"><![CDATA[View deactivated profiles]]></entry>
+  <entry id="status" status="1701369452|1|1"><![CDATA[Status]]></entry>
+  <entry id="status.no" status="1701369452|1|1"><![CDATA[Deactivate]]></entry>
+  <entry id="status.yes" status="1701369452|1|1"><![CDATA[Act.]]></entry>
+  <entry id="title" status="1701369452|1|1"><![CDATA[System user profiles]]></entry>
+  <entry id="users" status="1701369452|1|1"><![CDATA[Users]]></entry>
 </language>

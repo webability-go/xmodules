@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<language id="chatgpt" lang="pt">
+  <entry id="MODULENAME" status="1701370112|1|1"><![CDATA[ChatGPT Bridge]]></entry>
+  <entry id="commit" status="1701370112|1|1"><![CDATA[Instalação bem-sucedida.]]></entry>
+  <entry id="database.none" status="1701370112|1|1"><![CDATA[Não há banco de dados disponível no banco de dados]]></entry>
+  <entry id="error.delete" status="1701370112|1|1"><![CDATA[cliente::%s::%s - Erro ao excluir em %s: %s]]></entry>
+  <entry id="error.notable" status="1701370112|1|1"><![CDATA[cliente::%s::%s - Erro, a tabela %s não está disponível no banco de dados %s.]]></entry>
+  <entry id="error.select" status="1701370112|1|1"><![CDATA[cliente::%s::%s - Erro ao selecionar em %s: %s]]></entry>
+  <entry id="error.upsert" status="1701370112|1|1"><![CDATA[cliente::%s::%s - Erro ao atualizar em %s: %s]]></entry>
+  <entry id="moduleerror" status="1701370112|1|1"><![CDATA[Erro ao modificar a entrada %s na tabela base_module: %s]]></entry>
+  <entry id="modulemodified" status="1701370112|1|1"><![CDATA[A entrada %s foi modificada com sucesso na tabela base_module.]]></entry>
+  <entry id="rollback" status="1701370112|1|1"><![CDATA[Instalação com erro: %s]]></entry>
+  <entry id="transaction.commitnone" status="1701370112|1|1"><![CDATA[Erro ao pesquisar a transação para confirmar: Não há transação disponível.]]></entry>
+  <entry id="transaction.error" status="1701370112|1|1"><![CDATA[Erro na transação: %s]]></entry>
+  <entry id="transaction.exist" status="1701370112|1|1"><![CDATA[Erro ao criar uma transação: Já existe uma transação em andamento.]]></entry>
+  <entry id="transaction.none" status="1701370112|1|1"><![CDATA[Erro ao pesquisar a transação: Não há transação disponível.]]></entry>
+  <entry id="transaction.rollbacknone" status="1701370112|1|1"><![CDATA[Erro ao pesquisar a transação para desfazer: Não há transação disponível.]]></entry>
+</language>

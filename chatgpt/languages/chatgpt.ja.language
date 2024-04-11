@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<language id="chatgpt" lang="ja">
+  <entry id="MODULENAME" status="1701369826|1|1"><![CDATA[ChatGPTブリッジ]]></entry>
+  <entry id="commit" status="1701369826|1|1"><![CDATA[インストールが成功しました。]]></entry>
+  <entry id="database.none" status="1701369826|1|1"><![CDATA[データソースに利用可能なデータベースがありません。]]></entry>
+  <entry id="error.delete" status="1701369826|1|1"><![CDATA[client::%s::%s - エラー、%sでの削除：%s]]></entry>
+  <entry id="error.notable" status="1701369826|1|1"><![CDATA[client::%s::%s - エラー、データソース%sにテーブル%sが存在しません。]]></entry>
+  <entry id="error.select" status="1701369826|1|1"><![CDATA[client::%s::%s - エラー、%sでの選択：%s]]></entry>
+  <entry id="error.upsert" status="1701369826|1|1"><![CDATA[client::%s::%s - エラー、%sでのアップサート：%s]]></entry>
+  <entry id="moduleerror" status="1701369826|1|1"><![CDATA[ベースモジュールのエントリー%sの変更エラー：%s]]></entry>
+  <entry id="modulemodified" status="1701369826|1|1"><![CDATA[ベースモジュールのテーブルでの%sのエントリーが正常に変更されました。]]></entry>
+  <entry id="rollback" status="1701369826|1|1"><![CDATA[エラーが発生したインストール：%s]]></entry>
+  <entry id="transaction.commitnone" status="1701369826|1|1"><![CDATA[トランザクションのコミットの検索エラー：利用可能なトランザクションがありません。]]></entry>
+  <entry id="transaction.error" status="1701369826|1|1"><![CDATA[トランザクションのエラー：%s]]></entry>
+  <entry id="transaction.exist" status="1701369826|1|1"><![CDATA[トランザクションの作成エラー：既に開始されたトランザクションがあります。]]></entry>
+  <entry id="transaction.none" status="1701369826|1|1"><![CDATA[トランザクションの検索エラー：利用可能なトランザクションがありません。]]></entry>
+  <entry id="transaction.rollbacknone" status="1701369826|1|1"><![CDATA[トランザクションのロールバックの検索エラー：利用可能なトランザクションがありません。]]></entry>
+</language>

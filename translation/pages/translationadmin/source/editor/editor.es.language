@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<language id="translationadmin/source/editor" lang="es">
+
+  <entry id="errordatasource">translationadmin/source/editor::%s - Error: no hay fuente de datos '%s'</entry>
+  <entry id="erroraccess">translationadmin/source/editor::%s - Error: el usuario '%d' no tiene acceso a esta pantalla</entry>
+  <entry id="errortable">translationadmin/source/editor::%s - Error: la tabla '%s' no existe en el datasource</entry>
+
+  <entry id="title">Fuentes de textos conocidas por el sistema.</entry>
+  <entry id="hint">Haz click sobre un renglón para editarlo:</entry>
+
+  <entry id="mask.errormessage"><![CDATA[Los datos aún no son bien capturados. Por favor, verifique los mensajes y los campos en rojo antes de enviar la información.]]></entry>
+  <entry id="mask.servermessage"><![CDATA[Error: Los datos del registro no pudierón ser recuperados del servidor.]]></entry>
+  <entry id="mask.titleinsert"><![CDATA[Insertar una nueva fuente de textos:]]></entry>
+  <entry id="mask.titleinsert.message">Información agregada con éxito. Ya puede cerrar esta pantalla.</entry>
+  <entry id="mask.titleupdate"><![CDATA[Modificar los datos del idioma:]]></entry>
+  <entry id="mask.titleupdate.message">Información modificada con éxito. Ya puede cerrar esta pantalla.</entry>
+  <entry id="mask.titledelete"><![CDATA[Borrar el idioma:]]></entry>
+  <entry id="mask.titledelete.message">Información borrada con éxito. Ya puede cerrar esta pantalla.</entry>
+  <entry id="mask.titleview"><![CDATA[Datos de la fuente de textos:]]></entry>
+
+  <entry id="key.title">Clave</entry>
+  <entry id="key.help.description">La clave de la clave del textos es un número consecutivo.</entry>
+  <entry id="key.auto">Asignación automática</entry>
+
+  <entry id="name.title">Nombre</entry>
+  <entry id="name.help.description">El nombre de la fuente de textos es de 1 hasta 255 carácteres máximo.</entry>
+  <entry id="name.status.notnull">El nombre no puede estar vacio.</entry>
+
+  <entry id="config.title">Configuración:</entry>
+  <entry id="config.help.description">La configuración es una serie de parametros bajo la forma parametro=valor. Parámetros reconocidos por el sistema: source=db|file. path=[directory] El directorio base donde buscar los archivos de idiomas</entry>
+
+  <entry id="prune.title">¿Borrar tambien los hijos?</entry>
+  <entry id="prune.help.description">Si selecciona Sí, entonces todos las traducciones relacionadas con esta fuente serán borrados también. Si selecciona No, entonces la información será movida al idioma seleccionado en el campo siguiente.</entry>
+  <entry id="prune.yes">Sí, borrar los hijos</entry>
+  <entry id="prune.no">No, seleccionar la fuente receptora</entry>
+
+  <entry id="sourcetoprune.title">Fuente de textos receptora:</entry>
+  <entry id="sourcetoprune.help.description">Si seleccionó No en el campo anterior, entonces especifique la fuente que recibirá la información relacionada a la fuente a borrar.</entry>
+
+  <entry id="formsubmit.insert.title">Grabar la fuente de textos</entry>
+  <entry id="formsubmit.update.title">Guardar las modificaciones</entry>
+  <entry id="formsubmit.delete.title">Si, borrar esta fuente de textos</entry>
+  <entry id="formreset.title">Reinicinar</entry>
+  <entry id="formview.title">Cancelar</entry>
+</language>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<language id="access" lang="ja">
+  <entry id="accessgroup" status="1701369721|1|1"><![CDATA[アクセスグループの管理]]></entry>
+  <entry id="accesstitle" status="1701369721|1|1"><![CDATA[アクセス権限]]></entry>
+  <entry id="button.delete" status="1701369721|1|1"><![CDATA[削除]]></entry>
+  <entry id="button.edit" status="1701369721|1|1"><![CDATA[編集]]></entry>
+  <entry id="button.view" status="1701369721|1|1"><![CDATA[表示]]></entry>
+  <entry id="commands" status="1701369721|1|1"><![CDATA[コマンド]]></entry>
+  <entry id="description" status="1701369721|1|1"><![CDATA[説明]]></entry>
+  <entry id="erroraccess" status="1701369721|1|1"><![CDATA[adminuser/access::%s - エラー: ユーザー '%d' はこの画面にアクセスできません]]></entry>
+  <entry id="errordatasource" status="1701369721|1|1"><![CDATA[adminuser/access::%s - エラー: データソース '%s' が見つかりません]]></entry>
+  <entry id="group" status="1701369721|1|1"><![CDATA[グループ]]></entry>
+  <entry id="hint" status="1701369721|1|1"><![CDATA[行をクリックして表示します：]]></entry>
+  <entry id="insertnew" status="1701369721|1|1"><![CDATA[新しいアクセス]]></entry>
+  <entry id="key" status="1701369721|1|1"><![CDATA[パスワード]]></entry>
+  <entry id="name" status="1701369721|1|1"><![CDATA[名前]]></entry>
+  <entry id="newaccess" status="1701369721|1|1"><![CDATA[新規作成]]></entry>
+  <entry id="profiles" status="1701369721|1|1"><![CDATA[プロフィール]]></entry>
+  <entry id="reload" status="1701369721|1|1"><![CDATA[リストをリロード]]></entry>
+  <entry id="showsystem" status="1701369721|1|1"><![CDATA[システムのアクセス権限を表示]]></entry>
+  <entry id="title" status="1701369721|1|1"><![CDATA[システムのアクセス権限]]></entry>
+  <entry id="users" status="1701369721|1|1"><![CDATA[ユーザー]]></entry>
+</language>

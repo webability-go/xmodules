@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<application id="translationadmin/source">
+  <container type="separatorContainer" width="max" height="max" mode="vertical" auto="yes">
+
+    <zone id="filtercontainer" size="80">
+      <element type="htmlElement" ><![CDATA[
+
+<div style="padding: 10px;">
+  <button class="button reload" style="float: right;" onclick="translationadmin_source_reload();">##reload##</button>
+  <button class="button insert" style="float: right;" onclick="translationadmin_source_go('', 1);">##insertnew##</button>
+  <b>##title##</b><br />
+  ##hint##<br />
+
+  <button class="button insert" style="float: right;" onclick="translationadmin_source_cleansearch();">##cleanfilter##</button>
+  ##searchtitle## <input id="translationadmin/source|single|search" type="text" value="{{SEARCHFILTER}}">
+  <button class="button insert" onclick="translationadmin_source_setsearch();">##searchbutton##</button>
+
+</div>
+
+      ]]></element>
+    </zone>
+    <zone id="sourcecontainer" size="*">
+      <container type="gridContainer" id="sourcedata" width="max" height="max" haslistener="yes" classname="grid colored">
+        <zone type="column" size="70" field="clave" title="##key##" sortable="yes">
+        </zone>
+        <zone type="column" size="300" field="nombre" title="##name##" sortable="yes">
+        </zone>
+        <zone type="column" size="200" field="quantity" title="##quantity##">
+        </zone>
+        <zone type="column" size="250" field="commands" title="##commands##">
+        </zone>
+
+        <event type="click">
+          <code><![CDATA[
+function(data)
+{
+  if (!data || !data.data)
+    return;
+
+  translationadmin_source_go(data.data.key, 4);
+}
+          ]]></code>
+        </event>
+
+      </container>
+    </zone>
+
+  </container>
+
+  <element type="codeElement"><![CDATA[
+
+function translationadmin_source_reload()
+{
+  WA.$N('translationadmin/source|single|sourcedata').reload();
+}
+
+function translationadmin_source_setsearch()
+{
+  var checked = WA.toDOM("translationadmin/source|single|showall").checked;
+  var filter = WA.toDOM("translationadmin/source|single|search").value;
+  var request = WA.Managers.ajax.createRequest('/translationadmin/source/filter/json', 'POST', null, translationadmin_source_getfilter, false);
+  request.addParameter('checked', checked);
+  request.addParameter('filter', filter);
+  request.send();
+}
+
+function translationadmin_source_cleansearch()
+{
+  WA.toDOM("translationadmin/source|single|showall").checked = false;
+  WA.toDOM("translationadmin/source|single|search").value = "";
+  translationadmin_source_setsearch();
+}
+
+function translationadmin_source_getfilter(request)
+{
+  translationadmin_source_reload();
+}
+
+function translationadmin_source_go(key, mode)
+{
+  // open app to edit
+  var node = WA.$N('index|single|app_translationadmin/source/editor_'+(key?key:'new'));
+  if (!node)
+  {
+    var tree = {tag:'zone',attributes:{id:'app_translationadmin/source/editor_'+(key?key:'new'),title:'##sourcetitle## - ' + (key?key:'##newsource##'),closeable:'yes',application:'translationadmin/source/editor|'+(key?key:'new'),params:'mode='+mode+(key?'&Key='+key:'')}};
+    WA.$N('index|single|application').app.createTree('application', tree);
+  }
+  else
+  {
+    n = WA.$N('translationadmin/source/editor|'+(key?key:'new')+'|formsource');
+    if (n && mode == 1)
+      n.doInsert();
+    else if (n && mode == 2)
+      n.doUpdate();
+    else if (n && mode == 3)
+      n.doDelete();
+    else if (n && mode == 4)
+      n.doView();
+  }
+  WA.$N('index|single|application').activateZone('app_translationadmin/source/editor_'+(key?key:'new'));
+}
+
+]]></element>
+
+</application>

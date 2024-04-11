@@ -8,8 +8,8 @@ import (
 
 	"golang.org/x/text/language"
 
+	"github.com/webability-go/xamboo/applications"
 	"github.com/webability-go/xdominion"
-	"github.com/webability-go/xmodules/base"
 )
 
 const (
@@ -41,18 +41,18 @@ const (
 	UNIT_VISIBLE    = 62  // pieza escribiendo el nombre
 )
 
-func GetMetric(sitecontext *base.Datasource, clave int, lang language.Tag) *StructureMetric {
+func GetMetric(ds applications.Datasource, clave int, lang language.Tag) *StructureMetric {
 
 	canonical := lang.String()
 
-	data, _ := sitecontext.GetCache("metrics:" + canonical).Get(strconv.Itoa(clave))
+	data, _ := ds.GetCache("metrics:" + canonical).Get(strconv.Itoa(clave))
 	if data == nil {
-		sm := CreateStructureMetricByKey(sitecontext, clave, lang)
+		sm := CreateStructureMetricByKey(ds, clave, lang)
 		if sm == nil {
-			sitecontext.Log("graph", "xmodules::metrics::GetMetric: No hay medida creada:", clave, lang)
+			ds.Log("graph", "xmodules::metrics::GetMetric: No hay medida creada:", clave, lang)
 			return nil
 		}
-		sitecontext.GetCache("metric:"+canonical).Set(strconv.Itoa(clave), sm)
+		ds.GetCache("metric:"+canonical).Set(strconv.Itoa(clave), sm)
 		return sm.(*StructureMetric)
 	}
 	return data.(*StructureMetric)
@@ -112,7 +112,7 @@ func ParseQuantity(cantidad string) float64 {
 // state is the type of metric we prefer for this ingredient: (basically for SI and SA), since SC is all volume
 // 1 = solid
 // 2 = liquid
-func ConvertMetrics(sitecontext *base.Datasource, quantity float64, density float64, state int, fromMetric *xdominion.XRecord, system int) (float64, *xdominion.XRecord) {
+func ConvertMetrics(ds applications.Datasource, quantity float64, density float64, state int, fromMetric *xdominion.XRecord, system int) (float64, *xdominion.XRecord) {
 
 	fromsystem, _ := fromMetric.GetInt("type")
 	if fromsystem == system || fromsystem > 3 || system == 0 { // nothing to change, no calculable o el mismo sistema
@@ -123,7 +123,7 @@ func ConvertMetrics(sitecontext *base.Datasource, quantity float64, density floa
 
 	unidadsi, _ := fromMetric.GetInt("isunit")
 	factor, _ := fromMetric.GetFloat("factorconversion")
-	toMetric := GetMetric(sitecontext, unidadsi, language.Spanish) // only numbers interest us here
+	toMetric := GetMetric(ds, unidadsi, language.Spanish) // only numbers interest us here
 
 	// busca la medida más adhoc en el sistema correspondeiente
 	if system == 1 { // vamos a usar el sistema de conversión directo de fromMetric
@@ -132,18 +132,18 @@ func ConvertMetrics(sitecontext *base.Datasource, quantity float64, density floa
 		if state == 1 && unidadsi == SI_LITER { // queremos solido pero es volumen, aplicar densidad
 			toquantity = toquantity * density
 			unidadsi = SI_GRAM
-			toMetric = GetMetric(sitecontext, unidadsi, language.Spanish) // only numbers interest us here
+			toMetric = GetMetric(ds, unidadsi, language.Spanish) // only numbers interest us here
 		} else if state == 2 && unidadsi == SI_GRAM { // queremos volumen, es solido, aplicar 1/densidad
 			toquantity = toquantity / density
 			unidadsi = SI_LITER
-			toMetric = GetMetric(sitecontext, unidadsi, language.Spanish) // only numbers interest us here
+			toMetric = GetMetric(ds, unidadsi, language.Spanish) // only numbers interest us here
 		} else {
-			toMetric = GetMetric(sitecontext, unidadsi, language.Spanish) // only numbers interest us here
+			toMetric = GetMetric(ds, unidadsi, language.Spanish) // only numbers interest us here
 		}
 
 		// buscamos el metrico más conveniente
 		if unidadsi == SI_GRAM {
-			tometric := GetMetric(sitecontext, SI_KILO, language.Spanish).GetData()
+			tometric := GetMetric(ds, SI_KILO, language.Spanish).GetData()
 			factor, _ := tometric.GetFloat("factorconversion")
 			newquantity := toquantity * factor
 			if newquantity >= 1 {
@@ -185,19 +185,19 @@ func ConvertMetrics(sitecontext *base.Datasource, quantity float64, density floa
 
 	} else if unidadsi == SI_LITER {
 		// intentar SC_TAZA, SC_CUCHARADA, SC_CUCHARADIDA sin densidad
-		tometric := GetMetric(sitecontext, SC_CUP, language.Spanish).GetData()
+		tometric := GetMetric(ds, SC_CUP, language.Spanish).GetData()
 		factor, _ := tometric.GetFloat("factorconversion")
 		newquantity := toquantity * factor
 		if newquantity >= 1 {
 			return newquantity, tometric
 		}
-		tometric = GetMetric(sitecontext, SC_SPOON, language.Spanish).GetData()
+		tometric = GetMetric(ds, SC_SPOON, language.Spanish).GetData()
 		factor, _ = tometric.GetFloat("factorconversion")
 		newquantity = toquantity * factor
 		if newquantity >= 1 {
 			return newquantity, tometric
 		}
-		tometric = GetMetric(sitecontext, SC_TEASPOON, language.Spanish).GetData()
+		tometric = GetMetric(ds, SC_TEASPOON, language.Spanish).GetData()
 		factor, _ = tometric.GetFloat("factorconversion")
 		newquantity = toquantity * factor
 		return newquantity, tometric

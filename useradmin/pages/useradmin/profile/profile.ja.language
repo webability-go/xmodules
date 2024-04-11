@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<language id="profile" lang="ja">
+  <entry id="accesses" status="1701369790|1|1"><![CDATA[アクセス]]></entry>
+  <entry id="button.delete" status="1701369790|1|1"><![CDATA[削除]]></entry>
+  <entry id="button.edit" status="1701369790|1|1"><![CDATA[編集]]></entry>
+  <entry id="button.view" status="1701369790|1|1"><![CDATA[表示]]></entry>
+  <entry id="commands" status="1701369790|1|1"><![CDATA[コマンド]]></entry>
+  <entry id="description" status="1701369790|1|1"><![CDATA[説明]]></entry>
+  <entry id="erroraccess" status="1701369790|1|1"><![CDATA[adminuser/profile::%s - エラー：ユーザー '%d' はこの画面にアクセスできません]]></entry>
+  <entry id="errordatasource" status="1701369790|1|1"><![CDATA[adminuser/profile::%s - エラー：データソース '%s' がありません]]></entry>
+  <entry id="hint" status="1701369790|1|1"><![CDATA[行をクリックして表示します：]]></entry>
+  <entry id="insertnew" status="1701369790|1|1"><![CDATA[新しいプロフィール]]></entry>
+  <entry id="key" status="1701369790|1|1"><![CDATA[キー]]></entry>
+  <entry id="name" status="1701369790|1|1"><![CDATA[名前]]></entry>
+  <entry id="newprofile" status="1701369790|1|1"><![CDATA[新規作成]]></entry>
+  <entry id="profiletitle" status="1701369790|1|1"><![CDATA[プロフィール]]></entry>
+  <entry id="reload" status="1701369790|1|1"><![CDATA[リストを再読み込みする]]></entry>
+  <entry id="showall" status="1701369790|1|1"><![CDATA[非アクティブなプロフィールを表示する]]></entry>
+  <entry id="status" status="1701369790|1|1"><![CDATA[ステータス]]></entry>
+  <entry id="status.no" status="1701369790|1|1"><![CDATA[非アクティブ]]></entry>
+  <entry id="status.yes" status="1701369790|1|1"><![CDATA[アクティブ]]></entry>
+  <entry id="title" status="1701369790|1|1"><![CDATA[システムのユーザープロフィール。]]></entry>
+  <entry id="users" status="1701369790|1|1"><![CDATA[ユーザー]]></entry>
+</language>

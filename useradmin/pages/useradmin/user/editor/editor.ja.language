@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<language id="editor" lang="ja">
+  <entry id="accesses.hierarchy" status="1701369814|1|1"><![CDATA[継承]]></entry>
+  <entry id="accesses.no" status="1701369814|1|1"><![CDATA[拒否]]></entry>
+  <entry id="accesses.title" status="1701369814|1|1"><![CDATA[このユーザーに付与されたアクセス権：]]></entry>
+  <entry id="accesses.yes" status="1701369814|1|1"><![CDATA[付与済み]]></entry>
+  <entry id="erroraccess" status="1701369814|1|1"><![CDATA[adminuser/user/editor::%s - エラー：ユーザー '%d' はこの画面へのアクセス権を持っていません]]></entry>
+  <entry id="errordatasource" status="1701369814|1|1"><![CDATA[adminuser/user/editor::%s - エラー：データソース '%s' がありません]]></entry>
+  <entry id="errortable" status="1701369814|1|1"><![CDATA[adminuser/user/editor::%s - エラー：データソースにテーブル '%s' が存在しません]]></entry>
+  <entry id="father.help.description" status="1701369814|1|1"><![CDATA[このユーザーの責任者ユーザーを割り当てることができます。責任者ユーザーは権限とデータを管理できます。]]></entry>
+  <entry id="father.title" status="1701369814|1|1"><![CDATA[責任者ユーザー：]]></entry>
+  <entry id="fields.help.description" status="1701369814|1|1"><![CDATA[データフィールドは、パラメータ=値の形式で1行ずつ表示されます。]]></entry>
+  <entry id="fields.title" status="1701369814|1|1"><![CDATA[データフィールド：]]></entry>
+  <entry id="formreset.title" status="1701369814|1|1"><![CDATA[リセット]]></entry>
+  <entry id="formsubmit.delete.title" status="1701369814|1|1"><![CDATA[はい、このユーザーを削除します]]></entry>
+  <entry id="formsubmit.insert.title" status="1701369814|1|1"><![CDATA[新しいユーザーを保存する]]></entry>
+  <entry id="formsubmit.update.title" status="1701369814|1|1"><![CDATA[変更を保存する]]></entry>
+  <entry id="formview.title" status="1701369814|1|1"><![CDATA[キャンセル]]></entry>
+  <entry id="hint" status="1701369814|1|1"><![CDATA[行をクリックして編集します：]]></entry>
+  <entry id="info.help.description" status="1701369814|1|1"><![CDATA[ここにユーザーに関する追加情報を入力できます。]]></entry>
+  <entry id="info.title" status="1701369814|1|1"><![CDATA[追加情報：]]></entry>
+  <entry id="key.auto" status="1701369814|1|1"><![CDATA[自動割り当て]]></entry>
+  <entry id="key.help.description" status="1701369814|1|1"><![CDATA[管理者ユーザーのキーは、システムによって自動的に増加し管理される整数です。]]></entry>
+  <entry id="key.title" status="1701369814|1|1"><![CDATA[キー：]]></entry>
+  <entry id="mail.help.description" status="1701369814|1|1"><![CDATA[ユーザー名は最大200文字です。]]></entry>
+  <entry id="mail.status.notnull" status="1701369814|1|1"><![CDATA[名前は空にできません。]]></entry>
+  <entry id="mail.title" status="1701369814|1|1"><![CDATA[メールアドレス：]]></entry>
+  <entry id="mask.errormessage" status="1701369814|1|1"><![CDATA[データがまだ正しく入力されていません。情報を送信する前にメッセージと赤いフィールドを確認してください。]]></entry>
+  <entry id="mask.servermessage" status="1701369814|1|1"><![CDATA[エラー：レコードのデータをサーバーから取得できませんでした。]]></entry>
+  <entry id="mask.titledelete" status="1701369814|1|1"><![CDATA[管理者ユーザーを削除する：]]></entry>
+  <entry id="mask.titledelete.message" status="1701369814|1|1"><![CDATA[情報が正常に削除されました。この画面を閉じることができます。]]></entry>
+  <entry id="mask.titleinsert" status="1701369814|1|1"><![CDATA[新しい管理者ユーザーを挿入する：]]></entry>
+  <entry id="mask.titleinsert.message" status="1701369814|1|1"><![CDATA[情報が正常に追加されました。この画面を閉じることができます。]]></entry>
+  <entry id="mask.titleupdate" status="1701369814|1|1"><![CDATA[管理者ユーザーのデータを変更します：]]></entry>
+  <entry id="mask.titleupdate.message" status="1701369814|1|1"><![CDATA[情報が正常に変更されました。この画面を閉じることができます。]]></entry>
+  <entry id="mask.titleview" status="1701369814|1|1"><![CDATA[管理者ユーザーのデータ：]]></entry>
+  <entry id="name.help.description" status="1701369814|1|1"><![CDATA[ユーザー名は最大200文字です。]]></entry>
+  <entry id="name.status.notnull" status="1701369814|1|1"><![CDATA[名前は空にできません。]]></entry>
+  <entry id="name.title" status="1701369814|1|1"><![CDATA[名前：]]></entry>
+  <entry id="profiles.title" status="1701369814|1|1"><![CDATA[このユーザーがサブスクライブしているプロファイル：]]></entry>
+  <entry id="pw.help.description" status="1701369814|1|1"><![CDATA[接続するためのパスワードで、アクセスユーザーと対応するもので、最大200文字です。]]></entry>
+  <entry id="pw.status.notnull" status="1701369814|1|1"><![CDATA[パスワードは空にできません。]]></entry>
+  <entry id="pw.title" status="1701369814|1|1"><![CDATA[パスワード：]]></entry>
+  <entry id="sex.fem" status="1701369814|1|1"><![CDATA[女性]]></entry>
+  <entry id="sex.help.description" status="1701369814|1|1"><![CDATA[ユーザーの性別、女性または男性。]]></entry>
+  <entry id="sex.masc" status="1701369814|1|1"><![CDATA[男性]]></entry>
+  <entry id="sex.status.notnull" status="1701369814|1|1"><![CDATA[性別は空にできません。]]></entry>
+  <entry id="sex.title" status="1701369814|1|1"><![CDATA[性別：]]></entry>
+  <entry id="status.active" status="1701369814|1|1"><![CDATA[有効]]></entry>
+  <entry id="status.down" status="1701369814|1|1"><![CDATA[無効]]></entry>
+  <entry id="status.help.description" status="1701369814|1|1"><![CDATA[管理者ユーザーのステータスは、次の3つの値のいずれかになります：A = 有効（アクセス権およびプロファイルのセキュリティフィルタに従う）、S = スーパーユーザー（デフォルトでシステムのすべてのアクセス権を持つ）、X = 無効（接続不可）。]]></entry>
+  <entry id="status.status.notnull" status="1701369814|1|1"><![CDATA[ステータスは空にできません。]]></entry>
+  <entry id="status.superuser" status="1701369814|1|1"><![CDATA[スーパーユーザー]]></entry>
+  <entry id="status.title" status="1701369814|1|1"><![CDATA[ステータス：]]></entry>
+  <entry id="title" status="1701369814|1|1"><![CDATA[管理者ユーザーの編集。]]></entry>
+  <entry id="un.help.description" status="1701369814|1|1"><![CDATA[アクセスユーザーは、接続に使用されるユーザーで、最大200文字です。ユーザーの電子メールアドレスを使用することもできます。]]></entry>
+  <entry id="un.status.notnull" status="1701369814|1|1"><![CDATA[アクセスユーザーは空にできません。]]></entry>
+  <entry id="un.title" status="1701369814|1|1"><![CDATA[アクセスユーザー：]]></entry>
+</language>

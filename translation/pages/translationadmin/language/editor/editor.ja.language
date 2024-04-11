@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<language id="editor" lang="ja">
+  <entry id="config.help.description" status="1701369864|1|1"><![CDATA[設定は、parametro=valorの形式でのパラメーターのシリーズです。システムで認識されるパラメーター：domain=言語に対応するパブリックなドメイン。country=この言語が公用語であるISO国。country=は複数指定できます。]]></entry>
+  <entry id="config.title" status="1701369864|1|1"><![CDATA[設定：]]></entry>
+  <entry id="default.help.description" status="1701369864|1|1"><![CDATA[デフォルトの言語は1つしか設定できません。[はい]を選択すると、他の言語は自動的に[いいえ]に設定されます。]]></entry>
+  <entry id="default.no" status="1701369864|1|1"><![CDATA[いいえ]]></entry>
+  <entry id="default.status.notnull" status="1701369864|1|1"><![CDATA[ステータスは空白にすることはできません。]]></entry>
+  <entry id="default.title" status="1701369864|1|1"><![CDATA[デフォルトの言語：]]></entry>
+  <entry id="default.yes" status="1701369864|1|1"><![CDATA[はい]]></entry>
+  <entry id="erroraccess" status="1701369864|1|1"><![CDATA[translationadmin/language/editor::%s - エラー：ユーザー '%d' はこの画面にアクセス権限を持っていません]]></entry>
+  <entry id="errordatasource" status="1701369864|1|1"><![CDATA[translationadmin/language/editor::%s - エラー：データソース '%s' がありません]]></entry>
+  <entry id="errortable" status="1701369864|1|1"><![CDATA[translationadmin/language/editor::%s - エラー：データソースにテーブル '%s' が存在しません]]></entry>
+  <entry id="formreset.title" status="1701369864|1|1"><![CDATA[リセット]]></entry>
+  <entry id="formsubmit.delete.title" status="1701369864|1|1"><![CDATA[はい、この言語を削除する]]></entry>
+  <entry id="formsubmit.insert.title" status="1701369864|1|1"><![CDATA[言語を保存する]]></entry>
+  <entry id="formsubmit.update.title" status="1701369864|1|1"><![CDATA[変更を保存する]]></entry>
+  <entry id="formview.title" status="1701369864|1|1"><![CDATA[キャンセル]]></entry>
+  <entry id="hint" status="1701369864|1|1"><![CDATA[編集するには行をクリックしてください：]]></entry>
+  <entry id="key.help.description" status="1701369864|1|1"><![CDATA[言語のキーは、通常は言語のIDで構成され、オプションでハイフンと言語の国を追加して地域化されたものです。キーは2〜5文字の小文字で構成されます。]]></entry>
+  <entry id="key.status.badformat" status="1701369864|1|1"><![CDATA[キーは許可された形式ではありません。]]></entry>
+  <entry id="key.status.notnull" status="1701369864|1|1"><![CDATA[キーは空白にすることはできません。]]></entry>
+  <entry id="key.title" status="1701369864|1|1"><![CDATA[キー]]></entry>
+  <entry id="languagetoprune.help.description" status="1701369864|1|1"><![CDATA[前のフィールドで[いいえ]を選択した場合、削除する言語に関連する情報を受け取る言語を指定してください。]]></entry>
+  <entry id="languagetoprune.title" status="1701369864|1|1"><![CDATA[受信言語：]]></entry>
+  <entry id="mask.errormessage" status="1701369864|1|1"><![CDATA[データが正しく入力されていません。情報を送信する前に、メッセージと赤色のフィールドを確認してください。]]></entry>
+  <entry id="mask.servermessage" status="1701369864|1|1"><![CDATA[エラー：レコードのデータをサーバーから取得できませんでした。]]></entry>
+  <entry id="mask.titledelete" status="1701369864|1|1"><![CDATA[言語を削除する：]]></entry>
+  <entry id="mask.titledelete.message" status="1701369864|1|1"><![CDATA[情報が正常に削除されました。この画面を閉じることができます。]]></entry>
+  <entry id="mask.titleinsert" status="1701369864|1|1"><![CDATA[新しい言語を挿入する：]]></entry>
+  <entry id="mask.titleinsert.message" status="1701369864|1|1"><![CDATA[情報が正常に追加されました。この画面を閉じることができます。]]></entry>
+  <entry id="mask.titleupdate" status="1701369864|1|1"><![CDATA[言語のデータを変更する：]]></entry>
+  <entry id="mask.titleupdate.message" status="1701369864|1|1"><![CDATA[情報が正常に変更されました。この画面を閉じることができます。]]></entry>
+  <entry id="mask.titleview" status="1701369864|1|1"><![CDATA[言語のデータ：]]></entry>
+  <entry id="name.help.description" status="1701369864|1|1"><![CDATA[言語の名前は最大255文字までの1文字以上である必要があります。]]></entry>
+  <entry id="name.status.notnull" status="1701369864|1|1"><![CDATA[名前は空白にすることはできません。]]></entry>
+  <entry id="name.title" status="1701369864|1|1"><![CDATA[名前]]></entry>
+  <entry id="prune.help.description" status="1701369864|1|1"><![CDATA[[はい]を選択すると、この言語に関連するすべての翻訳が削除されます。[いいえ]を選択すると、情報は次のフィールドで選択した言語に移動されます。]]></entry>
+  <entry id="prune.no" status="1701369864|1|1"><![CDATA[いいえ、受信チャンネルを選択します]]></entry>
+  <entry id="prune.title" status="1701369864|1|1"><![CDATA[子供も削除しますか？]]></entry>
+  <entry id="prune.yes" status="1701369864|1|1"><![CDATA[はい、子供を削除する]]></entry>
+  <entry id="title" status="1701369864|1|1"><![CDATA[システムで認識されている言語。]]></entry>
+</language>

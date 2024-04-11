@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<language id="log" lang="en">
+  <!--  Module installation messages -->
+  <!--  init.go -->
+  <entry id="MODULENAME" status="1701361802|1|1"><![CDATA[Log]]></entry>
+  <entry id="modulemodified" status="1701361802|1|1"><![CDATA[Entry %s was successfully modified in the base_module table.]]></entry>
+  <entry id="commit" status="1701361802|1|1"><![CDATA[Successful installation.]]></entry>
+  <entry id="rollback" status="1701361802|1|1"><![CDATA[Installation with error: %s]]></entry>
+  
+  <entry id="loggroup.name" status="1701361802|1|1"><![CDATA[Logs of chef]]></entry>
+  <entry id="loggroup.description" status="1701361802|1|1"><![CDATA[Logs of chef]]></entry>
+  <entry id="log.name" status="1701361802|1|1"><![CDATA[Access to logs visualization]]></entry>
+  <entry id="log.description" status="1701361802|1|1"><![CDATA[Access to logs visualization]]></entry>
+  
+  <entry id="logfolder.name" status="1701361802|1|1"><![CDATA[Display logs chef]]></entry>
+  <entry id="logfolder.description" status="1701361802|1|1"><![CDATA[Display logs chef]]></entry>
+  <entry id="logoption.name" status="1701361802|1|1"><![CDATA[Logs]]></entry>
+  <entry id="logoption.description" status="1701361802|1|1"><![CDATA[Logs]]></entry>
+  
+   <!--  errors manager -->
+  <entry id="error.notable" status="1701361802|1|1"><![CDATA[client::%s::%s - Error, the table %s is not available on the datasource %s.]]></entry>
+  <entry id="error.upsert" status="1701361802|1|1"><![CDATA[client::%s::%s - Error, upserting in %s: %s]]></entry>
+  <entry id="error.select" status="1701361802|1|1"><![CDATA[client::%s::%s - Error, selecting in %s: %s]]></entry>
+  <entry id="error.delete" status="1701361802|1|1"><![CDATA[client::%s::%s - Error, deleting in %s: %s]]></entry>
+  
+  <entry id="moduleerror" status="1701361802|1|1"><![CDATA[Error modifying entry %s in the base_module table: %s]]></entry>
+  <!--  Datasources transactions -->
+  <entry id="transaction.exist" status="1701361802|1|1"><![CDATA[Error creating a transaction: There is already a started transaction.]]></entry>
+  <entry id="transaction.none" status="1701361802|1|1"><![CDATA[Error searching the transaction: There is no available transaction.]]></entry>
+  <entry id="transaction.commitnone" status="1701361802|1|1"><![CDATA[Error searching the transaction to commit: There is no available transaction.]]></entry>
+  <entry id="transaction.rollbacknone" status="1701361802|1|1"><![CDATA[Error searching the transaction to rollback: There is no available transaction.]]></entry>
+  <entry id="transaction.error" status="1701361802|1|1"><![CDATA[Error in the transaction: %s]]></entry>
+  <!--  Containers -->
+  <entry id="database.none" status="1701361802|1|1"><![CDATA[There is no available database in the datasource]]></entry>
+</language>

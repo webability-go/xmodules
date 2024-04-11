@@ -11,9 +11,9 @@ import (
 	"golang.org/x/text/encoding/charmap"
 	"golang.org/x/text/language"
 
+	"github.com/webability-go/xamboo/applications"
 	"github.com/webability-go/xcore/v2"
 	"github.com/webability-go/xdominion"
-	"github.com/webability-go/xmodules/base"
 )
 
 // Order to load/synchronize tables:
@@ -32,33 +32,33 @@ var moduletables = map[string]func() *xdominion.XTable{
 	"usda_foodnutrient": usda_foodnutrient,
 }
 
-func buildTables(sitecontext *base.Datasource) {
+func buildTables(ds applications.Datasource) {
 
 	for _, tbl := range moduletablesorder {
 		table := moduletables[tbl]()
-		table.SetBase(sitecontext.GetDatabase())
+		table.SetBase(ds.GetDatabase())
 		table.SetLanguage(language.English)
-		sitecontext.SetTable(tbl, table)
+		ds.SetTable(tbl, table)
 	}
 }
 
-func createCache(sitecontext *base.Datasource) []string {
+func createCache(ds applications.Datasource) []string {
 
-	for _, lang := range sitecontext.GetLanguages() {
+	for _, lang := range ds.GetLanguages() {
 		canonical := lang.String()
-		sitecontext.SetCache("usda:nutrients:"+canonical, xcore.NewXCache("usda:nutrients:"+canonical, 0, 0))
+		ds.SetCache("usda:nutrients:"+canonical, xcore.NewXCache("usda:nutrients:"+canonical, 0, 0))
 	}
 	return []string{}
 }
 
-func buildCache(sitecontext *base.Datasource) []string {
+func buildCache(ds applications.Datasource) []string {
 
 	// Lets protect us for race condition since map[] of Tables and XCaches are not thread safe
-	usda_nutrient := sitecontext.GetTable("usda_nutrient")
+	usda_nutrient := ds.GetTable("usda_nutrient")
 	caches := map[string]*xcore.XCache{}
-	for _, lang := range sitecontext.GetLanguages() {
+	for _, lang := range ds.GetLanguages() {
 		canonical := lang.String()
-		caches["usda:nutrients:"+canonical] = sitecontext.GetCache("usda:nutrients:" + canonical)
+		caches["usda:nutrients:"+canonical] = ds.GetCache("usda:nutrients:" + canonical)
 	}
 
 	// Loads all data in XCache
@@ -66,13 +66,13 @@ func buildCache(sitecontext *base.Datasource) []string {
 	if nutrients == nil {
 		return []string{"No hay nutrientes en la tabla"}
 	}
-	for _, lang := range sitecontext.GetLanguages() {
+	for _, lang := range ds.GetLanguages() {
 		canonical := lang.String()
 
 		all := []string{}
 		for _, m := range *nutrients {
 			// creates structure on language
-			str := CreateStructureNutrientByData(sitecontext, m.Clone(), lang)
+			str := CreateStructureNutrientByData(ds, m.Clone(), lang)
 			key, _ := m.GetString("key")
 			all = append(all, key)
 			caches["usda:nutrients:"+canonical].Set(key, str)
@@ -83,33 +83,33 @@ func buildCache(sitecontext *base.Datasource) []string {
 	return []string{}
 }
 
-func createTables(sitecontext *base.Datasource) []string {
+func createTables(ds applications.Datasource) []string {
 	// alguna protección para saber si existe la tabla y no tronarla si tiene datos?
 	// hacer un select count
-	num1, err1 := sitecontext.GetTable("usda_group").Count(nil)
-	num2, err2 := sitecontext.GetTable("usda_food").Count(nil)
-	num3, err3 := sitecontext.GetTable("usda_nutrient").Count(nil)
-	num4, err4 := sitecontext.GetTable("usda_foodnutrient").Count(nil)
+	num1, err1 := ds.GetTable("usda_group").Count(nil)
+	num2, err2 := ds.GetTable("usda_food").Count(nil)
+	num3, err3 := ds.GetTable("usda_nutrient").Count(nil)
+	num4, err4 := ds.GetTable("usda_foodnutrient").Count(nil)
 	if (err1 != nil && err2 != nil && err3 != nil && err4 != nil) || (num1 == 0 && num2 == 0 && num3 == 0 && num4 == 0) {
-		sitecontext.Log("main", "The tables usda_* were created (again)")
-		sitecontext.GetTable("usda_group").Synchronize()
-		sitecontext.GetTable("usda_food").Synchronize()
-		sitecontext.GetTable("usda_nutrient").Synchronize()
-		sitecontext.GetTable("usda_foodnutrient").Synchronize()
+		ds.Log("main", "The tables usda_* were created (again)")
+		ds.GetTable("usda_group").Synchronize()
+		ds.GetTable("usda_food").Synchronize()
+		ds.GetTable("usda_nutrient").Synchronize()
+		ds.GetTable("usda_foodnutrient").Synchronize()
 	} else {
-		sitecontext.Log("main", "The tables usda_* were not created because they contain data")
+		ds.Log("main", "The tables usda_* were not created because they contain data")
 	}
 
 	return []string{}
 }
 
-func loadTables(sitecontext *base.Datasource, filespath string) []string {
+func loadTables(ds applications.Datasource, filespath string) []string {
 
 	// borra toda la data porque la vamos a insertar de nuevo
-	sitecontext.GetTable("usda_foodnutrient").Delete(nil)
-	sitecontext.GetTable("usda_nutrient").Delete(nil)
-	sitecontext.GetTable("usda_food").Delete(nil)
-	sitecontext.GetTable("usda_group").Delete(nil)
+	ds.GetTable("usda_foodnutrient").Delete(nil)
+	ds.GetTable("usda_nutrient").Delete(nil)
+	ds.GetTable("usda_food").Delete(nil)
+	ds.GetTable("usda_group").Delete(nil)
 
 	// 4 archivos de importación
 	CSV_GROUP := filespath + "FD_GROUP.txt"
@@ -125,10 +125,10 @@ func loadTables(sitecontext *base.Datasource, filespath string) []string {
 	for _, r := range *data {
 		r.Set("lastmodif", time.Now())
 
-		sitecontext.GetTable("usda_group").Insert(*r.(*xdominion.XRecord))
+		ds.GetTable("usda_group").Insert(*r.(*xdominion.XRecord))
 	}
 	// Adds group 9999
-	sitecontext.GetTable("usda_group").Insert(xdominion.XRecord{
+	ds.GetTable("usda_group").Insert(xdominion.XRecord{
 		"key":       "9999",
 		"name":      "Other",
 		"lastmodif": time.Now(),
@@ -158,10 +158,10 @@ func loadTables(sitecontext *base.Datasource, filespath string) []string {
 		o, _ := strconv.Atoi(order)
 		r.Set("order", o)
 
-		sitecontext.GetTable("usda_nutrient").Insert(*r.(*xdominion.XRecord))
+		ds.GetTable("usda_nutrient").Insert(*r.(*xdominion.XRecord))
 	}
 	// Adds nutrient 999: weight
-	sitecontext.GetTable("usda_nutrient").Insert(xdominion.XRecord{
+	ds.GetTable("usda_nutrient").Insert(xdominion.XRecord{
 		"key":       "999",
 		"name":      "Weight",
 		"unit":      "g",
@@ -219,7 +219,7 @@ func loadTables(sitecontext *base.Datasource, filespath string) []string {
 			r.Set("chofactor", f)
 		}
 
-		sitecontext.GetTable("usda_food").Insert(*r.(*xdominion.XRecord))
+		ds.GetTable("usda_food").Insert(*r.(*xdominion.XRecord))
 	}
 
 	data = readFile(CSV_FOODNUTRIENT, map[int]string{
@@ -239,7 +239,7 @@ func loadTables(sitecontext *base.Datasource, filespath string) []string {
 			r.Set("value", v)
 		}
 
-		sitecontext.GetTable("usda_foodnutrient").Insert(*r.(*xdominion.XRecord))
+		ds.GetTable("usda_foodnutrient").Insert(*r.(*xdominion.XRecord))
 	}
 
 	return []string{}

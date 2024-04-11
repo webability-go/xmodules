@@ -33,12 +33,11 @@ func init() {
 // adds tables and caches to sitecontext::database
 func Setup(ds applications.Datasource, prefix string) ([]string, error) {
 
-	ctx := ds.(*base.Datasource)
-	buildTables(ctx)
-	createCache(ctx)
-	ctx.SetModule(MODULEID, VERSION)
+	buildTables(ds)
+	createCache(ds)
+	ds.SetModule(MODULEID, VERSION)
 
-	go buildCache(ctx)
+	go buildCache(ds)
 
 	return []string{}, nil
 }
@@ -47,22 +46,21 @@ func Synchronize(ds applications.Datasource, prefix string) ([]string, error) {
 
 	messages := []string{}
 
-	ctx := ds.(*base.Datasource)
 	// Needed modules: base and translation
-	vc := base.ModuleInstalledVersion(ctx, "base")
+	vc := base.ModuleInstalledVersion(ds, "base")
 	if vc == "" {
 		messages = append(messages, "xmodules/base need to be installed before installing xmodules/clientsecurity.")
 		return messages, nil
 	}
 
 	// create tables
-	messages = append(messages, createTables(ctx)...)
+	messages = append(messages, createTables(ds)...)
 	// fill super admin
-	messages = append(messages, loadTables(ctx)...)
+	messages = append(messages, loadTables(ds)...)
 
 	// Inserting into base-modules
 	// Be sure base module is on db: fill base module (we should get this from xmodule.conf)
-	err := base.AddModule(ctx, MODULEID, "Client Security", VERSION)
+	err := base.AddModule(ds, MODULEID, "Client Security", VERSION)
 	if err == nil {
 		messages = append(messages, "The entry "+MODULEID+" was modified successfully in the modules table.")
 	} else {

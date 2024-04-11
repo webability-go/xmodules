@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<language id="translationadmin/tools" lang="es">
+
+  <entry id="errordatasource">translationadmin/tools::%s - Error: no hay fuente de datos '%s'</entry>
+  <entry id="erroraccess">translationadmin/tools::%s - Error: el usuario '%d' no tiene acceso a esta pantalla</entry>
+  <entry id="errortable">translationadmin/tools::%s - Error: la tabla '%s' no existe en el datasource</entry>
+ 
+  <entry id="title">Herramientas de traducción.</entry>
+  <entry id="hint">Haz click en una herramienta para llamarla</entry>
+  
+  <entry id="translationtitle">Idiomas y Traducciones del sitio</entry>
+
+  <entry id="searchfiles1">Buscar por los archivos .language del código (módulos)</entry> S
+  <entry id="searchfiles2">Buscar por los archivos .language de las páginas</entry>
+  <entry id="searchfiles3">Buscar por los archivos en Javascript</entry>
+  <entry id="verifytranslation">Verificar la integridad de las traducciones</entry>
+
+</language>

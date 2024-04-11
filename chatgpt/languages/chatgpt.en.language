@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<language id="chatgpt" lang="en">
+  <entry id="MODULENAME" status="1701369473|1|1"><![CDATA[ChatGPT Bridge]]></entry>
+  <entry id="commit" status="1701369473|1|1"><![CDATA[Successful installation.]]></entry>
+  <entry id="database.none" status="1701369473|1|1"><![CDATA[There is no available database in the datasource.]]></entry>
+  <entry id="error.delete" status="1701369473|1|1"><![CDATA[client::%s::%s - Error, deleting in %s: %s]]></entry>
+  <entry id="error.notable" status="1701369473|1|1"><![CDATA[client::%s::%s - Error, the %s table is not available on the %s datasource.]]></entry>
+  <entry id="error.select" status="1701369473|1|1"><![CDATA[client::%s::%s - Error, selecting in %s: %s]]></entry>
+  <entry id="error.upsert" status="1701369473|1|1"><![CDATA[client::%s::%s - Error, upserting in %s: %s]]></entry>
+  <entry id="moduleerror" status="1701369473|1|1"><![CDATA[Error modifying entry %s in base_module table: %s]]></entry>
+  <entry id="modulemodified" status="1701369473|1|1"><![CDATA[Entry %s was successfully modified in the base_module table.]]></entry>
+  <entry id="rollback" status="1701369473|1|1"><![CDATA[Installation with error: %s]]></entry>
+  <entry id="transaction.commitnone" status="1701369473|1|1"><![CDATA[Error searching the transaction to commit: There is no available transaction.]]></entry>
+  <entry id="transaction.error" status="1701369473|1|1"><![CDATA[Error in the transaction: %s]]></entry>
+  <entry id="transaction.exist" status="1701369473|1|1"><![CDATA[Error creating a transaction: There is already a started transaction.]]></entry>
+  <entry id="transaction.none" status="1701369473|1|1"><![CDATA[Error searching the transaction: There is no available transaction.]]></entry>
+  <entry id="transaction.rollbacknone" status="1701369473|1|1"><![CDATA[Error searching the transaction to rollback: There is no available transaction.]]></entry>
+</language>

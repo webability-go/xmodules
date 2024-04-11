@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<language id="editor" lang="en">
+  <entry id="accesses.hierarchy" status="1701369465|1|1"><![CDATA[Inherited]]></entry>
+  <entry id="accesses.no" status="1701369465|1|1"><![CDATA[Denied]]></entry>
+  <entry id="accesses.title" status="1701369465|1|1"><![CDATA[Access granted to this user:]]></entry>
+  <entry id="accesses.yes" status="1701369465|1|1"><![CDATA[Granted]]></entry>
+  <entry id="erroraccess" status="1701369465|1|1"><![CDATA[adminuser/user/editor::%s - Error: user '%d' does not have access to this screen]]></entry>
+  <entry id="errordatasource" status="1701369465|1|1"><![CDATA[adminuser/user/editor::%s - Error: there is no data source '%s']]></entry>
+  <entry id="errortable" status="1701369465|1|1"><![CDATA[adminuser/user/editor::%s - Error: table '%s' does not exist in the datasource]]></entry>
+  <entry id="father.help.description" status="1701369465|1|1"><![CDATA[You can assign another user responsible for this user. The responsible user can manage their rights and data.]]></entry>
+  <entry id="father.title" status="1701369465|1|1"><![CDATA[Responsible user:]]></entry>
+  <entry id="fields.help.description" status="1701369465|1|1"><![CDATA[Data fields are entered one per line with the format Parameter=Value.]]></entry>
+  <entry id="fields.title" status="1701369465|1|1"><![CDATA[Data fields:]]></entry>
+  <entry id="formreset.title" status="1701369465|1|1"><![CDATA[Reset]]></entry>
+  <entry id="formsubmit.delete.title" status="1701369465|1|1"><![CDATA[Yes, delete this user]]></entry>
+  <entry id="formsubmit.insert.title" status="1701369465|1|1"><![CDATA[Save the new user]]></entry>
+  <entry id="formsubmit.update.title" status="1701369465|1|1"><![CDATA[Save modifications]]></entry>
+  <entry id="formview.title" status="1701369465|1|1"><![CDATA[Cancel]]></entry>
+  <entry id="hint" status="1701369465|1|1"><![CDATA[Click on a row to edit it:]]></entry>
+  <entry id="info.help.description" status="1701369465|1|1"><![CDATA[You can enter any additional information about the user here.]]></entry>
+  <entry id="info.title" status="1701369465|1|1"><![CDATA[Extra information:]]></entry>
+  <entry id="key.auto" status="1701369465|1|1"><![CDATA[Automatic assignment]]></entry>
+  <entry id="key.help.description" status="1701369465|1|1"><![CDATA[The administrator user's password is an auto-incremented integer managed by the system.]]></entry>
+  <entry id="key.title" status="1701369465|1|1"><![CDATA[Password:]]></entry>
+  <entry id="mail.help.description" status="1701369465|1|1"><![CDATA[The user name is from 1 to 200 characters maximum.]]></entry>
+  <entry id="mail.status.notnull" status="1701369465|1|1"><![CDATA[The name cannot be empty.]]></entry>
+  <entry id="mail.title" status="1701369465|1|1"><![CDATA[Email:]]></entry>
+  <entry id="mask.errormessage" status="1701369465|1|1"><![CDATA[The data is not yet well captured. Please check the messages and the fields in red before submitting the information.]]></entry>
+  <entry id="mask.servermessage" status="1701369465|1|1"><![CDATA[Error: Registration data could not be retrieved from the server.]]></entry>
+  <entry id="mask.titledelete" status="1701369465|1|1"><![CDATA[Delete the administrator user:]]></entry>
+  <entry id="mask.titledelete.message" status="1701369465|1|1"><![CDATA[Information successfully deleted. You can now close this window.]]></entry>
+  <entry id="mask.titleinsert" status="1701369465|1|1"><![CDATA[Insert a new administrator user:]]></entry>
+  <entry id="mask.titleinsert.message" status="1701369465|1|1"><![CDATA[Information successfully added. You can now close this window.]]></entry>
+  <entry id="mask.titleupdate" status="1701369465|1|1"><![CDATA[Modify the data of the administrator user:]]></entry>
+  <entry id="mask.titleupdate.message" status="1701369465|1|1"><![CDATA[Information successfully modified. You can now close this window.]]></entry>
+  <entry id="mask.titleview" status="1701369465|1|1"><![CDATA[Administrator user data:]]></entry>
+  <entry id="name.help.description" status="1701369465|1|1"><![CDATA[The user name is from 1 to 200 characters maximum.]]></entry>
+  <entry id="name.status.notnull" status="1701369465|1|1"><![CDATA[The name cannot be empty.]]></entry>
+  <entry id="name.title" status="1701369465|1|1"><![CDATA[Name:]]></entry>
+  <entry id="profiles.title" status="1701369465|1|1"><![CDATA[Profiles subscribed by this user:]]></entry>
+  <entry id="pw.help.description" status="1701369465|1|1"><![CDATA[It is the password for connection that goes along with the access user, it is from 1 to 200 characters maximum.]]></entry>
+  <entry id="pw.status.notnull" status="1701369465|1|1"><![CDATA[The password cannot be empty.]]></entry>
+  <entry id="pw.title" status="1701369465|1|1"><![CDATA[Password:]]></entry>
+  <entry id="sex.fem" status="1701369465|1|1"><![CDATA[Female]]></entry>
+  <entry id="sex.help.description" status="1701369465|1|1"><![CDATA[The user's gender, female or male.]]></entry>
+  <entry id="sex.masc" status="1701369465|1|1"><![CDATA[Male]]></entry>
+  <entry id="sex.status.notnull" status="1701369465|1|1"><![CDATA[The gender cannot be empty.]]></entry>
+  <entry id="sex.title" status="1701369465|1|1"><![CDATA[Gender:]]></entry>
+  <entry id="status.active" status="1701369465|1|1"><![CDATA[Activated]]></entry>
+  <entry id="status.down" status="1701369465|1|1"><![CDATA[Deactivated]]></entry>
+  <entry id="status.help.description" status="1701369465|1|1"><![CDATA[The status of the administrator user can be one of the three values: A = Activated, subject to the security filter of access rights and profiles. S = Super user, has by default all system access rights. X = Deactivated. Will not have any access, nor connect.]]></entry>
+  <entry id="status.status.notnull" status="1701369465|1|1"><![CDATA[The status cannot be empty.]]></entry>
+  <entry id="status.superuser" status="1701369465|1|1"><![CDATA[Super user]]></entry>
+  <entry id="status.title" status="1701369465|1|1"><![CDATA[Status:]]></entry>
+  <entry id="title" status="1701369465|1|1"><![CDATA[Editing the administrator user.]]></entry>
+  <entry id="un.help.description" status="1701369465|1|1"><![CDATA[The access user will be used as the user to connect, it is from 1 to 200 characters maximum. It can also be the user's email.]]></entry>
+  <entry id="un.status.notnull" status="1701369465|1|1"><![CDATA[The access user cannot be empty.]]></entry>
+  <entry id="un.title" status="1701369465|1|1"><![CDATA[Access user:]]></entry>
+</language>

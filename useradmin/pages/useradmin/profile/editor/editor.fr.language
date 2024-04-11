@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<language id="editor" lang="fr">
+  <entry id="accesses.title" status="1701369106|1|1"><![CDATA[Accès utilisant ce profil :]]></entry>
+  <entry id="description.help.description.title" status="1701369106|1|1"><![CDATA[La description est un texte libre, jusqu'à 4000 caractères.]]></entry>
+  <entry id="description.title" status="1701369106|1|1"><![CDATA[Description]]></entry>
+  <entry id="erroraccess" status="1701369106|1|1"><![CDATA[adminuser/profile/editor::%s - Erreur : l'utilisateur '%d' n'a pas accès à cet écran]]></entry>
+  <entry id="errordatasource" status="1701369106|1|1"><![CDATA[adminuser/profile/editor::%s - Erreur : aucune source de données '%s']]></entry>
+  <entry id="errortable" status="1701369106|1|1"><![CDATA[adminuser/profile/editor::%s - Erreur : la table '%s' n'existe pas dans la source de données]]></entry>
+  <entry id="formreset.title" status="1701369106|1|1"><![CDATA[Réinitialiser]]></entry>
+  <entry id="formsubmit.delete.title" status="1701369106|1|1"><![CDATA[Oui, supprimer ce profil]]></entry>
+  <entry id="formsubmit.insert.title" status="1701369106|1|1"><![CDATA[Enregistrer le nouveau profil]]></entry>
+  <entry id="formsubmit.update.title" status="1701369106|1|1"><![CDATA[Enregistrer les modifications]]></entry>
+  <entry id="formview.title" status="1701369106|1|1"><![CDATA[Annuler]]></entry>
+  <entry id="hint" status="1701369106|1|1"><![CDATA[Cliquez sur une ligne pour la modifier :]]></entry>
+  <entry id="key.help.description.title" status="1701369106|1|1"><![CDATA[La clé du profil contient de 1 à 30 caractères, en minuscules. Vous pouvez également utiliser des chiffres, '-' et '_'. Les clés ne peuvent commencer que par une lettre.]]></entry>
+  <entry id="key.status.notnull" status="1701369106|1|1"><![CDATA[La clé ne peut pas être vide.]]></entry>
+  <entry id="key.title" status="1701369106|1|1"><![CDATA[Clé]]></entry>
+  <entry id="mask.errormessage" status="1701369106|1|1"><![CDATA[Les données ne sont pas encore correctement capturées. Veuillez vérifier les messages et les champs en rouge avant d'envoyer les informations.]]></entry>
+  <entry id="mask.servermessage" status="1701369106|1|1"><![CDATA[Erreur : les données de l'enregistrement n'ont pas pu être récupérées du serveur.]]></entry>
+  <entry id="mask.titledelete" status="1701369106|1|1"><![CDATA[Supprimer le profil de droits :]]></entry>
+  <entry id="mask.titledelete.message" status="1701369106|1|1"><![CDATA[Informations supprimées avec succès. Vous pouvez maintenant fermer cet écran.]]></entry>
+  <entry id="mask.titleinsert" status="1701369106|1|1"><![CDATA[Insérer un nouveau profil de droits :]]></entry>
+  <entry id="mask.titleinsert.message" status="1701369106|1|1"><![CDATA[Informations ajoutées avec succès. Vous pouvez maintenant fermer cet écran.]]></entry>
+  <entry id="mask.titleupdate" status="1701369106|1|1"><![CDATA[Modifier les informations du profil de droits :]]></entry>
+  <entry id="mask.titleupdate.message" status="1701369106|1|1"><![CDATA[Informations modifiées avec succès. Vous pouvez maintenant fermer cet écran.]]></entry>
+  <entry id="mask.titleview" status="1701369106|1|1"><![CDATA[Informations du profil de droits :]]></entry>
+  <entry id="name.help.description.title" status="1701369106|1|1"><![CDATA[Le nom du profil est de 1 à 255 caractères maximum.]]></entry>
+  <entry id="name.status.notnull" status="1701369106|1|1"><![CDATA[Le nom ne peut pas être vide.]]></entry>
+  <entry id="name.title" status="1701369106|1|1"><![CDATA[Nom]]></entry>
+  <entry id="profiletoprune.help.description" status="1701369106|1|1"><![CDATA[Si vous avez sélectionné Non dans le champ précédent, veuillez spécifier le profil qui recevra les informations liées au profil à supprimer.]]></entry>
+  <entry id="profiletoprune.title" status="1701369106|1|1"><![CDATA[Profil destinataire :]]></entry>
+  <entry id="prune.help.description" status="1701369106|1|1"><![CDATA[Si vous sélectionnez Oui, toutes les informations liées à ce profil seront également supprimées. Si vous sélectionnez Non, les informations seront déplacées vers le profil sélectionné dans le champ suivant.]]></entry>
+  <entry id="prune.no" status="1701369106|1|1"><![CDATA[Non, sélectionner le profil destinataire]]></entry>
+  <entry id="prune.title" status="1701369106|1|1"><![CDATA[Supprimer également les enfants ?]]></entry>
+  <entry id="prune.yes" status="1701369106|1|1"><![CDATA[Oui, supprimer les enfants]]></entry>
+  <entry id="status.help.description" status="1701369106|1|1"><![CDATA[Vous pouvez activer ou désactiver un profil à tout moment. Si le profil est désactivé, son ensemble d'utilisateurs/droits est ignoré par le système.]]></entry>
+  <entry id="status.no" status="1701369106|1|1"><![CDATA[Désactivé]]></entry>
+  <entry id="status.title" status="1701369106|1|1"><![CDATA[Statut]]></entry>
+  <entry id="status.yes" status="1701369106|1|1"><![CDATA[Activé]]></entry>
+  <entry id="title" status="1701369106|1|1"><![CDATA[Profil de droits.]]></entry>
+  <entry id="users.title" status="1701369106|1|1"><![CDATA[Utilisateurs utilisant ce profil :]]></entry>
+</language>

@@ -2,6 +2,7 @@ package translation
 
 import (
 	"fmt"
+	"strings"
 	"time"
 
 	"golang.org/x/text/language"
@@ -13,23 +14,25 @@ import (
 )
 
 type TranslationBlock struct {
-	tema       string
+	tema       int
 	clave      string
 	lastmodif  time.Time
 	fromlang   language.Tag
 	tolang     language.Tag
+	prompt     string
 	original   map[string]string
 	verified   bool
 	translated map[string]string
 }
 
-func NewTranslationBlock(tema string, clave string, lastmodif time.Time, fromlang language.Tag, tolang language.Tag) *TranslationBlock {
+func NewTranslationBlock(tema int, clave string, lastmodif time.Time, fromlang language.Tag, tolang language.Tag) *TranslationBlock {
 	return &TranslationBlock{
 		tema:       tema,
 		clave:      clave,
 		lastmodif:  lastmodif,
 		fromlang:   fromlang,
 		tolang:     tolang,
+		prompt:     "",
 		original:   map[string]string{},
 		verified:   false,
 		translated: map[string]string{},
@@ -40,18 +43,16 @@ func (tb *TranslationBlock) Set(field string, value string) {
 	tb.original[field] = value
 }
 
-func (tb *TranslationBlock) Verify(sitecontext applications.Datasource) {
+func (tb *TranslationBlock) SetPrompt(prompt string) {
+	tb.prompt = prompt
+}
 
-	translation_info := sitecontext.GetTable("translation_info")
-	if translation_info == nil {
-		sitecontext.Log("main", "xmodules::translation::Verify: Error, the translation_info table is not available on this context")
-		return
-	}
+func (tb *TranslationBlock) Verify(ds applications.Datasource) {
 
-	data, err := translation_info.SelectAll(xdominion.XConditions{
-		xdominion.NewXCondition("theme", "=", tb.tema),
-		xdominion.NewXCondition("externalkey", "=", tb.clave, "and"),
-		xdominion.NewXCondition("language", "=", tb.tolang.String(), "and"),
+	data, err := ds.GetTable("kl_traducciontabla").SelectAll(xdominion.XConditions{
+		xdominion.NewXCondition("tema", "=", tb.tema),
+		xdominion.NewXCondition("claveext", "=", tb.clave, "and"),
+		xdominion.NewXCondition("idioma", "=", tb.tolang.String(), "and"),
 	})
 	if err != nil {
 		return
@@ -59,7 +60,7 @@ func (tb *TranslationBlock) Verify(sitecontext applications.Datasource) {
 
 	datafields := map[string]*xdominion.XRecord{}
 	for _, rec := range *data {
-		campo, _ := rec.GetString("field")
+		campo, _ := rec.GetString("campo")
 		datafields[campo] = rec.(*xdominion.XRecord)
 	}
 
@@ -73,30 +74,46 @@ func (tb *TranslationBlock) Verify(sitecontext applications.Datasource) {
 			values = append(values, value)
 			continue
 		}
-		fecha, _ := tr.GetTime("lastmodif")
+		fecha, _ := tr.GetTime("fecha")
 		if tb.lastmodif.After(fecha) {
-			verify, _ := tr.GetInt("verified")
+			verify, _ := tr.GetInt("verify")
 			if verify == 0 {
 				fields = append(fields, field)
 				values = append(values, value)
 				continue
 			} else if verify == 1 {
 				// notificamos que hubo un cambio al usuario
-				SetVerified(sitecontext, tb.tema, tb.clave, field, tb.tolang, 2)
+				SetVerified(ds, tb.tema, tb.clave, field, tb.tolang, 2)
 			}
 		}
-		trval, _ := tr.GetString("translation")
+		trval, _ := tr.GetString("traduccion")
 		tb.translated[field] = trval
 	}
 	if len(fields) > 0 {
-		result, err := GoogleTranslation(values, tb.fromlang, tb.tolang)
-		if err != nil || len(result) != len(fields) {
-			fmt.Println("Error translating google:", tb.tema, tb.clave, tb.fromlang, tb.tolang, len(result), len(fields), err)
-			return
+		//		result, _ := GoogleTranslation(values, tb.fromlang, tb.tolang)
+
+		langname := "inglés"
+		langdata := GetLanguageByKey(ds, tb.tolang.String())
+		//		fmt.Println("LANGUAGE TO TRANSLATE: ", tb.tolang.String(), langdata)
+		if langdata != nil {
+			langname, _ = langdata.GetString("name")
+			//			fmt.Println("LANGUAGE NAME = ", langname)
 		}
-		for i, field := range fields {
-			tb.translated[field] = result[i].Text
-			SetTranslation(sitecontext, result[i].Text, tb.tema, tb.clave, field, tb.tolang, 0)
+		if tb.prompt == "" {
+			tb.prompt = "Traduce las líneas siguientes al {{LANGNAME}}, para una página web de recetas de cocina, guardando el mismo formato y sin quitar los números ni los | y sin poner un prompt en la respuesta:"
+		}
+		tb.prompt = strings.ReplaceAll(tb.prompt, "{{LANGNAME}}", langname)
+		result, _ := GPTTranslation(ds, values, tb.fromlang, tb.prompt)
+
+		if len(result) == len(fields) {
+			for i, field := range fields {
+				tb.translated[field] = result[i]
+				//				tb.translated[field] = result[i].Text
+				SetTraduccion(ds, result[i], tb.tema, tb.clave, field, tb.tolang, 0)
+				//				SetTraduccion(sitecontext, result[i].Text, tb.tema, tb.clave, field, tb.tolang, 0)
+			}
+		} else {
+			fmt.Println("TRADUCCION NO FUNCIONO: ", tb)
 		}
 	}
 }

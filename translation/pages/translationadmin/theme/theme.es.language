@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<language id="translationadmin/theme" lang="es">
+
+  <entry id="errordatasource">translationadmin/theme::%s - Error: no hay fuente de datos '%s'</entry>
+  <entry id="erroraccess">translationadmin/theme::%s - Error: el usuario '%d' no tiene acceso a esta pantalla</entry>
+
+  <entry id="reload">Recargar la lista</entry>
+  <entry id="insertnew">Nuevo tema de traducción</entry>
+  <entry id="title">Lista de temas de traducción.</entry>
+  <entry id="hint">Haz click sobre un renglón para visualizarlo:</entry>
+  <entry id="searchtitle">Filtrar (clave o nombre):</entry>
+  <entry id="searchbutton">Buscar</entry>
+  <entry id="cleanfilter">Vaciar filtro</entry>
+
+  <entry id="newtheme">Nuevo</entry>
+  <entry id="themetitle">Tema de traducción</entry>
+  <entry id="button.view">Ver</entry>
+  <entry id="button.edit">Editar</entry>
+  <entry id="button.delete">Borrar</entry>
+
+  <entry id="key">Clave</entry>
+  <entry id="name">Nombre</entry>
+  <entry id="source">Fuente</entry>
+  <entry id="config">Config</entry>
+  <entry id="commands">Comandos</entry>
+
+  <entry id="quantity">Cantidad de traducciones:</entry>
+  <entry id="source.1">Base de datos</entry>
+  <entry id="source.2">Archivo .language página</entry>
+  <entry id="source.3">Archivo particular</entry>
+</language>

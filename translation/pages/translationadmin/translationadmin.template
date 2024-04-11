@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<application id="translationadmin">
+  <container type="separatorContainer" width="max" height="max" mode="vertical" auto="yes">
+    <zone id="filtercontainer" size="80">
+      <element type="htmlElement" ><![CDATA[
+
+<div style="padding: 10px;">
+  <button class="button reload" style="float: right;" onclick="translationadmin_translation_reload();">##reload##</button>
+  <button class="button insert" style="float: right;" onclick="translationadmin_translation_go('', 1);">##insertnew##</button>
+  <b>##title##</b><br />
+
+  <button class="button insert" style="float: right;" onclick="translationadmin_translation_cleansearch();">##cleanfilter##</button>
+  ##themetitle## 
+  <select id="translationadmin|single|theme" value="{{THEMEFILTER}}">
+    <option value="">##allthethemes##</option>
+    {{OPTIONSTHEMES}}
+  </select>
+  ##searchtitle## 
+  <input id="translationadmin|single|search" type="text" value="{{SEARCHFILTER}}">
+  ##languageitle## 
+  <select id="translationadmin|single|language" value="{{LANGUAGEFILTER}}">
+    {{OPTIONSLANGUAGE}}
+  </select>
+
+
+  <button class="button insert" onclick="translationadmin_translation_setsearch();">##searchbutton##</button>
+</div>
+
+      ]]></element>
+    </zone>
+
+    <zone id="translationcontainer" size="*" application="translationadmin/editor|single" params="theme=1&amp;key=1">
+
+    </zone>
+
+
+  </container>
+
+  <element type="codeElement"><![CDATA[
+
+function translationadmin_translation_reload()
+{
+  WA.$N('translationadmin|single|translationdata').reload();
+}
+
+function translationadmin_translation_setsearch()
+{
+  var checked = WA.toDOM("translationadmin|single|showall").checked;
+  var filter = WA.toDOM("translationadmin|single|search").value;
+  var theme = WA.toDOM("translationadmin|single|theme").value;
+  var request = WA.Managers.ajax.createRequest('/translationadmin/filter/json', 'POST', null, translationadmin_translation_getfilter, false);
+  request.addParameter('checked', checked);
+  request.addParameter('filter', filter);
+  request.addParameter('theme', theme);
+  request.send();
+}
+
+function translationadmin_translation_cleansearch()
+{
+  WA.toDOM("translationadmin|single|showall").checked = false;
+  WA.toDOM("translationadmin|single|search").value = "";
+  WA.toDOM("translationadmin|single|theme").value = "";
+  translationadmin_translation_setsearch();
+}
+
+function translationadmin_translation_getfilter(request)
+{
+  translationadmin_translation_reload();
+}
+
+function translationadmin_translation_go(key, mode)
+{
+  // open app to edit
+  var node = WA.$N('index|single|app_translationadmin/editor_'+(key?key:'new'));
+  if (!node)
+  {
+    var tree = {tag:'zone',attributes:{id:'app_translationadmin/editor_'+(key?key:'new'),title:'##translationtitle## - ' + (key?key:'##newtranslation##'),closeable:'yes',application:'translationadmin/editor|'+(key?key:'new'),params:'mode='+mode+(key?'&Key='+key:'')}};
+    WA.$N('index|single|application').app.createTree('application', tree);
+  }
+  else
+  {
+    n = WA.$N('translationadmin/editor|'+(key?key:'new')+'|formtranslation');
+    if (n && mode == 1)
+      n.doInsert();
+    else if (n && mode == 2)
+      n.doUpdate();
+    else if (n && mode == 3)
+      n.doDelete();
+    else if (n && mode == 4)
+      n.doView();
+  }
+  WA.$N('index|single|application').activateZone('app_translationadmin/editor_'+(key?key:'new'));
+}
+
+]]></element>
+
+</application>

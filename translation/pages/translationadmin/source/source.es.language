@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<language id="translationadmin/source" lang="es">
+
+  <entry id="errordatasource">translationadmin/source::%s - Error: no hay fuente de datos '%s'</entry>
+  <entry id="erroraccess">translationadmin/source::%s - Error: el usuario '%d' no tiene acceso a esta pantalla</entry>
+
+  <entry id="reload">Recargar la lista</entry>
+  <entry id="insertnew">Nueva fuente de textos</entry>
+  <entry id="title">Lista de fuentes conocidas.</entry>
+  <entry id="hint">Haz click sobre un renglón para visualizarlo:</entry>
+  <entry id="searchtitle">Filtrar (clave o nombre):</entry>
+  <entry id="searchbutton">Buscar</entry>
+  <entry id="cleanfilter">Vaciar filtro</entry>
+
+  <entry id="newsource">Nuevo</entry>
+  <entry id="sourcetitle">Fuente de datos</entry>
+  <entry id="button.view">Ver</entry>
+  <entry id="button.edit">Editar</entry>
+  <entry id="button.delete">Borrar</entry>
+
+  <entry id="key">Clave</entry>
+  <entry id="name">Nombre</entry>
+  <entry id="quantity"># temas / # entradas</entry>
+  <entry id="commands">Comandos</entry>
+
+</language>

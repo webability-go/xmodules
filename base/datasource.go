@@ -54,6 +54,16 @@ func (ds *Datasource) GetName() string {
 	return ds.Name
 }
 
+func (ds *Datasource) GetConfig() *xconfig.XConfig {
+	return ds.Config
+}
+
+func (ds *Datasource) GetDefaultLanguage() language.Tag {
+	lang, _ := ds.Config.GetString("defaultlanguage")
+	l, _ := language.Parse(lang)
+	return l
+}
+
 func (ds *Datasource) AddLanguage(lang language.Tag) {
 	ds.mlanguages.Lock()
 	ds.languages = append(ds.languages, lang)
@@ -273,7 +283,7 @@ func (ds *Datasource) Rollback() error {
 }
 
 // Analyze a datasource and gets back the main data
-func GetDatasourceStats(ds *Datasource) *xcore.XDataset {
+func GetDatasourceStats(ds applications.Datasource) *xcore.XDataset {
 
 	subdata := xcore.XDataset{}
 	subdata["languages"] = ds.GetLanguages()
@@ -297,7 +307,7 @@ func GetDatasourceStats(ds *Datasource) *xcore.XDataset {
 	}
 	subdata["tables"] = tables
 
-	subdata["config"] = tools.BuildConfigSet(ds.Config)
+	subdata["config"] = tools.BuildConfigSet(ds.GetConfig())
 
 	// analiza los módulos instalados
 	modules := map[string]interface{}{}

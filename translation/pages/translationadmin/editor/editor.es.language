@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<language id="translationadmin/editor" lang="es">
+
+  <entry id="errordatasource">translationadmin/editor::%s - Error: no hay fuente de datos '%s'</entry>
+  <entry id="erroraccess">translationadmin/editor::%s - Error: el usuario '%d' no tiene acceso a esta pantalla</entry>
+  <entry id="errortable">translationadmin/editor::%s - Error: la tabla '%s' no existe en el datasource</entry>
+
+  <entry id="key">Campo/Clave:</entry>
+  <entry id="original">Original:</entry>
+  <entry id="translation">Traducido:</entry>
+  <entry id="commands">Comandos:</entry>
+
+</language>

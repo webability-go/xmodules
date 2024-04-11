@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<language id="user" lang="pt">
+  <entry id="accesses" status="1701370106|1|1"><![CDATA[Acessos]]></entry>
+  <entry id="button.delete" status="1701370106|1|1"><![CDATA[Apagar]]></entry>
+  <entry id="button.edit" status="1701370106|1|1"><![CDATA[Editar]]></entry>
+  <entry id="button.view" status="1701370106|1|1"><![CDATA[Ver]]></entry>
+  <entry id="commands" status="1701370106|1|1"><![CDATA[Comandos]]></entry>
+  <entry id="description" status="1701370106|1|1"><![CDATA[Descrição]]></entry>
+  <entry id="erroraccess" status="1701370106|1|1"><![CDATA[adminuser/user::%s - Erro: o usuário '%d' não tem acesso a esta tela]]></entry>
+  <entry id="errordatasource" status="1701370106|1|1"><![CDATA[adminuser/user::%s - Erro: não há fonte de dados '%s']]></entry>
+  <entry id="hint" status="1701370106|1|1"><![CDATA[Clique em uma linha para visualizá-la:]]></entry>
+  <entry id="insertnew" status="1701370106|1|1"><![CDATA[Novo usuário]]></entry>
+  <entry id="key" status="1701370106|1|1"><![CDATA[Senha]]></entry>
+  <entry id="name" status="1701370106|1|1"><![CDATA[Nome]]></entry>
+  <entry id="newuser" status="1701370106|1|1"><![CDATA[Novo]]></entry>
+  <entry id="profiles" status="1701370106|1|1"><![CDATA[Perfis]]></entry>
+  <entry id="reload" status="1701370106|1|1"><![CDATA[Recarregar lista]]></entry>
+  <entry id="showall" status="1701370106|1|1"><![CDATA[Ver usuários desativados]]></entry>
+  <entry id="status" status="1701370106|1|1"><![CDATA[Status]]></entry>
+  <entry id="status.no" status="1701370106|1|1"><![CDATA[Desativar]]></entry>
+  <entry id="status.yes" status="1701370106|1|1"><![CDATA[Ativar]]></entry>
+  <entry id="title" status="1701370106|1|1"><![CDATA[Usuários do sistema]]></entry>
+  <entry id="usertitle" status="1701370106|1|1"><![CDATA[Usuário]]></entry>
+</language>

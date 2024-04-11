@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>e
+<application id="translationadmin/source/editor">
+
+  <container id="application" type="separatorContainer" width="max" height="max" mode="vertical" auto="yes">
+    <zone size="*">
+{{FORMSOURCE}}
+    </zone>
+  </container>
+
+
+  <element type="codeElement"><![CDATA[
+
+    function translationadmin_source_editor_{{KEY}}_formlistener(type, mode, key, data)
+    {
+      if (type == "success") // insert, update, delete OK
+      {
+        // reload the list
+        WA.$N('translationadmin/source|single|sourcedata').reload();
+      }
+    }
+  ]]></element>
+
+  <event type="start">
+    <code><![CDATA[
+    function(e)
+    {
+      WA.$N('translationadmin/source/editor|{{KEY}}|formsource').addListener(translationadmin_source_editor_{{KEY}}_formlistener);
+
+    }
+    ]]></code>
+  </event>
+
+</application>

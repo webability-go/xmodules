@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<application id="translationadmin/tools">
+
+  <container id="application" type="separatorContainer" width="max" height="max" mode="vertical" auto="yes">
+    <zone size="80">
+      <element type="htmlElement" ><![CDATA[
+
+<div style="padding: 10px;">
+  <b>##title##</b><br />
+  ##hint##<br />
+  <button class="button" onclick="translationadmin_tools_search1();">##searchfiles1##</button>
+  <button class="button" onclick="translationadmin_tools_search2();">##searchfiles2##</button>
+  <button class="button" onclick="translationadmin_tools_search3();">##searchfiles3##</button>
+  <button class="button" onclick="translationadmin_tools_verify();">##verifytranslation##</button>
+</div>
+
+      ]]></element>
+    </zone>
+
+    <zone size="*">
+      <element type="htmlElement" id="result" style="padding: 10px;" ></element>
+    </zone>
+  </container>
+
+  <element type="codeElement"><![CDATA[
+
+function translationadmin_tools_search1()
+{
+  WA.toDOM('translationadmin/tools|single|result').innerHTML = 'Enviando la solicitud al server. Puede tardar unos minutos en regresar el resultado. No cierre esta ventana.';
+
+  // Get the ID from the form
+  var request = WA.Managers.ajax.createRequest('translationadmin/tools/languagecode/json', 'POST', null, translationadmin_tools_languagecoderesponse, true);
+}
+
+function translationadmin_tools_languagecoderesponse(request)
+{
+  text = "<table>";
+  code = JSON.parse(request.responseText);
+  for (var i in code) {
+    text += "<tr><td style=\"border-bottom: 1px solid #ccc; padding: 5px;\"><b>" + i + "</b>:</td><td style=\"border-bottom: 1px solid #ccc; padding: 5px;\">" + code[i] + "</td></tr>";
+  }
+  text += "</table>";
+  WA.toDOM('translationadmin/tools|single|result').innerHTML = text;
+}
+
+]]></element>
+
+</application>

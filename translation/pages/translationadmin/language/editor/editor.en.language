@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<language id="editor" lang="en">
+  <entry id="config.help.description" status="1701369493|1|1"><![CDATA[Configuration is a series of parameters in the form parameter=value. Parameters recognized by the system: domain=public domain corresponding to the language. country=ISO country where this language is official. There can be multiple country=]]></entry>
+  <entry id="config.title" status="1701369493|1|1"><![CDATA[Configuration:]]></entry>
+  <entry id="default.help.description" status="1701369493|1|1"><![CDATA[There can only be one default language. If you select "Yes", the others are automatically set to No.]]></entry>
+  <entry id="default.no" status="1701369493|1|1"><![CDATA[No]]></entry>
+  <entry id="default.status.notnull" status="1701369493|1|1"><![CDATA[Status cannot be empty.]]></entry>
+  <entry id="default.title" status="1701369493|1|1"><![CDATA[Default language:]]></entry>
+  <entry id="default.yes" status="1701369493|1|1"><![CDATA[Yes]]></entry>
+  <entry id="erroraccess" status="1701369493|1|1"><![CDATA[translationadmin/language/editor::%s - Error: user '%d' does not have access to this screen]]></entry>
+  <entry id="errordatasource" status="1701369493|1|1"><![CDATA[translationadmin/language/editor::%s - Error: no data source '%s' available]]></entry>
+  <entry id="errortable" status="1701369493|1|1"><![CDATA[translationadmin/language/editor::%s - Error: table '%s' does not exist in the datasource]]></entry>
+  <entry id="formreset.title" status="1701369493|1|1"><![CDATA[Reset]]></entry>
+  <entry id="formsubmit.delete.title" status="1701369493|1|1"><![CDATA[Yes, delete this language]]></entry>
+  <entry id="formsubmit.insert.title" status="1701369493|1|1"><![CDATA[Save language]]></entry>
+  <entry id="formsubmit.update.title" status="1701369493|1|1"><![CDATA[Save modifications]]></entry>
+  <entry id="formview.title" status="1701369493|1|1"><![CDATA[Cancel]]></entry>
+  <entry id="hint" status="1701369493|1|1"><![CDATA[Click on a row to edit it:]]></entry>
+  <entry id="key.help.description" status="1701369493|1|1"><![CDATA[The language key contains 2 to 5 lowercase characters. It is normally composed of the language ID, optionally followed by a hyphen and the language country for regionalization.]]></entry>
+  <entry id="key.status.badformat" status="1701369493|1|1"><![CDATA[The key does not have an authorized format.]]></entry>
+  <entry id="key.status.notnull" status="1701369493|1|1"><![CDATA[Key cannot be empty.]]></entry>
+  <entry id="key.title" status="1701369493|1|1"><![CDATA[Key]]></entry>
+  <entry id="languagetoprune.help.description" status="1701369493|1|1"><![CDATA[If you selected No in the previous field, then specify the language that will receive the information related to the language to be deleted.]]></entry>
+  <entry id="languagetoprune.title" status="1701369493|1|1"><![CDATA[Receiving language:]]></entry>
+  <entry id="mask.errormessage" status="1701369493|1|1"><![CDATA[Data is not properly captured yet. Please check the messages and fields in red before submitting the information.]]></entry>
+  <entry id="mask.servermessage" status="1701369493|1|1"><![CDATA[Error: The record data could not be retrieved from the server.]]></entry>
+  <entry id="mask.titledelete" status="1701369493|1|1"><![CDATA[Delete language:]]></entry>
+  <entry id="mask.titledelete.message" status="1701369493|1|1"><![CDATA[Information successfully deleted. You can now close this screen.]]></entry>
+  <entry id="mask.titleinsert" status="1701369493|1|1"><![CDATA[Insert a new language:]]></entry>
+  <entry id="mask.titleinsert.message" status="1701369493|1|1"><![CDATA[Information successfully added. You can now close this screen.]]></entry>
+  <entry id="mask.titleupdate" status="1701369493|1|1"><![CDATA[Modify language data:]]></entry>
+  <entry id="mask.titleupdate.message" status="1701369493|1|1"><![CDATA[Information successfully modified. You can now close this screen.]]></entry>
+  <entry id="mask.titleview" status="1701369493|1|1"><![CDATA[Language data:]]></entry>
+  <entry id="name.help.description" status="1701369493|1|1"><![CDATA[The language name must be between 1 and 255 characters maximum.]]></entry>
+  <entry id="name.status.notnull" status="1701369493|1|1"><![CDATA[Name cannot be empty.]]></entry>
+  <entry id="name.title" status="1701369493|1|1"><![CDATA[Name]]></entry>
+  <entry id="prune.help.description" status="1701369493|1|1"><![CDATA[If you select Yes, then all translations related to this language will also be deleted. If you select No, then the information will be moved to the language selected in the following field.]]></entry>
+  <entry id="prune.no" status="1701369493|1|1"><![CDATA[No, select the receiving channel]]></entry>
+  <entry id="prune.title" status="1701369493|1|1"><![CDATA[Delete child records too?]]></entry>
+  <entry id="prune.yes" status="1701369493|1|1"><![CDATA[Yes, delete child records]]></entry>
+  <entry id="title" status="1701369493|1|1"><![CDATA[Languages known by the system.]]></entry>
+</language>

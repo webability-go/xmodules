@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<language id="tools" lang="pt">
+  <entry id="erroraccess" status="1701370180|1|1"><![CDATA[translationadmin/tools::%s - Erro: usuário '%d' não tem acesso a esta tela]]></entry>
+  <entry id="errordatasource" status="1701370180|1|1"><![CDATA[translationadmin/tools::%s - Erro: fonte de dados '%s' não encontrada]]></entry>
+  <entry id="errortable" status="1701370180|1|1"><![CDATA[translationadmin/tools::%s - Erro: tabela '%s' não existe no datasource]]></entry>
+  <entry id="hint" status="1701370180|1|1"><![CDATA[Clique em uma ferramenta para chamá-la]]></entry>
+  <entry id="searchfiles1" status="1701370180|1|1"><![CDATA[Pesquisar através dos arquivos .language do código (módulos)]]></entry>
+  <entry id="searchfiles2" status="1701370180|1|1"><![CDATA[Pesquisar através dos arquivos .language das páginas]]></entry>
+  <entry id="searchfiles3" status="1701370180|1|1"><![CDATA[Pesquisar através dos arquivos em Javascript]]></entry>
+  <entry id="title" status="1701370180|1|1"><![CDATA[Ferramentas de tradução.]]></entry>
+  <entry id="translationtitle" status="1701370180|1|1"><![CDATA[Idiomas e Traduções do site]]></entry>
+  <entry id="verifytranslation" status="1701370180|1|1"><![CDATA[Verificar a integridade das traduções]]></entry>
+</language>

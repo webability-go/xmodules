@@ -60,7 +60,7 @@ func PruneProfileChildren(ds applications.Datasource, skey string, profile strin
 	return nil
 }
 
-// GetCountry to get the data of a country from cache/db in the specified language
+// GetProfileAccesses to get the list of accesses of a profile
 func GetProfileAccesses(ds applications.Datasource, profile string, quantity int) (*xdominion.XRecords, error) {
 
 	user_profileaccess := ds.GetTable("user_profileaccess")
@@ -81,7 +81,7 @@ func SetProfileAccess(ds applications.Datasource, profile string, access string,
 	if user_profileaccess == nil {
 		return errors.New("xmodules::user::GetProfilesOfAccess: Error, the user_profileaccess table is not available on this datasource")
 	}
-	cond := xdominion.XConditions{xdominion.NewXCondition("profile", "=", profile), xdominion.NewXCondition("access", "=", access, "and")}
+	cond := &xdominion.XConditions{xdominion.NewXCondition("profile", "=", profile), xdominion.NewXCondition("access", "=", access, "and")}
 	data, err := user_profileaccess.SelectOne(cond)
 	if err != nil {
 		return err
@@ -112,4 +112,52 @@ func GetProfileUsers(ds applications.Datasource, profilekey string, quantity int
 	orderby := xdominion.NewXOrderBy("user", xdominion.ASC)
 	data, err := user_userprofile.SelectAll(cond, orderby, quantity)
 	return data, err
+}
+
+// HasProfilesAccessUser to get the right to an access by profiles of a user
+func HasProfilesAccessUser(ds applications.Datasource, userkey int, accesskey string) (bool, error) {
+
+	user_userprofile := ds.GetTable("user_userprofile")
+	if user_userprofile == nil {
+		ds.Log("xmodules::user::HasProfilesAccessUser: Error, the user_userprofile table is not available on this datasource")
+		return false, errors.New("xmodules::user::HasProfilesAccessUser: Error, the user_userprofile table is not available on this datasource")
+	}
+	cond := xdominion.NewXCondition("user", "=", userkey)
+	profiles, err := user_userprofile.SelectAll(cond)
+	if err != nil {
+		ds.Log("xmodules::user::HasProfilesAccessUser: " + err.Error())
+		return false, err
+	}
+	for _, profile := range *profiles {
+		profilekey, _ := profile.GetString("profile")
+		hasaccess, err := HasProfileAccess(ds, profilekey, accesskey)
+		if err != nil {
+			return false, err
+		}
+		if hasaccess {
+			return true, nil
+		}
+	}
+	// no profile access found
+	return false, nil
+}
+
+// HasProfileAccess to get the right to an access of a profile
+func HasProfileAccess(ds applications.Datasource, profilekey string, accesskey string) (bool, error) {
+
+	user_profileaccess := ds.GetTable("user_profileaccess")
+	if user_profileaccess == nil {
+		ds.Log("xmodules::user::HasProfileAccess: Error, the user_userprofile table is not available on this datasource")
+		return false, errors.New("xmodules::user::GetProfilesOfAccess: Error, the user_profileaccess table is not available on this datasource")
+	}
+	cond := &xdominion.XConditions{xdominion.NewXCondition("profile", "=", profilekey), xdominion.NewXCondition("access", "=", accesskey, "and")}
+	access, err := user_profileaccess.SelectOne(cond)
+	if err != nil {
+		ds.Log("xmodules::user::HasProfileAccess: " + err.Error())
+		return false, err
+	}
+	if access != nil {
+		return true, nil
+	}
+	return false, nil
 }

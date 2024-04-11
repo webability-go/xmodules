@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<language id="translationadmin" lang="pt">
+  <entry id="allthethemes" status="1701370182|1|1"><![CDATA[Todos os temas]]></entry>
+  <entry id="cleanfilter" status="1701370182|1|1"><![CDATA[Limpar filtro]]></entry>
+  <entry id="erroraccess" status="1701370182|1|1"><![CDATA[translationadmin::%s - Erro: o usuário '%d' não tem acesso a esta tela]]></entry>
+  <entry id="errordatasource" status="1701370182|1|1"><![CDATA[translationadmin::%s - Erro: nenhum dado de origem '%s' encontrado]]></entry>
+  <entry id="insertnew" status="1701370182|1|1"><![CDATA[Nova tradução]]></entry>
+  <entry id="reload" status="1701370182|1|1"><![CDATA[Recarregar lista]]></entry>
+  <entry id="searchbutton" status="1701370182|1|1"><![CDATA[Buscar]]></entry>
+  <entry id="searchtitle" status="1701370182|1|1"><![CDATA[Filtrar (chave, id ou nome):]]></entry>
+  <entry id="title" status="1701370182|1|1"><![CDATA[Lista de Traduções]]></entry>
+</language>

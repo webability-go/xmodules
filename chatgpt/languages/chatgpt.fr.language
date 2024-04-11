@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<language id="chatgpt" lang="fr">
+  <entry id="MODULENAME" status="1701369138|1|1"><![CDATA[Pont ChatGPT]]></entry>
+  <entry id="commit" status="1701369138|1|1"><![CDATA[Installation réussie.]]></entry>
+  <entry id="database.none" status="1701369138|1|1"><![CDATA[Il n'y a pas de base de données disponible dans la source de données.]]></entry>
+  <entry id="error.delete" status="1701369138|1|1"><![CDATA[client::%s::%s - Erreur lors de la suppression dans %s: %s]]></entry>
+  <entry id="error.notable" status="1701369138|1|1"><![CDATA[client::%s::%s - Erreur, la table %s n'est pas disponible dans la source de données %s.]]></entry>
+  <entry id="error.select" status="1701369138|1|1"><![CDATA[client::%s::%s - Erreur lors de la sélection dans %s: %s]]></entry>
+  <entry id="error.upsert" status="1701369138|1|1"><![CDATA[client::%s::%s - Erreur lors de l'insertion ou de la mise à jour dans %s: %s]]></entry>
+  <entry id="moduleerror" status="1701369138|1|1"><![CDATA[Erreur lors de la modification de l'entrée %s dans la table base_module: %s]]></entry>
+  <entry id="modulemodified" status="1701369138|1|1"><![CDATA[L'entrée %s a été modifiée avec succès dans la table base_module.]]></entry>
+  <entry id="rollback" status="1701369138|1|1"><![CDATA[Installation avec erreur: %s]]></entry>
+  <entry id="transaction.commitnone" status="1701369138|1|1"><![CDATA[Erreur lors de la recherche de la transaction à valider: Il n'y a pas de transaction disponible.]]></entry>
+  <entry id="transaction.error" status="1701369138|1|1"><![CDATA[Erreur dans la transaction: %s]]></entry>
+  <entry id="transaction.exist" status="1701369138|1|1"><![CDATA[Erreur lors de la création d'une transaction: Il y a déjà une transaction en cours.]]></entry>
+  <entry id="transaction.none" status="1701369138|1|1"><![CDATA[Erreur lors de la recherche de la transaction: Il n'y a pas de transaction disponible.]]></entry>
+  <entry id="transaction.rollbacknone" status="1701369138|1|1"><![CDATA[Erreur lors de la recherche de la transaction à annuler: Il n'y a pas de transaction disponible.]]></entry>
+</language>

@@ -33,10 +33,9 @@ func init() {
 // adds tables and caches to sitecontext::database
 func Setup(ds applications.Datasource, prefix string) ([]string, error) {
 
-	ctx := ds.(*base.Datasource)
-	buildTables(ctx)
+	buildTables(ds)
 	//	createCache(ctx)
-	ctx.SetModule(MODULEID, VERSION)
+	ds.SetModule(MODULEID, VERSION)
 
 	//	go buildCache(ctx)
 
@@ -47,22 +46,21 @@ func Synchronize(ds applications.Datasource, prefix string) ([]string, error) {
 
 	messages := []string{}
 
-	ctx := ds.(*base.Datasource)
 	// Needed modules: base and translation
-	vc := base.ModuleInstalledVersion(ctx, "base")
+	vc := base.ModuleInstalledVersion(ds, "base")
 	if vc == "" {
 		messages = append(messages, "xmodules/base need to be installed before installing xmodules/suggestions.")
 		return messages, nil
 	}
 
 	// create tables
-	messages = append(messages, createTables(ctx)...)
+	messages = append(messages, createTables(ds)...)
 	// fill super admin
-	messages = append(messages, loadTables(ctx)...)
+	messages = append(messages, loadTables(ds)...)
 
 	// Inserting into base-modules
 	// Be sure base module is on db: fill base module (we should get this from xmodule.conf)
-	err := base.AddModule(ctx, MODULEID, "Suggestions", VERSION)
+	err := base.AddModule(ds, MODULEID, "Suggestions", VERSION)
 	if err == nil {
 		messages = append(messages, "The entry "+MODULEID+" was modified successfully in the modules table.")
 	} else {

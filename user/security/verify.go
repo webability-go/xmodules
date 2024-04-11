@@ -67,7 +67,7 @@ func Verify(ctx *context.Context, connection int, args ...interface{}) bool {
 // SECURITY Access
 func HasAccess(ctx *context.Context, args ...interface{}) bool {
 
-	userentries := assets.GetEntries(ctx)
+	userentries := assets.GetEntries(ctx.LoggerError)
 	if userentries == nil {
 		http.Error(ctx.Writer, "Error, no security module", http.StatusInternalServerError)
 		return false

@@ -1,23 +1,18 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<language id="useradmin/accessgroup" lang="en">
-
-  <entry id="errordatasource">adminuser/accessgroup::%s - Error: there is no datasource '%s'</entry>
-  <entry id="erroraccess">adminuser/accessgroup::%s - Error: the user '%d' does not have access to this screen</entry>
-
-  <entry id="reload">Reload the list</entry>
-  <entry id="insertnew">New access group</entry>
-  <entry id="title">Groups of right accesses in the system.</entry>
-  <entry id="hint">Click on a line to view the information</entry>
-  <entry id="showsystem">View the system groups</entry>
-
-  <entry id="newaccessgroup">New</entry>
-  <entry id="accessgrouptitle">Groups of right accesses</entry>
-  <entry id="button.view">View</entry>
-  <entry id="button.edit">Edit</entry>
-  <entry id="button.delete">Delete</entry>
-
-  <entry id="key">Key</entry>
-  <entry id="name">Name</entry>
-  <entry id="commands">Commands</entry>
-
+<language id="accessgroup" lang="en">
+  <entry id="accessgrouptitle" status="1701369429|1|1"><![CDATA[Access rights groups]]></entry>
+  <entry id="button.delete" status="1701369429|1|1"><![CDATA[Delete]]></entry>
+  <entry id="button.edit" status="1701369429|1|1"><![CDATA[Edit]]></entry>
+  <entry id="button.view" status="1701369429|1|1"><![CDATA[View]]></entry>
+  <entry id="commands" status="1701369429|1|1"><![CDATA[Commands]]></entry>
+  <entry id="erroraccess" status="1701369429|1|1"><![CDATA[adminuser/accessgroup::%s - Error: user '%d' does not have access to this screen]]></entry>
+  <entry id="errordatasource" status="1701369429|1|1"><![CDATA[adminuser/accessgroup::%s - Error: no data source '%s' found]]></entry>
+  <entry id="hint" status="1701369429|1|1"><![CDATA[Click on a row to view it]]></entry>
+  <entry id="insertnew" status="1701369429|1|1"><![CDATA[New access group]]></entry>
+  <entry id="key" status="1701369429|1|1"><![CDATA[Password]]></entry>
+  <entry id="name" status="1701369429|1|1"><![CDATA[Name]]></entry>
+  <entry id="newaccessgroup" status="1701369429|1|1"><![CDATA[New]]></entry>
+  <entry id="reload" status="1701369429|1|1"><![CDATA[Reload the list]]></entry>
+  <entry id="showsystem" status="1701369429|1|1"><![CDATA[View system rights]]></entry>
+  <entry id="title" status="1701369429|1|1"><![CDATA[System access rights groups]]></entry>
 </language>

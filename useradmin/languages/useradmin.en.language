@@ -1,39 +1,32 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <language id="useradmin" lang="en">
-  <!--  Module installation messages -->
-  <!--  init.go -->
-  <entry id="MODULENAME">Users Administration tools</entry>
-  <entry id="modulemodified">The entry %s was modified successfully in the base_module table.</entry>
-  <entry id="commit">Installation successfull.</entry>
-  <entry id="rollback">Installation aborted with error: %s</entry>
-
-  <entry id="accessgroup.name">Access group for user administration</entry>
-  <entry id="accessgroup.description">Group of all accesses for user administration</entry>
-  <entry id="mainuser.name">Main access for user administration</entry>
-  <entry id="mainuser.description">Main access for user administration</entry>
-  <entry id="access.name">Access for user access administration</entry>
-  <entry id="access.description">Access for user access administration</entry>
-  <entry id="profile.name">Access for user profiles administration</entry>
-  <entry id="profile.description">Access for user profiles administration</entry>
-  <entry id="user.name">Access for user administration</entry>
-  <entry id="user.description">Access for user administration</entry>
-
-  <entry id="userfolder.name">Users administration</entry>
-  <entry id="userfolder.description">Accesses, Profiles and Users</entry>
-  <entry id="useraccess.name">Accesses</entry>
-  <entry id="useraccess.description">All the available user accesses</entry>
-  <entry id="userprofile.name">Profiles</entry>
-  <entry id="userprofile.description">All the available profiles</entry>
-  <entry id="useruser.name">Users</entry>
-  <entry id="useruser.description">List and edit users</entry>
-
-  <entry id="moduleerror">Error modifying the entry %s in the base_module table: %s</entry>
-  <!--  Datasources transactions -->
-  <entry id="transaction.exist">Error creating a transaction: There is already a started transaction.</entry>
-  <entry id="transaction.none">Error searching the transaction: There is no available transaction.</entry>
-  <entry id="transaction.commitnone">Error searching the transaction to commit: There is no available transaction.</entry>
-  <entry id="transaction.rollbacknone">Error searching the transaction to rollback: There is no available transaction.</entry>
-  <entry id="transaction.error">Error in the transaction: %s</entry>
-  <!--  Containers -->
-  <entry id="database.none">There is no available database in the datasource</entry>
+  <entry id="MODULENAME" status="1701369412|1|1"><![CDATA[Tools to manage users]]></entry>
+  <entry id="access.description" status="1701369412|1|1"><![CDATA[Access to user access administration]]></entry>
+  <entry id="access.name" status="1701369412|1|1"><![CDATA[Access to user access administration]]></entry>
+  <entry id="accessgroup.description" status="1701369412|1|1"><![CDATA[Access groups for user administration]]></entry>
+  <entry id="accessgroup.name" status="1701369412|1|1"><![CDATA[Access groups for user administration]]></entry>
+  <entry id="commit" status="1701369412|1|1"><![CDATA[Successful installation.]]></entry>
+  <entry id="database.none" status="1701369412|1|1"><![CDATA[There is no available database in the datasource]]></entry>
+  <entry id="mainuser.description" status="1701369412|1|1"><![CDATA[Main access for user administration]]></entry>
+  <entry id="mainuser.name" status="1701369412|1|1"><![CDATA[Main access for user administration]]></entry>
+  <entry id="moduleerror" status="1701369412|1|1"><![CDATA[Error modifying entry %s in the base_module table: %s]]></entry>
+  <entry id="modulemodified" status="1701369412|1|1"><![CDATA[Entry %s was successfully modified in the base_module table.]]></entry>
+  <entry id="profile.description" status="1701369412|1|1"><![CDATA[Access to user profile administration]]></entry>
+  <entry id="profile.name" status="1701369412|1|1"><![CDATA[Access to user profile administration]]></entry>
+  <entry id="rollback" status="1701369412|1|1"><![CDATA[Installation with error: %s]]></entry>
+  <entry id="transaction.commitnone" status="1701369412|1|1"><![CDATA[Error searching the transaction to commit: There is no available transaction.]]></entry>
+  <entry id="transaction.error" status="1701369412|1|1"><![CDATA[Error in the transaction: %s]]></entry>
+  <entry id="transaction.exist" status="1701369412|1|1"><![CDATA[Error creating a transaction: There is already a started transaction.]]></entry>
+  <entry id="transaction.none" status="1701369412|1|1"><![CDATA[Error searching the transaction: There is no available transaction.]]></entry>
+  <entry id="transaction.rollbacknone" status="1701369412|1|1"><![CDATA[Error searching the transaction to rollback: There is no available transaction.]]></entry>
+  <entry id="user.description" status="1701369412|1|1"><![CDATA[Access to user administration]]></entry>
+  <entry id="user.name" status="1701369412|1|1"><![CDATA[Access to user administration]]></entry>
+  <entry id="useraccess.description" status="1701369412|1|1"><![CDATA[All accesses]]></entry>
+  <entry id="useraccess.name" status="1701369412|1|1"><![CDATA[Access rights]]></entry>
+  <entry id="userfolder.description" status="1701369412|1|1"><![CDATA[Rights, Profiles and Users]]></entry>
+  <entry id="userfolder.name" status="1701369412|1|1"><![CDATA[User administration]]></entry>
+  <entry id="userprofile.description" status="1701369412|1|1"><![CDATA[All profiles]]></entry>
+  <entry id="userprofile.name" status="1701369412|1|1"><![CDATA[Profiles]]></entry>
+  <entry id="useruser.description" status="1701369412|1|1"><![CDATA[List and edit users]]></entry>
+  <entry id="useruser.name" status="1701369412|1|1"><![CDATA[Users]]></entry>
 </language>

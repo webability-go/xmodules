@@ -1,28 +1,22 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <language id="base" lang="en">
-  <!--  Module installation messages -->
-  <!--  init.go -->
-  <entry id="MODULENAME">XModules base</entry>
-  <entry id="modulemodified">The entry %s was modified successfully in the base_module table.</entry>
-  <entry id="commit">Installation successfull.</entry>
-  <entry id="rollback">Installation aborted with error: %s</entry>
-  <!--  installatin.go -->
-  <entry id="moduleneeded">Verifying '%s': The module '%s' is not installed: ERROR.</entry>
-  <entry id="moduleok">Verifying '%s': The module '%s' is installed: PASSED.</entry>
-  <entry id="analyze">Analysing %s table.</entry>
-  <entry id="notable">Critical Error: the module 'base' table '%s' does not exist.</entry>
-  <entry id="tablenoexist">The table %s does not exist in the database: %s</entry>
-  <entry id="tableerror">The table %s was not created: %s</entry>
-  <entry id="tablecreated">The table %s was created (again).</entry>
-  <entry id="tablenotmodified">The table %s was not created because it contains data.</entry>
-
-  <entry id="moduleerror">Error modifying the entry %s in the base_module table: %s</entry>
-  <!--  Datasources transactions -->
-  <entry id="transaction.exist">Error creating a transaction: There is already a started transaction.</entry>
-  <entry id="transaction.none">Error searching the transaction: There is no available transaction.</entry>
-  <entry id="transaction.commitnone">Error searching the transaction to commit: There is no available transaction.</entry>
-  <entry id="transaction.rollbacknone">Error searching the transaction to rollback: There is no available transaction.</entry>
-  <entry id="transaction.error">Error in the transaction: %s</entry>
-  <!--  Containers -->
-  <entry id="database.none">There is no available database in the datasource</entry>
+  <entry id="MODULENAME" status="1701369403|1|1"><![CDATA[base XModules]]></entry>
+  <entry id="analyze" status="1701369403|1|1"><![CDATA[Analyzing the table %s.]]></entry>
+  <entry id="commit" status="1701369403|1|1"><![CDATA[Successful installation.]]></entry>
+  <entry id="database.none" status="1701369403|1|1"><![CDATA[There is no available database in the datasource.]]></entry>
+  <entry id="moduleerror" status="1701369403|1|1"><![CDATA[Error modifying entry %s in the base_module table: %s]]></entry>
+  <entry id="modulemodified" status="1701369403|1|1"><![CDATA[Entry %s was successfully modified in the base_module table.]]></entry>
+  <entry id="moduleneeded" status="1701369403|1|1"><![CDATA[Verifying '%s': The module '%s' is not installed: ERROR.]]></entry>
+  <entry id="moduleok" status="1701369403|1|1"><![CDATA[Verifying '%s': The module '%s' is installed: OK.]]></entry>
+  <entry id="notable" status="1701369403|1|1"><![CDATA[Critical error: The module table 'base', '%s' does not exist.]]></entry>
+  <entry id="rollback" status="1701369403|1|1"><![CDATA[Installation with error: %s]]></entry>
+  <entry id="tablecreated" status="1701369403|1|1"><![CDATA[The table %s was created (again).]]></entry>
+  <entry id="tableerror" status="1701369403|1|1"><![CDATA[The table %s could not be created: %s]]></entry>
+  <entry id="tablenoexist" status="1701369403|1|1"><![CDATA[The table %s does not exist in the database: %s]]></entry>
+  <entry id="tablenotmodified" status="1701369403|1|1"><![CDATA[The table %s was not created because it already exists and contains data.]]></entry>
+  <entry id="transaction.commitnone" status="1701369403|1|1"><![CDATA[Error searching the transaction to commit: There is no available transaction.]]></entry>
+  <entry id="transaction.error" status="1701369403|1|1"><![CDATA[Error in the transaction: %s]]></entry>
+  <entry id="transaction.exist" status="1701369403|1|1"><![CDATA[Error creating a transaction: There is already a started transaction.]]></entry>
+  <entry id="transaction.none" status="1701369403|1|1"><![CDATA[Error searching the transaction: There is no available transaction.]]></entry>
+  <entry id="transaction.rollbacknone" status="1701369403|1|1"><![CDATA[Error searching the transaction to rollback: There is no available transaction.]]></entry>
 </language>

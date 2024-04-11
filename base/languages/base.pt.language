@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<language id="base" lang="pt">
+  <entry id="MODULENAME" status="1701370024|1|1"><![CDATA[base XModules]]></entry>
+  <entry id="analyze" status="1701370024|1|1"><![CDATA[Analisando a tabela %s.]]></entry>
+  <entry id="commit" status="1701370024|1|1"><![CDATA[Instalação bem-sucedida.]]></entry>
+  <entry id="database.none" status="1701370024|1|1"><![CDATA[Não há nenhum banco de dados disponível na fonte de dados]]></entry>
+  <entry id="moduleerror" status="1701370024|1|1"><![CDATA[Erro modificando a entrada %s na tabela base_module: %s]]></entry>
+  <entry id="modulemodified" status="1701370024|1|1"><![CDATA[A entrada %s foi modificada com sucesso na tabela base_module.]]></entry>
+  <entry id="moduleneeded" status="1701370024|1|1"><![CDATA[Verificando '%s': O módulo '%s' não está instalado: ERRO.]]></entry>
+  <entry id="moduleok" status="1701370024|1|1"><![CDATA[Verificando '%s': O módulo '%s' está instalado: OK.]]></entry>
+  <entry id="notable" status="1701370024|1|1"><![CDATA[Erro crítico: A tabela do módulo 'base', '%s', não existe.]]></entry>
+  <entry id="rollback" status="1701370024|1|1"><![CDATA[Instalação com erro: %s]]></entry>
+  <entry id="tablecreated" status="1701370024|1|1"><![CDATA[A tabela %s foi criada novamente.]]></entry>
+  <entry id="tableerror" status="1701370024|1|1"><![CDATA[A tabela %s não pôde ser criada: %s]]></entry>
+  <entry id="tablenoexist" status="1701370024|1|1"><![CDATA[A tabela %s não existe no banco de dados: %s]]></entry>
+  <entry id="tablenotmodified" status="1701370024|1|1"><![CDATA[A tabela %s não foi criada porque já existe e contém dados.]]></entry>
+  <entry id="transaction.commitnone" status="1701370024|1|1"><![CDATA[Erro ao buscar a transação para confirmar: Não há nenhuma transação disponível.]]></entry>
+  <entry id="transaction.error" status="1701370024|1|1"><![CDATA[Erro na transação: %s]]></entry>
+  <entry id="transaction.exist" status="1701370024|1|1"><![CDATA[Erro ao criar uma transação: Já existe uma transação em andamento.]]></entry>
+  <entry id="transaction.none" status="1701370024|1|1"><![CDATA[Erro ao buscar a transação: Não há nenhuma transação disponível.]]></entry>
+  <entry id="transaction.rollbacknone" status="1701370024|1|1"><![CDATA[Erro ao buscar a transação para reverter: Não há nenhuma transação disponível.]]></entry>
+</language>

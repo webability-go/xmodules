@@ -251,7 +251,7 @@ func predelete(m *xdommask.Mask, ctx *context.Context, key interface{}, oldrec *
 		return errors.New("Error: you cannot delete a key starting with _")
 	}
 
-	userentries := userassets.GetEntries(ctx)
+	userentries := userassets.GetEntries(ctx.LoggerError)
 	ds := base.TryDatasource(ctx, userassets.DATASOURCE)
 
 	prune, _ := rec.GetString("prune")
@@ -296,7 +296,7 @@ func Getprofiles(ctx *context.Context, template *xcore.XTemplate, language *xcor
 
 	result := []string{}
 
-	userentries := userassets.GetEntries(ctx)
+	userentries := userassets.GetEntries(ctx.LoggerError)
 	ds := base.TryDatasource(ctx, userassets.DATASOURCE)
 	key := ctx.Request.Form.Get("key")
 
@@ -337,7 +337,7 @@ func Getusers(ctx *context.Context, template *xcore.XTemplate, language *xcore.X
 
 	result := []string{}
 
-	userentries := userassets.GetEntries(ctx)
+	userentries := userassets.GetEntries(ctx.LoggerError)
 	ds := base.TryDatasource(ctx, userassets.DATASOURCE)
 	key := ctx.Request.Form.Get("key")
 
@@ -395,7 +395,7 @@ func Setprofile(ctx *context.Context, template *xcore.XTemplate, language *xcore
 		return ""
 	}
 
-	userentries := userassets.GetEntries(ctx)
+	userentries := userassets.GetEntries(ctx.LoggerError)
 	ds := base.TryDatasource(ctx, userassets.DATASOURCE)
 	key := ctx.Request.Form.Get("key")
 	profile := ctx.Request.Form.Get("id")
@@ -413,7 +413,7 @@ func Setuser(ctx *context.Context, template *xcore.XTemplate, language *xcore.XL
 		return ""
 	}
 
-	userentries := userassets.GetEntries(ctx)
+	userentries := userassets.GetEntries(ctx.LoggerError)
 	ds := base.TryDatasource(ctx, userassets.DATASOURCE)
 	key := ctx.Request.Form.Get("key")
 	user := ctx.Request.Form.Get("id")

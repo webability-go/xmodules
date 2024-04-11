@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<language id="log" lang="fr">
+  <!--  Module installation messages -->
+  <!--  init.go -->
+  <entry id="MODULENAME" status="1701362470|1|1"><![CDATA[Log]]></entry>
+  <entry id="modulemodified" status="1701362470|1|1"><![CDATA[L'entrée %s a été modifiée avec succès dans la table base_module.]]></entry>
+  <entry id="commit" status="1701362470|1|1"><![CDATA[Installation réussie.]]></entry>
+  <entry id="rollback" status="1701362470|1|1"><![CDATA[Installation avec erreur: %s]]></entry>
+  
+  <entry id="loggroup.name" status="1701362470|1|1"><![CDATA[Logs of chef]]></entry>
+  <entry id="loggroup.description" status="1701362470|1|1"><![CDATA[Logs of chef]]></entry>
+  <entry id="log.name" status="1701362470|1|1"><![CDATA[Access to logs visualization]]></entry>
+  <entry id="log.description" status="1701362470|1|1"><![CDATA[Access to logs visualization]]></entry>
+
+  <entry id="logfolder.name" status="1701362470|1|1"><![CDATA[Logs visualization]]></entry>
+  <entry id="logfolder.description" status="1701362470|1|1"><![CDATA[Logs visualization]]></entry>
+  <entry id="logoption.name" status="1701362470|1|1"><![CDATA[Logs]]></entry>
+  <entry id="logoption.description" status="1701362470|1|1"><![CDATA[Logs]]></entry>
+
+     <!--  errors manager -->
+  <entry id="error.notable" status="1701362470|1|1"><![CDATA[client::%s::%s - Erreur, la table %s n'est pas disponible dans la source de données %s.]]></entry>
+  <entry id="error.upsert" status="1701362470|1|1"><![CDATA[client::%s::%s - Erreur lors de la mise à jour dans %s: %s]]></entry>
+  <entry id="error.select" status="1701362470|1|1"><![CDATA[client::%s::%s - Erreur lors de la sélection dans %s: %s]]></entry>
+  <entry id="error.delete" status="1701362470|1|1"><![CDATA[client::%s::%s - Erreur lors de la suppression dans %s: %s]]></entry>
+  
+  <entry id="moduleerror" status="1701362470|1|1"><![CDATA[Erreur lors de la modification de l'entrée %s dans la table base_module: %s]]></entry>
+   <!--  Datasources transactions -->
+  <entry id="transaction.exist" status="1701362470|1|1"><![CDATA[Erreur lors de la création d'une transaction: une transaction est déjà en cours.]]></entry>
+  <entry id="transaction.none" status="1701362470|1|1"><![CDATA[Erreur lors de la recherche de la transaction: aucune transaction disponible.]]></entry>
+  <entry id="transaction.commitnone" status="1701362470|1|1"><![CDATA[Erreur lors de la recherche de la transaction à valider: aucune transaction disponible.]]></entry>
+   <entry id="transaction.rollbacknone" status="1701362470|1|1"><![CDATA[Erreur lors de la recherche de la transaction à annuler: aucune transaction disponible.]]></entry>
+  <entry id="transaction.error" status="1701362470|1|1"><![CDATA[Erreur dans la transaction: %s]]></entry>
+  <!--  Containers -->
+  <entry id="database.none" status="1701362470|1|1"><![CDATA[Aucune base de données disponible dans la source de données]]></entry>
+</language>

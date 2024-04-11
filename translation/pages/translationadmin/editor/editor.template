@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<application id="translationadmin/editor">
+
+  <container type="gridContainer" id="translationdata" width="max" height="max" haslistener="yes" classname="grid big" params="Key={{KEY}}">
+    <zone type="column" size="200" field="key" title="##key##">
+    </zone>
+    <zone type="column" size="400" field="original" title="##original##">
+    </zone>
+    <zone type="column" size="400" field="translation" title="##translation##">
+    </zone>
+    <zone type="column" size="250" field="commands" title="##commands##">
+    </zone>
+
+  </container>
+
+  <element type="codeElement"><![CDATA[
+
+function translationadmin_translation_editor_{{KEY}}_formlistener(type, mode, key, data)
+{
+  if (type == "success") // insert, update, delete OK
+  {
+    // reload the list
+    WA.$N('translationadmin|single|translationdata').reload();
+  }
+
+  if (type == "mode" && mode == 1)
+  {
+    WA.$N('translationadmin/editor|'+(key?key:'new')+'|application').hideZone('extra');
+    WA.$N('translationadmin/editor|'+(key?key:'new')+'|application').hideZone('source');
+  }
+
+  if (type == "fill") // insert, update, delete OK
+  {  // ensenar los dos tabs extras y cargarlos
+    if (mode != 1)
+    {
+      WA.$N('translationadmin/editor|'+(key?key:'new')+'|application').showZone('extra');
+      WA.$N('translationadmin/editor|'+(key?key:'new')+'|application').showZone('source');
+    }
+  }
+}
+
+function translationadmin_translation_editor_{{KEY}}_transcode(id)
+{
+  // Get the ID from the form
+  id = WA.$N('idbrightcove').getValues();
+  var request = WA.Managers.ajax.createRequest('{{VIDEO}}/publish?digest={{DIGEST}}', 'POST', null, translationadmin_translation_editor_{{KEY}}_result, false);
+  request.addParameter('site', '{{SITE}}');
+  request.addParameter('id', id);
+  request.send();
+
+  // set waiting transcode
+
+}
+
+function translationadmin_translation_editor_{{KEY}}_result(request)
+{
+  // transcode result
+  alert('Transcode enviado. Puede tardar varios minutos');
+  translationadmin_translation_editor_{{KEY}}_reload();
+}
+
+
+function translationadmin_translation_editor_{{KEY}}_reload()
+{
+  WA.$N('translationdata').reload();
+}
+
+  ]]></element>
+
+</application>

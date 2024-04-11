@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<language id="editor" lang="ja">
+  <entry id="accesses.title" status="1701369785|1|1"><![CDATA[このプロファイルを使用しているアクセス：]]></entry>
+  <entry id="description.help.description.title" status="1701369785|1|1"><![CDATA[説明は最大4000文字までの自由なテキストです。]]></entry>
+  <entry id="description.title" status="1701369785|1|1"><![CDATA[説明]]></entry>
+  <entry id="erroraccess" status="1701369785|1|1"><![CDATA[adminuser/profile/editor::%s - エラー：ユーザー '%d' はこの画面にアクセスできません]]></entry>
+  <entry id="errordatasource" status="1701369785|1|1"><![CDATA[adminuser/profile/editor::%s - エラー：データソース '%s' が見つかりません]]></entry>
+  <entry id="errortable" status="1701369785|1|1"><![CDATA[adminuser/profile/editor::%s - エラー：データソースにテーブル '%s' が存在しません]]></entry>
+  <entry id="formreset.title" status="1701369785|1|1"><![CDATA[リセット]]></entry>
+  <entry id="formsubmit.delete.title" status="1701369785|1|1"><![CDATA[はい、このプロファイルを削除する]]></entry>
+  <entry id="formsubmit.insert.title" status="1701369785|1|1"><![CDATA[新しいプロファイルを保存する]]></entry>
+  <entry id="formsubmit.update.title" status="1701369785|1|1"><![CDATA[変更を保存する]]></entry>
+  <entry id="formview.title" status="1701369785|1|1"><![CDATA[キャンセル]]></entry>
+  <entry id="hint" status="1701369785|1|1"><![CDATA[編集するために行をクリックしてください：]]></entry>
+  <entry id="key.help.description.title" status="1701369785|1|1"><![CDATA[プロファイルキーは1〜30文字で、小文字で構成されています。数字、'-'、および'_'も使用できます。プロファイルキーは文字で始まる必要があります。]]></entry>
+  <entry id="key.status.notnull" status="1701369785|1|1"><![CDATA[キーは空にすることはできません。]]></entry>
+  <entry id="key.title" status="1701369785|1|1"><![CDATA[キー]]></entry>
+  <entry id="mask.errormessage" status="1701369785|1|1"><![CDATA[データはまだ正しく収集されていません。情報を送信する前に、メッセージと赤いフィールドを確認してください。]]></entry>
+  <entry id="mask.servermessage" status="1701369785|1|1"><![CDATA[エラー：レコードのデータをサーバーから取得できませんでした。]]></entry>
+  <entry id="mask.titledelete" status="1701369785|1|1"><![CDATA[権限プロファイルを削除する：]]></entry>
+  <entry id="mask.titledelete.message" status="1701369785|1|1"><![CDATA[情報が正常に削除されました。この画面を閉じることができます。]]></entry>
+  <entry id="mask.titleinsert" status="1701369785|1|1"><![CDATA[新しい権限プロファイルを挿入する：]]></entry>
+  <entry id="mask.titleinsert.message" status="1701369785|1|1"><![CDATA[情報が正常に追加されました。この画面を閉じることができます。]]></entry>
+  <entry id="mask.titleupdate" status="1701369785|1|1"><![CDATA[権限プロファイルのデータを変更する：]]></entry>
+  <entry id="mask.titleupdate.message" status="1701369785|1|1"><![CDATA[情報が正常に変更されました。この画面を閉じることができます。]]></entry>
+  <entry id="mask.titleview" status="1701369785|1|1"><![CDATA[権限プロファイルのデータ：]]></entry>
+  <entry id="name.help.description.title" status="1701369785|1|1"><![CDATA[プロファイル名は最大255文字までの1文字以上です。]]></entry>
+  <entry id="name.status.notnull" status="1701369785|1|1"><![CDATA[名前は空にすることはできません。]]></entry>
+  <entry id="name.title" status="1701369785|1|1"><![CDATA[名前]]></entry>
+  <entry id="profiletoprune.help.description" status="1701369785|1|1"><![CDATA[前のフィールドで「いいえ」を選択した場合、削除するプロファイルに関連する情報が受け取るプロファイルを指定してください。]]></entry>
+  <entry id="profiletoprune.title" status="1701369785|1|1"><![CDATA[受け取るプロファイル：]]></entry>
+  <entry id="prune.help.description" status="1701369785|1|1"><![CDATA[「はい」を選択すると、このプロファイルに関連するすべての情報も削除されます。「いいえ」を選択すると、情報は次のフィールドで選択したプロファイルに移動されます。]]></entry>
+  <entry id="prune.no" status="1701369785|1|1"><![CDATA[いいえ、受け取るプロファイルを選択する]]></entry>
+  <entry id="prune.title" status="1701369785|1|1"><![CDATA[子供も削除しますか？]]></entry>
+  <entry id="prune.yes" status="1701369785|1|1"><![CDATA[はい、子供を削除する]]></entry>
+  <entry id="status.help.description" status="1701369785|1|1"><![CDATA[いつでもプロファイルを有効または無効にできます。プロファイルが無効になっている場合、ユーザー/権限のセットはシステムによって無視されます。]]></entry>
+  <entry id="status.no" status="1701369785|1|1"><![CDATA[無効]]></entry>
+  <entry id="status.title" status="1701369785|1|1"><![CDATA[ステータス]]></entry>
+  <entry id="status.yes" status="1701369785|1|1"><![CDATA[有効]]></entry>
+  <entry id="title" status="1701369785|1|1"><![CDATA[権限プロファイル。]]></entry>
+  <entry id="users.title" status="1701369785|1|1"><![CDATA[このプロファイルを使用しているユーザー：]]></entry>
+</language>

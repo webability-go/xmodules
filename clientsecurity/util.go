@@ -1,8 +1,8 @@
 package clientsecurity
 
 import (
+	"github.com/webability-go/xamboo/applications"
 	"github.com/webability-go/xdominion"
-	"github.com/webability-go/xmodules/base"
 )
 
 // Order to load/synchronize tables:
@@ -15,23 +15,23 @@ var moduletables = map[string]func() *xdominion.XTable{
 	//	"wiki_wiki":                  wikiwiki,
 }
 
-func buildTables(ctx *base.Datasource) {
+func buildTables(ds applications.Datasource) {
 
 	for _, tbl := range moduletablesorder {
 		table := moduletables[tbl]()
-		table.SetBase(ctx.GetDatabase())
-		ctx.SetTable(tbl, table)
+		table.SetBase(ds.GetDatabase())
+		ds.SetTable(tbl, table)
 	}
 }
 
-func createCache(ctx *base.Datasource) []string {
+func createCache(ds applications.Datasource) []string {
 
 	//	ctx.SetCache("wiki:wikis", xcore.NewXCache("wiki:wikis", 0, 0))
 
 	return []string{}
 }
 
-func buildCache(ctx *base.Datasource) []string {
+func buildCache(ds applications.Datasource) []string {
 	/*
 		wiki_wiki := ctx.GetTable("wiki_wiki")
 		if wiki_wiki == nil {
@@ -57,13 +57,13 @@ func buildCache(ctx *base.Datasource) []string {
 	return []string{}
 }
 
-func createTables(ctx *base.Datasource) []string {
+func createTables(ds applications.Datasource) []string {
 
 	messages := []string{}
 
 	for _, tbl := range moduletablesorder {
 
-		table := ctx.GetTable(tbl)
+		table := ds.GetTable(tbl)
 		if table == nil {
 			return []string{"xmodules::clientsecurity::createTables: Error, the table is not available on this context:" + tbl}
 		}
@@ -85,7 +85,7 @@ func createTables(ctx *base.Datasource) []string {
 	return messages
 }
 
-func loadTables(ctx *base.Datasource) []string {
+func loadTables(ds applications.Datasource) []string {
 	/*
 		wiki_wiki := ctx.GetTable("wiki_wiki")
 		if wiki_wiki == nil {

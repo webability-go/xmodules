@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<language id="access" lang="pt">
+  <entry id="accessgroup" status="1701370042|1|1"><![CDATA[Administrar grupos de accesos - Gerenciar grupos de acesso]]></entry>
+  <entry id="accesstitle" status="1701370042|1|1"><![CDATA[Derecho de acceso - Direito de acesso]]></entry>
+  <entry id="button.delete" status="1701370042|1|1"><![CDATA[Borrar - Excluir]]></entry>
+  <entry id="button.edit" status="1701370042|1|1"><![CDATA[Editar - Editar]]></entry>
+  <entry id="button.view" status="1701370042|1|1"><![CDATA[Ver - Ver]]></entry>
+  <entry id="commands" status="1701370042|1|1"><![CDATA[Comandos - Comandos]]></entry>
+  <entry id="description" status="1701370042|1|1"><![CDATA[Descripción - Descrição]]></entry>
+  <entry id="erroraccess" status="1701370042|1|1"><![CDATA[adminuser/access::%s - Error: el usuario '%d' no tiene acceso a esta pantalla - adminuser/access::%s - Erro: o usuário '%d' não tem acesso a esta tela]]></entry>
+  <entry id="errordatasource" status="1701370042|1|1"><![CDATA[adminuser/access::%s - Error: no hay fuente de datos '%s' - adminuser/access::%s - Erro: não há fonte de dados '%s']]></entry>
+  <entry id="group" status="1701370042|1|1"><![CDATA[Grupo - Grupo]]></entry>
+  <entry id="hint" status="1701370042|1|1"><![CDATA[Haz click sobre un renglón para visualizarlo: - Clique em uma linha para visualizá-la:]]></entry>
+  <entry id="insertnew" status="1701370042|1|1"><![CDATA[Nuevo acceso - Novo acesso]]></entry>
+  <entry id="key" status="1701370042|1|1"><![CDATA[Clave - Chave]]></entry>
+  <entry id="name" status="1701370042|1|1"><![CDATA[Nombre - Nome]]></entry>
+  <entry id="newaccess" status="1701370042|1|1"><![CDATA[Nuevo - Novo]]></entry>
+  <entry id="profiles" status="1701370042|1|1"><![CDATA[Perfiles - Perfis]]></entry>
+  <entry id="reload" status="1701370042|1|1"><![CDATA[Recargar la lista - Recarregar a lista]]></entry>
+  <entry id="showsystem" status="1701370042|1|1"><![CDATA[Ver los derechos del sistema - Ver os direitos do sistema]]></entry>
+  <entry id="title" status="1701370042|1|1"><![CDATA[Derechos de acceso del sistema. - Direitos de acesso do sistema.]]></entry>
+  <entry id="users" status="1701370042|1|1"><![CDATA[Usuarios - Usuários]]></entry>
+</language>

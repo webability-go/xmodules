@@ -18,34 +18,34 @@ type StructureMaterial struct {
 	Data *xdominion.XRecord
 }
 
-func CreateStructureMaterialByKey(sitecontext applications.Datasource, key int, lang language.Tag) base.Structure {
-	data, _ := sitecontext.GetTable("kl_material").SelectOne(key)
+func CreateStructureMaterialByKey(ds applications.Datasource, key int, lang language.Tag) base.Structure {
+	data, _ := ds.GetTable("kl_material").SelectOne(key)
 	if data == nil {
 		return nil
 	}
-	return CreateStructureMaterialByData(sitecontext, data, lang)
+	return CreateStructureMaterialByData(ds, data, lang)
 }
 
-func CreateStructureMaterialByData(sitecontext applications.Datasource, data xdominion.XRecordDef, lang language.Tag) base.Structure {
+func CreateStructureMaterialByData(ds applications.Datasource, data xdominion.XRecordDef, lang language.Tag) base.Structure {
 
 	key, _ := data.GetInt("clave")
 
 	// builds main data: translations
-	if sitecontext.GetTable("kl_material").Language != lang {
+	if ds.GetTable("kl_material").Language != lang {
 		// Only 1 fields to translate: nombre
-		translation.Translate(sitecontext, TRANSLATIONTHEME, strconv.Itoa(key), data, map[string]interface{}{"nombre": true, "plural": true}, sitecontext.GetTable("kl_material").Language, lang)
+		translation.Translate(ds, TRANSLATIONTHEME, strconv.Itoa(key), data, map[string]interface{}{"nombre": true, "plural": true}, ds.GetTable("kl_material").Language, lang)
 	}
 
 	return &StructureMaterial{Key: key, Lang: lang, Data: data.(*xdominion.XRecord)}
 }
 
 // ComplementData adds all the needed data from other objects /duplicable in the thread since the object will be destroyed at the end
-func (sm *StructureMaterial) ComplementData(sitecontext applications.Datasource) {
+func (sm *StructureMaterial) ComplementData(ds applications.Datasource) {
 
 }
 
 // IsAuthorized returns true if the structure can be used on this site/language/device
-func (sm *StructureMaterial) IsAuthorized(sitecontext applications.Datasource, site string, language string, device string) bool {
+func (sm *StructureMaterial) IsAuthorized(ds applications.Datasource, site string, language string, device string) bool {
 	return true
 }
 

@@ -11,10 +11,16 @@ import (
 
 // All purpose Translation method for structures
 // Any MAINDATA record MUST have a lastmodif field
-func Translate(sitecontext applications.Datasource, theme string, key string, maindata xdominion.XRecordDef, fields map[string]interface{}, fromLang language.Tag, toLang language.Tag) {
+func Translate(sitecontext applications.Datasource, theme int, key string, maindata xdominion.XRecordDef, fields map[string]interface{}, fromLang language.Tag, toLang language.Tag) {
+
+	TranslatePrompt(sitecontext, theme, key, maindata, fields, fromLang, toLang, "")
+}
+
+func TranslatePrompt(sitecontext applications.Datasource, theme int, key string, maindata xdominion.XRecordDef, fields map[string]interface{}, fromLang language.Tag, toLang language.Tag, prompt string) {
 
 	lastmodif, _ := maindata.GetTime("lastmodif")
 	trtbl := NewTranslationBlock(theme, key, lastmodif, fromLang, toLang)
+	trtbl.SetPrompt(prompt)
 
 	for campo, sub := range fields {
 		val := ""
@@ -44,6 +50,23 @@ func Translate(sitecontext applications.Datasource, theme string, key string, ma
 							subclave, _ = subrecord.GetString("key")
 						}
 						trtbl.Set(prefix+subclave, subval)
+					}
+				}
+			}
+		case map[string]bool:
+			subdata, _ := maindata.Get(campo)
+			if subdata == nil {
+				continue
+			}
+			switch subdata.(type) {
+			case *xdominion.XRecords:
+				for _, subrecord := range *subdata.(*xdominion.XRecords) {
+					for subcampo := range sub.(map[string]bool) {
+						subval, _ := subrecord.GetString(subcampo)
+						if subval == "" {
+							continue
+						}
+						trtbl.Set(subcampo, subval)
 					}
 				}
 			}

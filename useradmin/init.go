@@ -9,6 +9,8 @@ import (
 
 	"golang.org/x/text/language"
 
+	"github.com/webability-go/xcore/v2"
+
 	"github.com/webability-go/xamboo/applications"
 	"github.com/webability-go/xamboo/cms/context"
 
@@ -98,8 +100,7 @@ func Synchronize(ds applications.Datasource, prefix string) ([]string, error) {
 	}
 
 	// copy files
-	bcds := cds.(*base.Datasource)
-	pathadmin, _ := bcds.Config.GetString("pathinstalladmin")
+	pathadmin, _ := cds.GetConfig().GetString("pathinstalladmin")
 	pages, _ := fs.Sub(files, "pages")
 	err, rsf := base.SynchroFiles(pages, pathadmin)
 	result = append(result, rsf...)
@@ -107,7 +108,7 @@ func Synchronize(ds applications.Datasource, prefix string) ([]string, error) {
 		result = append(result, err.Error())
 	}
 
-	pathadminstatic, _ := bcds.Config.GetString("pathinstalladminstatic")
+	pathadminstatic, _ := cds.GetConfig().GetString("pathinstalladminstatic")
 	static, _ := fs.Sub(files, "static")
 	err, rsf = base.SynchroFiles(static, pathadminstatic)
 	result = append(result, rsf...)

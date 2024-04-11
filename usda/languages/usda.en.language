@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<language id="usda" lang="en">
+  <entry id="MODULENAME" status="1701361795|1|1"><![CDATA[USDA]]></entry>
+  <entry id="modulemodified" status="1701361795|1|1"><![CDATA[Entry %s was successfully modified in the base_module table.]]></entry>
+  <entry id="commit" status="1701361795|1|1"><![CDATA[Successful installation.]]></entry>
+  <entry id="rollback" status="1701361795|1|1"><![CDATA[Installation with error: %s]]></entry>
+</language>
